@@ -6,7 +6,27 @@ __pycache__/
 .Python
 env/
 venv/
+ENV/
 *.egg-info/
+*.egg
+dist/
+build/
+*.pyd
+*.pyo
+*.dll
+*.dylib
+*.ico
+
+# Virtual Environments
+.env/
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+pip-log.txt
+pip-delete-this-directory.txt
 
 # Outputs
 outputs/simulations/*
