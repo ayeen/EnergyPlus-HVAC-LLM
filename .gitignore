@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+*.egg-info/
+
+# Outputs
+outputs/simulations/*
+outputs/generated_idfs/*
+outputs/logs/*
+!outputs/.gitkeep
+
+# Temporary files
+temp_*
+*.tmp
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# API Keys
+.env
+secrets.txt
+
+# OS
+.DS_Store
+Thumbs.db

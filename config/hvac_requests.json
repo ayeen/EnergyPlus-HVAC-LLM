@@ -1,0 +1,43 @@
+{
+  "vrf_air_conditioning": {
+    "prompt": "I've designed a small, single-zone building model. Please add a complete VRF air-conditioning system that can provide both heating and cooling for this zone. Use realistic, default settings suitable for a small office or apartment — for example, efficient indoor and outdoor units with typical performance. Automatically include everything needed: indoor unit, outdoor unit, fans, cooling and heating coils, thermostats, and temperature schedules. Please make sure the system: Connects properly to the single zone in the model, Uses automatic sizing for airflow and capacity, Has reasonable setpoints (around 24°C for cooling and 21°C for heating)",
+    "zones": ["ZONE ONE"],
+    "base_idf": "../data/base_idfs/building_with_zones.idf"
+  },
+   "vrf_all_components": {
+    "prompt": "Design a complete VRF HVAC system to my one-zone building.Include all indoor and outdoor units, fans, coils for heating and cooling, thermostats, and schedules. Use normal default values, autosize everything, and connect it properly to the single zone",
+    "zones": ["ZONE ONE"],
+    "base_idf": "../data/base_idfs/building_with_zones.idf"
+  },
+  "vrf_single_zone": {
+    "prompt": "Design a VRF HVAC system for efficient heating and cooling",
+    "zones": ["ZONE ONE"],
+    "base_idf": "../data/base_idfs/building_with_zones.idf"
+  },
+  "vrf_ideal_load_single_zone": {
+    "prompt": "Generate the necessary HVAC objects for a single thermal zone using and IdealLoadsAirSystem to condition the zone. create a thermostate with constant heating setpoint at 21 degC and cooling setpoint at 24 degC.",
+    "zones": ["ZONE ONE"],
+    "base_idf": "../data/base_idfs/building_with_zones.idf"
+  },
+  "vrf_heat_recovery": {
+    "prompt": "Design a VRF system with heat recovery for simultaneous heating and cooling in different zones",
+    "zones": ["ZONE ONE"],
+    "base_idf": "../data/base_idfs/building_with_zones.idf"
+  },
+  "vrf_multi_zone_office": {
+    "prompt": "Design a VRF system to serve multiple office zones with independent temperature control",
+    "zones": ["ZONE 1", "ZONE 2", "ZONE 3", "ZONE 4"],
+    "base_idf": "../data/base_idfs/4ZoneWithShading_Simple_2_NoHVAC.idf",
+    "note": "Clean base IDF without existing HVAC equipment"
+  },
+  "vrf_high_efficiency": {
+    "prompt": "Design a high-efficiency VRF system with advanced control strategies for energy savings",
+    "zones": ["ZONE ONE"],
+    "base_idf": "../data/base_idfs/building_with_zones.idf"
+  },
+  "vrf_cold_climate": {
+    "prompt": "Design a VRF system optimized for cold climate operation with enhanced heating performance",
+    "zones": ["ZONE ONE"],
+    "base_idf": "../data/base_idfs/building_with_zones.idf"
+  }
+}

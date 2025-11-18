@@ -1,0 +1,13 @@
+# Core dependencies
+eppy>=0.9.11
+pandas>=1.3.0
+
+# LLM providers (optional)
+openai>=1.0.0
+anthropic>=0.7.0
+# Google Gemini / Generative AI client
+# Install the Google Generative Models client to use Gemini
+google-generative-ai>=0.2.0
+
+# Utilities
+python-dateutil>=2.8.0
