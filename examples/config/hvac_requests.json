@@ -1,0 +1,38 @@
+{
+  "vrf_single_zone": {
+    "prompt": "Design a VRF HVAC system for efficient heating and cooling",
+    "zones": [
+      "ZONE ONE"
+    ],
+    "base_idf": "../data/base_idfs/building_with_zones.idf"
+  },
+  "vrf_heat_recovery": {
+    "prompt": "Design a VRF system with heat recovery for simultaneous heating and cooling in different zones",
+    "zones": [
+      "ZONE ONE"
+    ],
+    "base_idf": "../data/base_idfs/building_with_zones.idf"
+  },
+  "vrf_multi_zone_office": {
+    "prompt": "Design a VRF system to serve multiple office zones with independent temperature control",
+    "zones": [
+      "ZONE ONE"
+    ],
+    "base_idf": "../data/base_idfs/building_with_zones.idf",
+    "note": "For actual multi-zone, create a multi-zone base IDF first"
+  },
+  "vrf_high_efficiency": {
+    "prompt": "Design a high-efficiency VRF system with advanced control strategies for energy savings",
+    "zones": [
+      "ZONE ONE"
+    ],
+    "base_idf": "../data/base_idfs/building_with_zones.idf"
+  },
+  "vrf_cold_climate": {
+    "prompt": "Design a VRF system optimized for cold climate operation with enhanced heating performance",
+    "zones": [
+      "ZONE ONE"
+    ],
+    "base_idf": "../data/base_idfs/building_with_zones.idf"
+  }
+}

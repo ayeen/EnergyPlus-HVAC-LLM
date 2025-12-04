@@ -31,14 +31,17 @@ class Config:
     IDD_FILE = os.path.join(ENERGYPLUS_DIR, "Energy+.idd")
     
     # LLM Settings
-    LLM_PROVIDER = "gemini"  # "gemini", "openai", "anthropic", "mock", or "auto"
-    # Default model name. For Gemini you might set e.g. "gemini-2.5-flash" or similar.
-    LLM_MODEL = "gemini-2.5-flash"  # or "claude-3-5-sonnet-20241022" or "gpt-4-turbo"
+    # LLM_PROVIDER = "mistral"  # "gemini", "openai", "anthropic", "mistral", "mock", or "auto"
+    # # Default model name. For Gemini you might set e.g. "gemini-2.5-flash" or similar.
+    # LLM_MODEL = r"D:\Ayeen\Project\Hvac-finedtuned-mistral-model\mistral-7b-vrf-merged"
+    LLM_PROVIDER = "gemini"  # Switch back temporarily
+    LLM_MODEL = "gemini-2.5-flash"  # Stable model with better quota
     LLM_MAX_TOKENS = 16384
     LLM_TEMPERATURE = 0.3
+    LLM_USE_8BIT = True  # Enable 8-bit quantization (faster loading, less memory, GPU only)
     
     # Pipeline Settings
-    MAX_ERROR_CORRECTION_ITERATIONS = 6
+    MAX_ERROR_CORRECTION_ITERATIONS = 3
     SIMULATION_TIMEOUT = 120  # seconds
     
     # Paths
@@ -56,4 +59,7 @@ class Config:
         elif provider == "gemini":
             # Gemini (Google Generative Models) API key
             return os.environ.get('GEMINI_API_KEY')
+        elif provider == "mistral":
+            # Mistral doesn't need API key for local models
+            return None
         return None

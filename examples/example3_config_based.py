@@ -11,8 +11,14 @@ import json
 from pathlib import Path
 from src.pipeline import HVACLLMPipeline
 
-def load_config(config_path: str = '../config/hvac_requests.json'):
+def load_config(config_path: str = None):
     """Load HVAC design requests from configuration file."""
+    if config_path is None:
+        # Get path relative to this script's location
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.dirname(script_dir)
+        config_path = os.path.join(project_root, 'config', 'hvac_requests.json')
+    
     with open(config_path, 'r') as f:
         return json.load(f)
 
@@ -29,11 +35,17 @@ def run_single_request(request_id: str, config: dict):
     # Create pipeline
     pipeline = HVACLLMPipeline()
     
+    # Resolve base_idf path relative to project root (not examples/)
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(script_dir)
+    base_idf = config.get('base_idf', 'data/base_idfs/building_with_zones.idf')
+    base_idf_full = os.path.join(project_root, base_idf)
+    
     # Run pipeline with configuration
     # NOTE: config['prompt'] is the user's natural language design request
     # The system will merge it with the technical template from energyplus_vrf_prompt.json
     result = pipeline.run(
-        base_idf=config.get('base_idf', '../data/base_idfs/building_with_zones.idf'),
+        base_idf=base_idf_full,
         zones=config['zones'],
         output_name=request_id,
         user_request=config['prompt'],  # User's natural language request
@@ -53,7 +65,10 @@ def run_single_request(request_id: str, config: dict):
 
 def create_example_config():
     """Create example configuration file if it doesn't exist."""
-    config_dir = Path('../config')
+    # Get path relative to this script's location
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(script_dir)
+    config_dir = Path(project_root) / 'config'
     config_dir.mkdir(exist_ok=True)
     
     example_config = {
@@ -100,9 +115,12 @@ def main():
     print("EXAMPLE 3: Config-Based HVAC Generation")
     print("=" * 70)
     
-    # Load configuration
-    config_path = '../config/hvac_requests.json'
+    # Get path relative to this script's location
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(script_dir)
+    config_path = os.path.join(project_root, 'config', 'hvac_requests.json')
     
+    # Load configuration
     try:
         requests = load_config(config_path)
         print(f"\n✓ Loaded configuration from: {config_path}")

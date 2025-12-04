@@ -1,0 +1,353 @@
+{
+  "vrf_basic_scenarios": [
+    {
+      "description": "Design a basic VRF system for single zone cooling and heating",
+      "keywords": ["basic", "simple", "standard", "single zone", "cooling", "heating"],
+      "technical_specs": {
+        "fields_to_set": [3, 4, 5, 6, 7, 9, 10, 11],
+        "field_17_heat_recovery": "No",
+        "field_36_condenser_type": "AirCooled"
+      }
+    },
+    {
+      "description": "Design VRF with heat recovery for simultaneous heating and cooling",
+      "keywords": ["heat recovery", "simultaneous", "waste heat", "energy recovery"],
+      "technical_specs": {
+        "fields_to_set": [3, 4, 7, 9, 17],
+        "field_17_heat_recovery": "Yes",
+        "typical_use": "Buildings with both perimeter and core zones"
+      }
+    },
+    {
+      "description": "Multi-zone VRF for office building with independent control",
+      "keywords": ["multi-zone", "multiple zones", "office", "independent control", "commercial"],
+      "technical_specs": {
+        "fields_to_set": [3, 4, 7, 9, 14],
+        "field_14_master_thermostat": "Required - set to first zone",
+        "zone_terminals": "One Zone:VRF per zone"
+      }
+    },
+    {
+      "description": "High-efficiency VRF with advanced controls",
+      "keywords": ["high efficiency", "energy efficient", "advanced", "optimized", "LEED"],
+      "technical_specs": {
+        "fields_to_set": [4, 9, 17, 37, 38],
+        "field_4_cooling_cop": "4.0 or higher",
+        "field_9_heating_cop": "4.0 or higher",
+        "field_17_heat_recovery": "Yes",
+        "fields_37_38_parasitic": "10-25W for detailed tracking"
+      }
+    }
+  ],
+  "climate_specific": [
+    {
+      "description": "VRF for cold climate with enhanced heating",
+      "keywords": ["cold climate", "winter", "low temperature", "freezing", "northern", "arctic"],
+      "technical_specs": {
+        "fields_to_set": [7, 8, 9, 10, 11, 30, 31, 33, 35],
+        "field_10_min_heating_temp": "-30°C or lower",
+        "field_30_defrost_strategy": "ReverseCycle",
+        "field_31_defrost_control": "OnDemand",
+        "field_33_supplemental_heating": "Electric or Gas",
+        "field_35_supplemental_capacity": "Autosize"
+      }
+    },
+    {
+      "description": "VRF for hot climate with enhanced cooling",
+      "keywords": ["hot climate", "tropical", "desert", "high temperature", "cooling dominated"],
+      "technical_specs": {
+        "fields_to_set": [3, 4, 5, 6, 36, 40, 41, 42],
+        "field_6_max_cooling_temp": "48°C or higher",
+        "field_36_condenser_type": "EvaporativelyCooled or WaterCooled",
+        "field_40_evap_effectiveness": "0.7-0.9",
+        "field_43_basin_heater": "Required for freeze protection"
+      }
+    },
+    {
+      "description": "VRF for moderate climate year-round comfort",
+      "keywords": ["moderate", "temperate", "mild", "balanced", "seasonal"],
+      "technical_specs": {
+        "fields_to_set": [3, 4, 7, 9],
+        "field_5_min_cooling_temp": "-6°C",
+        "field_6_max_cooling_temp": "43°C",
+        "field_10_min_heating_temp": "-20°C",
+        "field_11_max_heating_temp": "16°C"
+      }
+    }
+  ],
+  "building_type_specific": [
+    {
+      "description": "VRF for residential apartment building",
+      "keywords": ["residential", "apartment", "multi-family", "housing", "dwelling"],
+      "technical_specs": {
+        "zone_terminals": "One per apartment",
+        "outdoor_air_method": "Flow/Person recommended",
+        "typical_setpoints": "21°C heating, 24°C cooling",
+        "field_17_heat_recovery": "Optional - good for simultaneous loads"
+      }
+    },
+    {
+      "description": "VRF for hotel with guest room zones",
+      "keywords": ["hotel", "hospitality", "guest rooms", "lodging"],
+      "technical_specs": {
+        "zone_terminals": "One per guest room",
+        "field_20_system_schedule": "24/7 operation",
+        "field_21_fan_schedule": "Continuous low speed",
+        "outdoor_air": "ASHRAE 62.1 requirements"
+      }
+    },
+    {
+      "description": "VRF for retail store with display areas",
+      "keywords": ["retail", "store", "shop", "commercial", "sales floor"],
+      "technical_specs": {
+        "field_17_heat_recovery": "Yes - perimeter vs core",
+        "outdoor_air_method": "Flow/Area for large spaces",
+        "field_41_baseboard": "Electric for perimeter zones"
+      }
+    },
+    {
+      "description": "VRF for educational facility classrooms",
+      "keywords": ["school", "education", "classroom", "university", "campus"],
+      "technical_specs": {
+        "outdoor_air_method": "Flow/Person for high occupancy",
+        "field_20_system_schedule": "Occupied hours with setback",
+        "field_33_supplemental_heating": "Recommended for quick morning warmup"
+      }
+    },
+    {
+      "description": "VRF for healthcare medical office",
+      "keywords": ["healthcare", "medical", "clinic", "hospital", "patient care"],
+      "technical_specs": {
+        "outdoor_air": "Higher rates per codes",
+        "field_4_cooling_cop": "High efficiency preferred",
+        "redundancy": "Consider multiple smaller systems",
+        "filtration": "Enhanced air quality"
+      }
+    },
+    {
+      "description": "VRF for data center or server room",
+      "keywords": ["data center", "server room", "IT", "computer room", "cooling intensive"],
+      "technical_specs": {
+        "fields_to_set": [3, 4, 5, 6, 17, 36],
+        "field_3_cooling_capacity": "Critical - size for full IT load",
+        "field_17_heat_recovery": "Yes - use waste heat elsewhere",
+        "field_36_condenser_type": "WaterCooled for efficiency",
+        "heating": "Minimal or not required"
+      }
+    }
+  ],
+  "special_features": [
+    {
+      "description": "VRF with baseboard heating for perimeter zones",
+      "keywords": ["baseboard", "perimeter heating", "radiant", "supplemental"],
+      "technical_specs": {
+        "fields_to_set": [41, 42, 43],
+        "field_41_baseboard_type": "Electric or HotWater",
+        "field_42_baseboard_schedule": "During heating season",
+        "field_43_baseboard_capacity": "Autosize",
+        "typical_use": "Cold climates, large windows"
+      }
+    },
+    {
+      "description": "VRF with economizer for free cooling",
+      "keywords": ["economizer", "free cooling", "outside air", "energy savings"],
+      "technical_specs": {
+        "outdoor_air_method": "DetailedSpecification",
+        "field_18_outdoor_air_spec": "Required for economizer control",
+        "min_outdoor_temp": "Enable below 15°C"
+      }
+    },
+    {
+      "description": "VRF with dedicated outdoor air system (DOAS)",
+      "keywords": ["DOAS", "dedicated outdoor air", "decoupled ventilation", "ERV", "HRV"],
+      "technical_specs": {
+        "field_30_doas_name": "Link to separate DOAS system",
+        "zone_terminals": "Reduced outdoor air on VRF units",
+        "benefits": "Better humidity control, energy recovery"
+      }
+    },
+    {
+      "description": "VRF with variable speed fans for comfort",
+      "keywords": ["variable speed", "quiet operation", "noise reduction", "comfort"],
+      "technical_specs": {
+        "fields_to_set": [22, 23, 24, 25],
+        "field_22_fan_placement": "DrawThrough for quieter",
+        "field_23_fan_efficiency": "0.7 or higher",
+        "field_40_multispeed": "Optional for staged operation"
+      }
+    },
+    {
+      "description": "VRF with detailed energy tracking and parasitic loads",
+      "keywords": ["energy tracking", "parasitic", "detailed simulation", "energy plus"],
+      "technical_specs": {
+        "fields_to_set": [37, 38],
+        "field_37_on_parasitic": "10-50W typical",
+        "field_38_off_parasitic": "2-10W typical",
+        "purpose": "Accurate annual energy simulation"
+      }
+    }
+  ],
+  "capacity_and_sizing": [
+    {
+      "description": "Autosize VRF for unknown loads",
+      "keywords": ["autosize", "automatic sizing", "unknown load", "let EnergyPlus decide"],
+      "technical_specs": {
+        "fields_to_set": [3, 7],
+        "field_3_cooling_capacity": "Autosize",
+        "field_7_heating_capacity": "Autosize",
+        "field_8_sizing_ratio": "1.0 default",
+        "all_flow_rates": "Autosize"
+      }
+    },
+    {
+      "description": "Oversized VRF for extreme conditions",
+      "keywords": ["oversized", "safety factor", "extreme", "peak load", "buffer"],
+      "technical_specs": {
+        "field_8_sizing_ratio": "1.15 to 1.25",
+        "field_6_rated_heating_ratio": "1.2 or higher",
+        "use_case": "Extreme climates or uncertain loads"
+      }
+    },
+    {
+      "description": "Right-sized VRF for optimal efficiency",
+      "keywords": ["right sized", "optimal", "efficient", "not oversized"],
+      "technical_specs": {
+        "field_8_sizing_ratio": "1.0",
+        "field_12_min_part_load": "0.15 to 0.25",
+        "benefits": "Better part-load efficiency, less cycling"
+      }
+    }
+  ],
+  "performance_specifications": [
+    {
+      "description": "Standard efficiency VRF (code minimum)",
+      "keywords": ["standard", "code minimum", "basic efficiency", "budget"],
+      "technical_specs": {
+        "field_4_cooling_cop": "2.5 to 3.0",
+        "field_9_heating_cop": "2.5 to 3.0",
+        "typical_use": "Budget projects, mild climates"
+      }
+    },
+    {
+      "description": "High efficiency VRF (ENERGY STAR)",
+      "keywords": ["high efficiency", "ENERGY STAR", "premium", "low energy"],
+      "technical_specs": {
+        "field_4_cooling_cop": "3.5 to 4.5",
+        "field_9_heating_cop": "3.5 to 4.5",
+        "typical_use": "LEED projects, lifecycle cost optimization"
+      }
+    },
+    {
+      "description": "Ultra-high efficiency VRF (best available)",
+      "keywords": ["ultra-high", "best in class", "maximum efficiency", "net zero"],
+      "technical_specs": {
+        "field_4_cooling_cop": "4.5 to 5.5",
+        "field_9_heating_cop": "4.0 to 5.0",
+        "field_17_heat_recovery": "Yes recommended",
+        "typical_use": "Net-zero buildings, showcase projects"
+      }
+    }
+  ],
+  "operating_ranges": [
+    {
+      "description": "Extended range VRF for extreme temperatures",
+      "keywords": ["extended range", "extreme", "wide operating range"],
+      "technical_specs": {
+        "field_5_min_cooling": "-10°C",
+        "field_6_max_cooling": "50°C",
+        "field_10_min_heating": "-30°C",
+        "field_11_max_heating": "20°C"
+      }
+    },
+    {
+      "description": "Standard range VRF for typical climates",
+      "keywords": ["standard range", "typical", "normal operation"],
+      "technical_specs": {
+        "field_5_min_cooling": "-6°C",
+        "field_6_max_cooling": "43°C",
+        "field_10_min_heating": "-20°C",
+        "field_11_max_heating": "16°C"
+      }
+    }
+  ],
+  "control_strategies": [
+    {
+      "description": "Master thermostat priority control",
+      "keywords": ["master thermostat", "priority control", "master zone"],
+      "technical_specs": {
+        "field_13_master_zone": "Required - specify zone name",
+        "field_14_priority_type": "MasterThermostatPriority",
+        "use_case": "One zone dictates system operation"
+      }
+    },
+    {
+      "description": "Load priority control for balanced comfort",
+      "keywords": ["load priority", "balanced", "all zones equal"],
+      "technical_specs": {
+        "field_14_priority_type": "LoadPriority",
+        "use_case": "Equal priority to all zones"
+      }
+    },
+    {
+      "description": "Scheduled priority control",
+      "keywords": ["scheduled", "time-based", "occupancy based"],
+      "technical_specs": {
+        "field_14_priority_type": "Scheduled",
+        "field_15_priority_schedule": "Required schedule name",
+        "use_case": "Priority changes with occupancy"
+      }
+    }
+  ],
+  "defrost_strategies": [
+    {
+      "description": "Reverse cycle defrost (heat pump reversal)",
+      "keywords": ["reverse cycle", "heat pump reversal", "defrost"],
+      "technical_specs": {
+        "field_30_defrost_strategy": "ReverseCycle",
+        "field_31_defrost_control": "OnDemand or Timed",
+        "typical_use": "Most common, efficient"
+      }
+    },
+    {
+      "description": "Resistive defrost (electric heating)",
+      "keywords": ["resistive", "electric defrost", "heating element"],
+      "technical_specs": {
+        "field_30_defrost_strategy": "Resistive",
+        "field_34_resistive_capacity": "Autosize or specified",
+        "typical_use": "Backup or extreme cold"
+      }
+    }
+  ],
+  "condenser_types": [
+    {
+      "description": "Air-cooled VRF (standard outdoor condenser)",
+      "keywords": ["air-cooled", "outdoor unit", "standard"],
+      "technical_specs": {
+        "field_36_condenser_type": "AirCooled",
+        "typical_use": "Most common, lowest first cost"
+      }
+    },
+    {
+      "description": "Water-cooled VRF (tower or ground source)",
+      "keywords": ["water-cooled", "cooling tower", "ground source", "water source"],
+      "technical_specs": {
+        "field_36_condenser_type": "WaterCooled",
+        "field_37_inlet_node": "Required - connect to loop",
+        "field_38_outlet_node": "Required - connect to loop",
+        "field_39_water_flow_rate": "Autosize",
+        "typical_use": "Higher efficiency, existing cooling tower"
+      }
+    },
+    {
+      "description": "Evaporatively-cooled VRF (evap condenser)",
+      "keywords": ["evaporative", "evap cooled", "adiabatic", "water spray"],
+      "technical_specs": {
+        "field_36_condenser_type": "EvaporativelyCooled",
+        "field_40_evap_effectiveness": "0.7 to 0.9",
+        "field_41_evap_air_flow": "Autosize",
+        "field_42_evap_pump_power": "Autosize",
+        "typical_use": "Hot dry climates"
+      }
+    }
+  ]
+}

@@ -38,6 +38,15 @@ class HVACLLMPipeline:
             enable_quick_validation: Enable LLM pre-validation before simulation (default: True)
         """
         
+        # Convert relative path to absolute
+        if not os.path.isabs(base_idf):
+            # Resolve relative to current working directory
+            base_idf = os.path.abspath(base_idf)
+        
+        # Verify file exists
+        if not os.path.exists(base_idf):
+            raise FileNotFoundError(f"Base IDF file not found: {base_idf}")
+        
         print("=" * 70)
         print("HVAC-LLM PIPELINE")
         print("=" * 70)

@@ -1,22 +1,32 @@
 """
-LLM Agent 1: HVAC Generator
+LLM Agent 1: HVAC Generator with RAG Integration
 """
 
 from src.agents.llm_interface import UniversalLLM
 from src.core.idf_handler import IDFHandler
+from src.rag.rag_retriever import RAGRetriever
 import re
 import json
 import os
+
 class HVACGenerator:
-    """Generate HVAC systems using LLM"""
+    """Generate HVAC systems using LLM with RAG-enhanced context"""
     
     def __init__(self):
         self.llm = UniversalLLM()
         self.handler = IDFHandler()
+        # Initialize RAG retriever for field specs and user patterns
+        try:
+            self.rag = RAGRetriever()
+            self.rag_enabled = True
+            print("✓ RAG enabled for Agent 1 (HVAC Generator)")
+        except Exception as e:
+            print(f"⚠ RAG unavailable for Agent 1: {e}")
+            self.rag_enabled = False
     
     def generate_vrf_system(self, zones, system_name="VRF_System_1", user_request=None):
         """
-        Generate VRF system for zones.
+        Generate VRF system for zones with RAG-enhanced context.
         
         Args:
             zones: List of zone names
@@ -27,11 +37,53 @@ class HVACGenerator:
         
         zone_list = ", ".join(zones)
         
+        # RAG ENHANCEMENT: Query knowledge base for relevant context
+        rag_context = {}
+        if self.rag_enabled and user_request:
+            print("\n🔍 Querying RAG knowledge base for design patterns...")
+            
+            # Query user request examples for intent matching
+            similar_requests = self.rag.query_user_requests(
+                user_request=user_request,
+                n_results=3
+            )
+            
+            if similar_requests:
+                print(f"  ✓ Found {len(similar_requests)} similar design patterns")
+                rag_context['user_examples'] = similar_requests
+                
+                for i, req in enumerate(similar_requests, 1):
+                    similarity = req.get('similarity', 0)
+                    print(f"    {i}. {req.get('description', 'N/A')[:60]}... ({similarity:.1%})")
+            
+            # Query field dependencies for validation
+            dependencies = self.rag.query_field_dependencies(
+                query=f"{user_request} field requirements",
+                n_results=5
+            )
+            
+            if dependencies:
+                print(f"  ✓ Found {len(dependencies)} relevant field dependency rules")
+                rag_context['dependencies'] = dependencies
+            
+            # Query field specifications for critical fields
+            field_specs = self.rag.query_field_specs(
+                query_text="VRF system master thermostat defrost condenser capacity COP",
+                n_results=10
+            )
+            
+            if field_specs:
+                print(f"  ✓ Found {len(field_specs)} field specifications")
+                rag_context['field_specs'] = field_specs
+            
+            print("  ✓ RAG context prepared\n")
+        
         # Load prompt templates and merge with user request if provided
         [system_prompt, user_prompt] = self._create_energyplus_template_prompt(
             zone_list, 
             system_name, 
-            user_request
+            user_request,
+            rag_context
         )
         
         # print(f"Called LLM to generate VRF system for zones: {zone_list}")
@@ -53,15 +105,16 @@ class HVACGenerator:
             print(f"✗ Prompt got empty response")
             return ""
     
-    def _create_energyplus_template_prompt(self, zone_list, system_name, user_request=None):
+    def _create_energyplus_template_prompt(self, zone_list, system_name, user_request=None, rag_context=None):
         """
-        EnergyPlus HVACTemplate-focused approach (loads prompt from JSON file).
-        Merges user's natural language request with technical template.
+        EnergyPlus HVACTemplate-focused approach with RAG enhancement.
+        Merges user's natural language request with technical template and RAG context.
         
         Args:
             zone_list: Comma-separated zone names
             system_name: HVAC system name
             user_request: Optional natural language design request
+            rag_context: Optional RAG-retrieved context (user examples, dependencies, field specs)
         
         Returns:
             tuple: (system_prompt, user_prompt)
@@ -73,25 +126,65 @@ class HVACGenerator:
         
         system_prompt = prompt_data[0]["system_prompt"]
         
+        # Add RAG-enhanced validation rules to system prompt
+        if rag_context and rag_context.get('dependencies'):
+            system_prompt += "\n\n**CRITICAL FIELD DEPENDENCY RULES (from knowledge base):**\n"
+            for dep in rag_context['dependencies'][:3]:  # Top 3 most relevant
+                system_prompt += f"\n- {dep.get('dependency_id', 'N/A')}:\n"
+                system_prompt += f"  Trigger: {dep.get('trigger_field', 'N/A')}\n"
+                system_prompt += f"  Severity: {dep.get('severity', 'Unknown')}\n"
+                if 'content' in dep:
+                    content = dep['content']
+                    if 'Fix Strategy:' in content:
+                        fix_strategy = content.split('Fix Strategy:')[1].split('\n')[0]
+                        system_prompt += f"  Fix Strategy: {fix_strategy}\n"
+        
         # Fill technical template with actual values
         technical_template = prompt_data[0]["user_prompt"].format(
             zone_list=zone_list, 
             system_name=system_name
         )
-        # print(f"TECHNICAL TEMPLATE:\n{technical_template}\n")
-        # APPROACH A: Merge user request with technical specification
+        
+        # Build enhanced user prompt with RAG context
+        combined_prompt = ""
+        
         if user_request:
-            # Combine user's natural language request with technical requirements
-            combined_prompt = f"""USER DESIGN REQUEST:
+            combined_prompt += f"""USER DESIGN REQUEST:
 {user_request}
 
-TECHNICAL IMPLEMENTATION REQUIREMENTS:
+"""
+            
+            # Add similar design examples from RAG
+            if rag_context and rag_context.get('user_examples'):
+                combined_prompt += "**SIMILAR DESIGN PATTERNS (from knowledge base):**\n"
+                for i, ex in enumerate(rag_context['user_examples'][:2], 1):  # Top 2
+                    combined_prompt += f"\n{i}. {ex.get('description', 'N/A')}\n"
+                    if 'content' in ex:
+                        content = ex['content']
+                        # Extract technical specs if available
+                        if 'technical_specs' in content or 'keywords' in content:
+                            combined_prompt += f"   Key features: {content[:150]}...\n"
+                combined_prompt += "\n"
+            
+            combined_prompt += f"""TECHNICAL IMPLEMENTATION REQUIREMENTS:
 {technical_template}
 
-Please generate the EnergyPlus IDF objects that fulfill the user's design request while strictly following the technical specifications above. The user's design intent should guide features like heat recovery, economizer settings, and system configuration, but the output format must exactly match the technical requirements."""
+Please generate the EnergyPlus IDF objects that fulfill the user's design request while strictly following the technical specifications above. The user's design intent should guide features like heat recovery, economizer settings, and system configuration, but the output format must exactly match the technical requirements.
+
+**IMPORTANT VALIDATION:**
+1. Master Thermostat: If using 'MasterThermostatPriority', MUST set zone_name_for_master_thermostat_location
+2. Defrost Strategy: If using 'Resistive', MUST set resistive_defrost_heater_capacity to 'Autosize' or positive value
+3. Temperature Ranges: Use wide ranges (cooling: -10 to 48°C, heating: -25 to 18°C) for reliability
+4. COP Values: Must be > 0 even when capacity is 'Autosize' (typical: 3.5-4.5)"""
         else:
-            # No user request - use template directly
-            combined_prompt = technical_template
+            # No user request - use template directly with validation notes
+            combined_prompt = technical_template + """
+
+**IMPORTANT VALIDATION:**
+1. Master Thermostat: Recommend 'LoadPriority' over 'MasterThermostatPriority' (simpler, no zone name required)
+2. Defrost Strategy: Use 'ReverseCycle' or set resistive_defrost_heater_capacity to 'Autosize'
+3. Temperature Ranges: Use wide ranges for reliability
+4. COP Values: Must be > 0 (typical: 3.5-4.5)"""
         
         return system_prompt, combined_prompt
     

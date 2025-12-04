@@ -1,0 +1,314 @@
+{
+  "vrf_system_dependencies": [
+    {
+      "dependency_id": "master_thermostat_priority_requires_zone",
+      "trigger_field": "Field 14: Master_Thermostat_Priority_Control_Type",
+      "trigger_values": ["MasterThermostatPriority"],
+      "requires": [
+        {
+          "field": "Field 13: Zone_Name_for_Master_Thermostat_Location",
+          "must_be": "non-empty",
+          "valid_values": "any zone name from Zone:VRF objects"
+        }
+      ],
+      "error_if_violated": "Zone Name for Master Thermostat Location must be entered when Master Thermostat Priority Control Type = MASTERTHERMOSTATPRIORITY",
+      "fix_strategy": "Either: (1) Set Field 13 to a valid zone name, OR (2) Change Field 14 to 'LoadPriority' or 'ThermostatOffsetPriority'",
+      "severity": "Fatal",
+      "frequency": "Very common (100% of failed runs)"
+    },
+    {
+      "dependency_id": "master_thermostat_zone_must_exist",
+      "trigger_field": "Field 13: Zone_Name_for_Master_Thermostat_Location",
+      "trigger_values": ["any non-empty value"],
+      "requires": [
+        {
+          "field": "Zone:VRF object",
+          "must_be": "exists with matching zone name",
+          "valid_values": "zone name must match exactly (case-sensitive)"
+        }
+      ],
+      "error_if_violated": "could not find a matching HVACTemplate:Zone:VRF named: [zone_name]",
+      "fix_strategy": "Verify zone name matches exactly with one of the Zone:VRF objects",
+      "severity": "Warning",
+      "frequency": "Common"
+    },
+    {
+      "dependency_id": "resistive_defrost_requires_capacity",
+      "trigger_field": "Field 30: Defrost_Strategy",
+      "trigger_values": ["Resistive"],
+      "requires": [
+        {
+          "field": "Field 34: Resistive_Defrost_Heater_Capacity",
+          "must_be": "> 0 or Autosize",
+          "valid_values": "positive number or 'Autosize'"
+        }
+      ],
+      "error_if_violated": "Resistive Defrost Heater Capacity = 0.0 for defrost strategy = RESISTIVE",
+      "fix_strategy": "Set Field 34 to 'Autosize' or a positive value (typically 1000-5000 W)",
+      "severity": "Warning",
+      "frequency": "Common"
+    },
+    {
+      "dependency_id": "reverse_cycle_defrost_no_resistive_capacity",
+      "trigger_field": "Field 30: Defrost_Strategy",
+      "trigger_values": ["ReverseCycle"],
+      "optional": [
+        {
+          "field": "Field 34: Resistive_Defrost_Heater_Capacity",
+          "should_be": "0 or blank",
+          "note": "Not used with reverse cycle defrost"
+        }
+      ],
+      "severity": "Info",
+      "frequency": "Rare"
+    },
+    {
+      "dependency_id": "water_cooled_condenser_requires_nodes",
+      "trigger_field": "Field 36: Condenser_Type",
+      "trigger_values": ["WaterCooled"],
+      "requires": [
+        {
+          "field": "Field 37: Water_Condenser_Volume_Flow_Rate",
+          "must_be": "> 0 or Autosize",
+          "valid_values": "Autosize recommended"
+        }
+      ],
+      "note": "Water-cooled systems require connection to condenser water loop",
+      "severity": "Severe",
+      "frequency": "Rare (only if water-cooled selected)"
+    },
+    {
+      "dependency_id": "evaporatively_cooled_requires_effectiveness",
+      "trigger_field": "Field 36: Condenser_Type",
+      "trigger_values": ["EvaporativelyCooled"],
+      "requires": [
+        {
+          "field": "Field 40: Evaporative_Condenser_Effectiveness",
+          "must_be": "0.0 to 1.0",
+          "recommended": "0.7 to 0.9",
+          "valid_values": "0.0 to 1.0"
+        }
+      ],
+      "severity": "Warning",
+      "frequency": "Rare"
+    },
+    {
+      "dependency_id": "heat_recovery_mode_compatibility",
+      "trigger_field": "Field 17: Heat_Recovery_Cooling_Capacity_Modifier_Function_of_Temperature_Curve_Name",
+      "trigger_values": ["any non-empty value"],
+      "implies": {
+        "feature": "Heat recovery mode enabled",
+        "note": "System can simultaneously heat and cool different zones"
+      },
+      "severity": "Info",
+      "frequency": "Optional feature"
+    },
+    {
+      "dependency_id": "cooling_capacity_consistency",
+      "trigger_field": "Field 3: Gross_Rated_Total_Cooling_Capacity",
+      "trigger_values": ["Autosize"],
+      "requires": [
+        {
+          "field": "Field 4: Gross_Rated_Cooling_COP",
+          "must_be": "> 0",
+          "recommended": "2.5 to 5.0",
+          "note": "COP must be specified even when capacity is autosized"
+        }
+      ],
+      "severity": "Severe",
+      "frequency": "Common"
+    },
+    {
+      "dependency_id": "heating_capacity_consistency",
+      "trigger_field": "Field 7: Gross_Rated_Heating_Capacity",
+      "trigger_values": ["Autosize"],
+      "requires": [
+        {
+          "field": "Field 9: Gross_Rated_Heating_COP",
+          "must_be": "> 0",
+          "recommended": "2.5 to 4.5",
+          "note": "COP must be specified even when capacity is autosized"
+        }
+      ],
+      "severity": "Severe",
+      "frequency": "Common"
+    },
+    {
+      "dependency_id": "cooling_temperature_range_validation",
+      "trigger_field": "Field 5: Minimum_Outdoor_Temperature_in_Cooling_Mode",
+      "related_field": "Field 6: Maximum_Outdoor_Temperature_in_Cooling_Mode",
+      "constraint": "Field 5 must be < Field 6",
+      "recommended_range": {
+        "field_5": "-10°C to 0°C",
+        "field_6": "40°C to 50°C"
+      },
+      "error_if_violated": "VRF Heat Pump Min/Max Operating Temperature in Cooling Mode Limits have been exceeded",
+      "fix_strategy": "Expand temperature range: Field 5 = -10°C, Field 6 = 48°C (typical)",
+      "severity": "Warning",
+      "frequency": "Common in cold climates"
+    },
+    {
+      "dependency_id": "heating_temperature_range_validation",
+      "trigger_field": "Field 10: Minimum_Outdoor_Temperature_in_Heating_Mode",
+      "related_field": "Field 11: Maximum_Outdoor_Temperature_in_Heating_Mode",
+      "constraint": "Field 10 must be < Field 11",
+      "recommended_range": {
+        "field_10": "-30°C to -15°C",
+        "field_11": "16°C to 20°C"
+      },
+      "error_if_violated": "VRF Heat Pump Min/Max Operating Temperature in Heating Mode Limits have been exceeded",
+      "fix_strategy": "Expand temperature range: Field 10 = -25°C, Field 11 = 18°C (typical)",
+      "severity": "Warning",
+      "frequency": "Common in extreme climates"
+    },
+    {
+      "dependency_id": "minimum_part_load_ratio_validation",
+      "trigger_field": "Field 12: Minimum_Heat_Pump_Part_Load_Ratio",
+      "constraint": "0.0 to 1.0",
+      "recommended": "0.15 to 0.25",
+      "note": "Lower values allow better part-load performance but may cause cycling",
+      "severity": "Warning",
+      "frequency": "Rare"
+    },
+    {
+      "dependency_id": "sizing_ratio_validation",
+      "trigger_field": "Field 8: Rated_Heating_Capacity_Sizing_Ratio",
+      "constraint": "> 0",
+      "recommended": "1.0 to 1.3",
+      "note": "Ratio of heating to cooling capacity. 1.0 = equal, >1.0 = larger heating",
+      "severity": "Warning",
+      "frequency": "Uncommon"
+    }
+  ],
+  "vrf_zone_dependencies": [
+    {
+      "dependency_id": "zone_must_exist_in_model",
+      "trigger_field": "Field 1: Zone_Name",
+      "constraint": "Must match an existing Zone object in the IDF",
+      "error_if_violated": "Zone not found in building model",
+      "fix_strategy": "Verify zone name matches exactly with building geometry zones",
+      "severity": "Fatal",
+      "frequency": "Common with manual zone names"
+    },
+    {
+      "dependency_id": "terminal_cooling_coil_requires_capacity",
+      "trigger_field": "Field 7: Zone_Cooling_Design_Supply_Air_Temperature_Input_Method",
+      "trigger_values": ["SupplyAirTemperature"],
+      "requires": [
+        {
+          "field": "Field 8: Zone_Cooling_Design_Supply_Air_Temperature",
+          "must_be": "< zone thermostat setpoint",
+          "recommended": "12°C to 16°C"
+        }
+      ],
+      "severity": "Warning",
+      "frequency": "Common"
+    },
+    {
+      "dependency_id": "terminal_heating_coil_requires_capacity",
+      "trigger_field": "Field 16: Zone_Heating_Design_Supply_Air_Temperature_Input_Method",
+      "trigger_values": ["SupplyAirTemperature"],
+      "requires": [
+        {
+          "field": "Field 17: Zone_Heating_Design_Supply_Air_Temperature",
+          "must_be": "> zone thermostat setpoint",
+          "recommended": "35°C to 45°C"
+        }
+      ],
+      "severity": "Warning",
+      "frequency": "Common"
+    },
+    {
+      "dependency_id": "outdoor_air_method_requires_flow_rate",
+      "trigger_field": "Field 30: Outdoor_Air_Method",
+      "trigger_values": ["Flow/Person", "Flow/Area", "Flow/Zone", "Sum", "Maximum"],
+      "requires": [
+        {
+          "field": "Field 31 or 32 or 33: Outdoor_Air_Flow_Rates",
+          "must_be": "> 0 or Autosize",
+          "note": "Depends on method chosen"
+        }
+      ],
+      "severity": "Warning",
+      "frequency": "Common when outdoor air specified"
+    },
+    {
+      "dependency_id": "baseboard_heating_requires_capacity",
+      "trigger_field": "Field 41: Baseboard_Heating_Type",
+      "trigger_values": ["Electric", "HotWater"],
+      "requires": [
+        {
+          "field": "Field 43: Baseboard_Heating_Capacity",
+          "must_be": "> 0 or Autosize",
+          "recommended": "Autosize"
+        }
+      ],
+      "severity": "Warning",
+      "frequency": "Uncommon (supplemental heating)"
+    },
+    {
+      "dependency_id": "supply_air_fan_operating_mode",
+      "trigger_field": "Field 22: Supply_Air_Fan_Operating_Mode_Schedule_Name",
+      "note": "CyclingFan (0) = fan cycles with compressor, ContinuousFan (1) = fan runs continuously",
+      "recommended": "CyclingFan for energy efficiency",
+      "severity": "Info",
+      "frequency": "Common"
+    }
+  ],
+  "cross_object_dependencies": [
+    {
+      "dependency_id": "system_must_have_zones",
+      "rule": "Every HVACTemplate:System:VRF must have at least one HVACTemplate:Zone:VRF",
+      "constraint": "System Name in Zone:VRF must match System Name in System:VRF",
+      "error_if_violated": "VRF system has no terminal units",
+      "severity": "Fatal",
+      "frequency": "Rare (pipeline ensures this)"
+    },
+    {
+      "dependency_id": "master_zone_must_be_in_system",
+      "rule": "If Master Thermostat is specified, that zone must be served by the system",
+      "constraint": "Zone name in Field 13 (System) must exist in Field 1 of at least one Zone:VRF object",
+      "error_if_violated": "Master thermostat zone not found in system zones",
+      "severity": "Severe",
+      "frequency": "Common"
+    },
+    {
+      "dependency_id": "all_zones_must_have_thermostats",
+      "rule": "Each Zone:VRF should have a valid thermostat schedule",
+      "note": "Pipeline typically creates thermostats automatically",
+      "severity": "Warning",
+      "frequency": "Rare (pipeline handles this)"
+    }
+  ],
+  "performance_constraints": [
+    {
+      "constraint_id": "cop_realistic_range",
+      "field": "Cooling/Heating COP",
+      "minimum_acceptable": 2.0,
+      "typical_range": "2.5 to 4.5",
+      "high_efficiency": "> 4.0",
+      "note": "COP < 2.0 indicates poor efficiency, COP > 6.0 is unrealistic for VRF"
+    },
+    {
+      "constraint_id": "supply_air_temperature_limits",
+      "cooling_supply_temp": "10°C to 18°C (typical 13°C)",
+      "heating_supply_temp": "30°C to 50°C (typical 40°C)",
+      "note": "Outside these ranges may cause comfort issues"
+    },
+    {
+      "constraint_id": "outdoor_air_minimum",
+      "rule": "Follow ASHRAE 62.1 ventilation standards",
+      "typical_office": "8-10 L/s per person",
+      "typical_residential": "0.35 ACH or 15 CFM per person"
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "energyplus_version": "25.2.0",
+    "created": "2025-11-21",
+    "source": "Extracted from EnergyPlus IDD, simulation errors, and best practices",
+    "total_dependencies": 24,
+    "critical_dependencies": 10,
+    "coverage": "VRF systems (HVACTemplate:System:VRF and HVACTemplate:Zone:VRF)"
+  }
+}

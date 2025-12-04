@@ -18,8 +18,8 @@ def main():
     # Initialize pipeline
     pipeline = HVACLLMPipeline()
     
-    # Define project
-    base_idf = "../data/base_idfs/building_with_zones.idf"
+    # Define project - use path relative to project root
+    base_idf = "data/base_idfs/building_with_zones.idf"
     zones = ["ZONE ONE"]  # Must match the exact zone name in the IDF
     
     # Optional: Natural language design request

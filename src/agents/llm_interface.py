@@ -1,26 +1,59 @@
 """
-Universal LLM Interface
+Universal LLM Interface with Singleton Pattern
 """
 
 import os
 import json
 from config import Config
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
+
 class UniversalLLM:
-    """Universal interface for LLM providers"""
+    """Universal interface for LLM providers (Singleton to prevent multiple model loads)"""
+    
+    _instance = None
+    _initialized = False
+    
+    def __new__(cls, provider=None):
+        """Ensure only one instance exists across all agents"""
+        if cls._instance is None:
+            cls._instance = super(UniversalLLM, cls).__new__(cls)
+        return cls._instance
     
     def __init__(self, provider=None):
-        self.provider = provider or Config.LLM_PROVIDER
+        """Initialize only once - subsequent calls reuse the same model"""
+        requested_provider = provider or Config.LLM_PROVIDER
+        
+        # If already initialized with a different provider, warn but keep existing
+        if UniversalLLM._initialized:
+            if hasattr(self, 'provider') and self.provider != requested_provider:
+                print(f"⚠ LLM already initialized with '{self.provider}', ignoring request for '{requested_provider}'")
+                print(f"  To switch providers, restart your Python session or call UniversalLLM.reset()")
+            else:
+                print("✓ Reusing existing LLM instance (no reload needed)")
+            return
+        
+        self.provider = requested_provider
         self.client = None
         
         if self.provider == "auto":
             self.provider = self._detect_provider()
         
+        print(f"✓ Initializing NEW LLM instance (provider: {self.provider})")
         self._initialize()
+        UniversalLLM._initialized = True
+    
+    @classmethod
+    def reset(cls):
+        """Reset singleton to allow re-initialization with different provider"""
+        cls._instance = None
+        cls._initialized = False
+        print("✓ LLM instance reset. Next call will create new instance.")
     
     def _detect_provider(self):
         """Auto-detect available provider"""
-        # Prefer Gemini if available, then Anthropic, then OpenAI
+        # Prefer Mistral (local fine-tuned), then Gemini if available, then Anthropic, then OpenAI
+        if self.provider == "mistral" or Config.LLM_PROVIDER == "mistral":
+            return "mistral"
         if Config.get_api_key("gemini"):
             return "gemini"
         if Config.get_api_key("anthropic"):
@@ -33,7 +66,78 @@ class UniversalLLM:
     
     def _initialize(self):
         """Initialize provider"""
-        if self.provider == "gemini":
+        if self.provider == "mistral":
+            try:
+                from transformers import AutoModelForCausalLM, AutoTokenizer
+                import torch
+                
+                model_path = Config.LLM_MODEL
+                print(f"✓ Loading fine-tuned Mistral model from {model_path}")
+                
+                # Load tokenizer
+                self.tokenizer = AutoTokenizer.from_pretrained(
+                    model_path,
+                    trust_remote_code=True
+                )
+                
+                # Determine if we can use GPU
+                use_gpu = torch.cuda.is_available()
+                
+                if use_gpu:
+                    # GPU: Try to use 8-bit quantization, fallback to FP16
+                    try:
+                        from transformers import BitsAndBytesConfig
+                        import bitsandbytes
+                        
+                        print("✓ Using 8-bit quantization for faster loading and reduced memory...")
+                        
+                        # Configure 8-bit quantization
+                        bnb_config = BitsAndBytesConfig(
+                            load_in_8bit=True,
+                            bnb_8bit_compute_dtype=torch.float16,
+                            bnb_8bit_use_double_quant=True,
+                        )
+                        
+                        self.model = AutoModelForCausalLM.from_pretrained(
+                            model_path,
+                            quantization_config=bnb_config,
+                            device_map="auto",
+                            trust_remote_code=True
+                        )
+                        self.device = "cuda"
+                        print(f"✓ Model loaded on GPU with 8-bit quantization")
+                    except (ImportError, Exception) as e:
+                        print(f"✓ Using FP16 precision on GPU (8-bit unavailable on Windows)")
+                        self.model = AutoModelForCausalLM.from_pretrained(
+                            model_path,
+                            dtype=torch.float16,
+                            device_map="auto",
+                            trust_remote_code=True,
+                            max_memory={0: "7GB"}  # Limit to available VRAM
+                        )
+                        self.device = "cuda"
+                        print(f"✓ Model loaded on GPU with FP16 (half precision)")
+                else:
+                    # CPU: Use FP32 (8-bit quantization not well supported on CPU)
+                    print("⚠ No GPU detected, loading in FP32 (this will be slower)...")
+                    self.model = AutoModelForCausalLM.from_pretrained(
+                        model_path,
+                        dtype=torch.float32,
+                        low_cpu_mem_usage=True,
+                        trust_remote_code=True
+                    )
+                    self.device = "cpu"
+                    self.model = self.model.to(self.device)
+                    print(f"✓ Using fine-tuned Mistral model on CPU")
+                
+                self.client = "mistral"  # Marker that mistral is loaded
+            except Exception as e:
+                print(f"⚠ Mistral model loading failed: {e}")
+                import traceback
+                traceback.print_exc()
+                print("⚠ Falling back to MOCK mode")
+                self.provider = "mock"
+        elif self.provider == "gemini":
             try:
                 # Attempt to import Google's generative AI client
                 # The package name may vary; many setups use `google.generativeai` or `googleai`.
@@ -54,7 +158,10 @@ class UniversalLLM:
         max_tokens = Config.LLM_MAX_TOKENS
        
         # Try primary provider first
-        response = self._generate_gemini(system_prompt, user_prompt, max_tokens)
+        if self.provider == "mistral":
+            response = self._generate_mistral(system_prompt, user_prompt, max_tokens)
+        else:
+            response = self._generate_gemini(system_prompt, user_prompt, max_tokens)
         return response or "************No response generated.*************"
     
     def _generate_gemini(self, system_prompt, user_prompt, max_tokens):
@@ -167,27 +274,43 @@ class UniversalLLM:
         except Exception as e:
             print(f"⚠ Gemini generation failed: {e}")
             return ""
-
-        """Sanitize prompts to avoid content filtering."""
-        # Replace potentially triggering terms
-        replacements = {
-            "EnergyPlus": "building simulation software",
-            "error": "issue",
-            "fix": "improve",
-            "problem": "challenge",
-            "failure": "unsuccessful result",
-            "danger": "concern",
-            "kill": "stop",
-            "attack": "approach",
-            "weapon": "tool",
-            "explosive": "rapid",
-            "bomb": "device"
-        }
-        
-        sanitized = prompt
-        for old, new in replacements.items():
-            sanitized = sanitized.replace(old, new)
-            sanitized = sanitized.replace(old.upper(), new.upper())
-            sanitized = sanitized.replace(old.lower(), new.lower())
-        
-        return sanitized
+    
+    def _generate_mistral(self, system_prompt, user_prompt, max_tokens):
+        """Generate using fine-tuned Mistral model"""
+        try:
+            import torch
+            
+            # Combine prompts in Mistral format
+            full_prompt = f"<s>[INST] {system_prompt}\n\n{user_prompt} [/INST]"
+            
+            print("✓ Generating with fine-tuned Mistral model...")
+            
+            # Tokenize input
+            inputs = self.tokenizer(full_prompt, return_tensors="pt").to(self.device)
+            
+            # Generate
+            with torch.no_grad():
+                outputs = self.model.generate(
+                    **inputs,
+                    max_new_tokens=max_tokens,
+                    temperature=Config.LLM_TEMPERATURE,
+                    do_sample=True,
+                    top_p=0.95,
+                    pad_token_id=self.tokenizer.eos_token_id
+                )
+            
+            # Decode output
+            response = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
+            
+            # Extract only the generated part (after [/INST])
+            if "[/INST]" in response:
+                response = response.split("[/INST]")[-1].strip()
+            
+            print("✓ Mistral generation complete")
+            return response
+            
+        except Exception as e:
+            print(f"⚠ Mistral generation failed: {e}")
+            import traceback
+            traceback.print_exc()
+            return ""
