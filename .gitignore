@@ -27,6 +27,8 @@ env.bak/
 venv.bak/
 pip-log.txt
 pip-delete-this-directory.txt
+*.venv.zip
+.venv.zip
 
 # Outputs
 outputs/simulations/*
@@ -51,3 +53,13 @@ secrets.txt
 # OS
 .DS_Store
 Thumbs.db
+
+# Vector Database (generated files)
+data/vector_db/*.sqlite3
+data/vector_db/**/data_level0.bin
+data/vector_db/**/length.bin
+data/vector_db/**/link_lists.bin
+data/vector_db/**/header.bin
+
+# Config duplicates
+config/hvac_requests.json

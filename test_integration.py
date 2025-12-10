@@ -42,8 +42,7 @@ try:
         # Test 1: Simple HVAC system generation
         response1 = llm_gemini.generate(
             system_prompt="You are an HVAC design assistant for EnergyPlus building simulations.",
-            user_prompt="Generate a simple VRF (Variable Refrigerant Flow) system configuration for 2 office zones: Office_Zone_1 and Office_Zone_2. Include thermostats and basic settings.",
-            max_tokens=300
+            user_prompt="Generate a simple VRF (Variable Refrigerant Flow) system configuration for 2 office zones: Office_Zone_1 and Office_Zone_2. Include thermostats and basic settings."
         )
         
         if response1:
