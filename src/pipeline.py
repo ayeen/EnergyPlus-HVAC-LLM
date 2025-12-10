@@ -24,13 +24,14 @@ class HVACLLMPipeline:
         self.quick_validator = QuickValidator()
         self.corrector = ErrorCorrector()
     
-    def run(self, base_idf, zones, output_name="pipeline_output", system_name="VRF_System_1", user_request=None, enable_quick_validation=None):
+    def run(self, base_idf, zones=None, output_name="pipeline_output", system_name="VRF_System_1", user_request=None, enable_quick_validation=None):
         """
-        Run complete pipeline.
+        Run complete pipeline with automatic building context extraction.
         
         Args:
             base_idf: Path to base IDF file
-            zones: List of zone names
+            zones: Optional list of zone names. If None, auto-detects all zones from IDF.
+                   If provided, validates zones exist and uses only those zones.
             output_name: Name for output files
             system_name: HVAC system name
             user_request: Optional natural language design request
@@ -51,10 +52,62 @@ class HVACLLMPipeline:
         print("HVAC-LLM PIPELINE")
         print("=" * 70)
         
+        # ========== NEW: Step 0 - Extract Building Context ==========
+        print("\n[0] Analyzing base IDF...")
+        base_idf_obj = self.handler.load(base_idf)
+        
+        # Validate base IDF
+        validation_issues = self.handler.validate_base_idf(base_idf_obj)
+        if validation_issues:
+            print("\n⚠ Base IDF validation warnings:")
+            for issue in validation_issues:
+                print(f"  {issue}")
+            print()
+        
+        # Auto-detect zones if not provided
+        zones_auto_detected = False
+        if zones is None:
+            zones = self.handler.get_zones(base_idf_obj)
+            zones_auto_detected = True
+            print(f"✓ Auto-detected {len(zones)} zones from IDF")
+            for i, zone in enumerate(zones, 1):
+                print(f"  {i}. {zone}")
+        else:
+            print(f"✓ Using provided zones: {', '.join(zones)}")
+            # Validate provided zones exist
+            try:
+                self.handler.validate_zones(base_idf_obj, zones)
+                print(f"✓ All {len(zones)} zones validated")
+            except ValueError as e:
+                print(f"\n{e}")
+                raise
+        
+        # Extract building metadata for context-aware generation
+        building_context = self.handler.extract_building_context(base_idf_obj)
+        
+        print(f"\n📊 Building Context:")
+        print(f"  • Zones: {building_context['num_zones']}")
+        if building_context['total_area'] > 0:
+            print(f"  • Total Floor Area: {building_context['total_area']:.1f} m²")
+        if building_context['total_volume'] > 0:
+            print(f"  • Total Volume: {building_context['total_volume']:.1f} m³")
+        print(f"  • Orientation: {building_context['orientation']}°")
+        print(f"  • Internal Loads: {'✓ Yes' if building_context['has_internal_loads'] else '✗ None'}")
+        if building_context['has_internal_loads']:
+            loads = []
+            if building_context['has_people']: loads.append("People")
+            if building_context['has_lights']: loads.append("Lights")
+            if building_context['has_equipment']: loads.append("Equipment")
+            print(f"    ({', '.join(loads)})")
+        print(f"  • Location: {building_context['weather_file']}")
+        # ========== END Building Context Extraction ==========
+        
         results = {
             "timestamp": datetime.now().isoformat(),
             "base_idf": base_idf,
             "zones": zones,
+            "zones_auto_detected": zones_auto_detected,
+            "building_context": building_context,
             "user_request": user_request,
             "quick_validation_enabled": enable_quick_validation,
             "steps": []
@@ -64,9 +117,17 @@ class HVACLLMPipeline:
         print("\n[1] Generating HVAC...")
         if user_request:
             print(f"User Request: {user_request}")
-        hvac_response = self.generator.generate_vrf_system(zones, system_name=system_name, user_request=user_request)
+        
+        # Pass building context to generator for context-aware generation
+        hvac_response = self.generator.generate_vrf_system(
+            zones, 
+            system_name=system_name, 
+            user_request=user_request,
+            building_context=building_context
+        )
         
         if not hvac_response or hvac_response.strip() == "":
+            print("❌ Error: Empty HVAC configuration generated")
             print("❌ Error: Empty HVAC configuration generated")
             results["final_status"] = "GENERATION_FAILED"
             results["error"] = "Empty HVAC response"

@@ -1,38 +1,36 @@
 {
+  "_comment": "HVAC Request Templates - zones can be null for auto-detection or array for manual selection",
   "vrf_single_zone": {
     "prompt": "Design a VRF HVAC system for efficient heating and cooling",
-    "zones": [
-      "ZONE ONE"
-    ],
-    "base_idf": "../data/base_idfs/building_with_zones.idf"
+    "zones": null,
+    "base_idf": "../data/base_idfs/building_with_zones.idf",
+    "note": "zones=null means auto-detect all zones from IDF"
   },
   "vrf_heat_recovery": {
     "prompt": "Design a VRF system with heat recovery for simultaneous heating and cooling in different zones",
-    "zones": [
-      "ZONE ONE"
-    ],
+    "zones": null,
     "base_idf": "../data/base_idfs/building_with_zones.idf"
   },
   "vrf_multi_zone_office": {
     "prompt": "Design a VRF system to serve multiple office zones with independent temperature control",
-    "zones": [
-      "ZONE ONE"
-    ],
-    "base_idf": "../data/base_idfs/building_with_zones.idf",
-    "note": "For actual multi-zone, create a multi-zone base IDF first"
+    "zones": null,
+    "base_idf": "../data/base_idfs/4ZoneWithShading_Simple_2.idf",
+    "note": "Auto-detects all 4 zones from the IDF file"
+  },
+  "vrf_selective_zones": {
+    "prompt": "Design a VRF system for office spaces only, exclude storage areas",
+    "zones": ["SPACE1-1", "SPACE2-1"],
+    "base_idf": "../data/base_idfs/4ZoneWithShading_Simple_2.idf",
+    "note": "Manual zone selection - only specified zones get HVAC"
   },
   "vrf_high_efficiency": {
     "prompt": "Design a high-efficiency VRF system with advanced control strategies for energy savings",
-    "zones": [
-      "ZONE ONE"
-    ],
+    "zones": null,
     "base_idf": "../data/base_idfs/building_with_zones.idf"
   },
   "vrf_cold_climate": {
     "prompt": "Design a VRF system optimized for cold climate operation with enhanced heating performance",
-    "zones": [
-      "ZONE ONE"
-    ],
+    "zones": null,
     "base_idf": "../data/base_idfs/building_with_zones.idf"
   }
 }

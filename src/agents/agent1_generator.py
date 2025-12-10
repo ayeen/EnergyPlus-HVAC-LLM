@@ -24,15 +24,16 @@ class HVACGenerator:
             print(f"⚠ RAG unavailable for Agent 1: {e}")
             self.rag_enabled = False
     
-    def generate_vrf_system(self, zones, system_name="VRF_System_1", user_request=None):
+    def generate_vrf_system(self, zones, system_name="VRF_System_1", user_request=None, building_context=None):
         """
-        Generate VRF system for zones with RAG-enhanced context.
+        Generate VRF system for zones with RAG-enhanced and building context.
         
         Args:
             zones: List of zone names
             system_name: Name for the VRF system (default: "VRF_System_1")
             user_request: Optional natural language design request from user
                          (e.g., "Design a VRF system with heat recovery")
+            building_context: Optional dict with building metadata (area, orientation, loads, etc.)
         """
         
         zone_list = ", ".join(zones)
@@ -78,12 +79,13 @@ class HVACGenerator:
             
             print("  ✓ RAG context prepared\n")
         
-        # Load prompt templates and merge with user request if provided
+        # Load prompt templates and merge with user request and building context
         [system_prompt, user_prompt] = self._create_energyplus_template_prompt(
             zone_list, 
             system_name, 
             user_request,
-            rag_context
+            rag_context,
+            building_context
         )
         
         # print(f"Called LLM to generate VRF system for zones: {zone_list}")
@@ -105,16 +107,17 @@ class HVACGenerator:
             print(f"✗ Prompt got empty response")
             return ""
     
-    def _create_energyplus_template_prompt(self, zone_list, system_name, user_request=None, rag_context=None):
+    def _create_energyplus_template_prompt(self, zone_list, system_name, user_request=None, rag_context=None, building_context=None):
         """
-        EnergyPlus HVACTemplate-focused approach with RAG enhancement.
-        Merges user's natural language request with technical template and RAG context.
+        EnergyPlus HVACTemplate-focused approach with RAG and building context enhancement.
+        Merges user's natural language request with technical template, RAG context, and building metadata.
         
         Args:
             zone_list: Comma-separated zone names
             system_name: HVAC system name
             user_request: Optional natural language design request
             rag_context: Optional RAG-retrieved context (user examples, dependencies, field specs)
+            building_context: Optional building metadata (area, orientation, loads, etc.)
         
         Returns:
             tuple: (system_prompt, user_prompt)
@@ -138,6 +141,30 @@ class HVACGenerator:
                     if 'Fix Strategy:' in content:
                         fix_strategy = content.split('Fix Strategy:')[1].split('\n')[0]
                         system_prompt += f"  Fix Strategy: {fix_strategy}\n"
+        
+        # Add building context to system prompt for sizing guidance
+        if building_context:
+            system_prompt += "\n\n**BUILDING CONTEXT (for sizing and configuration):**\n"
+            system_prompt += f"- Number of Zones: {building_context['num_zones']}\n"
+            system_prompt += f"- Zone Names: {', '.join(building_context['zone_names'])}\n"
+            if building_context['total_area'] > 0:
+                system_prompt += f"- Total Floor Area: {building_context['total_area']:.1f} m²\n"
+                system_prompt += f"  💡 Use this for capacity estimation (typical: 100-150 W/m² cooling load)\n"
+            if building_context['total_volume'] > 0:
+                system_prompt += f"- Total Volume: {building_context['total_volume']:.1f} m³\n"
+            system_prompt += f"- Building Orientation: {building_context['orientation']}°\n"
+            if building_context['orientation'] != 0:
+                system_prompt += f"  💡 Non-zero orientation affects solar heat gain\n"
+            system_prompt += f"- Internal Loads Present: {'✓ Yes' if building_context['has_internal_loads'] else '✗ No'}\n"
+            if building_context['has_internal_loads']:
+                loads = []
+                if building_context['has_people']: loads.append("People")
+                if building_context['has_lights']: loads.append("Lights")  
+                if building_context['has_equipment']: loads.append("Equipment")
+                system_prompt += f"  ({', '.join(loads)})\n"
+            else:
+                system_prompt += "  ⚠️ No internal loads may result in undersized HVAC\n"
+            system_prompt += f"- Location: {building_context['weather_file']}\n"
         
         # Fill technical template with actual values
         technical_template = prompt_data[0]["user_prompt"].format(

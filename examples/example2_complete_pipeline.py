@@ -9,10 +9,10 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.pipeline import HVACLLMPipeline
 
 def main():
-    """Run complete pipeline"""
+    """Run complete pipeline with automatic zone detection"""
     
     print("=" * 70)
-    print("EXAMPLE 2: Complete HVAC-LLM Pipeline")
+    print("EXAMPLE 2: Complete HVAC-LLM Pipeline (Auto-Detection)")
     print("=" * 70)
     
     # Initialize pipeline
@@ -20,23 +20,26 @@ def main():
     
     # Define project - use path relative to project root
     base_idf = "data/base_idfs/building_with_zones.idf"
-    zones = ["ZONE ONE"]  # Must match the exact zone name in the IDF
+    
+    # NEW: zones parameter is now OPTIONAL!
+    # If zones=None (or omitted), pipeline auto-detects all zones from IDF
+    # If zones=["Zone1", "Zone2"], only those zones are used
     
     # Optional: Natural language design request
     user_request = "Design a VRF HVAC system with heat recovery for efficient heating and cooling"
     
     print(f"\nBase IDF: {base_idf}")
-    print(f"Zones: {', '.join(zones)}")
+    print(f"Zone Selection: Auto-detect from IDF")
     if user_request:
         print(f"User Request: {user_request}")
     print("\nStarting pipeline...")
     print("-" * 70)
     
-    # Run pipeline
-    # NOTE: You need to create the base IDF file first
+    # Run pipeline with AUTO-DETECTION (recommended)
     results = pipeline.run(
         base_idf=base_idf,
-        zones=zones,
+        # zones=None,  # Auto-detect all zones (default)
+        # zones=["ZONE ONE"],  # Or specify specific zones
         output_name="example2_complete",
         system_name="VRF_System_1",
         user_request=user_request,  # Pass the user's design request
