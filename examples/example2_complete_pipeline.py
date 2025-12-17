@@ -19,7 +19,7 @@ def main():
     pipeline = HVACLLMPipeline()
     
     # Define project - use path relative to project root
-    base_idf = "data/base_idfs/building_with_zones.idf"
+    base_idf = "data/base_idfs/4ZoneWithShading_Simple_2_NoHVAC.idf"
     
     # NEW: zones parameter is now OPTIONAL!
     # If zones=None (or omitted), pipeline auto-detects all zones from IDF

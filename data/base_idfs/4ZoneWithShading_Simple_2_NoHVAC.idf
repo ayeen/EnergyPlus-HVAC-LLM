@@ -1,11 +1,11 @@
-!- Windows Line endings 
+!- Linux Line endings 
 
 Version,
     25.1;                     !- Version Identifier
 
 SimulationControl,
-    Yes,                      !- Do Zone Sizing Calculation
-    Yes,                      !- Do System Sizing Calculation
+    No,                       !- Do Zone Sizing Calculation
+    No,                       !- Do System Sizing Calculation
     No,                       !- Do Plant Sizing Calculation
     Yes,                      !- Run Simulation for Sizing Periods
     No,                       !- Run Simulation for Weather File Run Periods
@@ -146,44 +146,6 @@ ScheduleTypeLimits,
     0,                        !- Lower Limit Value
     4,                        !- Upper Limit Value
     DISCRETE;                 !- Numeric Type
-
-SCHEDULE:COMPACT,
-    ZONE CONTROL TYPE SCHEDULE,    !- Name
-    CONTROLTYPE,              !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00,             !- Field 3
-    4;                        !- Field 4
-
-SCHEDULE:COMPACT,
-    ZONE HEATING SETPOINTS,    !- Name
-    TEMPERATURE,              !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: Weekdays WinterDesignDay,    !- Field 2
-    Until: 7:00,              !- Field 3
-    15.60,                    !- Field 4
-    Until: 17:00,             !- Field 5
-    19.40,                    !- Field 6
-    Until: 24:00,             !- Field 7
-    15.60,                    !- Field 8
-    For: AllOtherDays,        !- Field 9
-    Until: 24:00,             !- Field 10
-    15.60;                    !- Field 11
-
-SCHEDULE:COMPACT,
-    ZONE COOLING SETPOINTS,    !- Name
-    TEMPERATURE,              !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: Weekdays SummerDesignDay,    !- Field 2
-    Until: 7:00,              !- Field 3
-    100.00,                   !- Field 4
-    Until: 17:00,             !- Field 5
-    26.10,                    !- Field 6
-    Until: 24:00,             !- Field 7
-    100.00,                   !- Field 8
-    For: AllOtherDays,        !- Field 9
-    Until: 24:00,             !- Field 10
-    100.00;                   !- Field 11
 
 Material,
     A2 - 4 IN DENSE FACE BRICK,    !- Name
@@ -926,54 +888,6 @@ Shading:Fin:Projection,
     0.1,                      !- Right Distance Below Bottom of Window
     90,                       !- Right Tilt Angle from WindowDoor
     0.6;                      !- Right Depth as Fraction of WindowDoor Width
-
-ZoneControl:Thermostat,
-    ZONE 1 CONTROLS,          !- Name
-    ZONE 1,                   !- Zone or ZoneList Name
-    Zone Control Type Schedule,    !- Control Type Schedule Name
-    ThermostatSetpoint:DualSetpoint,    !- Control 1 Object Type
-    ZONE 1 SETPOINTS;         !- Control 1 Name
-
-ZoneControl:Thermostat,
-    ZONE 2 CONTROLS,          !- Name
-    ZONE 2,                   !- Zone or ZoneList Name
-    Zone Control Type Schedule,    !- Control Type Schedule Name
-    ThermostatSetpoint:DualSetpoint,    !- Control 1 Object Type
-    ZONE 2 SETPOINTS;         !- Control 1 Name
-
-ZoneControl:Thermostat,
-    ZONE 3 CONTROLS,          !- Name
-    ZONE 3,                   !- Zone or ZoneList Name
-    Zone Control Type Schedule,    !- Control Type Schedule Name
-    ThermostatSetpoint:DualSetpoint,    !- Control 1 Object Type
-    ZONE 3 SETPOINTS;         !- Control 1 Name
-
-ZoneControl:Thermostat,
-    ZONE 4 CONTROLS,          !- Name
-    ZONE 4,                   !- Zone or ZoneList Name
-    Zone Control Type Schedule,    !- Control Type Schedule Name
-    ThermostatSetpoint:DualSetpoint,    !- Control 1 Object Type
-    ZONE 4 SETPOINTS;         !- Control 1 Name
-
-ThermostatSetpoint:DualSetpoint,
-    ZONE 1 SETPOINTS,         !- Name
-    ZONE Heating Setpoints,    !- Heating Setpoint Temperature Schedule Name
-    ZONE Cooling Setpoints;    !- Cooling Setpoint Temperature Schedule Name
-
-ThermostatSetpoint:DualSetpoint,
-    ZONE 2 SETPOINTS,         !- Name
-    ZONE Heating Setpoints,    !- Heating Setpoint Temperature Schedule Name
-    ZONE Cooling Setpoints;    !- Cooling Setpoint Temperature Schedule Name
-
-ThermostatSetpoint:DualSetpoint,
-    ZONE 3 SETPOINTS,         !- Name
-    ZONE Heating Setpoints,    !- Heating Setpoint Temperature Schedule Name
-    ZONE Cooling Setpoints;    !- Cooling Setpoint Temperature Schedule Name
-
-ThermostatSetpoint:DualSetpoint,
-    ZONE 4 SETPOINTS,         !- Name
-    ZONE Heating Setpoints,    !- Heating Setpoint Temperature Schedule Name
-    ZONE Cooling Setpoints;    !- Cooling Setpoint Temperature Schedule Name
 
 NodeList,
     ZONE 1 INLETS,            !- Name

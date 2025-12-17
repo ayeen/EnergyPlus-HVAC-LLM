@@ -1,0 +1,75 @@
+{
+  "comparison_timestamp": "20251217_143915",
+  "scenario_1": {
+    "name": "Scenario 1: Gemini Only (No RAG)",
+    "description": "Gemini API without fine-tuning or Retrieval-Augmented Generation",
+    "success_rate": 0.0,
+    "avg_time_seconds": 43.336714029312134,
+    "avg_correction_iterations": 0.0,
+    "total_runs": 1,
+    "results": [
+      {
+        "scenario": "Scenario 1: Gemini Only (No RAG)",
+        "test_case": "single_zone_office",
+        "prompt": "Design a VRF HVAC system for efficient heating and cooling",
+        "zones": [
+          "Zone1"
+        ],
+        "llm_provider": "gemini",
+        "generation_success": true,
+        "validation_success": false,
+        "simulation_success": false,
+        "generation_time_seconds": 5.602836608886719e-05,
+        "total_time_seconds": 43.336714029312134,
+        "correction_iterations": 0,
+        "hvac_objects_generated": 0,
+        "errors_encountered": [],
+        "warnings_encountered": [],
+        "idd_issues_found": 0,
+        "idd_issues_auto_fixed": 0,
+        "output_idf_path": null,
+        "timestamp": "2025-12-17T14:39:09.084829"
+      }
+    ]
+  },
+  "scenario_2": {
+    "name": "Scenario 2: Mistral + RAG",
+    "description": "Fine-tuned Mistral 7B with Retrieval-Augmented Generation",
+    "success_rate": 0.0,
+    "avg_time_seconds": 6.289791584014893,
+    "avg_correction_iterations": 0.0,
+    "total_runs": 1,
+    "results": [
+      {
+        "scenario": "Scenario 2: Mistral + RAG",
+        "test_case": "single_zone_office",
+        "prompt": "Design a VRF HVAC system for efficient heating and cooling",
+        "zones": [
+          "Zone1"
+        ],
+        "llm_provider": "mistral",
+        "generation_success": false,
+        "validation_success": false,
+        "simulation_success": false,
+        "generation_time_seconds": 6.28979229927063,
+        "total_time_seconds": 6.289791584014893,
+        "correction_iterations": 0,
+        "hvac_objects_generated": 0,
+        "errors_encountered": [
+          "[Errno 32] Broken pipe"
+        ],
+        "warnings_encountered": [],
+        "idd_issues_found": 0,
+        "idd_issues_auto_fixed": 0,
+        "output_idf_path": null,
+        "timestamp": "2025-12-17T14:39:15.374669"
+      }
+    ]
+  },
+  "comparison": {
+    "success_rate_improvement_percent": 0.0,
+    "time_improvement_percent": 85.48622865185257,
+    "iteration_reduction": 0.0,
+    "rag_benefit": "neutral"
+  }
+}

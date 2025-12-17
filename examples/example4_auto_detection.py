@@ -30,7 +30,7 @@ def main():
     print("MODE 1: Full Auto-Detection (All zones, auto-extracted metadata)")
     print("=" * 70)
     
-    base_idf = "data/base_idfs/building_with_zones.idf"
+    base_idf = "../data/base_idfs/building_with_zones.idf"
     user_request = "Design a high-efficiency VRF system with heat recovery for cold climate"
     
     print(f"\nBase IDF: {base_idf}")
@@ -63,7 +63,7 @@ def main():
     print("MODE 2: Selective Zone Override (Manual zone selection)")
     print("=" * 70)
     
-    base_idf = "data/base_idfs/4ZoneWithShading_Simple_2.idf"
+    base_idf = "../data/base_idfs/4ZoneWithShading_Simple_2.idf"
     selected_zones = ["SPACE1-1", "SPACE2-1"]  # Only these zones
     user_request = "Design VRF for office spaces only, exclude storage and mechanical"
     
@@ -98,13 +98,13 @@ def main():
     
     batch_configs = [
         {
-            "base_idf": "data/base_idfs/building_with_zones.idf",
+            "base_idf": "../data/base_idfs/building_with_zones.idf",
             "zones": None,  # Auto-detect
             "request": "Standard efficiency VRF",
             "output": "batch_building1"
         },
         {
-            "base_idf": "data/base_idfs/4ZoneWithShading_Simple_2.idf",
+            "base_idf": "../data/base_idfs/4ZoneWithShading_Simple_2.idf",
             "zones": None,  # Auto-detect
             "request": "High-efficiency VRF with heat recovery",
             "output": "batch_building2"

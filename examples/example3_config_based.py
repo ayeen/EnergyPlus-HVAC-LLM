@@ -28,7 +28,11 @@ def run_single_request(request_id: str, config: dict):
     print(f"Processing Request: {request_id}")
     print("=" * 70)
     print(f"User Prompt: {config['prompt']}")
-    print(f"Zones: {', '.join(config['zones'])}")
+    zones = config.get('zones')
+    if zones:
+        print(f"Zones: {', '.join(zones)}")
+    else:
+        print(f"Zones: (will auto-detect from IDF)")
     print(f"Base IDF: {config.get('base_idf', 'default')}")
     print("=" * 70)
     
@@ -44,12 +48,13 @@ def run_single_request(request_id: str, config: dict):
     # Run pipeline with configuration
     # NOTE: config['prompt'] is the user's natural language design request
     # The system will merge it with the technical template from energyplus_vrf_prompt.json
+    # If zones is None, pipeline will auto-detect from base IDF
     result = pipeline.run(
         base_idf=base_idf_full,
-        zones=config['zones'],
+        zones=zones,  # Can be None for auto-detection
         output_name=request_id,
         user_request=config['prompt'],  # User's natural language request
-        enable_quick_validation=True  # Enable LLM validation
+        enable_quick_validation=False  # Enable LLM validation
     )
     
     # Print results
@@ -88,7 +93,7 @@ def create_example_config():
             "base_idf": "../data/base_idfs/building_with_zones.idf",
             "note": "For actual multi-zone, create a multi-zone base IDF first"
         },
-        "vrf_high_efficiency": {
+        "vrf_high_efficiency": {use_rag
             "prompt": "Design a high-efficiency VRF system with advanced control strategies for energy savings",
             "zones": ["ZONE ONE"],
             "base_idf": "../data/base_idfs/building_with_zones.idf"
@@ -137,7 +142,11 @@ def main():
     for req_id, config in requests.items():
         print(f"  {req_id}:")
         print(f"    Prompt: {config['prompt']}")
-        print(f"    Zones: {', '.join(config['zones'])}")
+        zones = config.get('zones')
+        if zones:
+            print(f"    Zones: {', '.join(zones)}")
+        else:
+            print(f"    Zones: (auto-detect from IDF)")
     print("-" * 70)
     
     # Get user selection

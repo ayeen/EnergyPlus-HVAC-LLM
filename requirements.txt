@@ -10,7 +10,8 @@ google-generativeai>=0.2.0
 transformers>=4.36.0
 torch>=2.0.0
 accelerate>=0.25.0
-# bitsandbytes>=0.41.0  # For 8-bit quantization (Linux/WSL only, limited Windows support)
+peft>=0.7.0  # For LoRA fine-tuned models
+bitsandbytes>=0.41.0  # For 4-bit quantization (Linux/WSL, GPU required)
 
 # Utilities
 python-dateutil>=2.8.0

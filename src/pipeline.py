@@ -16,15 +16,33 @@ from src.agents.agent3_corrector import ErrorCorrector
 class HVACLLMPipeline:
     """Complete HVAC-LLM pipeline"""
     
-    def __init__(self):
+    def __init__(self, use_rag: bool = None, llm_provider: str = None):
+        """
+        Initialize the HVAC-LLM pipeline.
+        
+        Args:
+            use_rag: Whether to enable RAG (Retrieval-Augmented Generation).
+                    - None (default): Use config setting (Config.USE_RAG)
+                    - True: Scenario 2 - LLM + RAG (enhanced with knowledge base)
+                    - False: Scenario 1 - LLM only (no RAG enhancement)
+            llm_provider: LLM provider to use. Options:
+                    - None (default): Use config setting (Config.LLM_PROVIDER)
+                    - "gemini": Use Google Gemini API
+                    - "mistral": Use fine-tuned Mistral model
+                    - "openai": Use OpenAI API
+                    - "anthropic": Use Anthropic Claude API
+        """
+        # Use Config setting if not explicitly provided
+        self.use_rag = use_rag if use_rag is not None else Config.USE_RAG
+        self.llm_provider = llm_provider
         self.handler = IDFHandler()
         self.simulator = EnergyPlusSimulator()
         self.validator = IDFValidator()
-        self.generator = HVACGenerator()
+        self.generator = HVACGenerator(use_rag=self.use_rag, llm_provider=llm_provider)
         self.quick_validator = QuickValidator()
-        self.corrector = ErrorCorrector()
+        self.corrector = ErrorCorrector(use_rag=self.use_rag, llm_provider=llm_provider)
     
-    def run(self, base_idf, zones=None, output_name="pipeline_output", system_name="VRF_System_1", user_request=None, enable_quick_validation=None):
+    def run(self, base_idf, zones=None, output_name="pipeline_output", system_name="VRF_System_1", user_request=None, enable_quick_validation=None, check_idd_compliance=True, auto_fix_compliance=True):
         """
         Run complete pipeline with automatic building context extraction.
         
@@ -37,6 +55,8 @@ class HVACLLMPipeline:
             user_request: Optional natural language design request
                          (e.g., "Design a VRF system with heat recovery")
             enable_quick_validation: Enable LLM pre-validation before simulation (default: True)
+            check_idd_compliance: Check base IDF for IDD compliance issues (default: True)
+            auto_fix_compliance: Automatically fix detected compliance issues (default: True)
         """
         
         # Convert relative path to absolute
@@ -55,6 +75,41 @@ class HVACLLMPipeline:
         # ========== NEW: Step 0 - Extract Building Context ==========
         print("\n[0] Analyzing base IDF...")
         base_idf_obj = self.handler.load(base_idf)
+        
+        # ========== NEW: IDD Compliance Check ==========
+        compliance_result = {'fixes_applied': [], 'compliant': True}  # Default for when check is disabled
+        if check_idd_compliance:
+            print("\n[0.1] Checking IDD compliance...")
+            compliance_result = self.handler.check_idd_compliance(base_idf_obj, auto_fix=auto_fix_compliance)
+            
+            if not compliance_result['compliant'] and not auto_fix_compliance:
+                # If not compliant and not auto-fixing, print report and fail
+                self.handler.print_compliance_report(compliance_result)
+                results = {
+                    "timestamp": datetime.now().isoformat(),
+                    "base_idf": base_idf,
+                    "final_status": "IDD_COMPLIANCE_FAILED",
+                    "compliance_report": compliance_result,
+                    "error": "Base IDF has IDD compliance issues. Set auto_fix_compliance=True to auto-fix."
+                }
+                return results
+            elif compliance_result['fixes_applied']:
+                # Fixes were applied
+                print(f"✓ IDD compliance check complete")
+                print(f"  🔧 Auto-fixed {len(compliance_result['fixes_applied'])} issue(s)")
+                for fix in compliance_result['fixes_applied']:
+                    print(f"     - {fix}")
+            elif compliance_result['compliant']:
+                print("✓ Base IDF is IDD-compliant")
+            
+            if compliance_result['warnings']:
+                for w in compliance_result['warnings']:
+                    print(f"  ⚠ {w}")
+        # ========== END IDD Compliance Check ==========
+        
+        # Enable sizing for autosizing HVAC components
+        if self.handler.enable_sizing(base_idf_obj):
+            print("✓ Enabled zone/system sizing for HVAC autosizing")
         
         # Validate base IDF
         validation_issues = self.handler.validate_base_idf(base_idf_obj)
@@ -110,6 +165,8 @@ class HVACLLMPipeline:
             "building_context": building_context,
             "user_request": user_request,
             "quick_validation_enabled": enable_quick_validation,
+            "idd_compliance_checked": check_idd_compliance,
+            "idd_fixes_applied": compliance_result.get('fixes_applied', []) if check_idd_compliance else [],
             "steps": []
         }
         
@@ -127,7 +184,6 @@ class HVACLLMPipeline:
         )
         
         if not hvac_response or hvac_response.strip() == "":
-            print("❌ Error: Empty HVAC configuration generated")
             print("❌ Error: Empty HVAC configuration generated")
             results["final_status"] = "GENERATION_FAILED"
             results["error"] = "Empty HVAC response"
@@ -257,8 +313,12 @@ class HVACLLMPipeline:
         hvac_idf = os.path.join(Config.OUTPUT_DIR, "generated_idfs", f"{output_name}_hvac.idf")
         os.makedirs(os.path.dirname(hvac_idf), exist_ok=True)
         
-        # Manual approach: combine base IDF and HVAC response with clear section marker
-        with open(base_idf, 'r') as f:
+        # Save the modified base IDF (with sizing enabled) to a temp file first
+        temp_base_idf = os.path.join(Config.OUTPUT_DIR, "generated_idfs", f"{output_name}_temp.idf")
+        base_idf_obj.saveas(temp_base_idf)
+        
+        # Manual approach: combine modified base IDF and HVAC response with clear section marker
+        with open(temp_base_idf, 'r') as f:
             base_content = f.read()
         
         # Add clear HVAC section header
@@ -274,6 +334,20 @@ class HVACLLMPipeline:
 """
         # step 1.6: Combine base IDF and HVAC section
         complete_idf = base_content.rstrip() + "\n" + hvac_section_header + hvac_response.strip() + "\n"
+        
+        # DEBUG: Final check before writing file
+        if 'Baseboard Heating Type;' in complete_idf:
+            print("  ❌ DEBUG: Problem STILL in complete_idf before write!")
+            # More detailed debug
+            if 'Baseboard Heating Type;' in hvac_response:
+                print("    ↳ Problem is in hvac_response")
+            if 'Baseboard Heating Type;' in base_content:
+                print("    ↳ Problem is in base_content")
+            if 'Baseboard Heating Type;' in hvac_section_header:
+                print("    ↳ Problem is in hvac_section_header")
+        else:
+            print("  ✓ DEBUG: complete_idf is clean before write")
+            
         with open(hvac_idf, 'w') as f:
             f.write(complete_idf)
         # Count HVAC objects
@@ -506,7 +580,6 @@ class HVACLLMPipeline:
             print(f"\n🎉 SUCCESS! Use this file:")
             print(f"   {final_output}")
         print("=" * 70)
-        
         return results
 
 def main():

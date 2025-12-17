@@ -1,0 +1,115 @@
+{
+  "comparison_timestamp": "20251217_142117",
+  "scenario_1": {
+    "name": "Scenario 1: LLM Only (No RAG)",
+    "description": "Fine-tuned Mistral 7B without Retrieval-Augmented Generation",
+    "success_rate": 1.0,
+    "avg_time_seconds": 44.67782187461853,
+    "avg_correction_iterations": 0.0,
+    "total_runs": 2,
+    "results": [
+      {
+        "scenario": "Scenario 1: LLM Only (No RAG)",
+        "test_case": "single_zone_office",
+        "prompt": "Design a VRF HVAC system for efficient heating and cooling",
+        "zones": [
+          "Zone1"
+        ],
+        "generation_success": true,
+        "validation_success": false,
+        "simulation_success": true,
+        "generation_time_seconds": 13.473047494888306,
+        "total_time_seconds": 51.37368941307068,
+        "correction_iterations": 0,
+        "hvac_objects_generated": 0,
+        "errors_encountered": [],
+        "warnings_encountered": [],
+        "idd_issues_found": 0,
+        "idd_issues_auto_fixed": 0,
+        "output_idf_path": null,
+        "timestamp": "2025-12-17T14:19:21.566949"
+      },
+      {
+        "scenario": "Scenario 1: LLM Only (No RAG)",
+        "test_case": "two_zone_building",
+        "prompt": "Design a VRF HVAC system for efficient heating and cooling for a two-zone building",
+        "zones": [
+          "Zone1",
+          "Zone2"
+        ],
+        "generation_success": true,
+        "validation_success": false,
+        "simulation_success": true,
+        "generation_time_seconds": 0.00013065338134765625,
+        "total_time_seconds": 37.98195433616638,
+        "correction_iterations": 0,
+        "hvac_objects_generated": 0,
+        "errors_encountered": [],
+        "warnings_encountered": [],
+        "idd_issues_found": 0,
+        "idd_issues_auto_fixed": 0,
+        "output_idf_path": null,
+        "timestamp": "2025-12-17T14:20:40.687031"
+      }
+    ]
+  },
+  "scenario_2": {
+    "name": "Scenario 2: LLM + RAG",
+    "description": "Fine-tuned Mistral 7B with Retrieval-Augmented Generation",
+    "success_rate": 1.0,
+    "avg_time_seconds": 39.066315054893494,
+    "avg_correction_iterations": 0.0,
+    "total_runs": 2,
+    "results": [
+      {
+        "scenario": "Scenario 2: LLM + RAG",
+        "test_case": "single_zone_office",
+        "prompt": "Design a VRF HVAC system for efficient heating and cooling",
+        "zones": [
+          "Zone1"
+        ],
+        "generation_success": true,
+        "validation_success": false,
+        "simulation_success": true,
+        "generation_time_seconds": 3.0742194652557373,
+        "total_time_seconds": 41.13779091835022,
+        "correction_iterations": 0,
+        "hvac_objects_generated": 0,
+        "errors_encountered": [],
+        "warnings_encountered": [],
+        "idd_issues_found": 0,
+        "idd_issues_auto_fixed": 0,
+        "output_idf_path": null,
+        "timestamp": "2025-12-17T14:20:02.704863"
+      },
+      {
+        "scenario": "Scenario 2: LLM + RAG",
+        "test_case": "two_zone_building",
+        "prompt": "Design a VRF HVAC system for efficient heating and cooling for a two-zone building",
+        "zones": [
+          "Zone1",
+          "Zone2"
+        ],
+        "generation_success": true,
+        "validation_success": false,
+        "simulation_success": true,
+        "generation_time_seconds": 0.005620002746582031,
+        "total_time_seconds": 36.99483919143677,
+        "correction_iterations": 0,
+        "hvac_objects_generated": 0,
+        "errors_encountered": [],
+        "warnings_encountered": [],
+        "idd_issues_found": 0,
+        "idd_issues_auto_fixed": 0,
+        "output_idf_path": null,
+        "timestamp": "2025-12-17T14:21:17.681942"
+      }
+    ]
+  },
+  "comparison": {
+    "success_rate_improvement_percent": 0.0,
+    "time_improvement_percent": 12.559938207088232,
+    "iteration_reduction": 0.0,
+    "rag_benefit": "neutral"
+  }
+}

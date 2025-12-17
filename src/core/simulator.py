@@ -14,10 +14,12 @@ class EnergyPlusSimulator:
         self.energyplus_exe = Config.ENERGYPLUS_EXE
         self.weather_file = Config.WEATHER_FILE
         self.idd_file = Config.IDD_FILE
-        # ExpandObjects.exe is in the same directory as EnergyPlus.exe
+        # ExpandObjects executable is in the same directory as EnergyPlus
+        # On Windows it's ExpandObjects.exe, on Linux/Mac it's ExpandObjects
+        expand_name = "ExpandObjects.exe" if os.name == 'nt' else "ExpandObjects"
         self.expand_objects_exe = os.path.join(
             os.path.dirname(self.energyplus_exe),
-            "ExpandObjects.exe"
+            expand_name
         )
     
     def run(self, idf_path, output_dir):
@@ -65,9 +67,23 @@ class EnergyPlusSimulator:
             return self._parse_results(output_dir)
             
         except subprocess.TimeoutExpired:
-            return {"success": False, "error": "Timeout"}
+            return {
+                "success": False, 
+                "error": "Timeout",
+                "error_count": 0,
+                "severe_errors": [],
+                "fatal_errors": [],
+                "warnings": []
+            }
         except Exception as e:
-            return {"success": False, "error": str(e)}
+            return {
+                "success": False, 
+                "error": str(e),
+                "error_count": 0,
+                "severe_errors": [],
+                "fatal_errors": [],
+                "warnings": []
+            }
         finally:
             os.chdir(original_dir)
     
@@ -99,13 +115,24 @@ class EnergyPlusSimulator:
             if not os.path.exists("expanded.idf"):
                 return {
                     "success": False,
-                    "error": f"ExpandObjects failed to create expanded.idf: {result.stderr}"
+                    "error": f"ExpandObjects failed to create expanded.idf: {result.stderr}",
+                    "error_count": 1,
+                    "severe_errors": [f"ExpandObjects failed: {result.stderr}"],
+                    "fatal_errors": [],
+                    "warnings": []
                 }
             
             return {"success": True}
             
         except Exception as e:
-            return {"success": False, "error": f"ExpandObjects error: {str(e)}"}
+            return {
+                "success": False, 
+                "error": f"ExpandObjects error: {str(e)}",
+                "error_count": 1,
+                "severe_errors": [f"ExpandObjects error: {str(e)}"],
+                "fatal_errors": [],
+                "warnings": []
+            }
     
     def _parse_results(self, output_dir):
         """Parse simulation results"""

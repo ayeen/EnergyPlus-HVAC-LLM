@@ -11,17 +11,35 @@ import re
 class ErrorCorrector:
     """Fix EnergyPlus errors using LLM with RAG-enhanced context"""
     
-    def __init__(self):
-        self.llm = UniversalLLM()
+    def __init__(self, use_rag: bool = True, llm_provider: str = None):
+        """
+        Initialize Error Corrector.
+        
+        Args:
+            use_rag: Whether to enable RAG (Retrieval-Augmented Generation).
+                    Set to False for Scenario 1 comparison (LLM only).
+                    Default: True (Scenario 2)
+            llm_provider: LLM provider to use (e.g., "gemini", "mistral", None for default)
+        """
+        # Note: Don't reset LLM here as generator may have already initialized it
+        self.llm = UniversalLLM(provider=llm_provider)
         self.handler = IDFHandler()
+        self.use_rag = use_rag
+        self.llm_provider = llm_provider
+        
         # Initialize RAG retriever for error patterns and fix procedures
-        try:
-            self.rag = RAGRetriever()
-            self.rag_enabled = True
-            print("✓ RAG enabled for Agent 3 (Error Corrector)")
-        except Exception as e:
-            print(f"⚠ RAG unavailable for Agent 3: {e}")
+        if use_rag:
+            try:
+                self.rag = RAGRetriever()
+                self.rag_enabled = True
+                print("✓ RAG enabled for Agent 3 (Error Corrector)")
+            except Exception as e:
+                print(f"⚠ RAG unavailable for Agent 3: {e}")
+                self.rag_enabled = False
+        else:
+            self.rag = None
             self.rag_enabled = False
+            print("ℹ RAG disabled for Agent 3 (Scenario 1: LLM Only)")
     
     def analyze_and_fix(self, idf_path, errors):
         """Analyze errors and suggest fixes with RAG-enhanced context"""
