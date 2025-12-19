@@ -31,7 +31,7 @@ class Config:
     IDD_FILE = os.path.join(ENERGYPLUS_DIR, "Energy+.idd")
     
     # LLM Settings
-    LLM_PROVIDER = "mistral"  # "gemini", "openai", "anthropic", "mistral", "mock", or "auto"
+    LLM_PROVIDER = "mistral"  # "gemini", "mistral", "anthropic", "mistral", "mock", or "auto"
     LLM_MODEL = "gemini-2.5-flash"  # Latest lite version - may have better quota
     # LLM_MODEl = "gemini-2.5-flash-lite"
     LLM_MAX_TOKENS = 16384
