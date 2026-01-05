@@ -40,6 +40,8 @@ class Config:
     # Mistral Fine-tuned Model Settings
     MISTRAL_BASE_MODEL = "mistralai/Mistral-7B-v0.1"
     MISTRAL_FINETUNED_PATH = os.path.expanduser("~/Documents/Ayeen/LLM-Fine-Tunning/mistral-7b-vrf-finetuned-v4")
+    # Agent 3 specific fine-tuned model for error correction
+    MISTRAL_AGENT3_PATH = os.path.expanduser("~/Documents/Ayeen/LLM-Fine-Tunning/mistral-7b-vrf-finetuned-agent3-balanced")
     MISTRAL_MAX_TOKENS_PER_OBJECT = 512  # For iterative generation
     MISTRAL_TEMPERATURE = 0.3
     MISTRAL_TOP_P = 0.9

@@ -91,6 +91,12 @@ class KnowledgeBaseBuilder:
         # Collection 7: Error Fix Procedures (NEW)
         self.build_error_fix_procedures_collection()
         
+        # Collection 8: VRF EnergyPlus Documentation (NEW)
+        self.build_vrf_documentation_collection()
+        
+        # Collection 9: VRF Design Patterns (NEW)
+        self.build_vrf_design_patterns_collection()
+        
         print("\n" + "=" * 70)
         print("✅ KNOWLEDGE BASE BUILD COMPLETE")
         print("=" * 70)
@@ -101,6 +107,10 @@ class KnowledgeBaseBuilder:
         print("  3. Documentation files (design guidance)")
         print("  4. User request patterns (expandable scenarios)")
         print("  5. Official EnergyPlus IDD (complete field specs)")
+        print("  6. Field dependency rules")
+        print("  7. Error fix procedures")
+        print("  8. VRF EnergyPlus documentation")
+        print("  9. VRF design patterns")
         print("\nCollections created:")
         for collection in self.client.list_collections():
             print(f"  - {collection.name} ({collection.count()} documents)")
@@ -1200,6 +1210,428 @@ Related Fields: {', '.join(error.get('related_fields', []))}
                 })
         
         return chunks
+
+    def build_vrf_documentation_collection(self):
+        """Build collection from VRF EnergyPlus documentation"""
+        print("[8/9] Building 'vrf_documentation' collection...")
+        
+        doc_path = Path("data/knowledge/vrf_energyplus_documentation.json")
+        
+        if not doc_path.exists():
+            print(f"  ❌ Not found: {doc_path}")
+            print("  Skipping VRF documentation collection")
+            return
+        
+        with open(doc_path, encoding='utf-8') as f:
+            doc_data = json.load(f)
+        
+        # Create collection
+        collection_name = f"vrf_documentation_v{self.version.replace('.', '_')}"
+        try:
+            self.client.delete_collection(collection_name)
+        except:
+            pass
+        
+        collection = self.client.create_collection(
+            name=collection_name,
+            embedding_function=self.embedding_fn,
+            metadata={"description": "VRF EnergyPlus documentation and field specifications"}
+        )
+        
+        documents = []
+        metadatas = []
+        ids = []
+        
+        # Add system overview
+        overview = doc_data.get("vrf_system_overview", {})
+        if overview:
+            doc_text = f"""
+VRF System Overview
+
+Description: {overview.get('description', '')}
+
+Key Features:
+{chr(10).join('- ' + f for f in overview.get('key_features', []))}
+
+Applications:
+{chr(10).join('- ' + a for a in overview.get('applications', []))}
+
+EnergyPlus Modeling: {overview.get('energyplus_modeling_approach', '')}
+            """.strip()
+            documents.append(doc_text)
+            metadatas.append({"category": "overview", "object_type": "System:VRF"})
+            ids.append("vrf_overview")
+        
+        # Add HVACTemplate:System:VRF detailed fields
+        system_vrf = doc_data.get("hvactemplate_system_vrf", {})
+        if system_vrf:
+            for field in system_vrf.get("detailed_fields", []):
+                doc_text = f"""
+Field {field['field_number']}: {field['field_name']}
+Object: HVACTemplate:System:VRF
+Field ID: {field.get('field_id', 'N/A')}
+Type: {field.get('type', 'N/A')}
+Required: {field.get('required', False)}
+
+Description: {field.get('description', '')}
+
+Default: {field.get('default', 'None')}
+{f"Typical Range: {field.get('typical_range', '')}" if field.get('typical_range') else ''}
+{f"Units: {field.get('units', '')}" if field.get('units') else ''}
+{f"Example: {field.get('example', '')}" if field.get('example') else ''}
+{f"Notes: {field.get('notes', '')}" if field.get('notes') else ''}
+{f"CRITICAL: {field.get('critical_dependency', '')}" if field.get('critical_dependency') else ''}
+                """.strip()
+                
+                documents.append(doc_text)
+                metadatas.append({
+                    "category": "field_spec",
+                    "object_type": "HVACTemplate:System:VRF",
+                    "field_number": field['field_number'],
+                    "field_name": field['field_name']
+                })
+                ids.append(f"system_vrf_field_{field['field_number']}")
+            
+            # Add common configurations
+            for i, config in enumerate(system_vrf.get("common_configurations", [])):
+                doc_text = f"""
+VRF Configuration: {config['name']}
+Description: {config['description']}
+
+Key Settings:
+{chr(10).join(f'- {k}: {v}' for k, v in config.get('key_settings', {}).items())}
+
+{f"Benefits: {config.get('benefits', '')}" if config.get('benefits') else ''}
+                """.strip()
+                
+                documents.append(doc_text)
+                metadatas.append({"category": "configuration", "config_name": config['name']})
+                ids.append(f"system_config_{i}")
+        
+        # Add HVACTemplate:Zone:VRF fields
+        zone_vrf = doc_data.get("hvactemplate_zone_vrf", {})
+        if zone_vrf:
+            for field in zone_vrf.get("detailed_fields", []):
+                doc_text = f"""
+Field {field['field_number']}: {field['field_name']}
+Object: HVACTemplate:Zone:VRF
+Field ID: {field.get('field_id', 'N/A')}
+Type: {field.get('type', 'N/A')}
+Required: {field.get('required', False)}
+
+Description: {field.get('description', '')}
+
+Default: {field.get('default', 'None')}
+{f"Example: {field.get('example', '')}" if field.get('example') else ''}
+{f"Notes: {field.get('notes', '')}" if field.get('notes') else ''}
+{f"CRITICAL: {field.get('critical', '')}" if field.get('critical') else ''}
+                """.strip()
+                
+                documents.append(doc_text)
+                metadatas.append({
+                    "category": "field_spec",
+                    "object_type": "HVACTemplate:Zone:VRF",
+                    "field_number": field['field_number'],
+                    "field_name": field['field_name']
+                })
+                ids.append(f"zone_vrf_field_{field['field_number']}")
+        
+        # Add thermostat documentation
+        thermostat = doc_data.get("hvactemplate_thermostat", {})
+        if thermostat:
+            for field in thermostat.get("detailed_fields", []):
+                doc_text = f"""
+Field {field['field_number']}: {field['field_name']}
+Object: HVACTemplate:Thermostat
+Field ID: {field.get('field_id', 'N/A')}
+
+Description: {field.get('description', '')}
+Default: {field.get('default', 'None')}
+{f"Typical Range: {field.get('typical_range', '')}" if field.get('typical_range') else ''}
+{f"Example: {field.get('example', '')}" if field.get('example') else ''}
+                """.strip()
+                
+                documents.append(doc_text)
+                metadatas.append({
+                    "category": "field_spec",
+                    "object_type": "HVACTemplate:Thermostat",
+                    "field_number": field['field_number'],
+                    "field_name": field['field_name']
+                })
+                ids.append(f"thermostat_field_{field['field_number']}")
+        
+        # Add design guidance
+        design = doc_data.get("design_guidance", {})
+        if design:
+            # System selection guidance
+            selection = design.get("system_selection", {})
+            if selection:
+                doc_text = f"""
+VRF System Selection Guidance
+
+When to Use VRF:
+{chr(10).join('- ' + w for w in selection.get('when_to_use_vrf', []))}
+
+Alternatives to Consider:
+{chr(10).join(f"- {alt['system']}: {alt['when']}" for alt in selection.get('alternatives_to_consider', []))}
+                """.strip()
+                
+                documents.append(doc_text)
+                metadatas.append({"category": "design_guidance", "topic": "system_selection"})
+                ids.append("design_system_selection")
+            
+            # Sizing guidelines
+            sizing = design.get("sizing_guidelines", {})
+            if sizing:
+                doc_text = f"""
+VRF Sizing Guidelines
+
+Cooling Capacity:
+- Rule of thumb: {sizing.get('cooling_capacity', {}).get('rule_of_thumb', 'N/A')}
+- Recommendation: {sizing.get('cooling_capacity', {}).get('recommendation', 'N/A')}
+
+Heating Capacity:
+- Sizing ratio: {sizing.get('heating_capacity', {}).get('sizing_ratio', 'N/A')}
+- Cold climate: {sizing.get('heating_capacity', {}).get('cold_climate', 'N/A')}
+
+Airflow:
+- Cooling: {sizing.get('airflow', {}).get('cooling', 'N/A')}
+- Heating: {sizing.get('airflow', {}).get('heating', 'N/A')}
+                """.strip()
+                
+                documents.append(doc_text)
+                metadatas.append({"category": "design_guidance", "topic": "sizing"})
+                ids.append("design_sizing")
+            
+            # Climate considerations
+            climate = design.get("climate_considerations", {})
+            for climate_type, settings in climate.items():
+                doc_text = f"""
+VRF for {climate_type.replace('_', ' ').title()} Climate
+
+Settings:
+{chr(10).join(f'- {k}: {v}' for k, v in settings.items())}
+                """.strip()
+                
+                documents.append(doc_text)
+                metadatas.append({"category": "design_guidance", "topic": f"climate_{climate_type}"})
+                ids.append(f"design_climate_{climate_type}")
+        
+        # Add common errors and solutions
+        for i, error in enumerate(doc_data.get("common_errors_and_solutions", [])):
+            doc_text = f"""
+Common VRF Error: {error.get('error', 'Unknown')}
+
+Cause: {error.get('cause', 'Unknown')}
+Solution: {error.get('solution', 'Unknown')}
+{f"Recommended Fix: {error.get('recommended_fix', '')}" if error.get('recommended_fix') else ''}
+{f"Critical: {error.get('critical', '')}" if error.get('critical') else ''}
+            """.strip()
+            
+            documents.append(doc_text)
+            metadatas.append({"category": "error_solution", "error_index": i})
+            ids.append(f"error_solution_{i}")
+        
+        # Add best practices
+        for i, practice in enumerate(doc_data.get("best_practices", [])):
+            doc_text = f"""
+VRF Best Practice: {practice['practice']}
+
+Reason: {practice['reason']}
+Implementation: {practice['implementation']}
+            """.strip()
+            
+            documents.append(doc_text)
+            metadatas.append({"category": "best_practice", "practice_index": i})
+            ids.append(f"best_practice_{i}")
+        
+        # Add to collection
+        if documents:
+            collection.add(
+                documents=documents,
+                metadatas=metadatas,
+                ids=ids
+            )
+            print(f"  ✅ Added {len(documents)} VRF documentation chunks")
+        else:
+            print("  ⚠ No documentation extracted")
+
+    def build_vrf_design_patterns_collection(self):
+        """Build collection from VRF design patterns"""
+        print("[9/9] Building 'vrf_design_patterns' collection...")
+        
+        pattern_path = Path("data/knowledge/vrf_design_patterns.json")
+        
+        if not pattern_path.exists():
+            print(f"  ❌ Not found: {pattern_path}")
+            print("  Skipping VRF design patterns collection")
+            return
+        
+        with open(pattern_path, encoding='utf-8') as f:
+            pattern_data = json.load(f)
+        
+        # Create collection
+        collection_name = f"vrf_design_patterns_v{self.version.replace('.', '_')}"
+        try:
+            self.client.delete_collection(collection_name)
+        except:
+            pass
+        
+        collection = self.client.create_collection(
+            name=collection_name,
+            embedding_function=self.embedding_fn,
+            metadata={"description": "VRF design patterns and real-world configurations"}
+        )
+        
+        documents = []
+        metadatas = []
+        ids = []
+        
+        # Add design patterns
+        for pattern in pattern_data.get("design_patterns", []):
+            config = pattern.get("system_config", {})
+            key_settings = pattern.get("key_settings", {})
+            considerations = pattern.get("key_considerations", [])
+            
+            doc_text = f"""
+VRF Design Pattern: {pattern['name']}
+Pattern ID: {pattern['pattern_id']}
+
+Description: {pattern['description']}
+
+{f"Zones: {pattern.get('zones', 'Variable')}" if pattern.get('zones') else ''}
+{f"Typical Area: {pattern.get('typical_area', '')}" if pattern.get('typical_area') else ''}
+{f"Climate: {pattern.get('typical_climate', '')}" if pattern.get('typical_climate') else ''}
+
+Use Cases:
+{chr(10).join('- ' + uc for uc in pattern.get('use_cases', []))}
+
+System Configuration:
+{chr(10).join(f'- {k}: {v}' for k, v in config.items())}
+
+{f"Key Settings:{chr(10)}{chr(10).join(f'- {k}: {v}' for k, v in key_settings.items())}" if key_settings else ''}
+
+{f"Key Considerations:{chr(10)}{chr(10).join('- ' + c for c in considerations)}" if considerations else ''}
+            """.strip()
+            
+            documents.append(doc_text)
+            metadatas.append({
+                "category": "design_pattern",
+                "pattern_id": pattern['pattern_id'],
+                "pattern_name": pattern['name']
+            })
+            ids.append(f"pattern_{pattern['pattern_id']}")
+        
+        # Add zone configurations
+        for zone_type, config in pattern_data.get("zone_configurations", {}).items():
+            doc_text = f"""
+Zone Configuration: {zone_type.replace('_', ' ').title()}
+
+Description: {config.get('description', '')}
+
+Recommended Settings:
+{chr(10).join(f'- {k}: {v}' for k, v in config.get('recommended_settings', {}).items())}
+            """.strip()
+            
+            documents.append(doc_text)
+            metadatas.append({"category": "zone_config", "zone_type": zone_type})
+            ids.append(f"zone_config_{zone_type}")
+        
+        # Add COP guidelines
+        cop = pattern_data.get("cop_guidelines", {})
+        if cop:
+            doc_text = f"""
+VRF COP (Coefficient of Performance) Guidelines
+
+Cooling COP:
+- Minimum acceptable: {cop.get('cooling_cop', {}).get('minimum_acceptable', 'N/A')}
+- Typical standard: {cop.get('cooling_cop', {}).get('typical_standard', 'N/A')}
+- High efficiency: {cop.get('cooling_cop', {}).get('high_efficiency', 'N/A')}
+- Premium: {cop.get('cooling_cop', {}).get('premium', 'N/A')}
+Notes: {cop.get('cooling_cop', {}).get('notes', '')}
+
+Heating COP:
+- Minimum acceptable: {cop.get('heating_cop', {}).get('minimum_acceptable', 'N/A')}
+- Typical standard: {cop.get('heating_cop', {}).get('typical_standard', 'N/A')}
+- High efficiency: {cop.get('heating_cop', {}).get('high_efficiency', 'N/A')}
+- Cold climate: {cop.get('heating_cop', {}).get('cold_climate', 'N/A')}
+Notes: {cop.get('heating_cop', {}).get('notes', '')}
+            """.strip()
+            
+            documents.append(doc_text)
+            metadatas.append({"category": "cop_guidelines"})
+            ids.append("cop_guidelines")
+        
+        # Add capacity guidelines
+        capacity = pattern_data.get("capacity_guidelines", {})
+        for building_type, values in capacity.items():
+            doc_text = f"""
+VRF Capacity Guidelines for {building_type.replace('_', ' ').title()}
+
+Cooling: {values.get('cooling_watts_per_m2', 'N/A')} W/m²
+Heating: {values.get('heating_watts_per_m2', 'N/A')} W/m²
+            """.strip()
+            
+            documents.append(doc_text)
+            metadatas.append({"category": "capacity_guidelines", "building_type": building_type})
+            ids.append(f"capacity_{building_type}")
+        
+        # Add piping guidelines
+        piping = pattern_data.get("piping_guidelines", {})
+        if piping:
+            doc_text = f"""
+VRF Piping Guidelines
+
+Equivalent Length:
+- Small system: {piping.get('equivalent_length', {}).get('small_system', 'N/A')}
+- Medium system: {piping.get('equivalent_length', {}).get('medium_system', 'N/A')}
+- Large system: {piping.get('equivalent_length', {}).get('large_system', 'N/A')}
+- Maximum: {piping.get('equivalent_length', {}).get('maximum', 'N/A')}
+
+Vertical Height:
+- Outdoor above indoor: {piping.get('vertical_height', {}).get('outdoor_above_indoor', 'N/A')}
+- Indoor above outdoor: {piping.get('vertical_height', {}).get('indoor_above_outdoor', 'N/A')}
+- Between indoor units: {piping.get('vertical_height', {}).get('between_indoor_units', 'N/A')}
+
+Capacity Derating: {piping.get('capacity_derating', {}).get('typical_derating', 'N/A')}
+            """.strip()
+            
+            documents.append(doc_text)
+            metadatas.append({"category": "piping_guidelines"})
+            ids.append("piping_guidelines")
+        
+        # Add troubleshooting guide
+        for issue_type, guide in pattern_data.get("troubleshooting_guide", {}).items():
+            doc_text = f"""
+VRF Troubleshooting: {issue_type.replace('_', ' ').title()}
+
+Symptoms:
+{chr(10).join('- ' + s for s in guide.get('symptoms', []))}
+
+Causes:
+{chr(10).join('- ' + c for c in guide.get('causes', []))}
+
+Solutions:
+{chr(10).join('- ' + s for s in guide.get('solutions', []))}
+
+{f"Recommended: {guide.get('recommended', '')}" if guide.get('recommended') else ''}
+{f"Recommended Ranges: {guide.get('recommended_ranges', '')}" if guide.get('recommended_ranges') else ''}
+            """.strip()
+            
+            documents.append(doc_text)
+            metadatas.append({"category": "troubleshooting", "issue_type": issue_type})
+            ids.append(f"troubleshoot_{issue_type}")
+        
+        # Add to collection
+        if documents:
+            collection.add(
+                documents=documents,
+                metadatas=metadatas,
+                ids=ids
+            )
+            print(f"  ✅ Added {len(documents)} VRF design pattern chunks")
+        else:
+            print("  ⚠ No design patterns extracted")
 
 
 # ========== MAIN: CLI Entry Point ==========

@@ -1,0 +1,319 @@
+{
+  "metadata": {
+    "source": "VRF Design Patterns and Examples",
+    "version": "1.0",
+    "created": "2026-01-02",
+    "purpose": "Provide real-world VRF design patterns for RAG retrieval"
+  },
+
+  "design_patterns": [
+    {
+      "pattern_id": "single_zone_residential",
+      "name": "Single Zone Residential VRF",
+      "description": "Basic VRF configuration for a single-zone residential or small office application",
+      "zones": 1,
+      "typical_area": "50-150 m²",
+      "use_cases": ["Studio apartment", "Small office", "Server room"],
+      "system_config": {
+        "heat_recovery": "No",
+        "control_type": "LoadPriority",
+        "condenser_type": "AirCooled",
+        "defrost_strategy": "ReverseCycle"
+      },
+      "example_idf": {
+        "thermostat": "HVACTemplate:Thermostat,\n  Thermostat_Zone1,\n  ,\n  21.0,\n  ,\n  24.0;",
+        "system": "HVACTemplate:System:VRF,\n  VRF_System_1,\n  ,\n  Autosize,\n  3.5,\n  -6.0,\n  43.0,\n  Autosize,\n  1.0,\n  3.5,\n  -20.0,\n  16.0,\n  0.15;",
+        "zone": "HVACTemplate:Zone:VRF,\n  Zone1,\n  VRF_System_1,\n  Thermostat_Zone1,\n  ...42 fields...;"
+      }
+    },
+    {
+      "pattern_id": "multi_zone_office",
+      "name": "Multi-Zone Office VRF",
+      "description": "VRF system serving multiple office zones with individual temperature control",
+      "zones": "2-10",
+      "typical_area": "200-2000 m²",
+      "use_cases": ["Office building", "Medical office", "Educational facility"],
+      "system_config": {
+        "heat_recovery": "Yes (recommended for >3 zones)",
+        "control_type": "LoadPriority",
+        "condenser_type": "AirCooled",
+        "defrost_strategy": "ReverseCycle"
+      },
+      "key_considerations": [
+        "Enable heat recovery if zones have different orientations",
+        "Consider supplemental heating for perimeter zones",
+        "Use baseboard heating for cold climates"
+      ]
+    },
+    {
+      "pattern_id": "hotel_guestroom",
+      "name": "Hotel Guestroom VRF",
+      "description": "VRF system for hotel with many similar guestroom zones",
+      "zones": "10-100+",
+      "typical_area": "20-40 m² per room",
+      "use_cases": ["Hotels", "Dormitories", "Assisted living"],
+      "system_config": {
+        "heat_recovery": "Yes",
+        "control_type": "LoadPriority",
+        "supplemental_heating": "None (unless cold climate)"
+      },
+      "key_considerations": [
+        "Heat recovery essential for efficiency",
+        "Individual zone control critical for guest comfort",
+        "Consider multiple VRF systems for large hotels"
+      ]
+    },
+    {
+      "pattern_id": "cold_climate",
+      "name": "Cold Climate VRF",
+      "description": "VRF system optimized for cold climate operation",
+      "typical_climate": "Heating degree days > 4000",
+      "system_config": {
+        "min_heating_temp": -25,
+        "max_heating_temp": 18,
+        "heating_sizing_ratio": 1.2,
+        "defrost_strategy": "ReverseCycle",
+        "defrost_control": "OnDemand",
+        "supplemental_heating": "Electric"
+      },
+      "key_settings": {
+        "Minimum_Outdoor_Temperature_in_Heating_Mode": -25,
+        "Maximum_Outdoor_Temperature_in_Heating_Mode": 18,
+        "Rated_Heating_Capacity_Sizing_Ratio": 1.2,
+        "Supplemental_Heating_Coil_Type": "Electric",
+        "Maximum_Outdoor_Dry_Bulb_Temperature_for_Supplemental_Heater_Operation": 5
+      }
+    },
+    {
+      "pattern_id": "hot_climate",
+      "name": "Hot Climate VRF",
+      "description": "VRF system optimized for hot climate operation",
+      "typical_climate": "Cooling degree days > 3000",
+      "system_config": {
+        "min_cooling_temp": -10,
+        "max_cooling_temp": 48,
+        "condenser_type": "AirCooled or EvaporativelyCooled"
+      },
+      "key_settings": {
+        "Minimum_Outdoor_Temperature_in_Cooling_Mode": -10,
+        "Maximum_Outdoor_Temperature_in_Cooling_Mode": 48,
+        "Gross_Rated_Cooling_COP": 4.0
+      }
+    },
+    {
+      "pattern_id": "retail_store",
+      "name": "Retail Store VRF",
+      "description": "VRF for retail with high cooling loads from lighting and occupancy",
+      "zones": "1-5",
+      "use_cases": ["Retail stores", "Shopping centers", "Showrooms"],
+      "system_config": {
+        "heat_recovery": "Optional",
+        "control_type": "LoadPriority",
+        "high_cooling_capacity": true
+      },
+      "key_considerations": [
+        "High internal gains from lighting",
+        "Variable occupancy requires good part-load efficiency",
+        "Entry vestibules may need supplemental heating"
+      ]
+    },
+    {
+      "pattern_id": "data_center",
+      "name": "Data Center/Server Room VRF",
+      "description": "VRF for spaces with year-round cooling loads",
+      "use_cases": ["Server rooms", "Data centers", "Telecom facilities"],
+      "system_config": {
+        "heat_recovery": "No (cooling only)",
+        "control_type": "LoadPriority",
+        "min_cooling_temp": -15,
+        "cooling_year_round": true
+      },
+      "key_settings": {
+        "Minimum_Outdoor_Temperature_in_Cooling_Mode": -15,
+        "Heat_Pump_Waste_Heat_Recovery": "No"
+      },
+      "key_considerations": [
+        "Requires cooling even in winter",
+        "Extend minimum cooling temperature",
+        "Consider redundancy with multiple systems"
+      ]
+    }
+  ],
+
+  "zone_configurations": {
+    "perimeter_zone": {
+      "description": "Zones on building perimeter with high heating/cooling loads",
+      "recommended_settings": {
+        "Supplemental_Heating_Coil_Type": "Electric",
+        "Baseboard_Heating_Type": "Electric",
+        "Zone_Heating_Sizing_Factor": 1.1
+      }
+    },
+    "interior_zone": {
+      "description": "Interior zones with primarily cooling loads",
+      "recommended_settings": {
+        "Supplemental_Heating_Coil_Type": "None",
+        "Zone_Cooling_Sizing_Factor": 1.0
+      }
+    },
+    "conference_room": {
+      "description": "Zones with variable occupancy",
+      "recommended_settings": {
+        "Outdoor_Air_Method": "Flow/Person",
+        "high_airflow_capacity": true
+      }
+    }
+  },
+
+  "cop_guidelines": {
+    "cooling_cop": {
+      "minimum_acceptable": 2.5,
+      "typical_standard": 3.3,
+      "high_efficiency": 4.0,
+      "premium": 4.5,
+      "notes": "Higher COP = better efficiency. Modern VRF systems achieve 4.0+ COP."
+    },
+    "heating_cop": {
+      "minimum_acceptable": 2.5,
+      "typical_standard": 3.4,
+      "high_efficiency": 3.8,
+      "cold_climate": 3.0,
+      "notes": "Heating COP decreases as outdoor temperature drops. Cold climate systems designed to maintain COP at low temps."
+    }
+  },
+
+  "capacity_guidelines": {
+    "office": {
+      "cooling_watts_per_m2": "100-150",
+      "heating_watts_per_m2": "80-120"
+    },
+    "retail": {
+      "cooling_watts_per_m2": "150-200",
+      "heating_watts_per_m2": "100-150"
+    },
+    "residential": {
+      "cooling_watts_per_m2": "80-120",
+      "heating_watts_per_m2": "80-150"
+    },
+    "server_room": {
+      "cooling_watts_per_m2": "500-2000",
+      "heating_watts_per_m2": 0
+    }
+  },
+
+  "piping_guidelines": {
+    "equivalent_length": {
+      "small_system": "10-30 m",
+      "medium_system": "30-60 m",
+      "large_system": "60-100 m",
+      "maximum": "165 m typical manufacturer limit"
+    },
+    "vertical_height": {
+      "outdoor_above_indoor": "Up to 50 m",
+      "indoor_above_outdoor": "Up to 40 m",
+      "between_indoor_units": "Up to 15 m"
+    },
+    "capacity_derating": {
+      "note": "Capacity decreases with longer piping runs",
+      "typical_derating": "2-3% per 10m over 30m"
+    }
+  },
+
+  "template_examples": {
+    "basic_2_zone": {
+      "description": "Complete VRF setup for 2 zones",
+      "objects": [
+        {
+          "type": "HVACTemplate:Thermostat",
+          "name": "Thermostat_Zone1",
+          "heating_setpoint": 21,
+          "cooling_setpoint": 24
+        },
+        {
+          "type": "HVACTemplate:Thermostat",
+          "name": "Thermostat_Zone2",
+          "heating_setpoint": 21,
+          "cooling_setpoint": 24
+        },
+        {
+          "type": "HVACTemplate:System:VRF",
+          "name": "VRF_System_1",
+          "cooling_capacity": "Autosize",
+          "cooling_cop": 3.5,
+          "heating_capacity": "Autosize",
+          "heating_cop": 3.5,
+          "control_type": "LoadPriority",
+          "heat_recovery": "No",
+          "defrost_strategy": "ReverseCycle",
+          "condenser_type": "AirCooled"
+        },
+        {
+          "type": "HVACTemplate:Zone:VRF",
+          "zone_name": "Zone1",
+          "system_name": "VRF_System_1",
+          "thermostat_name": "Thermostat_Zone1"
+        },
+        {
+          "type": "HVACTemplate:Zone:VRF",
+          "zone_name": "Zone2",
+          "system_name": "VRF_System_1",
+          "thermostat_name": "Thermostat_Zone2"
+        }
+      ]
+    },
+    "heat_recovery_4_zone": {
+      "description": "4-zone VRF with heat recovery",
+      "features": ["Heat recovery enabled", "Mixed heating/cooling loads"],
+      "system_settings": {
+        "Heat_Pump_Waste_Heat_Recovery": "Yes",
+        "Master_Thermostat_Priority_Control_Type": "LoadPriority"
+      }
+    }
+  },
+
+  "troubleshooting_guide": {
+    "zero_capacity": {
+      "symptoms": ["Simulation fails", "Zero rated capacity error"],
+      "causes": [
+        "Missing thermostat object",
+        "Incorrect thermostat reference in Zone:VRF",
+        "Zone not properly defined"
+      ],
+      "solutions": [
+        "Verify HVACTemplate:Thermostat exists for each zone",
+        "Check Field 3 of Zone:VRF matches thermostat name exactly",
+        "Ensure zone geometry is properly defined"
+      ]
+    },
+    "master_thermostat_error": {
+      "symptoms": ["Fatal error about master thermostat location"],
+      "causes": ["MasterThermostatPriority selected but zone not specified"],
+      "solutions": [
+        "Set Zone_Name_for_Master_Thermostat_Location to valid zone",
+        "OR change control type to LoadPriority"
+      ],
+      "recommended": "Use LoadPriority unless specific master control needed"
+    },
+    "temperature_range_exceeded": {
+      "symptoms": ["Warning about operating temperature limits"],
+      "causes": ["Weather temperatures outside specified range"],
+      "solutions": [
+        "Expand Minimum_Outdoor_Temperature fields",
+        "Expand Maximum_Outdoor_Temperature fields"
+      ],
+      "recommended_ranges": {
+        "cooling": {"min": -10, "max": 48},
+        "heating": {"min": -25, "max": 18}
+      }
+    },
+    "defrost_capacity_error": {
+      "symptoms": ["Warning about resistive defrost capacity"],
+      "causes": ["Resistive defrost selected but capacity = 0"],
+      "solutions": [
+        "Set Resistive_Defrost_Heater_Capacity to Autosize",
+        "OR change Defrost_Strategy to ReverseCycle"
+      ],
+      "recommended": "Use ReverseCycle defrost (more efficient)"
+    }
+  }
+}

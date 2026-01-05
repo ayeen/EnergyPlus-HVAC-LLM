@@ -332,6 +332,91 @@
       },
       "prevention": "Pipeline typically handles this - manual intervention rarely needed",
       "related_fields": ["Zone:VRF Field 1 (must have matching thermostat)"]
+    },
+    {
+      "error_id": "invalid_condenser_type",
+      "error_pattern": "condenser_type.*Failed to match against any enum values|Invalid condenser type",
+      "severity": "Severe/Fatal",
+      "frequency": "Low",
+      "root_cause": "Condenser type field contains an invalid value - must be one of the allowed enum values",
+      "diagnosis_steps": [
+        "1. Check the condenser_type field value",
+        "2. Verify against allowed values: AirCooled, EvaporativelyCooled, WaterCooled"
+      ],
+      "fix_procedure": {
+        "option_1": {
+          "description": "Set to AirCooled (default, most common)",
+          "steps": [
+            "1. Change condenser_type to 'AirCooled'",
+            "2. This is the most common configuration for VRF systems"
+          ],
+          "success_rate": "100%",
+          "recommended": true,
+          "field_name": "condenser_type",
+          "new_value": "AirCooled"
+        },
+        "option_2": {
+          "description": "Set to EvaporativelyCooled",
+          "steps": [
+            "1. Change condenser_type to 'EvaporativelyCooled'",
+            "2. Use for high-efficiency in dry climates"
+          ],
+          "success_rate": "100%",
+          "field_name": "condenser_type",
+          "new_value": "EvaporativelyCooled"
+        },
+        "option_3": {
+          "description": "Set to WaterCooled",
+          "steps": [
+            "1. Change condenser_type to 'WaterCooled'",
+            "2. Use when water-cooled condenser loop is available"
+          ],
+          "success_rate": "100%",
+          "field_name": "condenser_type",
+          "new_value": "WaterCooled"
+        }
+      },
+      "prevention": "Always validate condenser_type against allowed enum: AirCooled, EvaporativelyCooled, WaterCooled",
+      "related_fields": ["condenser_type"],
+      "object_type": "AirConditioner:VariableRefrigerantFlow"
+    },
+    {
+      "error_id": "invalid_cop_type",
+      "error_pattern": "gross_rated_heating_cop.*Value type.*string.*not permitted|gross_rated_cooling_cop.*Value type.*string.*not permitted|COP must be numeric",
+      "severity": "Severe/Fatal",
+      "frequency": "Low",
+      "root_cause": "COP field contains a non-numeric value - must be a positive number",
+      "diagnosis_steps": [
+        "1. Check the gross_rated_heating_cop or gross_rated_cooling_cop field",
+        "2. Verify it contains a valid numeric value",
+        "3. Typical range: 2.5 to 5.0"
+      ],
+      "fix_procedure": {
+        "option_1": {
+          "description": "Set to typical heating COP value",
+          "steps": [
+            "1. Change gross_rated_heating_cop to '3.5'",
+            "2. This is a typical efficient value for VRF heating"
+          ],
+          "success_rate": "100%",
+          "recommended": true,
+          "field_name": "gross_rated_heating_cop",
+          "new_value": "3.5"
+        },
+        "option_2": {
+          "description": "Set to typical cooling COP value",
+          "steps": [
+            "1. Change gross_rated_cooling_cop to '4.0'",
+            "2. This is a typical efficient value for VRF cooling"
+          ],
+          "success_rate": "100%",
+          "field_name": "gross_rated_cooling_cop",
+          "new_value": "4.0"
+        }
+      },
+      "prevention": "Ensure COP values are always numeric (typically 2.5-5.0)",
+      "related_fields": ["gross_rated_heating_cop", "gross_rated_cooling_cop"],
+      "object_type": "AirConditioner:VariableRefrigerantFlow"
     }
   ],
   "fix_success_metrics": {

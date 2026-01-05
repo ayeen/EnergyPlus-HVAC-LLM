@@ -1,4 +1,10 @@
 {
+  "vrf_agent3_error_test": {
+    "prompt": "Fix the existing broken VRF HVAC system in this building",
+    "zones": null,
+    "base_idf": "data/base_idfs/test_agent3_broken_hvac.idf",
+    "note": "Test Agent 3 error correction with intentionally broken HVAC objects"
+  },
   "vrf_air_conditioning": {
     "prompt": "I've designed a small, single-zone building model. Please add a complete VRF air-conditioning system that can provide both heating and cooling for this zone. Use realistic, default settings suitable for a small office or apartment — for example, efficient indoor and outdoor units with typical performance. Automatically include everything needed: indoor unit, outdoor unit, fans, cooling and heating coils, thermostats, and temperature schedules. Please make sure the system: Connects properly to the single zone in the model, Uses automatic sizing for airflow and capacity, Has reasonable setpoints (around 24°C for cooling and 21°C for heating)",
     "zones": ["Zone1"],
@@ -55,6 +61,12 @@
     "prompt": "Design VRF for a large office building with 10 zones",
     "zones": null,
     "base_idf": "data/base_idfs/large_office_10zone.idf"
+  },
+  "vrf_large_office_20zone": {
+    "prompt": "Design a comprehensive VRF HVAC system for a large office building with 20 zones. Include all necessary components: outdoor units, terminal units for each zone, cooling/heating coils, fans, thermostats with appropriate schedules. The building has 12 office zones, 3 conference rooms, 3 executive offices, a lobby, and an IT server room. Ensure proper sizing and efficient operation.",
+    "zones": ["Office_Zone_1", "Office_Zone_2", "Office_Zone_3", "Office_Zone_4", "Office_Zone_5", "Office_Zone_6", "Office_Zone_7", "Office_Zone_8", "Office_Zone_9", "Office_Zone_10", "Office_Zone_11", "Office_Zone_12", "Conference_Room_1", "Conference_Room_2", "Conference_Room_3", "Executive_Office_1", "Executive_Office_2", "Executive_Office_3", "Lobby", "IT_Server_Room"],
+    "base_idf": "data/base_idfs/large_office_20zone.idf",
+    "note": "Research test: Large 20-zone office building for model comparison"
   },
   "vrf_residential": {
     "prompt": "Design VRF for residential home with 3 bedrooms and living areas",
