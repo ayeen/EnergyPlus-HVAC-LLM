@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-01-13T10:29:37.914935",
+  "test_prompt": "Design a VRF HVAC system for efficient heating and cooling",
+  "test_zones": [
+    "ZONE ONE"
+  ],
+  "results": {
+    "finetuned": {
+      "success": true,
+      "iterations": 0,
+      "time": 72.16443109512329,
+      "final_idf": "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/finetuned_test_hvac.idf"
+    },
+    "pretrained": {
+      "success": true,
+      "time": 6.458038091659546,
+      "analysis": {
+        "has_hvactemplate_system": true,
+        "has_hvactemplate_zone": true,
+        "has_raw_airconditioner": false,
+        "has_markdown_blocks": false,
+        "semicolon_count": 2,
+        "comma_count": 52,
+        "line_count": 54,
+        "char_count": 3453,
+        "has_cop_values": true,
+        "format": "HVACTemplate (CORRECT for pipeline)",
+        "score": 8,
+        "max_score": 8
+      }
+    }
+  }
+}

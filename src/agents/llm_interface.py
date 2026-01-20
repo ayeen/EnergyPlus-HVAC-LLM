@@ -82,51 +82,151 @@ class UniversalLLM:
                 print("⚠ Gemini client not available, falling back to MOCK")
         
         elif self.provider == "mistral":
-            try:
-                import torch
-                from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
-                from peft import PeftModel
-                
-                print("⏳ Loading Mistral fine-tuned model...")
-                print(f"   Base model: {Config.MISTRAL_BASE_MODEL}")
-                print(f"   Fine-tuned path: {Config.MISTRAL_FINETUNED_PATH}")
-                
-                # Configure 4-bit quantization for efficient inference
-                bnb_config = BitsAndBytesConfig(
-                    load_in_4bit=True,
-                    bnb_4bit_quant_type="nf4",
-                    bnb_4bit_compute_dtype=torch.float16,
-                    bnb_4bit_use_double_quant=False,
-                    llm_int8_enable_fp32_cpu_offload=True,
-                )
-                
-                # Load base model
-                base_model = AutoModelForCausalLM.from_pretrained(
-                    Config.MISTRAL_BASE_MODEL,
-                    quantization_config=bnb_config,
-                    device_map="auto",
-                    trust_remote_code=True,
-                    torch_dtype=torch.float16,
-                    max_memory={0: "14GB", "cpu": "30GB"},
-                )
-                
-                # Load LoRA weights
-                self.mistral_model = PeftModel.from_pretrained(base_model, Config.MISTRAL_FINETUNED_PATH)
-                
-                # Load tokenizer
-                self.mistral_tokenizer = AutoTokenizer.from_pretrained(Config.MISTRAL_FINETUNED_PATH)
-                self.mistral_tokenizer.pad_token = self.mistral_tokenizer.eos_token
-                self.mistral_tokenizer.padding_side = "right"
-                
-                print("✓ Mistral fine-tuned model loaded successfully")
-                print(f"   Device: {next(self.mistral_model.parameters()).device}")
-                if torch.cuda.is_available():
-                    print(f"   GPU: {torch.cuda.get_device_name(0)}")
-                
-            except Exception as e:
-                print(f"⚠ Mistral model loading failed: {e}")
+            self._load_mistral_finetuned()
+        
+        elif self.provider == "mistral-pretrained":
+            self._load_mistral_pretrained()
+        
+        elif self.provider == "mistral-api":
+            self._init_mistral_api()
+    
+    def _load_mistral_finetuned(self):
+        """Load Mistral fine-tuned model with LoRA weights"""
+        try:
+            import torch
+            from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+            from peft import PeftModel
+            
+            print("⏳ Loading Mistral fine-tuned model...")
+            print(f"   Base model: {Config.MISTRAL_BASE_MODEL}")
+            print(f"   Fine-tuned path: {Config.MISTRAL_FINETUNED_PATH}")
+            
+            # Configure 4-bit quantization for efficient inference
+            bnb_config = BitsAndBytesConfig(
+                load_in_4bit=True,
+                bnb_4bit_quant_type="nf4",
+                bnb_4bit_compute_dtype=torch.float16,
+                bnb_4bit_use_double_quant=False,
+                llm_int8_enable_fp32_cpu_offload=True,
+            )
+            
+            # Load base model
+            base_model = AutoModelForCausalLM.from_pretrained(
+                Config.MISTRAL_BASE_MODEL,
+                quantization_config=bnb_config,
+                device_map="auto",
+                trust_remote_code=True,
+                torch_dtype=torch.float16,
+                max_memory={0: "14GB", "cpu": "30GB"},
+            )
+            
+            # Load LoRA weights
+            self.mistral_model = PeftModel.from_pretrained(base_model, Config.MISTRAL_FINETUNED_PATH)
+            
+            # Load tokenizer
+            self.mistral_tokenizer = AutoTokenizer.from_pretrained(Config.MISTRAL_FINETUNED_PATH)
+            self.mistral_tokenizer.pad_token = self.mistral_tokenizer.eos_token
+            self.mistral_tokenizer.padding_side = "right"
+            
+            print("✓ Mistral fine-tuned model loaded successfully")
+            print(f"   Model type: {Config.MISTRAL_FINETUNED_TYPE}")
+            print(f"   Device: {next(self.mistral_model.parameters()).device}")
+            if torch.cuda.is_available():
+                print(f"   GPU: {torch.cuda.get_device_name(0)}")
+            
+        except Exception as e:
+            print(f"⚠ Mistral fine-tuned model loading failed: {e}")
+            print("  Falling back to MOCK mode")
+            self.provider = "mock"
+    
+    def _load_mistral_pretrained(self):
+        """Load Mistral pre-trained model (no LoRA weights) with optimized caching"""
+        try:
+            import torch
+            from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+            import os
+            
+            print("⏳ Loading Mistral pre-trained model...")
+            print(f"   Model: {Config.MISTRAL_PRETRAINED_PATH}")
+            print("   (This may take a few minutes on first run as model is downloaded from HuggingFace)")
+            
+            # Set HuggingFace cache directory for better control
+            hf_cache_dir = os.path.expanduser("~/.cache/huggingface/hub")
+            os.makedirs(hf_cache_dir, exist_ok=True)
+            
+            # Configure 4-bit quantization for efficient inference
+            bnb_config = BitsAndBytesConfig(
+                load_in_4bit=True,
+                bnb_4bit_quant_type="nf4",
+                bnb_4bit_compute_dtype=torch.float16,
+                bnb_4bit_use_double_quant=False,
+                llm_int8_enable_fp32_cpu_offload=True,
+            )
+            
+            print("   Loading tokenizer...")
+            # Load tokenizer first (smaller, faster)
+            self.mistral_tokenizer = AutoTokenizer.from_pretrained(
+                Config.MISTRAL_PRETRAINED_PATH,
+                cache_dir=hf_cache_dir,
+                trust_remote_code=True,
+            )
+            self.mistral_tokenizer.pad_token = self.mistral_tokenizer.eos_token
+            self.mistral_tokenizer.padding_side = "right"
+            print("   ✓ Tokenizer loaded")
+            
+            print("   Loading model weights (this may take 2-5 minutes)...")
+            # Load pre-trained model directly (no LoRA)
+            self.mistral_model = AutoModelForCausalLM.from_pretrained(
+                Config.MISTRAL_PRETRAINED_PATH,
+                quantization_config=bnb_config,
+                device_map="auto",
+                trust_remote_code=True,
+                torch_dtype=torch.float16,
+                max_memory={0: "14GB", "cpu": "30GB"},
+                cache_dir=hf_cache_dir,
+            )
+            print("   ✓ Model weights loaded")
+            
+            print("✓ Mistral pre-trained model loaded successfully")
+            print(f"   Model type: {Config.MISTRAL_PRETRAINED_TYPE}")
+            print(f"   Device: {next(self.mistral_model.parameters()).device}")
+            if torch.cuda.is_available():
+                print(f"   GPU: {torch.cuda.get_device_name(0)}")
+            
+        except Exception as e:
+            print(f"⚠ Mistral pre-trained model loading failed: {e}")
+            print("  Falling back to MOCK mode")
+            import traceback
+            traceback.print_exc()
+            self.provider = "mock"
+    
+    def _init_mistral_api(self):
+        """Initialize Mistral API client (no local model download needed)"""
+        try:
+            from mistralai import Mistral
+            
+            api_key = Config.get_api_key("mistral")
+            if not api_key:
+                print("⚠ MISTRAL_API_KEY not found in environment")
+                print("  Set it in .env file: MISTRAL_API_KEY=your-key-here")
                 print("  Falling back to MOCK mode")
                 self.provider = "mock"
+                return
+            
+            self.mistral_client = Mistral(api_key=api_key)
+            print(f"✓ Mistral API initialized")
+            print(f"   Model: {Config.MISTRAL_API_MODEL}")
+            print(f"   Type: pre-trained (API)")
+            
+        except ImportError:
+            print("⚠ mistralai package not installed")
+            print("  Install with: pip install mistralai")
+            print("  Falling back to MOCK mode")
+            self.provider = "mock"
+        except Exception as e:
+            print(f"⚠ Mistral API initialization failed: {e}")
+            print("  Falling back to MOCK mode")
+            self.provider = "mock"
     
     
     def generate(self, system_prompt, user_prompt):
@@ -134,8 +234,10 @@ class UniversalLLM:
         max_tokens = Config.LLM_MAX_TOKENS
        
         # Generate using configured provider
-        if self.provider == "mistral":
+        if self.provider in ["mistral", "mistral-pretrained"]:
             response = self._generate_mistral(system_prompt, user_prompt, max_tokens)
+        elif self.provider == "mistral-api":
+            response = self._generate_mistral_api(system_prompt, user_prompt, max_tokens)
         else:
             response = self._generate_gemini(system_prompt, user_prompt, max_tokens)
         
@@ -250,6 +352,48 @@ class UniversalLLM:
                 
         except Exception as e:
             print(f"⚠ Gemini generation failed: {e}")
+            return ""
+    
+    def _generate_mistral_api(self, system_prompt, user_prompt, max_tokens):
+        """
+        Generate using Mistral API (pre-trained model, no local download needed).
+        This is faster than loading the local model but requires API key.
+        """
+        try:
+            if not hasattr(self, 'mistral_client') or self.mistral_client is None:
+                print("⚠ Mistral API client not initialized")
+                return ""
+            
+            print(f"✓ Generating with Mistral API ({Config.MISTRAL_API_MODEL})...")
+            
+            # Combine system and user prompts
+            combined_prompt = f"{system_prompt}\n\n{user_prompt}"
+            
+            response = self.mistral_client.chat.complete(
+                model=Config.MISTRAL_API_MODEL,
+                messages=[
+                    {"role": "user", "content": combined_prompt}
+                ],
+                temperature=Config.MISTRAL_TEMPERATURE,
+                max_tokens=max_tokens
+            )
+            
+            output = response.choices[0].message.content
+            
+            # Clean up markdown if present
+            if output.startswith("```"):
+                # Remove markdown code blocks
+                import re
+                output = re.sub(r'^```\w*\n?', '', output)
+                output = re.sub(r'\n?```$', '', output)
+            
+            print(f"✓ Mistral API response received ({len(output)} chars)")
+            return output
+            
+        except Exception as e:
+            print(f"⚠ Mistral API generation failed: {e}")
+            import traceback
+            traceback.print_exc()
             return ""
     
     def _generate_mistral(self, system_prompt, user_prompt, max_tokens):
