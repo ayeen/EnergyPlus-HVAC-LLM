@@ -895,7 +895,316 @@ In contrast, pre-trained models fail at 20 zones even with in-context examples, 
 
 ---
 
-**Document Version:** 1.0  
+# 6. Discussion
+
+This section discusses the implications of our experimental results, addresses the broader context of LLM applications in engineering domains, and acknowledges the limitations of our study.
+
+## 6.1. Interpretation of Results
+
+### 6.1.1 The Fine-tuning Imperative
+
+Our results strongly suggest that **domain-specific fine-tuning is not optional but essential** for specialized engineering tasks like EnergyPlus HVAC generation. The stark contrast between fine-tuned (100% success) and pre-trained (0-20% success) models indicates that:
+
+1. **Implicit knowledge acquisition**: Fine-tuning enables the model to internalize domain-specific patterns that cannot be adequately conveyed through prompts alone. The 42-field VRF system specification, with its complex interdependencies and strict formatting requirements, represents knowledge that must be "learned" rather than "instructed."
+
+2. **Format stability**: Fine-tuned models produce consistently formatted output without markdown artifacts, explanatory text, or structural deviations. This reliability is critical for automated pipelines where post-processing failures can cascade into simulation errors.
+
+3. **Scalability preservation**: Unlike pre-trained models that exhibit quality degradation at scale (breaking at 20 zones), fine-tuned models maintain consistent performance regardless of complexity.
+
+### 6.1.2 The Limitations of In-Context Learning
+
+The failure of in-context learning (few-shot prompting) at scale reveals fundamental constraints:
+
+| Observation | Implication |
+|-------------|-------------|
+| Pre-trained succeeds at 1 zone but fails at 20 | Context window limitations affect output consistency |
+| Adding examples helps format but not scale | Examples teach syntax, not generalization |
+| Quality degrades gradually (2→10 zones) then fails (20 zones) | Model "attention" becomes diluted with complexity |
+
+This finding aligns with recent research suggesting that in-context learning is effective for tasks within the model's training distribution but struggles with specialized, out-of-distribution formats.
+
+### 6.1.3 Multi-Agent Synergy
+
+The improvement from 80% first-try success to 100% final success demonstrates the value of the multi-agent architecture:
+
+```
+Single Agent (Generator Only):     80% success
+Multi-Agent (Generator + Corrector): 100% success
+                                    ────────────
+Improvement:                        +20% absolute
+```
+
+This synergy arises because:
+
+1. **Specialization**: Agent 1 focuses on generation; Agent 3 focuses on correction. Neither needs to be perfect—they complement each other.
+
+2. **Error diversity**: The types of errors Agent 1 makes (e.g., field mismatches) are exactly what Agent 3 is trained to fix.
+
+3. **Bounded iteration**: With a maximum of 3 correction iterations, the system maintains efficiency while ensuring reliability.
+
+---
+
+## 6.2. Implications for Building Energy Modeling
+
+### 6.2.1 Automation Potential
+
+Our system demonstrates that **end-to-end automation of HVAC design is feasible** for VRF systems. The practical implications include:
+
+| Stakeholder | Benefit |
+|-------------|---------|
+| **Building engineers** | Reduced manual IDF editing; faster design iterations |
+| **Energy modelers** | Automatic generation of simulation-ready configurations |
+| **Researchers** | Rapid prototyping of building energy studies |
+| **Software developers** | Foundation for intelligent building design tools |
+
+### 6.2.2 Integration with BIM Workflows
+
+The natural language interface enables integration with Building Information Modeling (BIM) workflows:
+
+```
+BIM Model → Zone Extraction → User Request → HVAC-LLM → EnergyPlus IDF
+```
+
+This pipeline could connect tools like Revit, OpenStudio, or gbXML exporters to our LLM-based generation system.
+
+### 6.2.3 Expanding Beyond VRF
+
+While this study focused on VRF systems, the methodology is generalizable to other HVAC system types:
+
+| System Type | Adaptation Required |
+|-------------|---------------------|
+| VAV (Variable Air Volume) | New training data; similar architecture |
+| Chilled beam | New training data; similar architecture |
+| Radiant systems | New training data; field specification updates |
+| Hybrid systems | Multi-system coordination; extended pipeline |
+
+The modular architecture allows fine-tuned models for different system types to be swapped based on user requirements.
+
+---
+
+## 6.3. Implications for LLM Applications in Engineering
+
+### 6.3.1 Domain-Specific vs. General-Purpose Models
+
+Our findings contribute to the ongoing debate about specialized vs. general-purpose LLMs:
+
+| Approach | Advantages | Disadvantages |
+|----------|------------|---------------|
+| **General-purpose (GPT-4, Claude)** | No training required; broad capabilities | Fails on specialized formats; expensive at scale |
+| **Fine-tuned specialist** | High accuracy; consistent output; lower inference cost | Requires training data; narrower scope |
+
+For engineering applications with strict output requirements, **fine-tuned specialists outperform generalists** despite having fewer parameters (7B vs. 175B+).
+
+### 6.3.2 The RAG-Fine-tuning Spectrum
+
+Our RAG analysis reveals a nuanced relationship:
+
+```
+                    PERFORMANCE vs. APPROACH
+                    
+Performance
+     │
+100% │                           ●────────● Fine-tuned + RAG
+     │                    ●─────●          Fine-tuned only
+ 80% │
+     │
+ 60% │
+     │
+ 40% │
+     │
+ 20% │  ●─────●                            Pre-trained + RAG
+     │
+  0% │  ●─────●                            Pre-trained only
+     └──────────────────────────────────────────────────────
+            Low                                    High
+                    Domain Specialization
+```
+
+**Key insight**: RAG provides marginal improvement (~15%) on top of fine-tuning but cannot rescue a non-fine-tuned model. The knowledge retrieval is most valuable when the base model already understands the domain context.
+
+### 6.3.3 Error Correction as a Safety Net
+
+The Agent 3 correction mechanism addresses a critical challenge in LLM deployment: **graceful degradation**. Rather than failing silently or producing unusable output, the system:
+
+1. Detects failures through simulation feedback
+2. Applies targeted corrections based on error semantics
+3. Iterates until success or explicit failure
+
+This pattern is applicable to other LLM applications where output correctness is verifiable (e.g., code generation, data transformation, document formatting).
+
+---
+
+## 6.4. Comparison with Related Work
+
+### 6.4.1 LLMs for Code Generation
+
+| Aspect | Code Generation (e.g., Copilot) | Our HVAC Generation |
+|--------|--------------------------------|---------------------|
+| Output format | Programming languages | Domain-specific IDF format |
+| Verification | Compilation, tests | EnergyPlus simulation |
+| Error feedback | Compiler errors | Simulation errors |
+| Domain specificity | General programming | Highly specialized |
+
+Our work extends code generation paradigms to domain-specific engineering artifacts.
+
+### 6.4.2 LLMs for Scientific Computing
+
+Compared to LLM applications in computational chemistry or physics simulations:
+
+| Aspect | Scientific Computing | Building Energy Modeling |
+|--------|---------------------|-------------------------|
+| Input complexity | Molecular structures, PDEs | Building geometry, zones |
+| Output validation | Experimental data | Simulation convergence |
+| Domain knowledge | Physics/chemistry principles | HVAC engineering standards |
+
+Our multi-agent approach with simulation-in-the-loop validation is analogous to active learning in scientific ML.
+
+---
+
+## 6.5. Limitations
+
+### 6.5.1 Scope Limitations
+
+| Limitation | Description | Mitigation |
+|------------|-------------|------------|
+| **VRF-only focus** | Only VRF systems tested | Methodology applicable to other system types |
+| **EnergyPlus version** | Tested on v25.2.0 only | IDD version-awareness built into RAG |
+| **Building types** | Office buildings primarily | Expandable training data needed |
+| **Climate zones** | Limited weather file testing | Additional validation recommended |
+
+### 6.5.2 Model Limitations
+
+| Limitation | Description | Impact |
+|------------|-------------|--------|
+| **Training data size** | 500+ examples may not cover all edge cases | Rare configurations may fail |
+| **Model size** | 7B parameters limits reasoning depth | Complex multi-system interactions may be challenging |
+| **Context window** | Limited to ~4K tokens per generation | Very large buildings may require chunking |
+
+### 6.5.3 Experimental Limitations
+
+| Limitation | Description | Future Work |
+|------------|-------------|-------------|
+| **Test case diversity** | 5 primary test cases | Expand to 50+ diverse buildings |
+| **User study absence** | No human evaluation of usability | Conduct practitioner interviews |
+| **Baseline comparison** | Only Mistral-based models | Compare with GPT-4, Claude, Llama |
+| **Energy accuracy** | Simulation success ≠ energy accuracy | Validate against measured data |
+
+### 6.5.4 Deployment Limitations
+
+| Limitation | Description | Consideration |
+|------------|-------------|---------------|
+| **GPU requirement** | Fine-tuned model requires GPU | Cloud deployment or quantization |
+| **EnergyPlus dependency** | Requires local EnergyPlus installation | Container-based deployment |
+| **Real-time performance** | 3-5 second generation time | Acceptable for design workflows |
+
+---
+
+## 6.6. Threats to Validity
+
+### 6.6.1 Internal Validity
+
+| Threat | Description | Mitigation |
+|--------|-------------|------------|
+| **Training/test overlap** | Fine-tuned model may have seen similar test cases | Used distinct test buildings not in training set |
+| **Parameter tuning** | Results may be sensitive to hyperparameters | Reported all configuration settings |
+| **Random variation** | LLM outputs are stochastic | Multiple runs averaged where feasible |
+
+### 6.6.2 External Validity
+
+| Threat | Description | Mitigation |
+|--------|-------------|------------|
+| **Generalization to other HVAC types** | VRF results may not extend to VAV, chilled water | Discussed methodology generalization |
+| **Generalization to other LLMs** | Results specific to Mistral architecture | Future work on other model families |
+| **Real-world applicability** | Lab conditions vs. production use | Discussed deployment considerations |
+
+### 6.6.3 Construct Validity
+
+| Threat | Description | Mitigation |
+|--------|-------------|------------|
+| **Success metric definition** | "Success" = simulation runs, not energy accuracy | Acknowledged as limitation |
+| **Quality measurement** | Binary success vs. output quality gradations | Included qualitative analysis |
+
+---
+
+## 6.7. Future Research Directions
+
+### 6.7.1 Short-term Extensions
+
+| Direction | Description | Effort |
+|-----------|-------------|--------|
+| **Multi-system support** | Add VAV, chiller, boiler generation | Medium (new training data) |
+| **Interactive refinement** | User feedback loop for design iteration | Low (pipeline modification) |
+| **Confidence scoring** | Output reliability indicators | Medium (calibration study) |
+
+### 6.7.2 Medium-term Research
+
+| Direction | Description | Effort |
+|-----------|-------------|--------|
+| **Hybrid HVAC systems** | Generate coordinated multi-system configurations | High (architectural changes) |
+| **Energy optimization** | Optimize parameters for energy efficiency | High (RL integration) |
+| **Explainability** | Explain design decisions to users | Medium (attention analysis) |
+
+### 6.7.3 Long-term Vision
+
+| Direction | Description |
+|-----------|-------------|
+| **Full building automation** | Envelope + HVAC + controls in one pipeline |
+| **Multi-objective optimization** | Balance energy, cost, comfort, emissions |
+| **Continuous learning** | Update models from production deployments |
+| **Industry integration** | Standards-compliant export (gbXML, IFC) |
+
+---
+
+## 6.8. Practical Recommendations
+
+### 6.8.1 For Practitioners
+
+| Recommendation | Rationale |
+|----------------|-----------|
+| **Use fine-tuned models for production** | 100% vs. 20% success rate justifies training investment |
+| **Enable RAG for complex requests** | +15% improvement for edge cases |
+| **Keep Agent 3 active** | Safety net ensures reliability |
+| **Validate simulation results** | LLM success ≠ engineering correctness |
+
+### 6.8.2 For Researchers
+
+| Recommendation | Rationale |
+|----------------|-----------|
+| **Invest in domain-specific fine-tuning** | General-purpose LLMs insufficient for specialized formats |
+| **Design multi-agent architectures** | Specialization + iteration outperforms monolithic approaches |
+| **Build verification pipelines** | Simulation-in-the-loop catches errors automatically |
+| **Collect domain-specific training data** | Data quality determines model quality |
+
+### 6.8.3 For Tool Developers
+
+| Recommendation | Rationale |
+|----------------|-----------|
+| **Modular architecture** | Enable component swapping and upgrades |
+| **Version-aware knowledge bases** | EnergyPlus versions change field specifications |
+| **Graceful degradation** | Fail explicitly rather than silently |
+| **Logging and transparency** | Enable debugging and user trust |
+
+---
+
+## 6.9. Summary
+
+This discussion has examined the broader implications of our experimental results:
+
+1. **Fine-tuning is essential** for domain-specific engineering tasks with strict output requirements.
+
+2. **Multi-agent architectures** provide robustness through specialization and iterative refinement.
+
+3. **RAG enhances but cannot replace** fine-tuning—it is most effective when the base model already has domain understanding.
+
+4. **Scalability is a critical differentiator**—fine-tuned models maintain quality at scale while pre-trained models degrade.
+
+5. **The methodology is generalizable** to other HVAC system types and potentially other engineering domains with verifiable outputs.
+
+The limitations of this study—primarily scope and baseline comparisons—provide clear directions for future work. The practical recommendations offer guidance for practitioners, researchers, and tool developers seeking to apply LLMs to specialized engineering automation tasks.
+
+---
+
+**Document Version:** 1.1  
 **Last Updated:** February 2026  
 **Author:** Ayeen
 
