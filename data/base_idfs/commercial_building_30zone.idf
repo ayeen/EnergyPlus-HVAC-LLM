@@ -1,0 +1,1611 @@
+!-Generator IDFEditor 1.50
+!-NOTE: All comments with '!-' are ignored by the IDFEditor
+!- Commercial Building with 30 Zones (3 Floors) for VRF HVAC Stress Testing
+!- Building Type: Mixed-use commercial (offices, conference, labs, server room)
+!- Total Floor Area: ~4500 m2 across 3 floors
+!- Location: Chicago, IL (USA_IL_Chicago-OHare.Intl.AP.725300_TMY3)
+
+!-   ===========  ALL OBJECTS IN CLASS: VERSION ===========
+
+Version,
+    25.2;                    !- Version Identifier
+
+!-   ===========  ALL OBJECTS IN CLASS: BUILDING ===========
+
+Building,
+    Commercial Building 30 Zone,  !- Name
+    0,                       !- North Axis {deg}
+    City,                    !- Terrain
+    0.04,                    !- Loads Convergence Tolerance Value {W}
+    0.4,                     !- Temperature Convergence Tolerance Value {deltaC}
+    FullInteriorAndExterior, !- Solar Distribution
+    25,                      !- Maximum Number of Warmup Days
+    6;                       !- Minimum Number of Warmup Days
+
+!-   ===========  ALL OBJECTS IN CLASS: TIMESTEP ===========
+
+Timestep,
+    6;                       !- Number of Timesteps per Hour
+
+!-   ===========  ALL OBJECTS IN CLASS: SIMULATIONCONTROL ===========
+
+SimulationControl,
+    No,                      !- Do Zone Sizing Calculation
+    No,                      !- Do System Sizing Calculation
+    No,                      !- Do Plant Sizing Calculation
+    Yes,                     !- Run Simulation for Sizing Periods
+    Yes,                     !- Run Simulation for Weather File Run Periods
+    No,                      !- Do HVAC Sizing Simulation for Sizing Periods
+    1;                       !- Maximum Number of HVAC Sizing Simulation Passes
+
+!-   ===========  ALL OBJECTS IN CLASS: RUNPERIOD ===========
+
+RunPeriod,
+    Annual Run,              !- Name
+    1,                       !- Begin Month
+    1,                       !- Begin Day of Month
+    ,                        !- Begin Year
+    12,                      !- End Month
+    31,                      !- End Day of Month
+    ,                        !- End Year
+    Sunday,                  !- Day of Week for Start Day
+    Yes,                     !- Use Weather File Holidays and Special Days
+    Yes,                     !- Use Weather File Daylight Saving Period
+    No,                      !- Apply Weekend Holiday Rule
+    Yes,                     !- Use Weather File Rain Indicators
+    Yes;                     !- Use Weather File Snow Indicators
+
+!-   ===========================================================================
+!-   FLOOR 1 - GROUND FLOOR (Zones 1-10)
+!-   Reception, Lobby, 5 Offices, 2 Conference Rooms, Break Room, IT Server Room
+!-   ===========================================================================
+
+Zone,
+    F1_Reception,            !- Name
+    0,                       !- Direction of Relative North {deg}
+    0,                       !- X Origin {m}
+    0,                       !- Y Origin {m}
+    0,                       !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.5,                     !- Ceiling Height {m}
+    525;                     !- Volume {m3}
+
+Zone,
+    F1_Lobby,                !- Name
+    0,                       !- Direction of Relative North {deg}
+    15,                      !- X Origin {m}
+    0,                       !- Y Origin {m}
+    0,                       !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.5,                     !- Ceiling Height {m}
+    700;                     !- Volume {m3}
+
+Zone,
+    F1_Office_1,             !- Name
+    0,                       !- Direction of Relative North {deg}
+    0,                       !- X Origin {m}
+    15,                      !- Y Origin {m}
+    0,                       !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.5,                     !- Ceiling Height {m}
+    350;                     !- Volume {m3}
+
+Zone,
+    F1_Office_2,             !- Name
+    0,                       !- Direction of Relative North {deg}
+    10,                      !- X Origin {m}
+    15,                      !- Y Origin {m}
+    0,                       !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.5,                     !- Ceiling Height {m}
+    350;                     !- Volume {m3}
+
+Zone,
+    F1_Office_3,             !- Name
+    0,                       !- Direction of Relative North {deg}
+    20,                      !- X Origin {m}
+    15,                      !- Y Origin {m}
+    0,                       !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.5,                     !- Ceiling Height {m}
+    350;                     !- Volume {m3}
+
+Zone,
+    F1_Office_4,             !- Name
+    0,                       !- Direction of Relative North {deg}
+    30,                      !- X Origin {m}
+    15,                      !- Y Origin {m}
+    0,                       !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.5,                     !- Ceiling Height {m}
+    350;                     !- Volume {m3}
+
+Zone,
+    F1_Office_5,             !- Name
+    0,                       !- Direction of Relative North {deg}
+    40,                      !- X Origin {m}
+    15,                      !- Y Origin {m}
+    0,                       !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.5,                     !- Ceiling Height {m}
+    350;                     !- Volume {m3}
+
+Zone,
+    F1_Conference_A,         !- Name
+    0,                       !- Direction of Relative North {deg}
+    35,                      !- X Origin {m}
+    0,                       !- Y Origin {m}
+    0,                       !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.5,                     !- Ceiling Height {m}
+    525;                     !- Volume {m3}
+
+Zone,
+    F1_Conference_B,         !- Name
+    0,                       !- Direction of Relative North {deg}
+    45,                      !- X Origin {m}
+    0,                       !- Y Origin {m}
+    0,                       !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.5,                     !- Ceiling Height {m}
+    420;                     !- Volume {m3}
+
+Zone,
+    F1_ServerRoom,           !- Name
+    0,                       !- Direction of Relative North {deg}
+    50,                      !- X Origin {m}
+    15,                      !- Y Origin {m}
+    0,                       !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.5,                     !- Ceiling Height {m}
+    280;                     !- Volume {m3}
+
+!-   ===========================================================================
+!-   FLOOR 2 - MIDDLE FLOOR (Zones 11-20)
+!-   6 Offices, 2 Conference Rooms, Research Lab, Break Room
+!-   ===========================================================================
+
+Zone,
+    F2_Office_1,             !- Name
+    0,                       !- Direction of Relative North {deg}
+    0,                       !- X Origin {m}
+    0,                       !- Y Origin {m}
+    3.5,                     !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.0,                     !- Ceiling Height {m}
+    360;                     !- Volume {m3}
+
+Zone,
+    F2_Office_2,             !- Name
+    0,                       !- Direction of Relative North {deg}
+    12,                      !- X Origin {m}
+    0,                       !- Y Origin {m}
+    3.5,                     !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.0,                     !- Ceiling Height {m}
+    360;                     !- Volume {m3}
+
+Zone,
+    F2_Office_3,             !- Name
+    0,                       !- Direction of Relative North {deg}
+    24,                      !- X Origin {m}
+    0,                       !- Y Origin {m}
+    3.5,                     !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.0,                     !- Ceiling Height {m}
+    360;                     !- Volume {m3}
+
+Zone,
+    F2_Office_4,             !- Name
+    0,                       !- Direction of Relative North {deg}
+    36,                      !- X Origin {m}
+    0,                       !- Y Origin {m}
+    3.5,                     !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.0,                     !- Ceiling Height {m}
+    360;                     !- Volume {m3}
+
+Zone,
+    F2_Office_5,             !- Name
+    0,                       !- Direction of Relative North {deg}
+    0,                       !- X Origin {m}
+    12,                      !- Y Origin {m}
+    3.5,                     !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.0,                     !- Ceiling Height {m}
+    360;                     !- Volume {m3}
+
+Zone,
+    F2_Office_6,             !- Name
+    0,                       !- Direction of Relative North {deg}
+    12,                      !- X Origin {m}
+    12,                      !- Y Origin {m}
+    3.5,                     !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.0,                     !- Ceiling Height {m}
+    360;                     !- Volume {m3}
+
+Zone,
+    F2_Conference_A,         !- Name
+    0,                       !- Direction of Relative North {deg}
+    24,                      !- X Origin {m}
+    12,                      !- Y Origin {m}
+    3.5,                     !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.0,                     !- Ceiling Height {m}
+    540;                     !- Volume {m3}
+
+Zone,
+    F2_Conference_B,         !- Name
+    0,                       !- Direction of Relative North {deg}
+    36,                      !- X Origin {m}
+    12,                      !- Y Origin {m}
+    3.5,                     !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.0,                     !- Ceiling Height {m}
+    420;                     !- Volume {m3}
+
+Zone,
+    F2_ResearchLab,          !- Name
+    0,                       !- Direction of Relative North {deg}
+    48,                      !- X Origin {m}
+    0,                       !- Y Origin {m}
+    3.5,                     !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.0,                     !- Ceiling Height {m}
+    480;                     !- Volume {m3}
+
+Zone,
+    F2_BreakRoom,            !- Name
+    0,                       !- Direction of Relative North {deg}
+    48,                      !- X Origin {m}
+    12,                      !- Y Origin {m}
+    3.5,                     !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.0,                     !- Ceiling Height {m}
+    300;                     !- Volume {m3}
+
+!-   ===========================================================================
+!-   FLOOR 3 - TOP FLOOR (Zones 21-30)
+!-   5 Offices, Executive Suite, 2 Conference Rooms, Break Room, Rooftop Lounge
+!-   ===========================================================================
+
+Zone,
+    F3_Office_1,             !- Name
+    0,                       !- Direction of Relative North {deg}
+    0,                       !- X Origin {m}
+    0,                       !- Y Origin {m}
+    6.5,                     !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.0,                     !- Ceiling Height {m}
+    360;                     !- Volume {m3}
+
+Zone,
+    F3_Office_2,             !- Name
+    0,                       !- Direction of Relative North {deg}
+    12,                      !- X Origin {m}
+    0,                       !- Y Origin {m}
+    6.5,                     !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.0,                     !- Ceiling Height {m}
+    360;                     !- Volume {m3}
+
+Zone,
+    F3_Office_3,             !- Name
+    0,                       !- Direction of Relative North {deg}
+    24,                      !- X Origin {m}
+    0,                       !- Y Origin {m}
+    6.5,                     !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.0,                     !- Ceiling Height {m}
+    360;                     !- Volume {m3}
+
+Zone,
+    F3_Office_4,             !- Name
+    0,                       !- Direction of Relative North {deg}
+    36,                      !- X Origin {m}
+    0,                       !- Y Origin {m}
+    6.5,                     !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.0,                     !- Ceiling Height {m}
+    360;                     !- Volume {m3}
+
+Zone,
+    F3_Office_5,             !- Name
+    0,                       !- Direction of Relative North {deg}
+    0,                       !- X Origin {m}
+    12,                      !- Y Origin {m}
+    6.5,                     !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.0,                     !- Ceiling Height {m}
+    360;                     !- Volume {m3}
+
+Zone,
+    F3_ExecutiveSuite,       !- Name
+    0,                       !- Direction of Relative North {deg}
+    12,                      !- X Origin {m}
+    12,                      !- Y Origin {m}
+    6.5,                     !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.0,                     !- Ceiling Height {m}
+    600;                     !- Volume {m3}
+
+Zone,
+    F3_Conference_A,         !- Name
+    0,                       !- Direction of Relative North {deg}
+    24,                      !- X Origin {m}
+    12,                      !- Y Origin {m}
+    6.5,                     !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.0,                     !- Ceiling Height {m}
+    450;                     !- Volume {m3}
+
+Zone,
+    F3_Conference_B,         !- Name
+    0,                       !- Direction of Relative North {deg}
+    36,                      !- X Origin {m}
+    12,                      !- Y Origin {m}
+    6.5,                     !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.0,                     !- Ceiling Height {m}
+    420;                     !- Volume {m3}
+
+Zone,
+    F3_BreakRoom,            !- Name
+    0,                       !- Direction of Relative North {deg}
+    48,                      !- X Origin {m}
+    0,                       !- Y Origin {m}
+    6.5,                     !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.0,                     !- Ceiling Height {m}
+    300;                     !- Volume {m3}
+
+Zone,
+    F3_RooftopLounge,        !- Name
+    0,                       !- Direction of Relative North {deg}
+    48,                      !- X Origin {m}
+    12,                      !- Y Origin {m}
+    6.5,                     !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.0,                     !- Ceiling Height {m}
+    480;                     !- Volume {m3}
+
+!-   ===========  ALL OBJECTS IN CLASS: PEOPLE ===========
+!-   Floor 1 People
+
+People,
+    F1_Reception_People,     !- Name
+    F1_Reception,            !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    8,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F1_Lobby_People,         !- Name
+    F1_Lobby,                !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    15,                      !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F1_Office_1_People,      !- Name
+    F1_Office_1,             !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    5,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F1_Office_2_People,      !- Name
+    F1_Office_2,             !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    5,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F1_Office_3_People,      !- Name
+    F1_Office_3,             !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    5,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F1_Office_4_People,      !- Name
+    F1_Office_4,             !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    5,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F1_Office_5_People,      !- Name
+    F1_Office_5,             !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    5,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F1_Conference_A_People,  !- Name
+    F1_Conference_A,         !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    20,                      !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F1_Conference_B_People,  !- Name
+    F1_Conference_B,         !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    15,                      !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F1_ServerRoom_People,    !- Name
+    F1_ServerRoom,           !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    2,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+!-   Floor 2 People
+
+People,
+    F2_Office_1_People,      !- Name
+    F2_Office_1,             !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    5,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F2_Office_2_People,      !- Name
+    F2_Office_2,             !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    5,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F2_Office_3_People,      !- Name
+    F2_Office_3,             !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    5,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F2_Office_4_People,      !- Name
+    F2_Office_4,             !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    5,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F2_Office_5_People,      !- Name
+    F2_Office_5,             !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    5,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F2_Office_6_People,      !- Name
+    F2_Office_6,             !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    5,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F2_Conference_A_People,  !- Name
+    F2_Conference_A,         !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    20,                      !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F2_Conference_B_People,  !- Name
+    F2_Conference_B,         !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    15,                      !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F2_ResearchLab_People,   !- Name
+    F2_ResearchLab,          !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    8,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F2_BreakRoom_People,     !- Name
+    F2_BreakRoom,            !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    10,                      !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+!-   Floor 3 People
+
+People,
+    F3_Office_1_People,      !- Name
+    F3_Office_1,             !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    5,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F3_Office_2_People,      !- Name
+    F3_Office_2,             !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    5,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F3_Office_3_People,      !- Name
+    F3_Office_3,             !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    5,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F3_Office_4_People,      !- Name
+    F3_Office_4,             !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    5,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F3_Office_5_People,      !- Name
+    F3_Office_5,             !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    5,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F3_ExecutiveSuite_People,!- Name
+    F3_ExecutiveSuite,       !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    6,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F3_Conference_A_People,  !- Name
+    F3_Conference_A,         !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    18,                      !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F3_Conference_B_People,  !- Name
+    F3_Conference_B,         !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    15,                      !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F3_BreakRoom_People,     !- Name
+    F3_BreakRoom,            !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    10,                      !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+People,
+    F3_RooftopLounge_People, !- Name
+    F3_RooftopLounge,        !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    12,                      !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Office_Activity;         !- Activity Level Schedule Name
+
+!-   ===========  ALL OBJECTS IN CLASS: LIGHTS ===========
+!-   Floor 1 Lights
+
+Lights,
+    F1_Reception_Lights,     !- Name
+    F1_Reception,            !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    15.0,                    !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F1_Lobby_Lights,         !- Name
+    F1_Lobby,                !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    16.0,                    !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F1_Office_1_Lights,      !- Name
+    F1_Office_1,             !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F1_Office_2_Lights,      !- Name
+    F1_Office_2,             !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F1_Office_3_Lights,      !- Name
+    F1_Office_3,             !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F1_Office_4_Lights,      !- Name
+    F1_Office_4,             !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F1_Office_5_Lights,      !- Name
+    F1_Office_5,             !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F1_Conference_A_Lights,  !- Name
+    F1_Conference_A,         !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    12.0,                    !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F1_Conference_B_Lights,  !- Name
+    F1_Conference_B,         !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    12.0,                    !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F1_ServerRoom_Lights,    !- Name
+    F1_ServerRoom,           !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    8.0,                     !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+!-   Floor 2 Lights
+
+Lights,
+    F2_Office_1_Lights,      !- Name
+    F2_Office_1,             !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F2_Office_2_Lights,      !- Name
+    F2_Office_2,             !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F2_Office_3_Lights,      !- Name
+    F2_Office_3,             !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F2_Office_4_Lights,      !- Name
+    F2_Office_4,             !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F2_Office_5_Lights,      !- Name
+    F2_Office_5,             !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F2_Office_6_Lights,      !- Name
+    F2_Office_6,             !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F2_Conference_A_Lights,  !- Name
+    F2_Conference_A,         !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    12.0,                    !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F2_Conference_B_Lights,  !- Name
+    F2_Conference_B,         !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    12.0,                    !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F2_ResearchLab_Lights,   !- Name
+    F2_ResearchLab,          !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    14.0,                    !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F2_BreakRoom_Lights,     !- Name
+    F2_BreakRoom,            !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    10.0,                    !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+!-   Floor 3 Lights
+
+Lights,
+    F3_Office_1_Lights,      !- Name
+    F3_Office_1,             !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F3_Office_2_Lights,      !- Name
+    F3_Office_2,             !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F3_Office_3_Lights,      !- Name
+    F3_Office_3,             !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F3_Office_4_Lights,      !- Name
+    F3_Office_4,             !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F3_Office_5_Lights,      !- Name
+    F3_Office_5,             !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F3_ExecutiveSuite_Lights,!- Name
+    F3_ExecutiveSuite,       !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    12.0,                    !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F3_Conference_A_Lights,  !- Name
+    F3_Conference_A,         !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    12.0,                    !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F3_Conference_B_Lights,  !- Name
+    F3_Conference_B,         !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    12.0,                    !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F3_BreakRoom_Lights,     !- Name
+    F3_BreakRoom,            !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    10.0,                    !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    F3_RooftopLounge_Lights, !- Name
+    F3_RooftopLounge,        !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Lighting Level {W}
+    12.0,                    !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+!-   ===========  ALL OBJECTS IN CLASS: ELECTRICEQUIPMENT ===========
+!-   Floor 1 Equipment
+
+ElectricEquipment,
+    F1_Reception_Equip,      !- Name
+    F1_Reception,            !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    8.0,                     !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F1_Lobby_Equip,          !- Name
+    F1_Lobby,                !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    5.0,                     !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F1_Office_1_Equip,       !- Name
+    F1_Office_1,             !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F1_Office_2_Equip,       !- Name
+    F1_Office_2,             !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F1_Office_3_Equip,       !- Name
+    F1_Office_3,             !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F1_Office_4_Equip,       !- Name
+    F1_Office_4,             !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F1_Office_5_Equip,       !- Name
+    F1_Office_5,             !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F1_Conference_A_Equip,   !- Name
+    F1_Conference_A,         !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    8.0,                     !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F1_Conference_B_Equip,   !- Name
+    F1_Conference_B,         !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    8.0,                     !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F1_ServerRoom_Equip,     !- Name
+    F1_ServerRoom,           !- Zone or ZoneList Name
+    Always On,               !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    200.0,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.3,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+!-   Floor 2 Equipment
+
+ElectricEquipment,
+    F2_Office_1_Equip,       !- Name
+    F2_Office_1,             !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F2_Office_2_Equip,       !- Name
+    F2_Office_2,             !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F2_Office_3_Equip,       !- Name
+    F2_Office_3,             !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F2_Office_4_Equip,       !- Name
+    F2_Office_4,             !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F2_Office_5_Equip,       !- Name
+    F2_Office_5,             !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F2_Office_6_Equip,       !- Name
+    F2_Office_6,             !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F2_Conference_A_Equip,   !- Name
+    F2_Conference_A,         !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    8.0,                     !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F2_Conference_B_Equip,   !- Name
+    F2_Conference_B,         !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    8.0,                     !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F2_ResearchLab_Equip,    !- Name
+    F2_ResearchLab,          !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    25.0,                    !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F2_BreakRoom_Equip,      !- Name
+    F2_BreakRoom,            !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    15.0,                    !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+!-   Floor 3 Equipment
+
+ElectricEquipment,
+    F3_Office_1_Equip,       !- Name
+    F3_Office_1,             !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F3_Office_2_Equip,       !- Name
+    F3_Office_2,             !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F3_Office_3_Equip,       !- Name
+    F3_Office_3,             !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F3_Office_4_Equip,       !- Name
+    F3_Office_4,             !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F3_Office_5_Equip,       !- Name
+    F3_Office_5,             !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    10.76,                   !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F3_ExecutiveSuite_Equip, !- Name
+    F3_ExecutiveSuite,       !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    12.0,                    !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F3_Conference_A_Equip,   !- Name
+    F3_Conference_A,         !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    8.0,                     !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F3_Conference_B_Equip,   !- Name
+    F3_Conference_B,         !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    8.0,                     !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F3_BreakRoom_Equip,      !- Name
+    F3_BreakRoom,            !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    15.0,                    !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    F3_RooftopLounge_Equip,  !- Name
+    F3_RooftopLounge,        !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    Watts/Area,              !- Design Level Calculation Method
+    ,                        !- Design Level {W}
+    8.0,                     !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.5,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+!-   ===========  ALL OBJECTS IN CLASS: SCHEDULETYPELIMITS ===========
+
+ScheduleTypeLimits,
+    Fraction,                !- Name
+    0,                       !- Lower Limit Value
+    1,                       !- Upper Limit Value
+    Continuous;              !- Numeric Type
+
+ScheduleTypeLimits,
+    Any Number;              !- Name
+
+ScheduleTypeLimits,
+    On/Off,                  !- Name
+    0,                       !- Lower Limit Value
+    1,                       !- Upper Limit Value
+    Discrete;                !- Numeric Type
+
+!-   ===========  ALL OBJECTS IN CLASS: SCHEDULE:COMPACT ===========
+
+Schedule:Compact,
+    Office_Occupancy,        !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 06:00,0.0,        !- Field 3
+    Until: 07:00,0.1,        !- Field 5
+    Until: 08:00,0.5,        !- Field 7
+    Until: 12:00,1.0,        !- Field 9
+    Until: 13:00,0.5,        !- Field 11
+    Until: 17:00,1.0,        !- Field 13
+    Until: 18:00,0.5,        !- Field 15
+    Until: 24:00,0.0,        !- Field 17
+    For: Saturday,           !- Field 19
+    Until: 06:00,0.0,        !- Field 20
+    Until: 12:00,0.25,       !- Field 22
+    Until: 24:00,0.0,        !- Field 24
+    For: AllOtherDays,       !- Field 26
+    Until: 24:00,0.0;        !- Field 27
+
+Schedule:Compact,
+    Office_Lighting,         !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 06:00,0.05,       !- Field 3
+    Until: 07:00,0.2,        !- Field 5
+    Until: 17:00,0.9,        !- Field 7
+    Until: 18:00,0.5,        !- Field 9
+    Until: 24:00,0.05,       !- Field 11
+    For: Saturday,           !- Field 13
+    Until: 06:00,0.05,       !- Field 14
+    Until: 12:00,0.5,        !- Field 16
+    Until: 24:00,0.05,       !- Field 18
+    For: AllOtherDays,       !- Field 20
+    Until: 24:00,0.05;       !- Field 21
+
+Schedule:Compact,
+    Office_Equipment,        !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 06:00,0.1,        !- Field 3
+    Until: 07:00,0.3,        !- Field 5
+    Until: 17:00,0.9,        !- Field 7
+    Until: 18:00,0.5,        !- Field 9
+    Until: 24:00,0.1,        !- Field 11
+    For: Saturday,           !- Field 13
+    Until: 06:00,0.1,        !- Field 14
+    Until: 12:00,0.5,        !- Field 16
+    Until: 24:00,0.1,        !- Field 18
+    For: AllOtherDays,       !- Field 20
+    Until: 24:00,0.1;        !- Field 21
+
+Schedule:Compact,
+    Office_Activity,         !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,120;        !- Field 3
+
+Schedule:Compact,
+    Always On,               !- Name
+    On/Off,                  !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,1;          !- Field 3
+
+!-   ===========  ALL OBJECTS IN CLASS: GLOBALGEOMETRYRULES ===========
+
+GlobalGeometryRules,
+    UpperLeftCorner,         !- Starting Vertex Position
+    Counterclockwise,        !- Vertex Entry Direction
+    Relative;                !- Coordinate System
+
+!-   ===========  ALL OBJECTS IN CLASS: OUTPUT:VARIABLEDICTIONARY ===========
+
+Output:VariableDictionary,
+    IDF;                     !- Key Field
+
+!-   ===========  ALL OBJECTS IN CLASS: OUTPUT:TABLE:SUMMARYREPORTS ===========
+
+Output:Table:SummaryReports,
+    AllSummary;              !- Report 1 Name
+
+!-   ===========  ALL OBJECTS IN CLASS: OUTPUTCONTROL:TABLE:STYLE ===========
+
+OutputControl:Table:Style,
+    HTML;                    !- Column Separator

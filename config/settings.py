@@ -37,10 +37,10 @@ class Config:
     #   "mistral-api"       - Pre-trained via Mistral API (fast, no download)
     #   "gemini"            - Google Gemini API
     #   "mock"              - Mock responses for testing
-    LLM_PROVIDER = "mistral-api"  # Change this to switch between models
+    LLM_PROVIDER = "mistral"  # Change this to switch between models
     LLM_MODEL = "gemini-2.5-flash"  # Latest lite version - may have better quota
     # LLM_MODEl = "gemini-2.5-flash-lite"
-    LLM_MAX_TOKENS = 16384
+    LLM_MAX_TOKENS = 32768
     LLM_TEMPERATURE = 0.3
     
     # Mistral Model Settings - FINE-TUNED (VRF-specific)

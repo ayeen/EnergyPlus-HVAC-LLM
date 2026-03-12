@@ -116,11 +116,42 @@ class HVACGenerator:
             print(f"  User Design Request: {user_request}")
         
         response = self.llm.generate(system_prompt, user_prompt)
-        # Clean response: remove markdown and non-IDF lines
-        hvac_response_clean = "\n".join(
-            line for line in response.splitlines()
-            if not line.strip().startswith("```")
-        )
+        # Clean response: remove markdown fences and LLM preamble/postamble text
+        # LLM APIs often include natural language before/after the actual IDF objects
+        lines = response.splitlines()
+        cleaned_lines = []
+        in_idf_content = False
+        
+        for line in lines:
+            stripped = line.strip()
+            
+            # Skip markdown code fences
+            if stripped.startswith("```"):
+                continue
+            
+            # Detect start of actual IDF content
+            # IDF lines are: object types (contain ':' or ','), field values (contain ';' or ','), 
+            # comments (start with '!'), or blank lines within IDF content
+            is_idf_line = (
+                stripped == '' or                           # blank line
+                stripped.startswith('!') or                 # IDF comment
+                'HVACTemplate' in stripped or               # HVAC template object
+                'HVACTEMPLATE' in stripped or               # HVAC template (uppercase)
+                stripped.endswith(',') or                   # IDF field continuation
+                stripped.endswith(';') or                   # IDF object terminator
+                re.match(r'^[\w:]+,$', stripped) or         # Object type declaration
+                re.match(r'^[\w:]+;$', stripped) or         # Single-field object
+                (in_idf_content and stripped != '')          # Inside IDF content block
+            )
+            
+            if is_idf_line and stripped != '':
+                in_idf_content = True
+            
+            if in_idf_content:
+                cleaned_lines.append(line)
+            # Skip any preamble text before IDF content starts
+        
+        hvac_response_clean = "\n".join(cleaned_lines).strip()
         
         # Return clean response (pipeline will add header)
         if hvac_response_clean:

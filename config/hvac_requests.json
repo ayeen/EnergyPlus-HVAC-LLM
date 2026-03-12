@@ -68,6 +68,12 @@
     "base_idf": "data/base_idfs/large_office_20zone.idf",
     "note": "Research test: Large 20-zone office building for model comparison"
   },
+  "vrf_commercial_30zone": {
+    "prompt": "Design a comprehensive VRF HVAC system for a 3-floor commercial building with 30 zones. The building includes offices, conference rooms, a research lab, an IT server room, break rooms, reception, lobby, an executive suite, and a rooftop lounge. The server room needs continuous high-capacity cooling. Ensure proper sizing, efficient operation with heat recovery, and independent temperature control for each zone.",
+    "zones": null,
+    "base_idf": "data/base_idfs/commercial_building_30zone.idf",
+    "note": "Stress test: 30-zone commercial building to test max zone scalability beyond 20 zones"
+  },
   "vrf_residential": {
     "prompt": "Design VRF for residential home with 3 bedrooms and living areas",
     "zones": null,
