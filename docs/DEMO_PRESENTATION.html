@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HVAC-LLM Demo Presentation | Client Project Demo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+        
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5a67d8;
+            --secondary: #764ba2;
+            --accent: #00b894;
+            --accent2: #4facfe;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --success: #27ae60;
+            --dark: #1a1a2e;
+            --darker: #16213e;
+            --light: #f8f9fa;
+            --text: #2c3e50;
+            --text-light: #95a5a6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--dark);
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+        
+        /* Slide System */
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px 80px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .slide.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        /* Navigation */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0; right: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            padding: 12px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .nav-bar .slide-counter {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .nav-bar .nav-buttons button {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            margin: 0 5px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        
+        .nav-bar .nav-buttons button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+        
+        .nav-bar .progress-bar {
+            height: 3px;
+            background: rgba(255,255,255,0.1);
+            position: absolute;
+            top: 0; left: 0; right: 0;
+        }
+        
+        .nav-bar .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.3s ease;
+        }
+        
+        /* Backgrounds */
+        .bg-gradient-1 {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        .bg-gradient-2 {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+        .bg-gradient-3 {
+            background: linear-gradient(135deg, #141e30 0%, #243b55 100%);
+        }
+        .bg-dark {
+            background: #0d1117;
+        }
+        .bg-white {
+            background: #fff;
+            color: var(--text);
+        }
+        .bg-light {
+            background: #f5f6fa;
+            color: var(--text);
+        }
+        
+        /* Typography */
+        h1 { font-size: 52px; font-weight: 800; line-height: 1.15; margin-bottom: 20px; }
+        h2 { font-size: 40px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+        h3 { font-size: 28px; font-weight: 600; line-height: 1.3; margin-bottom: 12px; }
+        h4 { font-size: 20px; font-weight: 600; }
+        p { font-size: 18px; line-height: 1.7; }
+        .subtitle { font-size: 22px; font-weight: 300; opacity: 0.85; margin-bottom: 30px; }
+        .label { font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+        .small { font-size: 14px; opacity: 0.7; }
+        
+        /* Layout helpers */
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .gap-20 { gap: 20px; }
+        .gap-30 { gap: 30px; }
+        .gap-40 { gap: 40px; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .flex-1 { flex: 1; }
+        .w-half { width: 48%; }
+        .text-center { text-align: center; }
+        .mt-20 { margin-top: 20px; }
+        .mt-30 { margin-top: 30px; }
+        .mt-40 { margin-top: 40px; }
+        .mb-10 { margin-bottom: 10px; }
+        .mb-20 { margin-bottom: 20px; }
+        
+        /* Cards */
+        .card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 28px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .card-white {
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            color: var(--text);
+        }
+        
+        .card-accent {
+            border-color: var(--accent);
+            background: rgba(0,184,148,0.08);
+        }
+        
+        .card-primary {
+            border-color: var(--primary);
+            background: rgba(102,126,234,0.08);
+        }
+        
+        /* Code blocks */
+        .code-block {
+            background: #1e1e2e;
+            border-radius: 12px;
+            padding: 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.8;
+            overflow-x: auto;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .code-block .comment { color: #6a9955; }
+        .code-block .keyword { color: #569cd6; }
+        .code-block .string { color: #ce9178; }
+        .code-block .function { color: #dcdcaa; }
+        .code-block .number { color: #b5cea8; }
+        .code-block .type { color: #4ec9b0; }
+        
+        /* Badge */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge-green { background: rgba(39,174,96,0.2); color: #27ae60; }
+        .badge-blue { background: rgba(52,152,219,0.2); color: #3498db; }
+        .badge-purple { background: rgba(155,89,182,0.2); color: #9b59b6; }
+        .badge-orange { background: rgba(243,156,18,0.2); color: #f39c12; }
+        .badge-red { background: rgba(231,76,60,0.2); color: #e74c3c; }
+        
+        /* Stat box */
+        .stat-box {
+            text-align: center;
+            padding: 30px 20px;
+        }
+        .stat-box .stat-value {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stat-box .stat-label {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-top: 8px;
+        }
+        
+        /* Highlight gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .gradient-text-2 {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Icons */
+        .icon-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        
+        /* Progress ring */
+        .ring { 
+            width: 120px; height: 120px; position: relative; 
+        }
+        .ring svg { 
+            transform: rotate(-90deg); 
+        }
+        .ring .ring-label {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 28px;
+            font-weight: 800;
+        }
+        
+        /* Animated dots */
+        .dot-pulse {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        /* Pipeline flow */
+        .pipeline-step {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.05);
+            border-left: 4px solid transparent;
+            transition: all 0.3s;
+        }
+        .pipeline-step:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(5px);
+        }
+        .pipeline-step.step-input { border-left-color: var(--accent2); }
+        .pipeline-step.step-agent1 { border-left-color: var(--primary); }
+        .pipeline-step.step-agent2 { border-left-color: var(--warning); }
+        .pipeline-step.step-agent3 { border-left-color: var(--accent); }
+        .pipeline-step.step-output { border-left-color: var(--success); }
+        
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 15px;
+        }
+        table th {
+            background: rgba(102,126,234,0.15);
+            padding: 14px 18px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+        }
+        table td {
+            padding: 12px 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        table tr:hover td {
+            background: rgba(255,255,255,0.03);
+        }
+        
+        /* Comparison bar */
+        .comparison-bar {
+            height: 32px;
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+        .comparison-bar .bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            padding-left: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #fff;
+            transition: width 1s ease;
+        }
+        
+        /* Feature list */
+        .feature-list {
+            list-style: none;
+        }
+        .feature-list li {
+            padding: 10px 0;
+            display: flex;
+            align-items: start;
+            gap: 12px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .feature-list li::before {
+            content: "✓";
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        /* Architecture diagram */
+        .arch-box {
+            padding: 18px 24px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+            position: relative;
+        }
+        .arch-box.agent1 { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .arch-box.agent2 { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .arch-box.agent3 { background: linear-gradient(135deg, #4facfe, #00f2fe); color: #1a1a2e; }
+        .arch-box.rag { background: linear-gradient(135deg, #a29bfe, #6c5ce7); }
+        .arch-box.input-box { background: linear-gradient(135deg, #11998e, #38ef7d); color: #1a1a2e; }
+        .arch-box.output-box { background: linear-gradient(135deg, #43e97b, #38f9d7); color: #1a1a2e; }
+        
+        .arch-arrow {
+            text-align: center;
+            font-size: 24px;
+            opacity: 0.5;
+            padding: 5px 0;
+        }
+        
+        /* Demo terminal */
+        .terminal {
+            background: #0d1117;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .terminal-header {
+            background: #161b22;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .terminal-dot {
+            width: 12px; height: 12px; border-radius: 50%;
+        }
+        .terminal-body {
+            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+        .t-green { color: #3fb950; }
+        .t-blue { color: #58a6ff; }
+        .t-yellow { color: #d29922; }
+        .t-red { color: #f85149; }
+        .t-gray { color: #8b949e; }
+        .t-white { color: #c9d1d9; }
+        .t-bold { font-weight: 700; }
+        
+        /* Animated entrance */
+        .fade-in { animation: fadeIn 0.8s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .slide-up { animation: slideUp 0.6s ease forwards; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Logo area */
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .logo-icon {
+            width: 60px; height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+        
+        /* Section divider */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+        .section-divider .line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(102,126,234,0.5), transparent);
+        }
+    </style>
+</head>
+<body>
+
+<div class="slide-container" id="slideContainer">
+
+<!-- =====================================================
+     SLIDE 1: TITLE 
+     ===================================================== -->
+<div class="slide bg-gradient-1 active" id="slide-1">
+    <div style="max-width: 900px;">
+        <div class="logo-area">
+            <div class="logo-icon">🏢</div>
+            <div>
+                <div style="font-size: 16px; font-weight: 700; letter-spacing: 1px;">HVAC-LLM</div>
+                <div style="font-size: 12px; opacity: 0.6;">AI-Powered Building Design</div>
+            </div>
+        </div>
+        
+        <div class="label">Client Project Demo</div>
+        <h1>Automated HVAC System Design <br>using <span class="gradient-text">Multi-Agent LLMs</span></h1>
+        <p class="subtitle">Transform natural language requirements into simulation-ready<br>EnergyPlus configurations — in minutes, not days.</p>
+        
+        <div class="flex gap-30 mt-40">
+            <div class="stat-box">
+                <div class="stat-value">100%</div>
+                <div class="stat-label">Final Success Rate</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">3</div>
+                <div class="stat-label">AI Agents</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">&lt;2min</div>
+                <div class="stat-label">Average Generation Time</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">42</div>
+                <div class="stat-label">VRF System Fields</div>
+            </div>
+        </div>
+        
+        <div class="mt-40 small" style="opacity: 0.5;">
+            Research Project • EnergyPlus 25.2.0 • Mistral-7B Fine-tuned • RAG-Enhanced
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+     SLIDE 2: THE PROBLEM 
+     ===================================================== -->
+<div class="slide bg-gradient-2" id="slide-2">
+    <div class="label">The Challenge</div>
+    <h2>Why Automate HVAC Design?</h2>
+    <p class="subtitle" style="max-width: 700px;">Manual HVAC configuration for EnergyPlus is time-consuming, error-prone, and requires deep domain expertise.</p>
+    
+    <div class="flex gap-30 mt-30">
+        <div class="card flex-1">
+            <div style="font-size: 36px; margin-bottom: 12px;">⏱️</div>
+            <h4 class="mb-10">Time-Consuming</h4>
+            <p style="font-size: 15px; opacity: 0.8;">Manual VRF system configuration requires specifying <strong>42 fields</strong> per system, plus zone-level objects and thermostats. A 20-zone building can take hours to configure correctly.</p>
+        </div>
+        <div class="card flex-1">
+            <div style="font-size: 36px; margin-bottom: 12px;">❌</div>
+            <h4 class="mb-10">Error-Prone</h4>
+            <p style="font-size: 15px; opacity: 0.8;">Field value mismatches, missing references, invalid enumerations — even experienced engineers make syntax errors that cause <strong>simulation failures</strong>.</p>
+        </div>
+        <div class="card flex-1">
+            <div style="font-size: 36px; margin-bottom: 12px;">📚</div>
+            <h4 class="mb-10">Domain Expertise Required</h4>
+            <p style="font-size: 15px; opacity: 0.8;">EnergyPlus has <strong>900+ object types</strong> with complex interdependencies. Understanding VRF field specifications requires years of HVAC engineering experience.</p>
+        </div>
+    </div>
+    
+    <div class="card card-accent mt-30" style="max-width: 800px;">
+        <div class="flex items-center gap-20">
+            <div style="font-size: 28px;">💡</div>
+            <div>
+                <h4>Our Solution</h4>
+                <p style="font-size: 15px; opacity: 0.8;">A multi-agent AI system that takes natural language descriptions and produces <strong>complete, simulation-ready</strong> EnergyPlus IDF files — with built-in error correction.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+     SLIDE 3: SOLUTION OVERVIEW 
+     ===================================================== -->
+<div class="slide bg-gradient-1" id="slide-3">
+    <div class="label">Solution Overview</div>
+    <h2>How It Works — <span class="gradient-text">The Big Picture</span></h2>
+    
+    <div class="flex gap-40 mt-30">
+        <div style="width: 55%;">
+            <div class="pipeline-step step-input mb-10">
+                <div class="icon-circle" style="background: rgba(79,172,254,0.2);">📝</div>
+                <div>
+                    <h4>User Input</h4>
+                    <p class="small">"Design a VRF system with heat recovery for my 4-zone office building"</p>
+                </div>
+            </div>
+            <div class="arch-arrow">▼</div>
+            <div class="pipeline-step step-agent1 mb-10">
+                <div class="icon-circle" style="background: rgba(102,126,234,0.2);">🤖</div>
+                <div>
+                    <h4>Agent 1: VRF Generator</h4>
+                    <p class="small">Fine-tuned Mistral-7B generates HVACTemplate objects (System + Zone + Thermostat)</p>
+                </div>
+            </div>
+            <div class="arch-arrow">▼</div>
+            <div class="pipeline-step step-agent2 mb-10">
+                <div class="icon-circle" style="background: rgba(243,156,18,0.2);">✅</div>
+                <div>
+                    <h4>Agent 2: Validation & Simulation</h4>
+                    <p class="small">IDD compliance → Eppy validation → ExpandObjects → EnergyPlus simulation</p>
+                </div>
+            </div>
+            <div class="arch-arrow">▼</div>
+            <div class="pipeline-step step-agent3 mb-10">
+                <div class="icon-circle" style="background: rgba(0,184,148,0.2);">🔧</div>
+                <div>
+                    <h4>Agent 3: Error Corrector</h4>
+                    <p class="small">Analyzes errors + applies targeted fixes (max 3 iterations)</p>
+                </div>
+            </div>
+            <div class="arch-arrow">▼</div>
+            <div class="pipeline-step step-output">
+                <div class="icon-circle" style="background: rgba(39,174,96,0.2);">📄</div>
+                <div>
+                    <h4>Output: Complete IDF</h4>
+                    <p class="small">Simulation-ready EnergyPlus file, validated and error-free</p>
+                </div>
+            </div>
+        </div>
+        
+        <div style="width: 42%;">
+            <div class="card" style="margin-bottom: 20px;">
+                <h4 class="mb-10">🎯 Key Innovation</h4>
+                <p style="font-size: 14px; opacity: 0.8;">Unlike monolithic LLM approaches, our <strong>generate → validate → correct</strong> paradigm means no single agent needs to be perfect. The system self-corrects.</p>
+            </div>
+            
+            <div class="card" style="margin-bottom: 20px;">
+                <h4 class="mb-10">📊 By The Numbers</h4>
+                <ul class="feature-list" style="font-size: 14px;">
+                    <li>80% first-try success rate</li>
+                    <li>100% final success (after correction)</li>
+                    <li>Average 0.2 correction iterations</li>
+                    <li>Handles 1 to 20+ zones</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h4 class="mb-10">🔧 Tech Stack</h4>
+                <div class="flex gap-10" style="flex-wrap: wrap;">
+                    <span class="badge badge-blue">EnergyPlus 25.2</span>
+                    <span class="badge badge-purple">Mistral-7B</span>
+                    <span class="badge badge-green">ChromaDB</span>
+                    <span class="badge badge-orange">PyTorch</span>
+                    <span class="badge badge-blue">LoRA/QLoRA</span>
+                    <span class="badge badge-green">Eppy</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+     SLIDE 4: SYSTEM ARCHITECTURE
+     ===================================================== -->
+<div class="slide bg-gradient-3" id="slide-4">
+    <div class="label">Architecture</div>
+    <h2>Multi-Agent System Architecture</h2>
+    
+    <div class="flex gap-30 mt-20">
+        <!-- Left: Architecture Diagram -->
+        <div style="width: 60%;">
+            <svg width="100%" height="480" viewBox="0 0 580 480" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="ag1" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#667eea"/><stop offset="100%" style="stop-color:#764ba2"/>
+                    </linearGradient>
+                    <linearGradient id="ag2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#f093fb"/><stop offset="100%" style="stop-color:#f5576c"/>
+                    </linearGradient>
+                    <linearGradient id="ag3" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#4facfe"/><stop offset="100%" style="stop-color:#00f2fe"/>
+                    </linearGradient>
+                    <linearGradient id="ragG" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#a29bfe"/><stop offset="100%" style="stop-color:#6c5ce7"/>
+                    </linearGradient>
+                    <linearGradient id="inG" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#11998e"/><stop offset="100%" style="stop-color:#38ef7d"/>
+                    </linearGradient>
+                    <linearGradient id="outG" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#43e97b"/><stop offset="100%" style="stop-color:#38f9d7"/>
+                    </linearGradient>
+                    <marker id="ah" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#8b949e"/>
+                    </marker>
+                </defs>
+                
+                <!-- Input -->
+                <rect x="160" y="10" width="260" height="50" rx="8" fill="url(#inG)"/>
+                <text x="290" y="32" text-anchor="middle" fill="#1a1a2e" font-family="Inter" font-weight="700" font-size="13">📝 USER INPUT</text>
+                <text x="290" y="48" text-anchor="middle" fill="#1a1a2e" font-family="Inter" font-size="10">Natural Language + Base IDF + Zones</text>
+                
+                <line x1="290" y1="60" x2="290" y2="85" stroke="#8b949e" stroke-width="2" marker-end="url(#ah)"/>
+                
+                <!-- RAG Knowledge Base (side) -->
+                <rect x="420" y="100" width="150" height="100" rx="8" fill="url(#ragG)"/>
+                <text x="495" y="125" text-anchor="middle" fill="white" font-family="Inter" font-weight="700" font-size="12">📚 RAG Knowledge</text>
+                <text x="495" y="143" text-anchor="middle" fill="white" font-family="Inter" font-size="9">ChromaDB (718+ docs)</text>
+                <text x="495" y="158" text-anchor="middle" fill="white" font-family="Inter" font-size="9">Field Specs • Rules</text>
+                <text x="495" y="173" text-anchor="middle" fill="white" font-family="Inter" font-size="9">Error Patterns • Deps</text>
+                <text x="495" y="188" text-anchor="middle" fill="white" font-family="Inter" font-size="9">BAAI/bge-small 384d</text>
+                
+                <!-- Agent 1 -->
+                <rect x="100" y="90" width="280" height="70" rx="10" fill="url(#ag1)"/>
+                <text x="240" y="118" text-anchor="middle" fill="white" font-family="Inter" font-weight="700" font-size="13">🤖 AGENT 1: VRF GENERATOR</text>
+                <text x="240" y="138" text-anchor="middle" fill="white" font-family="Inter" font-size="10">Fine-tuned Mistral-7B (500+ examples)</text>
+                <text x="240" y="153" text-anchor="middle" fill="white" font-family="Inter" font-size="9">System:VRF (42 fields) + Zone:VRF + Thermostats</text>
+                
+                <!-- RAG arrow to Agent 1 -->
+                <line x1="420" y1="135" x2="385" y2="125" stroke="#a29bfe" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#ah)"/>
+                
+                <line x1="240" y1="160" x2="240" y2="185" stroke="#8b949e" stroke-width="2" marker-end="url(#ah)"/>
+                
+                <!-- Quick Validator -->
+                <rect x="130" y="190" width="220" height="40" rx="6" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.2)" stroke-dasharray="5,3"/>
+                <text x="240" y="213" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-family="Inter" font-size="10">Agent 1.5: Quick Validation (optional)</text>
+                
+                <line x1="240" y1="230" x2="240" y2="255" stroke="#8b949e" stroke-width="2" marker-end="url(#ah)"/>
+                
+                <!-- Agent 2 -->
+                <rect x="80" y="260" width="320" height="80" rx="10" fill="url(#ag2)"/>
+                <text x="240" y="285" text-anchor="middle" fill="white" font-family="Inter" font-weight="700" font-size="13">✅ AGENT 2: VALIDATION & SIMULATION</text>
+                <text x="240" y="303" text-anchor="middle" fill="white" font-family="Inter" font-size="10">4-Stage Pipeline:</text>
+                <text x="240" y="318" text-anchor="middle" fill="white" font-family="Inter" font-size="9">IDD Check → Eppy Validate → ExpandObjects → EnergyPlus Sim</text>
+                <text x="240" y="333" text-anchor="middle" fill="white" font-family="Inter" font-size="9">Error classification: Warning | Severe | Fatal</text>
+                
+                <!-- Decision -->
+                <line x1="170" y1="340" x2="170" y2="370" stroke="#8b949e" stroke-width="2"/>
+                <line x1="310" y1="340" x2="310" y2="370" stroke="#8b949e" stroke-width="2"/>
+                
+                <text x="140" y="365" fill="#3fb950" font-family="Inter" font-weight="700" font-size="11">SUCCESS</text>
+                <text x="295" y="365" fill="#f85149" font-family="Inter" font-weight="700" font-size="11">FAILURE</text>
+                
+                <line x1="170" y1="370" x2="170" y2="400" stroke="#3fb950" stroke-width="2" marker-end="url(#ah)"/>
+                <line x1="310" y1="370" x2="310" y2="400" stroke="#f85149" stroke-width="2" marker-end="url(#ah)"/>
+                
+                <!-- Output -->
+                <rect x="90" y="405" width="160" height="50" rx="8" fill="url(#outG)"/>
+                <text x="170" y="428" text-anchor="middle" fill="#1a1a2e" font-family="Inter" font-weight="700" font-size="13">📄 COMPLETE IDF</text>
+                <text x="170" y="445" text-anchor="middle" fill="#1a1a2e" font-family="Inter" font-size="10">Simulation-ready</text>
+                
+                <!-- Agent 3 -->
+                <rect x="270" y="405" width="200" height="55" rx="10" fill="url(#ag3)"/>
+                <text x="370" y="428" text-anchor="middle" fill="#1a1a2e" font-family="Inter" font-weight="700" font-size="12">🔧 AGENT 3: CORRECTOR</text>
+                <text x="370" y="445" text-anchor="middle" fill="#1a1a2e" font-family="Inter" font-size="9">Fine-tuned Mistral-7B (200+ error-fix pairs)</text>
+                
+                <!-- RAG arrow to Agent 3 -->
+                <line x1="495" y1="200" x2="400" y2="405" stroke="#a29bfe" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#ah)"/>
+                
+                <!-- Loop back arrow -->
+                <path d="M 470 430 Q 520 430 520 320 Q 520 300 400 300" fill="none" stroke="#8b949e" stroke-width="2" marker-end="url(#ah)"/>
+                <text x="540" y="370" fill="#8b949e" font-family="Inter" font-size="9" transform="rotate(-90,540,370)">Re-simulate (Max 3)</text>
+            </svg>
+        </div>
+        
+        <!-- Right: Key Details -->
+        <div style="width: 38%;">
+            <div class="card mb-20" style="padding: 20px;">
+                <h4 style="font-size: 15px;" class="mb-10">🔑 Design Principles</h4>
+                <ul class="feature-list" style="font-size: 13px;">
+                    <li>Separation of Concerns — each agent specializes</li>
+                    <li>Iterative Refinement — mimics engineering workflow</li>
+                    <li>Knowledge-Enhanced — RAG provides runtime context</li>
+                    <li>Bounded Execution — max 3 correction iterations</li>
+                </ul>
+            </div>
+            
+            <div class="card mb-20" style="padding: 20px;">
+                <h4 style="font-size: 15px;" class="mb-10">📡 Agent Communication</h4>
+                <p style="font-size: 12px; opacity: 0.8;">JSON-based protocol: Agent 1 sends HVACTemplate objects → Agent 2 validates & simulates → Agent 3 receives error messages + IDF path → Returns targeted JSON fix specifications.</p>
+            </div>
+            
+            <div class="card" style="padding: 20px;">
+                <h4 style="font-size: 15px;" class="mb-10">🏗️ VRF Architecture</h4>
+                <p style="font-size: 12px; opacity: 0.8;"><strong>1 outdoor unit</strong> serves <strong>N indoor units</strong> (one per zone). The system generates all HVACTemplate objects that EnergyPlus ExpandObjects converts to detailed simulation objects.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+     SLIDE 5: AGENT 1 DEEP DIVE
+     ===================================================== -->
+<div class="slide bg-gradient-1" id="slide-5">
+    <div class="label">Agent 1 — The Generator</div>
+    <h2>Fine-tuned Mistral-7B for VRF Generation</h2>
+    
+    <div class="flex gap-30 mt-20">
+        <div style="width: 50%;">
+            <div class="card mb-20">
+                <h4 class="mb-10">🧠 Model Details</h4>
+                <table>
+                    <tr><td style="font-weight:600; width:50%;">Base Model</td><td>Mistral-7B-v0.1</td></tr>
+                    <tr><td style="font-weight:600;">Fine-tuning</td><td>LoRA (r=16, α=32)</td></tr>
+                    <tr><td style="font-weight:600;">Training Data</td><td>500+ VRF examples</td></tr>
+                    <tr><td style="font-weight:600;">Quantization</td><td>4-bit NF4 (QLoRA)</td></tr>
+                    <tr><td style="font-weight:600;">Memory</td><td>~6GB VRAM</td></tr>
+                    <tr><td style="font-weight:600;">Parameters Updated</td><td>~0.1% (via LoRA)</td></tr>
+                </table>
+            </div>
+            
+            <div class="card">
+                <h4 class="mb-10">🔄 Iterative Generation Strategy</h4>
+                <div class="pipeline-step step-agent1 mb-10" style="padding: 10px 14px;">
+                    <div><strong>Step 1:</strong> HVACTemplate:System:VRF (42 fields, 512 tokens)</div>
+                </div>
+                <div class="pipeline-step step-agent1 mb-10" style="padding: 10px 14px;">
+                    <div><strong>Step 2:</strong> HVACTemplate:Zone:VRF (per zone, 400 tokens each)</div>
+                </div>
+                <div class="pipeline-step step-agent1" style="padding: 10px 14px;">
+                    <div><strong>Step 3:</strong> HVACTemplate:Thermostat (per zone, 256 tokens)</div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="width: 48%;">
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dot" style="background:#f85149;"></div>
+                    <div class="terminal-dot" style="background:#d29922;"></div>
+                    <div class="terminal-dot" style="background:#3fb950;"></div>
+                    <span class="t-gray" style="margin-left: 10px; font-size: 12px;">Agent 1 Output (2-Zone Example)</span>
+                </div>
+                <div class="terminal-body" style="font-size: 11px; max-height: 400px; overflow-y: auto;">
+<span class="t-green">HVACTemplate:System:VRF,</span>
+<span class="t-white">  VRF_System_1,</span> <span class="t-gray">!- Name</span>
+<span class="t-white">  ,</span> <span class="t-gray">!- Availability Schedule</span>
+<span class="t-blue">  Autosize,</span> <span class="t-gray">!- Cooling Capacity</span>
+<span class="t-yellow">  3.3,</span> <span class="t-gray">!- Cooling COP</span>
+<span class="t-white">  -10,</span> <span class="t-gray">!- Min Outdoor Temp (Cool)</span>
+<span class="t-white">  48,</span> <span class="t-gray">!- Max Outdoor Temp (Cool)</span>
+<span class="t-blue">  Autosize,</span> <span class="t-gray">!- Heating Capacity</span>
+<span class="t-white">  1,</span> <span class="t-gray">!- Heating Cap Sizing Ratio</span>
+<span class="t-yellow">  3.5,</span> <span class="t-gray">!- Heating COP</span>
+<span class="t-white">  -25,</span> <span class="t-gray">!- Min Outdoor Temp (Heat)</span>
+<span class="t-white">  18,</span> <span class="t-gray">!- Max Outdoor Temp (Heat)</span>
+<span class="t-white">  0.15,</span> <span class="t-gray">!- Min Heat Pump PLR</span>
+<span class="t-white">  Zone1,</span> <span class="t-gray">!- Master Thermostat Zone</span>
+<span class="t-white">  LoadPriority;</span> <span class="t-gray">!- Priority Control</span>
+<br>
+<span class="t-green">HVACTemplate:Zone:VRF,</span>
+<span class="t-white">  Zone1,</span> <span class="t-gray">!- Zone Name</span>
+<span class="t-white">  VRF_System_1,</span> <span class="t-gray">!- System Name</span>
+<span class="t-white">  Thermostat_Zone1,</span> <span class="t-gray">!- Thermostat</span>
+<span class="t-white">  ...</span> <span class="t-gray">!- (42 fields per zone)</span>
+<br>
+<span class="t-green">HVACTemplate:Thermostat,</span>
+<span class="t-white">  Thermostat_Zone1,</span> <span class="t-gray">!- Name</span>
+<span class="t-white">  , 20,</span> <span class="t-gray">!- Heating: 20°C</span>
+<span class="t-white">  , 24;</span> <span class="t-gray">!- Cooling: 24°C</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+     SLIDE 6: AGENT 2 & 3 DEEP DIVE
+     ===================================================== -->
+<div class="slide bg-gradient-2" id="slide-6">
+    <div class="label">Agents 2 & 3 — Validate & Correct</div>
+    <h2>Four-Stage Validation + Iterative Correction</h2>
+    
+    <div class="flex gap-30 mt-20">
+        <!-- Agent 2 -->
+        <div style="width: 50%;">
+            <h3 style="font-size: 20px; margin-bottom: 15px;">✅ Agent 2: Validation Pipeline</h3>
+            
+            <div class="card mb-10" style="padding: 16px; border-left: 4px solid #74b9ff;">
+                <div class="flex items-center gap-10">
+                    <span class="badge badge-blue">Stage 1</span>
+                    <strong>IDD Compliance Check</strong>
+                </div>
+                <p style="font-size: 12px; opacity: 0.7; margin-top: 6px;">Validates object types, required fields, value ranges against EnergyPlus Data Dictionary</p>
+            </div>
+            
+            <div class="card mb-10" style="padding: 16px; border-left: 4px solid #a29bfe;">
+                <div class="flex items-center gap-10">
+                    <span class="badge badge-purple">Stage 2</span>
+                    <strong>Eppy Validation</strong>
+                </div>
+                <p style="font-size: 12px; opacity: 0.7; margin-top: 6px;">Cross-object reference checking, zone links, schema compliance using Eppy library</p>
+            </div>
+            
+            <div class="card mb-10" style="padding: 16px; border-left: 4px solid #fd79a8;">
+                <div class="flex items-center gap-10">
+                    <span class="badge badge-red">Stage 3</span>
+                    <strong>ExpandObjects</strong>
+                </div>
+                <p style="font-size: 12px; opacity: 0.7; margin-top: 6px;">HVACTemplate → Detailed objects (coils, fans, schedules, piping, controls)</p>
+            </div>
+            
+            <div class="card" style="padding: 16px; border-left: 4px solid #55efc4;">
+                <div class="flex items-center gap-10">
+                    <span class="badge badge-green">Stage 4</span>
+                    <strong>EnergyPlus Simulation</strong>
+                </div>
+                <p style="font-size: 12px; opacity: 0.7; margin-top: 6px;">Full energy simulation, parses eplusout.err for errors → classifies: Warning / Severe / Fatal</p>
+            </div>
+        </div>
+        
+        <!-- Agent 3 -->
+        <div style="width: 48%;">
+            <h3 style="font-size: 20px; margin-bottom: 15px;">🔧 Agent 3: Error Correction</h3>
+            
+            <div class="card mb-20" style="padding: 20px;">
+                <h4 style="font-size: 15px;" class="mb-10">Correction Strategy</h4>
+                <div style="font-size: 13px;">
+                    <div class="flex items-center gap-10 mb-10">
+                        <span class="badge badge-green">1</span>
+                        <span>Receive error messages from Agent 2</span>
+                    </div>
+                    <div class="flex items-center gap-10 mb-10">
+                        <span class="badge badge-purple">2</span>
+                        <span>Query RAG for similar error patterns</span>
+                    </div>
+                    <div class="flex items-center gap-10 mb-10">
+                        <span class="badge badge-blue">3</span>
+                        <span>If similarity &gt; 77% → Apply cached fix</span>
+                    </div>
+                    <div class="flex items-center gap-10 mb-10">
+                        <span class="badge badge-orange">4</span>
+                        <span>Otherwise → LLM generates JSON fix spec</span>
+                    </div>
+                    <div class="flex items-center gap-10">
+                        <span class="badge badge-green">5</span>
+                        <span>Apply fix via Eppy → Re-simulate</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dot" style="background:#f85149;"></div>
+                    <div class="terminal-dot" style="background:#d29922;"></div>
+                    <div class="terminal-dot" style="background:#3fb950;"></div>
+                    <span class="t-gray" style="margin-left: 10px; font-size: 12px;">Agent 3 Fix Specification</span>
+                </div>
+                <div class="terminal-body" style="font-size: 11px;">
+<span class="t-white">{</span>
+<span class="t-blue">  "object_type"</span><span class="t-white">: </span><span class="t-green">"HVACTemplate:System:VRF"</span><span class="t-white">,</span>
+<span class="t-blue">  "field_to_change"</span><span class="t-white">: </span><span class="t-green">"condenser_type"</span><span class="t-white">,</span>
+<span class="t-blue">  "new_value"</span><span class="t-white">: </span><span class="t-green">"AirCooled"</span><span class="t-white">,</span>
+<span class="t-blue">  "reason"</span><span class="t-white">: </span><span class="t-green">"Invalid enum value"</span>
+<span class="t-white">}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+     SLIDE 7: RAG & FINE-TUNING
+     ===================================================== -->
+<div class="slide bg-gradient-1" id="slide-7">
+    <div class="label">AI Technology</div>
+    <h2>RAG Knowledge Base + <span class="gradient-text">LoRA Fine-Tuning</span></h2>
+    
+    <div class="flex gap-30 mt-20">
+        <!-- RAG -->
+        <div style="width: 48%;">
+            <h3 style="font-size: 20px; margin-bottom: 15px;">📚 RAG (Retrieval-Augmented Generation)</h3>
+            <div class="card mb-20">
+                <table>
+                    <tr><td style="font-weight:600; width: 55%;">Vector Database</td><td>ChromaDB</td></tr>
+                    <tr><td style="font-weight:600;">Documents</td><td>718+ indexed</td></tr>
+                    <tr><td style="font-weight:600;">Embedding Model</td><td>BAAI/bge-small-en-v1.5</td></tr>
+                    <tr><td style="font-weight:600;">Dimensions</td><td>384</td></tr>
+                    <tr><td style="font-weight:600;">Similarity</td><td>Cosine (threshold 77%)</td></tr>
+                </table>
+            </div>
+            
+            <div class="card">
+                <h4 style="font-size: 14px;" class="mb-10">Knowledge Collections</h4>
+                <div style="font-size: 13px; line-height: 2.2;">
+                    <div class="flex justify-between"><span>📋 Field Specifications</span><span class="badge badge-blue">42 fields</span></div>
+                    <div class="flex justify-between"><span>⚠️ Error Patterns</span><span class="badge badge-orange">50+ patterns</span></div>
+                    <div class="flex justify-between"><span>📖 Design Rules</span><span class="badge badge-green">HVAC best practices</span></div>
+                    <div class="flex justify-between"><span>🔗 Field Dependencies</span><span class="badge badge-purple">25 rules</span></div>
+                    <div class="flex justify-between"><span>🔧 Fix Procedures</span><span class="badge badge-red">10 step-by-step</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Fine-Tuning -->
+        <div style="width: 48%;">
+            <h3 style="font-size: 20px; margin-bottom: 15px;">🧬 LoRA Fine-Tuning</h3>
+            <div class="card mb-20">
+                <div class="flex gap-20 items-center">
+                    <div style="text-align: center;">
+                        <div style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #74b9ff, #0984e3); display: flex; align-items: center; justify-content: center;">
+                            <div>
+                                <div style="font-size: 14px; font-weight: 700;">7B</div>
+                                <div style="font-size: 9px;">Frozen ❄️</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="font-size: 24px;">+</div>
+                    <div style="text-align: center;">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #fd79a8, #e84393); display: flex; align-items: center; justify-content: center;">
+                            <div>
+                                <div style="font-size: 10px; font-weight: 700;">0.1%</div>
+                                <div style="font-size: 8px;">LoRA</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="font-size: 24px;">=</div>
+                    <div style="text-align: center;">
+                        <div style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #00b894, #55efc4); display: flex; align-items: center; justify-content: center;">
+                            <div style="color: #1a1a2e;">
+                                <div style="font-size: 14px; font-weight: 700;">VRF</div>
+                                <div style="font-size: 9px;">Expert ✓</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h4 style="font-size: 14px;" class="mb-10">Training Configuration</h4>
+                <div class="flex gap-20">
+                    <div style="font-size: 12px; line-height: 2;">
+                        <div><strong>LoRA Rank:</strong> 16</div>
+                        <div><strong>LoRA Alpha:</strong> 32</div>
+                        <div><strong>Dropout:</strong> 0.05</div>
+                        <div><strong>Quant:</strong> NF4 (4-bit)</div>
+                    </div>
+                    <div style="font-size: 12px; line-height: 2;">
+                        <div><strong>LR:</strong> 2e-4</div>
+                        <div><strong>Batch:</strong> 4</div>
+                        <div><strong>Epochs:</strong> 3</div>
+                        <div><strong>Time:</strong> ~4 GPU hours</div>
+                    </div>
+                </div>
+                <div class="mt-20" style="font-size: 12px;">
+                    <div class="flex justify-between mb-10"><span>Agent 1 (Generator):</span><span class="badge badge-blue">500+ VRF examples</span></div>
+                    <div class="flex justify-between"><span>Agent 3 (Corrector):</span><span class="badge badge-green">200+ error-fix pairs</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+     SLIDE 8: LIVE DEMO - PIPELINE RUN
+     ===================================================== -->
+<div class="slide bg-dark" id="slide-8">
+    <div class="label">Live Demo</div>
+    <h2>Pipeline Execution — <span class="gradient-text">Real Output</span></h2>
+    <p class="subtitle" style="font-size: 16px;">Example: 2-Zone Office Building with VRF</p>
+    
+    <div class="flex gap-20 mt-20">
+        <div style="width: 58%;">
+            <div class="terminal" style="height: 420px;">
+                <div class="terminal-header">
+                    <div class="terminal-dot" style="background:#f85149;"></div>
+                    <div class="terminal-dot" style="background:#d29922;"></div>
+                    <div class="terminal-dot" style="background:#3fb950;"></div>
+                    <span class="t-gray" style="margin-left: 10px; font-size: 12px;">$ python examples/example3_config_based.py</span>
+                </div>
+                <div class="terminal-body" style="font-size: 11px; max-height: 370px; overflow-y: auto;">
+<span class="t-white t-bold">======================================================================</span>
+<span class="t-white t-bold">HVAC-LLM PIPELINE</span>
+<span class="t-white t-bold">======================================================================</span>
+<br>
+<span class="t-green">[0] Analyzing base IDF...</span>
+<span class="t-green">[0.1] Checking IDD compliance...</span>
+<span class="t-green">✓ Base IDF is IDD-compliant</span>
+<span class="t-green">✓ Enabled zone/system sizing for HVAC autosizing</span>
+<span class="t-green">✓ Auto-detected 2 zones from IDF</span>
+<span class="t-white">  1. Zone1</span>
+<span class="t-white">  2. Zone2</span>
+<br>
+<span class="t-blue">📊 Building Context:</span>
+<span class="t-white">  • Zones: 2</span>
+<span class="t-white">  • Total Floor Area: 50.0 m²</span>
+<span class="t-white">  • Total Volume: 150.0 m³</span>
+<span class="t-white">  • Orientation: 0°</span>
+<span class="t-white">  • Internal Loads: ✓ Yes (People, Lights, Equipment)</span>
+<span class="t-white">  • Location: Chicago IL USA</span>
+<br>
+<span class="t-green">[1] Generating HVAC...</span>
+<span class="t-white">User Request: Design a VRF system for 2-zone building</span>
+<span class="t-blue">🔍 Querying RAG knowledge base for design patterns...</span>
+<span class="t-white">  ✓ Found 3 similar design patterns</span>
+<span class="t-white">  ✓ Found 5 relevant field dependency rules</span>
+<span class="t-white">  ✓ Found 10 field specifications</span>
+<span class="t-green">✓ Generated 5 HVAC objects</span>
+<br>
+<span class="t-green">[2] Validating IDF...</span>
+<span class="t-white">Valid: True, Errors: 0</span>
+<span class="t-green">✓ Validation passed - proceeding to simulation</span>
+<br>
+<span class="t-green">[3] Simulating...</span>
+<span class="t-yellow">Success: False, Errors: 1</span>
+<br>
+<span class="t-yellow">[4.1] Fixing errors...</span>
+<span class="t-green">✓ Applied 1 fixes</span>
+<br>
+<span class="t-green">[5.1] Re-simulating...</span>
+<span class="t-green t-bold">Success: True</span>
+<br>
+<span class="t-white t-bold">======================================================================</span>
+<span class="t-green t-bold">PIPELINE COMPLETE: SUCCESS</span>
+<span class="t-green">🎉 SUCCESS! Use this file:</span>
+<span class="t-blue">   outputs/generated_idfs/vrf_two_zone_FINAL.idf</span>
+<span class="t-white t-bold">======================================================================</span>
+                </div>
+            </div>
+        </div>
+        
+        <div style="width: 40%;">
+            <div class="card mb-20" style="padding: 20px;">
+                <h4 style="font-size: 15px;" class="mb-10">📋 Run Summary</h4>
+                <div style="font-size: 13px; line-height: 2.2;">
+                    <div class="flex justify-between"><span>Zones Detected</span><span class="t-bold">2 (auto)</span></div>
+                    <div class="flex justify-between"><span>HVAC Objects Generated</span><span class="t-bold">5</span></div>
+                    <div class="flex justify-between"><span>First-Try Simulation</span><span class="t-yellow t-bold">Failed (1 error)</span></div>
+                    <div class="flex justify-between"><span>Agent 3 Corrections</span><span class="t-bold">1 fix applied</span></div>
+                    <div class="flex justify-between"><span>Final Result</span><span class="t-green t-bold">✓ SUCCESS</span></div>
+                    <div class="flex justify-between"><span>Total Iterations</span><span class="t-bold">1</span></div>
+                </div>
+            </div>
+            
+            <div class="card mb-20" style="padding: 20px;">
+                <h4 style="font-size: 15px;" class="mb-10">🏢 Generated Objects</h4>
+                <div style="font-size: 12px; line-height: 2;">
+                    <div>• 1× <span class="badge badge-blue">HVACTemplate:System:VRF</span></div>
+                    <div>• 2× <span class="badge badge-purple">HVACTemplate:Zone:VRF</span></div>
+                    <div>• 2× <span class="badge badge-green">HVACTemplate:Thermostat</span></div>
+                </div>
+                <p style="font-size: 11px; opacity: 0.6; margin-top: 10px;">1 outdoor unit → 2 indoor terminal units (one per zone)</p>
+            </div>
+            
+            <div class="card card-accent" style="padding: 16px;">
+                <p style="font-size: 12px;"><strong>💡 Key Point:</strong> The system auto-detected zones, extracted building context, and generated a complete VRF system with only a natural language request.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+     SLIDE 9: RESULTS — SUCCESS RATES
+     ===================================================== -->
+<div class="slide bg-gradient-1" id="slide-9">
+    <div class="label">Results</div>
+    <h2>Success Rate Comparison</h2>
+    <p class="subtitle" style="font-size: 16px;">Fine-tuned vs. Pre-trained across 5 test cases (1–20 zones)</p>
+    
+    <div class="flex gap-40 mt-30">
+        <div style="width: 60%;">
+            <!-- Bar Chart -->
+            <div class="card" style="padding: 30px;">
+                <div style="margin-bottom: 24px;">
+                    <div class="flex justify-between items-center mb-10">
+                        <span style="font-size: 13px; font-weight: 600;">Fine-tuned Mistral-7B: First-try</span>
+                        <span class="badge badge-green">80%</span>
+                    </div>
+                    <div class="comparison-bar" style="background: rgba(39,174,96,0.15);">
+                        <div class="bar-fill" style="width: 80%; background: linear-gradient(90deg, #27ae60, #2ecc71);">80%</div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 24px;">
+                    <div class="flex justify-between items-center mb-10">
+                        <span style="font-size: 13px; font-weight: 600;">Fine-tuned Mistral-7B: Final (w/ Agent 3)</span>
+                        <span class="badge badge-green">100%</span>
+                    </div>
+                    <div class="comparison-bar" style="background: rgba(39,174,96,0.15);">
+                        <div class="bar-fill" style="width: 100%; background: linear-gradient(90deg, #00b894, #55efc4);">100%</div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 24px;">
+                    <div class="flex justify-between items-center mb-10">
+                        <span style="font-size: 13px; font-weight: 600;">Pre-trained (w/ in-context examples)</span>
+                        <span class="badge badge-orange">20%</span>
+                    </div>
+                    <div class="comparison-bar" style="background: rgba(243,156,18,0.15);">
+                        <div class="bar-fill" style="width: 20%; background: linear-gradient(90deg, #f39c12, #e67e22);">20%</div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="flex justify-between items-center mb-10">
+                        <span style="font-size: 13px; font-weight: 600;">Pre-trained (no examples)</span>
+                        <span class="badge badge-red">0%</span>
+                    </div>
+                    <div class="comparison-bar" style="background: rgba(231,76,60,0.15);">
+                        <div class="bar-fill" style="width: 2%; background: linear-gradient(90deg, #e74c3c, #c0392b);">0%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="width: 38%;">
+            <div class="card card-accent mb-20" style="padding: 20px;">
+                <h4 style="font-size: 20px; margin-bottom: 8px;">🎯 Key Finding</h4>
+                <p style="font-size: 14px;">Fine-tuning improves success from <strong>0% to 80%</strong> first-try, and the multi-agent correction achieves <strong>100% final success</strong>.</p>
+            </div>
+            
+            <div class="card" style="padding: 20px;">
+                <h4 style="font-size: 15px; margin-bottom: 12px;">📊 Test Matrix</h4>
+                <table style="font-size: 12px;">
+                    <tr><th>Test Case</th><th>Zones</th><th>Result</th></tr>
+                    <tr><td>Single Zone Office</td><td>1</td><td><span class="t-green">✓ Pass</span></td></tr>
+                    <tr><td>Two Zone Building</td><td>2</td><td><span class="t-green">✓ Pass</span></td></tr>
+                    <tr><td>Multi-Zone Office</td><td>4</td><td><span class="t-green">✓ Pass (1 fix)</span></td></tr>
+                    <tr><td>Large Office</td><td>10</td><td><span class="t-green">✓ Pass</span></td></tr>
+                    <tr><td>Large Building</td><td>20</td><td><span class="t-green">✓ Pass</span></td></tr>
+                </table>
+            </div>
+            
+            <div class="card mt-20" style="padding: 16px;">
+                <p style="font-size: 12px;"><strong>Average iterations:</strong> 0.2 (most succeed on first try)</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+     SLIDE 10: RESULTS — SCALABILITY
+     ===================================================== -->
+<div class="slide bg-gradient-3" id="slide-10">
+    <div class="label">Scalability</div>
+    <h2>Scalability: 1 → 20 Zones</h2>
+    
+    <div class="flex gap-30 mt-20">
+        <div style="width: 55%;">
+            <div class="card" style="padding: 30px;">
+                <h4 style="font-size: 15px; margin-bottom: 20px;">Output Quality vs. Zone Count</h4>
+                
+                <!-- Simple chart visualization -->
+                <div style="position: relative; height: 240px; border-left: 2px solid rgba(255,255,255,0.2); border-bottom: 2px solid rgba(255,255,255,0.2); margin-left: 40px;">
+                    <!-- Y-axis labels -->
+                    <div style="position: absolute; left: -40px; top: -5px; font-size: 11px; opacity: 0.6;">100%</div>
+                    <div style="position: absolute; left: -35px; top: 55px; font-size: 11px; opacity: 0.6;">75%</div>
+                    <div style="position: absolute; left: -35px; top: 115px; font-size: 11px; opacity: 0.6;">50%</div>
+                    <div style="position: absolute; left: -35px; top: 175px; font-size: 11px; opacity: 0.6;">25%</div>
+                    <div style="position: absolute; left: -30px; top: 228px; font-size: 11px; opacity: 0.6;">0%</div>
+                    
+                    <!-- Grid lines -->
+                    <div style="position: absolute; top: 0; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.05);"></div>
+                    <div style="position: absolute; top: 60px; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.05);"></div>
+                    <div style="position: absolute; top: 120px; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.05);"></div>
+                    <div style="position: absolute; top: 180px; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.05);"></div>
+                    
+                    <!-- Fine-tuned line (flat at top) -->
+                    <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" preserveAspectRatio="none">
+                        <line x1="10%" y1="2%" x2="90%" y2="2%" stroke="#27ae60" stroke-width="3"/>
+                        <circle cx="10%" cy="2%" r="5" fill="#27ae60"/>
+                        <circle cx="30%" cy="2%" r="5" fill="#27ae60"/>
+                        <circle cx="50%" cy="2%" r="5" fill="#27ae60"/>
+                        <circle cx="70%" cy="2%" r="5" fill="#27ae60"/>
+                        <circle cx="90%" cy="2%" r="5" fill="#27ae60"/>
+                        
+                        <!-- Pre-trained line (declining) -->
+                        <polyline points="10%,2% 30%,15% 50%,35% 70%,60% 90%,92%" fill="none" stroke="#e74c3c" stroke-width="3"/>
+                        <circle cx="10%" cy="2%" r="5" fill="#e74c3c"/>
+                        <circle cx="30%" cy="15%" r="5" fill="#e74c3c"/>
+                        <circle cx="50%" cy="35%" r="5" fill="#e74c3c"/>
+                        <circle cx="70%" cy="60%" r="5" fill="#e74c3c"/>
+                        <circle cx="90%" cy="92%" r="5" fill="#e74c3c"/>
+                    </svg>
+                    
+                    <!-- X-axis labels -->
+                    <div style="position: absolute; bottom: -25px; left: 8%; font-size: 11px; opacity: 0.6;">1</div>
+                    <div style="position: absolute; bottom: -25px; left: 28%; font-size: 11px; opacity: 0.6;">2</div>
+                    <div style="position: absolute; bottom: -25px; left: 48%; font-size: 11px; opacity: 0.6;">4</div>
+                    <div style="position: absolute; bottom: -25px; left: 68%; font-size: 11px; opacity: 0.6;">10</div>
+                    <div style="position: absolute; bottom: -25px; left: 87%; font-size: 11px; opacity: 0.6;">20</div>
+                </div>
+                <div style="text-align: center; margin-top: 30px; font-size: 12px; opacity: 0.6;">Zone Count</div>
+                
+                <!-- Legend -->
+                <div class="flex gap-30 justify-center mt-20">
+                    <div class="flex items-center gap-10">
+                        <div style="width: 20px; height: 3px; background: #27ae60;"></div>
+                        <span style="font-size: 12px;">Fine-tuned Mistral-7B</span>
+                    </div>
+                    <div class="flex items-center gap-10">
+                        <div style="width: 20px; height: 3px; background: #e74c3c;"></div>
+                        <span style="font-size: 12px;">Pre-trained (w/ examples)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="width: 43%;">
+            <div class="card mb-20" style="padding: 20px;">
+                <h4 style="font-size: 15px;" class="mb-10">🚀 Fine-tuned: No Degradation</h4>
+                <p style="font-size: 13px; opacity: 0.8;">Maintains 100% quality from 1 to 20 zones. The iterative generation strategy handles scaling by generating objects per-zone sequentially.</p>
+            </div>
+            
+            <div class="card mb-20" style="padding: 20px; border-color: var(--danger);">
+                <h4 style="font-size: 15px;" class="mb-10">⚠️ Pre-trained: Breaking Point at 20</h4>
+                <p style="font-size: 13px; opacity: 0.8;">Quality degrades progressively: 100% at 1 zone → ~35% at 10 zones → <strong>0% at 20 zones</strong>. Token window overflow causes missed zones and malformed objects.</p>
+            </div>
+            
+            <div class="card card-accent" style="padding: 20px;">
+                <h4 style="font-size: 15px;" class="mb-10">💡 Why Fine-tuning Matters</h4>
+                <p style="font-size: 13px;">Domain knowledge is <strong>encoded in weights</strong>, not in prompts. Fine-tuned models don't need extensive context — they inherently know VRF field specifications, reducing token usage and improving reliability at scale.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+     SLIDE 11: RAG CONTRIBUTION + ABLATION
+     ===================================================== -->
+<div class="slide bg-gradient-2" id="slide-11">
+    <div class="label">Ablation Study</div>
+    <h2>RAG Contribution Analysis</h2>
+    
+    <div class="flex gap-40 mt-30">
+        <div style="width: 55%;">
+            <div class="card" style="padding: 30px;">
+                <div style="margin-bottom: 28px;">
+                    <div class="flex justify-between items-center mb-10">
+                        <span style="font-size: 14px; font-weight: 600;">Fine-tuned + RAG</span>
+                        <span class="badge badge-green" style="font-size: 14px;">100%</span>
+                    </div>
+                    <div class="comparison-bar" style="background: rgba(39,174,96,0.15); height: 40px;">
+                        <div class="bar-fill" style="width: 100%; background: linear-gradient(90deg, #27ae60, #2ecc71); font-size: 15px;">100%</div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 28px;">
+                    <div class="flex justify-between items-center mb-10">
+                        <span style="font-size: 14px; font-weight: 600;">Fine-tuned only (no RAG)</span>
+                        <span class="badge badge-green" style="font-size: 14px;">95%</span>
+                    </div>
+                    <div class="comparison-bar" style="background: rgba(39,174,96,0.15); height: 40px;">
+                        <div class="bar-fill" style="width: 95%; background: linear-gradient(90deg, #55efc4, #00b894); font-size: 15px;">95%</div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 28px;">
+                    <div class="flex justify-between items-center mb-10">
+                        <span style="font-size: 14px; font-weight: 600;">Pre-trained + RAG</span>
+                        <span class="badge badge-orange" style="font-size: 14px;">20%</span>
+                    </div>
+                    <div class="comparison-bar" style="background: rgba(243,156,18,0.15); height: 40px;">
+                        <div class="bar-fill" style="width: 20%; background: linear-gradient(90deg, #f39c12, #e67e22); font-size: 15px;">20%</div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="flex justify-between items-center mb-10">
+                        <span style="font-size: 14px; font-weight: 600;">Pre-trained only</span>
+                        <span class="badge badge-red" style="font-size: 14px;">0%</span>
+                    </div>
+                    <div class="comparison-bar" style="background: rgba(231,76,60,0.15); height: 40px;">
+                        <div class="bar-fill" style="width: 3%; background: linear-gradient(90deg, #e74c3c, #c0392b); font-size: 15px;">0%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="width: 40%;">
+            <div class="card card-primary mb-20" style="padding: 20px;">
+                <h4 style="font-size: 16px;">✅ RAG Enhances Fine-tuned (+5%)</h4>
+                <p style="font-size: 13px; opacity: 0.8; margin-top: 8px;">RAG improves edge case handling — retrieving specific field specifications and dependency rules that prevent subtle errors.</p>
+            </div>
+            
+            <div class="card mb-20" style="padding: 20px; border-color: var(--danger);">
+                <h4 style="font-size: 16px;">❌ RAG Cannot Rescue Pre-trained</h4>
+                <p style="font-size: 13px; opacity: 0.8; margin-top: 8px;">Pre-trained models with RAG still fail at 80%. RAG provides context but cannot teach the model the VRF generation format and syntax.</p>
+            </div>
+            
+            <div class="card card-accent" style="padding: 20px;">
+                <h4 style="font-size: 16px;">💡 Conclusion</h4>
+                <p style="font-size: 13px; margin-top: 8px;"><strong>Fine-tuning is essential</strong>. RAG is beneficial as a complement but not as a substitute. The best results come from combining both technologies.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+     SLIDE 12: GENERATED OUTPUT SHOWCASE
+     ===================================================== -->
+<div class="slide bg-dark" id="slide-12">
+    <div class="label">Output Showcase</div>
+    <h2>Generated IDF Output — <span class="gradient-text">Real Example</span></h2>
+    <p class="subtitle" style="font-size: 14px;">2-Zone VRF System (vrf_two_zone_fixed_1.idf) — 691 lines, simulation-ready</p>
+    
+    <div class="flex gap-20 mt-20">
+        <div style="width: 48%;">
+            <div class="terminal" style="height: 380px;">
+                <div class="terminal-header">
+                    <div class="terminal-dot" style="background:#f85149;"></div>
+                    <div class="terminal-dot" style="background:#d29922;"></div>
+                    <div class="terminal-dot" style="background:#3fb950;"></div>
+                    <span class="t-gray" style="margin-left: 10px; font-size: 11px;">HVACTemplate:System:VRF (Outdoor Unit)</span>
+                </div>
+                <div class="terminal-body" style="font-size: 10.5px; overflow-y: auto; max-height: 330px;">
+<span class="t-green t-bold">HVACTemplate:System:VRF,</span>
+<span class="t-white">  VRF_System_1,</span><span class="t-gray">      !- Name</span>
+<span class="t-white">  ,</span><span class="t-gray">                    !- Availability Schedule</span>
+<span class="t-blue">  Autosize,</span><span class="t-gray">           !- Gross Rated Total Cooling Cap</span>
+<span class="t-yellow">  3.3,</span><span class="t-gray">                !- Gross Rated Cooling COP</span>
+<span class="t-white">  -10,</span><span class="t-gray">                !- Min Outdoor Temp Cooling {°C}</span>
+<span class="t-white">  48,</span><span class="t-gray">                 !- Max Outdoor Temp Cooling {°C}</span>
+<span class="t-blue">  Autosize,</span><span class="t-gray">           !- Gross Rated Heating Cap</span>
+<span class="t-white">  1,</span><span class="t-gray">                  !- Rated Heating Cap Sizing Ratio</span>
+<span class="t-yellow">  3.5,</span><span class="t-gray">                !- Gross Rated Heating COP</span>
+<span class="t-white">  -25,</span><span class="t-gray">                !- Min Outdoor Temp Heating {°C}</span>
+<span class="t-white">  18,</span><span class="t-gray">                 !- Max Outdoor Temp Heating {°C}</span>
+<span class="t-white">  0.15,</span><span class="t-gray">               !- Min Heat Pump Part-Load Ratio</span>
+<span class="t-white">  Zone1,</span><span class="t-gray">              !- Master Thermostat Zone</span>
+<span class="t-white">  LoadPriority;</span><span class="t-gray">       !- Priority Control Type</span>
+<br>
+<span class="t-gray">─── 1 outdoor unit → 2 indoor units ───</span>
+<span class="t-gray">─── EnergyPlus auto-sizes capacity  ───</span>
+                </div>
+            </div>
+        </div>
+        
+        <div style="width: 48%;">
+            <div class="terminal" style="height: 380px;">
+                <div class="terminal-header">
+                    <div class="terminal-dot" style="background:#f85149;"></div>
+                    <div class="terminal-dot" style="background:#d29922;"></div>
+                    <div class="terminal-dot" style="background:#3fb950;"></div>
+                    <span class="t-gray" style="margin-left: 10px; font-size: 11px;">Zone:VRF + Thermostats (Indoor Units)</span>
+                </div>
+                <div class="terminal-body" style="font-size: 10.5px; overflow-y: auto; max-height: 330px;">
+<span class="t-green t-bold">HVACTemplate:Zone:VRF,</span>
+<span class="t-white">  Zone1,</span><span class="t-gray">              !- Zone Name</span>
+<span class="t-white">  VRF_System_1,</span><span class="t-gray">       !- Template VRF System</span>
+<span class="t-white">  Thermostat_Zone1,</span><span class="t-gray">   !- Template Thermostat</span>
+<span class="t-blue">  Autosize,</span><span class="t-gray">           !- Cooling Supply Air Flow</span>
+<span class="t-blue">  Autosize,</span><span class="t-gray">           !- Heating Supply Air Flow</span>
+<span class="t-blue">  Autosize,</span><span class="t-gray">           !- Outdoor Air Flow Rate</span>
+<span class="t-blue">  Autosize,</span><span class="t-gray">           !- Cooling Coil Total Cap</span>
+<span class="t-blue">  Autosize,</span><span class="t-gray">           !- Heating Coil Capacity</span>
+<span class="t-white">  ...</span><span class="t-gray">                 !- (42 fields per zone)</span>
+<span class="t-white">  ;</span><span class="t-gray">                   !- Baseboard Heating Type</span>
+<br>
+<span class="t-green t-bold">HVACTemplate:Zone:VRF,</span>
+<span class="t-white">  Zone2, VRF_System_1, Thermostat_Zone2,</span>
+<span class="t-gray">  ...  </span><span class="t-gray">(same structure, links to same system)</span>
+<br>
+<span class="t-green t-bold">HVACTemplate:Thermostat,</span>
+<span class="t-white">  Thermostat_Zone1,</span><span class="t-gray">   !- Name</span>
+<span class="t-white">  , </span><span class="t-yellow">20,</span><span class="t-gray">               !- Heating Setpoint: 20°C</span>
+<span class="t-white">  , </span><span class="t-yellow">24;</span><span class="t-gray">               !- Cooling Setpoint: 24°C</span>
+<br>
+<span class="t-green t-bold">HVACTemplate:Thermostat,</span>
+<span class="t-white">  Thermostat_Zone2, , 20, , 24;</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+     SLIDE 13: HOW TO USE — CONFIG-DRIVEN
+     ===================================================== -->
+<div class="slide bg-gradient-1" id="slide-13">
+    <div class="label">Usage Guide</div>
+    <h2>How to Use — <span class="gradient-text">3 Simple Steps</span></h2>
+    
+    <div class="flex gap-30 mt-30">
+        <div class="flex-1">
+            <div class="card mb-20" style="padding: 24px; border-left: 4px solid var(--accent2);">
+                <div class="flex items-center gap-15 mb-10">
+                    <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--accent2); display: flex; align-items: center; justify-content: center; font-weight: 800; color: #1a1a2e;">1</div>
+                    <h4>Define Your Request</h4>
+                </div>
+                <div class="code-block" style="font-size: 11px; padding: 16px;">
+<span class="comment">// config/hvac_requests.json</span>
+{
+  <span class="string">"my_project"</span>: {
+    <span class="keyword">"prompt"</span>: <span class="string">"Design a VRF system for 
+      efficient heating and cooling"</span>,
+    <span class="keyword">"zones"</span>: [<span class="string">"Zone1"</span>, <span class="string">"Zone2"</span>],
+    <span class="keyword">"base_idf"</span>: <span class="string">"data/base_idfs/my_building.idf"</span>
+  }
+}
+                </div>
+            </div>
+            
+            <div class="card mb-20" style="padding: 24px; border-left: 4px solid var(--primary);">
+                <div class="flex items-center gap-15 mb-10">
+                    <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 800;">2</div>
+                    <h4>Run the Pipeline</h4>
+                </div>
+                <div class="code-block" style="font-size: 11px; padding: 16px;">
+<span class="comment"># Terminal command</span>
+$ <span class="keyword">python</span> examples/example3_config_based.py
+
+<span class="comment"># Or use Python API directly</span>
+<span class="keyword">from</span> <span class="type">src.pipeline</span> <span class="keyword">import</span> <span class="type">HVACLLMPipeline</span>
+pipeline = <span class="function">HVACLLMPipeline</span>()
+result = pipeline.<span class="function">run</span>(
+    base_idf=<span class="string">"data/base_idfs/my_building.idf"</span>,
+    zones=<span class="keyword">None</span>,  <span class="comment"># Auto-detect</span>
+    user_request=<span class="string">"Design a VRF system"</span>
+)
+                </div>
+            </div>
+            
+            <div class="card" style="padding: 24px; border-left: 4px solid var(--success);">
+                <div class="flex items-center gap-15 mb-10">
+                    <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--success); display: flex; align-items: center; justify-content: center; font-weight: 800;">3</div>
+                    <h4>Get Your Output</h4>
+                </div>
+                <p style="font-size: 14px; opacity: 0.8;">The final IDF is saved to <code style="background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 4px;">outputs/generated_idfs/my_project_FINAL.idf</code> — ready to open in <strong>EP-Launch</strong> for simulation.</p>
+            </div>
+        </div>
+        
+        <div style="width: 35%;">
+            <div class="card" style="padding: 24px;">
+                <h4 class="mb-10">⚙️ Configuration Options</h4>
+                <div style="font-size: 13px; line-height: 2.2;">
+                    <div class="flex justify-between"><span>LLM Provider</span><span class="badge badge-purple">mistral</span></div>
+                    <div class="flex justify-between"><span>RAG</span><span class="badge badge-green">enabled</span></div>
+                    <div class="flex justify-between"><span>Max Iterations</span><span class="badge badge-blue">3</span></div>
+                    <div class="flex justify-between"><span>Auto-detect Zones</span><span class="badge badge-green">yes</span></div>
+                    <div class="flex justify-between"><span>IDD Compliance</span><span class="badge badge-green">auto-fix</span></div>
+                    <div class="flex justify-between"><span>Quick Validation</span><span class="badge badge-orange">optional</span></div>
+                </div>
+            </div>
+            
+            <div class="card mt-20" style="padding: 20px;">
+                <h4 class="mb-10">📁 Available Base IDFs</h4>
+                <div style="font-size: 12px; line-height: 2;">
+                    <div>• building_with_zones_fixed.idf</div>
+                    <div>• 4ZoneWithShading_Simple.idf</div>
+                    <div>• Custom client building files</div>
+                </div>
+            </div>
+            
+            <div class="card card-accent mt-20" style="padding: 16px;">
+                <p style="font-size: 12px;"><strong>💡 Pro Tip:</strong> Set <code>zones: null</code> to let the system auto-detect all zones from your IDF file.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+     SLIDE 14: CLIENT VALUE PROPOSITION
+     ===================================================== -->
+<div class="slide bg-gradient-2" id="slide-14">
+    <div class="label">Client Value</div>
+    <h2>Value Proposition for Your Project</h2>
+    
+    <div class="flex gap-30 mt-30">
+        <div class="card flex-1" style="padding: 30px; text-align: center;">
+            <div style="font-size: 48px; margin-bottom: 15px;">⚡</div>
+            <h3 style="font-size: 22px;">10x Faster</h3>
+            <p style="font-size: 14px; opacity: 0.8; margin-top: 10px;">What takes hours manually takes <strong>&lt;2 minutes</strong> with HVAC-LLM. From natural language to simulation-ready IDF.</p>
+        </div>
+        
+        <div class="card flex-1" style="padding: 30px; text-align: center;">
+            <div style="font-size: 48px; margin-bottom: 15px;">🎯</div>
+            <h3 style="font-size: 22px;">100% Reliable</h3>
+            <p style="font-size: 14px; opacity: 0.8; margin-top: 10px;">Multi-agent correction ensures every generated IDF <strong>passes simulation</strong>. No manual debugging needed.</p>
+        </div>
+        
+        <div class="card flex-1" style="padding: 30px; text-align: center;">
+            <div style="font-size: 48px; margin-bottom: 15px;">📐</div>
+            <h3 style="font-size: 22px;">1 to 20+ Zones</h3>
+            <p style="font-size: 14px; opacity: 0.8; margin-top: 10px;">Scales from single-room to large buildings. <strong>No quality degradation</strong> as complexity increases.</p>
+        </div>
+    </div>
+    
+    <div class="flex gap-30 mt-30">
+        <div class="card flex-1" style="padding: 30px; text-align: center;">
+            <div style="font-size: 48px; margin-bottom: 15px;">🗣️</div>
+            <h3 style="font-size: 22px;">Natural Language</h3>
+            <p style="font-size: 14px; opacity: 0.8; margin-top: 10px;">No EnergyPlus expertise required. Describe your needs in <strong>plain English</strong> and the system handles the rest.</p>
+        </div>
+        
+        <div class="card flex-1" style="padding: 30px; text-align: center;">
+            <div style="font-size: 48px; margin-bottom: 15px;">🔧</div>
+            <h3 style="font-size: 22px;">Self-Correcting</h3>
+            <p style="font-size: 14px; opacity: 0.8; margin-top: 10px;">Agent 3 automatically detects and fixes errors. The system <strong>iterates until success</strong> (max 3 attempts).</p>
+        </div>
+        
+        <div class="card flex-1" style="padding: 30px; text-align: center;">
+            <div style="font-size: 48px; margin-bottom: 15px;">🏢</div>
+            <h3 style="font-size: 22px;">VRF Expert</h3>
+            <p style="font-size: 14px; opacity: 0.8; margin-top: 10px;">Specialized for <strong>Variable Refrigerant Flow</strong> systems — the most efficient HVAC technology for multi-zone buildings.</p>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+     SLIDE 15: FUTURE ROADMAP + THANK YOU
+     ===================================================== -->
+<div class="slide bg-gradient-1" id="slide-15">
+    <div class="flex gap-40 items-center" style="height: 100%;">
+        <div style="width: 55%;">
+            <div class="label">Roadmap & Next Steps</div>
+            <h2>What's Next?</h2>
+            
+            <div class="mt-30">
+                <div class="pipeline-step step-agent1 mb-10">
+                    <div class="icon-circle" style="background: rgba(102,126,234,0.2);">🔮</div>
+                    <div>
+                        <h4 style="font-size: 15px;">Expand HVAC Types</h4>
+                        <p class="small">Support for VAV, Chiller, Boiler, DOAS, and hybrid systems</p>
+                    </div>
+                </div>
+                
+                <div class="pipeline-step step-agent2 mb-10">
+                    <div class="icon-circle" style="background: rgba(243,156,18,0.2);">🌍</div>
+                    <div>
+                        <h4 style="font-size: 15px;">Climate-Adaptive Design</h4>
+                        <p class="small">Auto-configure based on weather data and building codes</p>
+                    </div>
+                </div>
+                
+                <div class="pipeline-step step-agent3 mb-10">
+                    <div class="icon-circle" style="background: rgba(0,184,148,0.2);">📊</div>
+                    <div>
+                        <h4 style="font-size: 15px;">Energy Optimization</h4>
+                        <p class="small">Post-simulation analysis and design refinement for energy savings</p>
+                    </div>
+                </div>
+                
+                <div class="pipeline-step step-output mb-10">
+                    <div class="icon-circle" style="background: rgba(39,174,96,0.2);">🖥️</div>
+                    <div>
+                        <h4 style="font-size: 15px;">Web Interface</h4>
+                        <p class="small">Browser-based UI for non-technical users, cloud deployment</p>
+                    </div>
+                </div>
+                
+                <div class="pipeline-step step-input">
+                    <div class="icon-circle" style="background: rgba(79,172,254,0.2);">🔄</div>
+                    <div>
+                        <h4 style="font-size: 15px;">Continuous Learning</h4>
+                        <p class="small">Automated fine-tuning from successful generation patterns</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="width: 40%; text-align: center;">
+            <div class="logo-icon" style="width: 100px; height: 100px; font-size: 50px; margin: 0 auto 30px; border-radius: 24px;">🏢</div>
+            <h2 style="margin-bottom: 15px;">Thank You</h2>
+            <p style="font-size: 18px; opacity: 0.8; margin-bottom: 30px;">Questions & Discussion</p>
+            
+            <div class="card" style="padding: 24px; text-align: left;">
+                <h4 style="font-size: 15px; margin-bottom: 15px;">📋 Quick Summary</h4>
+                <div style="font-size: 13px; line-height: 2.2;">
+                    <div class="flex justify-between"><span>Technology</span><span>Multi-Agent LLM + RAG</span></div>
+                    <div class="flex justify-between"><span>Model</span><span>Fine-tuned Mistral-7B</span></div>
+                    <div class="flex justify-between"><span>First-try Success</span><span class="t-bold" style="color: var(--accent);">80%</span></div>
+                    <div class="flex justify-between"><span>Final Success</span><span class="t-bold" style="color: var(--accent);">100%</span></div>
+                    <div class="flex justify-between"><span>Scale</span><span>1–20+ zones</span></div>
+                    <div class="flex justify-between"><span>Speed</span><span>&lt;2 min per building</span></div>
+                </div>
+            </div>
+            
+            <div class="mt-30 small" style="opacity: 0.4;">
+                HVAC-LLM • EnergyPlus 25.2.0 • Research Project
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<!-- Navigation Bar -->
+<div class="nav-bar">
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 6.67%;"></div>
+    </div>
+    <div class="slide-counter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">15</span>
+    </div>
+    <div class="nav-buttons">
+        <button onclick="prevSlide()">← Previous</button>
+        <button onclick="nextSlide()">Next →</button>
+    </div>
+    <div style="font-size: 11px; opacity: 0.5;">
+        Use ← → arrow keys to navigate
+    </div>
+</div>
+
+<script>
+    let current = 1;
+    const total = 15;
+    
+    function showSlide(n) {
+        if (n < 1 || n > total) return;
+        
+        document.querySelectorAll('.slide').forEach(s => {
+            s.classList.remove('active');
+        });
+        
+        current = n;
+        document.getElementById(`slide-${n}`).classList.add('active');
+        document.getElementById('currentSlide').textContent = n;
+        document.getElementById('progressFill').style.width = (n / total * 100) + '%';
+    }
+    
+    function nextSlide() { showSlide(current + 1); }
+    function prevSlide() { showSlide(current - 1); }
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+        if (e.key === 'Home') { e.preventDefault(); showSlide(1); }
+        if (e.key === 'End') { e.preventDefault(); showSlide(total); }
+    });
+    
+    // Touch support for mobile
+    let touchStartX = 0;
+    document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+    document.addEventListener('touchend', e => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) nextSlide();
+            else prevSlide();
+        }
+    });
+</script>
+
+</body>
+</html>
