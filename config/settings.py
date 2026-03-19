@@ -32,13 +32,16 @@ class Config:
     
     # LLM Settings - MAIN PROVIDER SELECTOR
     # Options: 
+    #   "claude-opus-4.6"   - Anthropic Claude Opus 4.6 (recommended for multi-client API usage)
     #   "mistral"           - Fine-tuned local model (best for VRF)
-    #   "mistral-pretrained"- Pre-trained local model (downloads 13GB)
+    #   "mistral-pretrained"- Pre-trained local model (downloads ~13GB)
     #   "mistral-api"       - Pre-trained via Mistral API (fast, no download)
     #   "gemini"            - Google Gemini API
     #   "mock"              - Mock responses for testing
-    LLM_PROVIDER = "mistral"  # Change this to switch between models
-    LLM_MODEL = "gemini-2.5-flash"  # Latest lite version - may have better quota
+    # NOTE: Enabling a cloud provider requires setting the corresponding API key in the environment
+    # (e.g., ANTHROPIC_API_KEY for Claude, MISTRAL_API_KEY for Mistral, GEMINI_API_KEY for Gemini).
+    LLM_PROVIDER = "claude-opus-4.6"  # Default provider set to Claude Opus 4.6 for all clients
+    LLM_MODEL = "claude-opus-4.6"  # Model identifier for provider-specific handlers
     # LLM_MODEl = "gemini-2.5-flash-lite"
     LLM_MAX_TOKENS = 32768
     LLM_TEMPERATURE = 0.3
@@ -86,4 +89,8 @@ class Config:
             return os.environ.get('GEMINI_API_KEY')
         elif provider == "mistral":
             return os.environ.get('MISTRAL_API_KEY')
+        # Support Claude model identifier mapping to Anthropic key
+        if provider and 'claude' in provider.lower():
+            return os.environ.get('ANTHROPIC_API_KEY')
+
         return None
