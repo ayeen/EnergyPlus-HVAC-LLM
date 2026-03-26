@@ -122,3 +122,91 @@ AssertionError: write() before start_response
 127.0.0.1 - - [26/Mar/2026 14:22:58] "GET /api/files/log/f14eab72-df37-4279-a394-0e5afe709387 HTTP/1.1" 200 -
 127.0.0.1 - - [26/Mar/2026 14:22:58] "GET /api/files/preview/f14eab72-df37-4279-a394-0e5afe709387?lines=500&t=1774502578276 HTTP/1.1" 200 -
 127.0.0.1 - - [26/Mar/2026 14:22:58] "GET /api/files/list/f14eab72-df37-4279-a394-0e5afe709387 HTTP/1.1" 200 -
+ * Detected change in '/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/test_prompt_specificity.py', reloading
+✓ Agent 3 Mistral model loaded successfully
+   Device: cuda:0
+   GPU: NVIDIA RTX A4000
+============================================================
+
+⚠ RAG unavailable for Agent 3: Vector DB not found at data/vector_db. Run 'python -m src.rag.knowledge_builder' first!
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ IDD compliance check complete
+  🔧 Auto-fixed 4 issue(s)
+     - Added SimulationControl object with sizing enabled
+     - Added default Site:Location (Chicago, IL)
+     - Added default design days (Chicago winter/summer)
+     - Generated basic geometry for 5 zone(s): Living_Room, Kitchen, Master_Bedroom, Bedroom_2, Bedroom_3
+✓ Enabled zone/system sizing for HVAC autosizing
+✓ Auto-detected 5 zones from IDF
+  1. Living_Room
+  2. Kitchen
+  3. Master_Bedroom
+  4. Bedroom_2
+  5. Bedroom_3
+
+📊 Building Context:
+  • Zones: 5
+  • Total Floor Area: 500.0 m²
+  • Total Volume: 1500.0 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Chicago_IL_USA
+
+[1] Generating HVAC...
+User Request: Design a heat recovery VRF system
+✓ Calling LLM (mistral) to generate VRF system for zones: Living_Room, Kitchen, Master_Bedroom, Bedroom_2, Bedroom_3
+  User Design Request: Design a heat recovery VRF system
+✓ Generating with Mistral fine-tuned model...
+   Found 5 zones: Living_Room, Kitchen, Master_Bedroom, Bedroom_2, Bedroom_3
+   System name: VRF_System_1
+   🔧 Generating System VRF...
+      ✅ System VRF generated (2633 chars)
+   🏢 Generating Zone VRFs for 5 zones...
+      Zone 1/5: Living_Room... ✅ (3455 chars)
+      Zone 2/5: Kitchen... ✅ (3447 chars)
+      Zone 3/5: Master_Bedroom... ✅ (3461 chars)
+      Zone 4/5: Bedroom_2... ✅ (3451 chars)
+      Zone 5/5: Bedroom_3... ✅ (3451 chars)
+   🌡️  Generating Thermostats for 5 zones...
+      Thermostat 1/5: Living_Room... ✅ (315 chars)
+      Thermostat 2/5: Kitchen... ✅ (311 chars)
+      Thermostat 3/5: Master_Bedroom... ✅ (318 chars)
+      Thermostat 4/5: Bedroom_2... ✅ (313 chars)
+      Thermostat 5/5: Bedroom_3... ✅ (313 chars)
+   ✅ Complete VRF system generated (21488 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 11 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 11 HVAC objects
+
+[2] Validating IDF...
+Valid: True, Errors: 0
+✓ Validation passed - proceeding to simulation
+
+[3] Simulating...
+Success: True, Errors: 0
+
+✓ Final corrected IDF copied to: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/f14eab72-df37-4279-a394-0e5afe709387_FINAL.idf
+  Use this file in EP-Launch for simulation!
+
+======================================================================
+PIPELINE COMPLETE: SUCCESS
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/f14eab72-df37-4279-a394-0e5afe709387_results.json
+
+🎉 SUCCESS! Use this file:
+   /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/f14eab72-df37-4279-a394-0e5afe709387_FINAL.idf
+======================================================================
+Client disconnected
+ * Restarting with stat
+Werkzeug appears to be used in a production deployment. Consider switching to a production web server instead.
+ * Debugger is active!
+ * Debugger PIN: 129-709-520
