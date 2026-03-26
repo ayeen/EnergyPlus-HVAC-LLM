@@ -31,7 +31,7 @@ class Config:
     IDD_FILE = os.path.join(ENERGYPLUS_DIR, "Energy+.idd")
     
     # LLM Settings - MAIN PROVIDER SELECTOR
-    # Options: 
+    # Options:
     #   "claude-opus-4.6"   - Anthropic Claude Opus 4.6 (recommended for multi-client API usage)
     #   "mistral"           - Fine-tuned local model (best for VRF)
     #   "mistral-pretrained"- Pre-trained local model (downloads ~13GB)
