@@ -16,7 +16,12 @@ class Config:
     DEBUG = True
 
     # CORS settings
-    CORS_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000']
+    CORS_ORIGINS = [
+        'http://localhost:3000',
+        'http://127.0.0.1:3000',
+        'http://163.180.125.76:3000',
+        'http://163.180.125.76:5000'
+    ]
 
     # File upload settings
     UPLOAD_FOLDER = str(PROJECT_ROOT / 'ui' / 'backend' / 'uploads')

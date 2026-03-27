@@ -11,11 +11,12 @@ Couldn't import dot_parser, loading of dot files will not be possible.
 Werkzeug appears to be used in a production deployment. Consider switching to a production web server instead.
  * Debugger is active!
  * Debugger PIN: 129-709-520
-127.0.0.1 - - [26/Mar/2026 15:44:04] "POST /api/upload/idf HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:44:04] "GET /api/pipeline/examples HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:44:04] "GET /api/pipeline/examples HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:44:28] "POST /api/pipeline/run HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:44:28] "[35m[1mGET /socket.io/?EIO=4&transport=websocket HTTP/1.1[0m" 500 -
+127.0.0.1 - - [27/Mar/2026 16:04:46] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+127.0.0.1 - - [27/Mar/2026 16:04:57] "POST /api/upload/idf HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:04:57] "GET /api/pipeline/examples HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:04:57] "GET /api/pipeline/examples HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:05:14] "POST /api/pipeline/run HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:05:14] "[35m[1mGET /socket.io/?EIO=4&transport=websocket HTTP/1.1[0m" 500 -
 Error on request:
 Traceback (most recent call last):
   File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 371, in run_wsgi
@@ -27,7 +28,7 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: write() before start_response
 `torch_dtype` is deprecated! Use `dtype` instead!
-127.0.0.1 - - [26/Mar/2026 15:44:30] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:05:16] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
 Couldn't import dot_parser, loading of dot files will not be possible.
 ✓ LLM instance reset. Next call will create new instance.
 ✓ Initializing NEW LLM instance (provider: mistral)
@@ -35,13 +36,14 @@ Couldn't import dot_parser, loading of dot files will not be possible.
    Base model: mistralai/Mistral-7B-v0.1
    Fine-tuned path: /home/hubel/Documents/Ayeen/LLM-Fine-Tunning/mistral-7b-vrf-finetuned-v4
 Client connected
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]127.0.0.1 - - [26/Mar/2026 15:44:32] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:44:34] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:44:36] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-Loading checkpoint shards:  50%|█████     | 1/2 [00:07<00:07,  7.41s/it]127.0.0.1 - - [26/Mar/2026 15:44:38] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:44:40] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-Loading checkpoint shards: 100%|██████████| 2/2 [00:10<00:00,  4.71s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:10<00:00,  5.12s/it]
-127.0.0.1 - - [26/Mar/2026 15:44:42] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]127.0.0.1 - - [27/Mar/2026 16:05:18] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:05:20] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:05:22] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:05:24] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+Loading checkpoint shards:  50%|█████     | 1/2 [00:08<00:08,  8.30s/it]127.0.0.1 - - [27/Mar/2026 16:05:26] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+Loading checkpoint shards: 100%|██████████| 2/2 [00:11<00:00,  5.08s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:11<00:00,  5.56s/it]
+127.0.0.1 - - [27/Mar/2026 16:05:28] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:05:30] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
 ✓ Mistral fine-tuned model loaded successfully
    Model type: fine-tuned
    Device: cuda:0
@@ -56,36 +58,37 @@ Loading Agent 3 Fine-tuned Mistral Model
 ============================================================
    Base model: mistralai/Mistral-7B-v0.1
    Agent 3 path: /home/hubel/Documents/Ayeen/LLM-Fine-Tunning/mistral-7b-vrf-finetuned-agent3-balanced
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]127.0.0.1 - - [26/Mar/2026 15:44:44] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:44:46] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:44:48] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-Loading checkpoint shards:  50%|█████     | 1/2 [00:06<00:06,  6.41s/it]127.0.0.1 - - [26/Mar/2026 15:44:50] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:44:52] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-Loading checkpoint shards: 100%|██████████| 2/2 [00:09<00:00,  4.26s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:09<00:00,  4.58s/it]
-127.0.0.1 - - [26/Mar/2026 15:44:54] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:44:56] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:44:58] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:00] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:02] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:04] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:06] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:08] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:10] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:12] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:14] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:16] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:18] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:20] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:22] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:24] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:26] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:28] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:30] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:32] "GET /api/pipeline/status/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:33] "GET /api/files/preview/284776e9-1d5c-49f9-851d-8dc400f267b5?lines=500&t=1774507533839 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:33] "GET /api/files/log/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:33] "GET /api/files/list/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:33] "[35m[1mGET /socket.io/?EIO=4&transport=websocket HTTP/1.1[0m" 500 -
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]127.0.0.1 - - [27/Mar/2026 16:05:32] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:05:34] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:05:36] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+Loading checkpoint shards:  50%|█████     | 1/2 [00:06<00:06,  6.75s/it]127.0.0.1 - - [27/Mar/2026 16:05:38] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+Loading checkpoint shards: 100%|██████████| 2/2 [00:09<00:00,  4.39s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:09<00:00,  4.74s/it]
+127.0.0.1 - - [27/Mar/2026 16:05:40] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:05:42] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:05:44] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:05:46] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:05:48] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:05:50] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:05:52] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:05:54] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:05:56] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:05:58] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:06:00] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:06:02] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:06:04] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:06:06] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:06:08] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:06:10] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:06:12] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:06:14] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:06:16] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:06:18] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:06:20] "GET /api/pipeline/status/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:06:21] "GET /api/files/log/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:06:21] "GET /api/files/preview/7934fbba-f596-4c97-bc15-9c9d26476ca1?lines=500&t=1774595181773 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:06:21] "GET /api/files/list/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:06:21] "GET /api/files/log/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:06:21] "[35m[1mGET /socket.io/?EIO=4&transport=websocket HTTP/1.1[0m" 500 -
 Error on request:
 Traceback (most recent call last):
   File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 371, in run_wsgi
@@ -96,10 +99,232 @@ Traceback (most recent call last):
     assert status_set is not None, "write() before start_response"
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: write() before start_response
-127.0.0.1 - - [26/Mar/2026 15:45:33] "GET /api/files/log/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:33] "GET /api/files/preview/284776e9-1d5c-49f9-851d-8dc400f267b5?lines=500&t=1774507533839 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:33] "GET /api/files/list/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:35] "GET /api/files/log/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:35] "GET /api/files/preview/284776e9-1d5c-49f9-851d-8dc400f267b5?lines=500&t=1774507535841 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:45:35] "GET /api/files/list/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 15:52:02] "GET /api/files/download/284776e9-1d5c-49f9-851d-8dc400f267b5 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:06:21] "GET /api/files/preview/7934fbba-f596-4c97-bc15-9c9d26476ca1?lines=500&t=1774595181773 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:06:21] "GET /api/files/list/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:06:23] "GET /api/files/preview/7934fbba-f596-4c97-bc15-9c9d26476ca1?lines=500&t=1774595183774 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:06:23] "GET /api/files/list/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:06:23] "GET /api/files/log/7934fbba-f596-4c97-bc15-9c9d26476ca1 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:08:23] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+127.0.0.1 - - [27/Mar/2026 16:09:59] "POST /api/upload/idf HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:09:59] "GET /api/pipeline/examples HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:09:59] "GET /api/pipeline/examples HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:10:20] "POST /api/pipeline/run HTTP/1.1" 200 -
+✓ Agent 3 Mistral model loaded successfully
+   Device: cuda:0
+   GPU: NVIDIA RTX A4000
+============================================================
+
+⚠ RAG unavailable for Agent 3: Vector DB not found at data/vector_db. Run 'python -m src.rag.knowledge_builder' first!
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ IDD compliance check complete
+  🔧 Auto-fixed 15 issue(s)
+     - Fixed Zone 'Zone1' Type: 5 → 1
+     - Fixed Zone 'Zone2' Type: 5 → 1
+     - Fixed People 'Zone1People': Set calculation method to 'People'
+     - Fixed People 'Zone1People': Added Activity_Level_Schedule_Name
+     - Fixed People 'Zone2People': Set calculation method to 'People'
+     - Fixed People 'Zone2People': Added Activity_Level_Schedule_Name
+     - Fixed Lights 'Zone1Lights': Set calculation method to 'LightingLevel'
+     - Fixed Lights 'Zone2Lights': Set calculation method to 'LightingLevel'
+     - Fixed ElectricEquipment 'Zone1Equip': Set calculation method to 'EquipmentLevel'
+     - Fixed ElectricEquipment 'Zone2Equip': Set calculation method to 'EquipmentLevel'
+     - Added SimulationControl object with sizing enabled
+     - Added default Site:Location (Chicago, IL)
+     - Added default design days (Chicago winter/summer)
+     - Generated basic geometry for 2 zone(s): Zone1, Zone2
+     - Rebuilt RunPeriod 'Annual' with valid fields
+✓ Enabled zone/system sizing for HVAC autosizing
+✓ Auto-detected 2 zones from IDF
+  1. Zone1
+  2. Zone2
+
+📊 Building Context:
+  • Zones: 2
+  • Total Floor Area: 200.0 m²
+  • Total Volume: 600.0 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Chicago_IL_USA
+
+[1] Generating HVAC...
+User Request: generate vrf heat recovery
+✓ Calling LLM (mistral) to generate VRF system for zones: Zone1, Zone2
+  User Design Request: generate vrf heat recovery
+✓ Generating with Mistral fine-tuned model...
+   Found 2 zones: Zone1, Zone2
+   System name: VRF_System_1
+   🔧 Generating System VRF...
+      ✅ System VRF generated (2626 chars)
+   🏢 Generating Zone VRFs for 2 zones...
+      Zone 1/2: Zone1... ✅ (3443 chars)
+      Zone 2/2: Zone2... ✅ (3443 chars)
+   🌡️  Generating Thermostats for 2 zones...
+      Thermostat 1/2: Zone1... ✅ (309 chars)
+      Thermostat 2/2: Zone2... ✅ (309 chars)
+   ✅ Complete VRF system generated (10138 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 5 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 5 HVAC objects
+
+[2] Validating IDF...
+Valid: True, Errors: 0
+✓ Validation passed - proceeding to simulation
+
+[3] Simulating...
+Success: True, Errors: 0
+
+✓ Final corrected IDF copied to: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/7934fbba-f596-4c97-bc15-9c9d26476ca1_FINAL.idf
+  Use this file in EP-Launch for simulation!
+
+======================================================================
+PIPELINE COMPLETE: SUCCESS
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/7934fbba-f596-4c97-bc15-9c9d26476ca1_results.json
+
+🎉 SUCCESS! Use this file:
+   /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/7934fbba-f596-4c97-bc15-9c9d26476ca1_FINAL.idf
+======================================================================
+Client disconnected
+✓ LLM instance reset. Next call will create new instance.
+✓ Initializing NEW LLM instance (provider: mistral)
+⏳ Loading Mistral fine-tuned model...
+   Base model: mistralai/Mistral-7B-v0.1
+   Fine-tuned path: /home/hubel/Documents/Ayeen/LLM-Fine-Tunning/mistral-7b-vrf-finetuned-v4
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]127.0.0.1 - - [27/Mar/2026 16:10:22] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:10:24] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:10:26] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+Loading checkpoint shards:  50%|█████     | 1/2 [00:06<00:06,  6.77s/it]127.0.0.1 - - [27/Mar/2026 16:10:28] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:10:30] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+Loading checkpoint shards: 100%|██████████| 2/2 [00:09<00:00,  4.41s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:09<00:00,  4.77s/it]
+127.0.0.1 - - [27/Mar/2026 16:10:32] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:10:34] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:10:36] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:10:38] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:10:40] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:10:42] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:10:44] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:10:46] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:10:48] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:10:50] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:10:52] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:10:54] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:10:56] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:10:58] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:00] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:02] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:04] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:06] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:08] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:10] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:12] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:14] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:16] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:18] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:20] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:22] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:24] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:26] "GET /api/pipeline/status/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:26] "GET /api/files/list/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:26] "GET /api/files/preview/840db516-1ed5-4b7c-a890-60cf3ac2e2fb?lines=500&t=1774595482370 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:26] "GET /api/files/log/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:26] "GET /api/files/preview/840db516-1ed5-4b7c-a890-60cf3ac2e2fb?lines=500&t=1774595482371 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:26] "GET /api/files/list/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:26] "GET /api/files/log/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:28] "GET /api/files/preview/840db516-1ed5-4b7c-a890-60cf3ac2e2fb?lines=500&t=1774595484373 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:28] "GET /api/files/log/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:28] "GET /api/files/list/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+127.0.0.1 - - [27/Mar/2026 16:11:31] "GET /api/files/download/840db516-1ed5-4b7c-a890-60cf3ac2e2fb HTTP/1.1" 200 -
+ * Detected change in '/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/ui/backend/backend_config.py', reloading
+✓ Mistral fine-tuned model loaded successfully
+   Model type: fine-tuned
+   Device: cuda:0
+   GPU: NVIDIA RTX A4000
+⚠ RAG unavailable for Agent 1: Vector DB not found at data/vector_db. Run 'python -m src.rag.knowledge_builder' first!
+✓ Reusing existing LLM instance (no reload needed)
+
+🔧 Agent 3 using fine-tuned Mistral model for error correction
+⚠ RAG unavailable for Agent 3: Vector DB not found at data/vector_db. Run 'python -m src.rag.knowledge_builder' first!
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ IDD compliance check complete
+  🔧 Auto-fixed 4 issue(s)
+     - Added SimulationControl object with sizing enabled
+     - Added default Site:Location (Chicago, IL)
+     - Added default design days (Chicago winter/summer)
+     - Generated basic geometry for 3 zone(s): Sales_Floor, Storage, Back_Office
+✓ Enabled zone/system sizing for HVAC autosizing
+✓ Auto-detected 3 zones from IDF
+  1. Sales_Floor
+  2. Storage
+  3. Back_Office
+
+📊 Building Context:
+  • Zones: 3
+  • Total Floor Area: 300.0 m²
+  • Total Volume: 900.0 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Chicago_IL_USA
+
+[1] Generating HVAC...
+User Request: generate a heat recovery idf
+✓ Calling LLM (mistral) to generate VRF system for zones: Sales_Floor, Storage, Back_Office
+  User Design Request: generate a heat recovery idf
+✓ Generating with Mistral fine-tuned model...
+   Found 3 zones: Sales_Floor, Storage, Back_Office
+   System name: VRF_System_1
+   🔧 Generating System VRF...
+      ✅ System VRF generated (2632 chars)
+   🏢 Generating Zone VRFs for 3 zones...
+      Zone 1/3: Sales_Floor... ✅ (3455 chars)
+      Zone 2/3: Storage... ✅ (3447 chars)
+      Zone 3/3: Back_Office... ✅ (3455 chars)
+   🌡️  Generating Thermostats for 3 zones...
+      Thermostat 1/3: Sales_Floor... ✅ (315 chars)
+      Thermostat 2/3: Storage... ✅ (311 chars)
+      Thermostat 3/3: Back_Office... ✅ (315 chars)
+   ✅ Complete VRF system generated (13942 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 7 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 7 HVAC objects
+
+[2] Validating IDF...
+Valid: True, Errors: 0
+✓ Validation passed - proceeding to simulation
+
+[3] Simulating...
+Success: True, Errors: 0
+
+✓ Final corrected IDF copied to: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/840db516-1ed5-4b7c-a890-60cf3ac2e2fb_FINAL.idf
+  Use this file in EP-Launch for simulation!
+
+======================================================================
+PIPELINE COMPLETE: SUCCESS
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/840db516-1ed5-4b7c-a890-60cf3ac2e2fb_results.json
+
+🎉 SUCCESS! Use this file:
+   /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/840db516-1ed5-4b7c-a890-60cf3ac2e2fb_FINAL.idf
+======================================================================
+[W327 17:41:01.537454312 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+ * Restarting with stat
+Werkzeug appears to be used in a production deployment. Consider switching to a production web server instead.
+ * Debugger is active!
+ * Debugger PIN: 129-709-520
