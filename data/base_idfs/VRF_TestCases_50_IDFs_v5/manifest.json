@@ -1,0 +1,736 @@
+[
+  {
+    "id": "TC01",
+    "file": "TC01_RetailStandalone_4A.idf",
+    "building": "RetailStandalone",
+    "climate_zone": "4A",
+    "location": "Baltimore MD",
+    "num_zones": 2,
+    "zone_names": [
+      "Sales_Floor",
+      "Back_Space"
+    ]
+  },
+  {
+    "id": "TC02",
+    "file": "TC02_RetailStandalone_2A.idf",
+    "building": "RetailStandalone",
+    "climate_zone": "2A",
+    "location": "Houston TX",
+    "num_zones": 2,
+    "zone_names": [
+      "Sales_Floor",
+      "Back_Space"
+    ]
+  },
+  {
+    "id": "TC03",
+    "file": "TC03_RetailStandalone_5A.idf",
+    "building": "RetailStandalone",
+    "climate_zone": "5A",
+    "location": "Chicago IL",
+    "num_zones": 2,
+    "zone_names": [
+      "Sales_Floor",
+      "Back_Space"
+    ]
+  },
+  {
+    "id": "TC04",
+    "file": "TC04_RetailStandalone_3B.idf",
+    "building": "RetailStandalone",
+    "climate_zone": "3B",
+    "location": "Los Angeles CA",
+    "num_zones": 3,
+    "zone_names": [
+      "Sales_Floor",
+      "Storage_Room",
+      "Vestibule"
+    ]
+  },
+  {
+    "id": "TC05",
+    "file": "TC05_RetailStandalone_6A.idf",
+    "building": "RetailStandalone",
+    "climate_zone": "6A",
+    "location": "Minneapolis MN",
+    "num_zones": 3,
+    "zone_names": [
+      "Main_Retail",
+      "Back_Office",
+      "Loading_Dock"
+    ]
+  },
+  {
+    "id": "TC06",
+    "file": "TC06_RetailStripMall_4A.idf",
+    "building": "RetailStripMall",
+    "climate_zone": "4A",
+    "location": "Baltimore MD",
+    "num_zones": 4,
+    "zone_names": [
+      "RestrntSeating",
+      "RestrntKitchen",
+      "Retail1",
+      "Retail2"
+    ]
+  },
+  {
+    "id": "TC07",
+    "file": "TC07_RetailStripMall_3C.idf",
+    "building": "RetailStripMall",
+    "climate_zone": "3C",
+    "location": "San Francisco CA",
+    "num_zones": 4,
+    "zone_names": [
+      "Retail_A",
+      "Retail_B",
+      "Retail_C",
+      "Common_Area"
+    ]
+  },
+  {
+    "id": "TC08",
+    "file": "TC08_RetailStripMall_2B.idf",
+    "building": "RetailStripMall",
+    "climate_zone": "2B",
+    "location": "Phoenix AZ",
+    "num_zones": 4,
+    "zone_names": [
+      "Shop_1",
+      "Shop_2",
+      "Shop_3",
+      "Back_Corridor"
+    ]
+  },
+  {
+    "id": "TC09",
+    "file": "TC09_RetailStripMall_5B.idf",
+    "building": "RetailStripMall",
+    "climate_zone": "5B",
+    "location": "Denver CO",
+    "num_zones": 3,
+    "zone_names": [
+      "Unit_A",
+      "Unit_B",
+      "Unit_C"
+    ]
+  },
+  {
+    "id": "TC10",
+    "file": "TC10_RetailStripMall_7.idf",
+    "building": "RetailStripMall",
+    "climate_zone": "7",
+    "location": "Duluth MN",
+    "num_zones": 3,
+    "zone_names": [
+      "Store_1",
+      "Store_2",
+      "Hallway"
+    ]
+  },
+  {
+    "id": "TC11",
+    "file": "TC11_SmallOffice_4A.idf",
+    "building": "SmallOffice",
+    "climate_zone": "4A",
+    "location": "Baltimore MD",
+    "num_zones": 5,
+    "zone_names": [
+      "Perimeter_ZN_1",
+      "Perimeter_ZN_2",
+      "Perimeter_ZN_3",
+      "Perimeter_ZN_4",
+      "Core_ZN"
+    ]
+  },
+  {
+    "id": "TC12",
+    "file": "TC12_SmallOffice_2A.idf",
+    "building": "SmallOffice",
+    "climate_zone": "2A",
+    "location": "Houston TX",
+    "num_zones": 5,
+    "zone_names": [
+      "Perimeter_ZN_1",
+      "Perimeter_ZN_2",
+      "Perimeter_ZN_3",
+      "Perimeter_ZN_4",
+      "Core_ZN"
+    ]
+  },
+  {
+    "id": "TC13",
+    "file": "TC13_SmallOffice_5A.idf",
+    "building": "SmallOffice",
+    "climate_zone": "5A",
+    "location": "Chicago IL",
+    "num_zones": 5,
+    "zone_names": [
+      "South_Office",
+      "North_Office",
+      "East_Office",
+      "West_Office",
+      "Core_ZN"
+    ]
+  },
+  {
+    "id": "TC14",
+    "file": "TC14_SmallOffice_3B.idf",
+    "building": "SmallOffice",
+    "climate_zone": "3B",
+    "location": "Los Angeles CA",
+    "num_zones": 4,
+    "zone_names": [
+      "Open_Office",
+      "Conference",
+      "Reception",
+      "Server_Room"
+    ]
+  },
+  {
+    "id": "TC15",
+    "file": "TC15_SmallOffice_1A.idf",
+    "building": "SmallOffice",
+    "climate_zone": "1A",
+    "location": "Miami FL",
+    "num_zones": 4,
+    "zone_names": [
+      "Perimeter_ZN_1",
+      "Perimeter_ZN_2",
+      "Core_ZN",
+      "Break_Room"
+    ]
+  },
+  {
+    "id": "TC16",
+    "file": "TC16_SmallOffice_6A.idf",
+    "building": "SmallOffice",
+    "climate_zone": "6A",
+    "location": "Minneapolis MN",
+    "num_zones": 5,
+    "zone_names": [
+      "Perimeter_ZN_1",
+      "Perimeter_ZN_2",
+      "Perimeter_ZN_3",
+      "Perimeter_ZN_4",
+      "Core_ZN"
+    ]
+  },
+  {
+    "id": "TC17",
+    "file": "TC17_SmallOffice_3A.idf",
+    "building": "SmallOffice",
+    "climate_zone": "3A",
+    "location": "Atlanta GA",
+    "num_zones": 4,
+    "zone_names": [
+      "Office_N",
+      "Office_S",
+      "Lobby",
+      "Storage"
+    ]
+  },
+  {
+    "id": "TC18",
+    "file": "TC18_SmallOffice_4C.idf",
+    "building": "SmallOffice",
+    "climate_zone": "4C",
+    "location": "Seattle WA",
+    "num_zones": 4,
+    "zone_names": [
+      "Open_Plan",
+      "Meeting_Room",
+      "Kitchen",
+      "Corridor"
+    ]
+  },
+  {
+    "id": "TC19",
+    "file": "TC19_MediumOffice_4A.idf",
+    "building": "MediumOffice",
+    "climate_zone": "4A",
+    "location": "Baltimore MD",
+    "num_zones": 5,
+    "zone_names": [
+      "Perimeter_ZN_1",
+      "Perimeter_ZN_2",
+      "Perimeter_ZN_3",
+      "Perimeter_ZN_4",
+      "Core_ZN"
+    ]
+  },
+  {
+    "id": "TC20",
+    "file": "TC20_MediumOffice_2A.idf",
+    "building": "MediumOffice",
+    "climate_zone": "2A",
+    "location": "Houston TX",
+    "num_zones": 5,
+    "zone_names": [
+      "Floor1_Perim_N",
+      "Floor1_Perim_S",
+      "Floor1_Core",
+      "Floor2_Perim_N",
+      "Floor2_Core"
+    ]
+  },
+  {
+    "id": "TC21",
+    "file": "TC21_MediumOffice_5A.idf",
+    "building": "MediumOffice",
+    "climate_zone": "5A",
+    "location": "Chicago IL",
+    "num_zones": 5,
+    "zone_names": [
+      "Perimeter_ZN_1",
+      "Perimeter_ZN_2",
+      "Perimeter_ZN_3",
+      "Perimeter_ZN_4",
+      "Core_ZN"
+    ]
+  },
+  {
+    "id": "TC22",
+    "file": "TC22_MediumOffice_3B.idf",
+    "building": "MediumOffice",
+    "climate_zone": "3B",
+    "location": "Los Angeles CA",
+    "num_zones": 5,
+    "zone_names": [
+      "SW_Office",
+      "NE_Office",
+      "SE_Office",
+      "NW_Office",
+      "Central_Core"
+    ]
+  },
+  {
+    "id": "TC23",
+    "file": "TC23_MediumOffice_6A.idf",
+    "building": "MediumOffice",
+    "climate_zone": "6A",
+    "location": "Minneapolis MN",
+    "num_zones": 5,
+    "zone_names": [
+      "Perimeter_ZN_1",
+      "Perimeter_ZN_2",
+      "Perimeter_ZN_3",
+      "Core_ZN",
+      "Stairwell"
+    ]
+  },
+  {
+    "id": "TC24",
+    "file": "TC24_MediumOffice_1A.idf",
+    "building": "MediumOffice",
+    "climate_zone": "1A",
+    "location": "Miami FL",
+    "num_zones": 5,
+    "zone_names": [
+      "East_Wing",
+      "West_Wing",
+      "North_Wing",
+      "South_Wing",
+      "Core_ZN"
+    ]
+  },
+  {
+    "id": "TC25",
+    "file": "TC25_SmallHotel_4A.idf",
+    "building": "SmallHotel",
+    "climate_zone": "4A",
+    "location": "Baltimore MD",
+    "num_zones": 6,
+    "zone_names": [
+      "Corridor_Flr_1",
+      "Corridor_Flr_2",
+      "Room_101",
+      "Room_102",
+      "Room_201",
+      "Lobby"
+    ]
+  },
+  {
+    "id": "TC26",
+    "file": "TC26_SmallHotel_2A.idf",
+    "building": "SmallHotel",
+    "climate_zone": "2A",
+    "location": "Houston TX",
+    "num_zones": 6,
+    "zone_names": [
+      "Corridor_Flr_1",
+      "Room_101",
+      "Room_102",
+      "Room_103",
+      "Lobby",
+      "Laundry"
+    ]
+  },
+  {
+    "id": "TC27",
+    "file": "TC27_SmallHotel_5A.idf",
+    "building": "SmallHotel",
+    "climate_zone": "5A",
+    "location": "Chicago IL",
+    "num_zones": 6,
+    "zone_names": [
+      "Corridor_Flr_1",
+      "Corridor_Flr_2",
+      "Room_101",
+      "Room_201",
+      "Fitness",
+      "Lobby"
+    ]
+  },
+  {
+    "id": "TC28",
+    "file": "TC28_SmallHotel_3B.idf",
+    "building": "SmallHotel",
+    "climate_zone": "3B",
+    "location": "Los Angeles CA",
+    "num_zones": 6,
+    "zone_names": [
+      "Room_101",
+      "Room_102",
+      "Room_103",
+      "Room_104",
+      "Lobby",
+      "Corridor"
+    ]
+  },
+  {
+    "id": "TC29",
+    "file": "TC29_SmallHotel_6A.idf",
+    "building": "SmallHotel",
+    "climate_zone": "6A",
+    "location": "Minneapolis MN",
+    "num_zones": 6,
+    "zone_names": [
+      "Corridor_Flr_1",
+      "Room_101",
+      "Room_102",
+      "Room_201",
+      "Room_202",
+      "Lobby"
+    ]
+  },
+  {
+    "id": "TC30",
+    "file": "TC30_SmallHotel_3A.idf",
+    "building": "SmallHotel",
+    "climate_zone": "3A",
+    "location": "Atlanta GA",
+    "num_zones": 6,
+    "zone_names": [
+      "Room_101",
+      "Room_102",
+      "Room_103",
+      "Corridor",
+      "Lobby",
+      "Meeting_Room"
+    ]
+  },
+  {
+    "id": "TC31",
+    "file": "TC31_LargeHotel_4A.idf",
+    "building": "LargeHotel",
+    "climate_zone": "4A",
+    "location": "Baltimore MD",
+    "num_zones": 6,
+    "zone_names": [
+      "Banquet_Flr6",
+      "Dining_Flr6",
+      "Kitchen_Flr6",
+      "Corridor_Flr3",
+      "Room_3_1",
+      "Room_3_2"
+    ]
+  },
+  {
+    "id": "TC32",
+    "file": "TC32_LargeHotel_2A.idf",
+    "building": "LargeHotel",
+    "climate_zone": "2A",
+    "location": "Houston TX",
+    "num_zones": 6,
+    "zone_names": [
+      "Lobby_Flr1",
+      "Retail_Flr1",
+      "Corridor_Flr2",
+      "Room_2_1",
+      "Room_2_2",
+      "Room_2_3"
+    ]
+  },
+  {
+    "id": "TC33",
+    "file": "TC33_LargeHotel_5A.idf",
+    "building": "LargeHotel",
+    "climate_zone": "5A",
+    "location": "Chicago IL",
+    "num_zones": 6,
+    "zone_names": [
+      "Lobby_Flr1",
+      "Banquet_Flr6",
+      "Corridor_Flr4",
+      "Room_4_1",
+      "Room_4_2",
+      "Room_4_3"
+    ]
+  },
+  {
+    "id": "TC34",
+    "file": "TC34_LargeHotel_3B.idf",
+    "building": "LargeHotel",
+    "climate_zone": "3B",
+    "location": "Los Angeles CA",
+    "num_zones": 6,
+    "zone_names": [
+      "Lobby_Flr1",
+      "Dining_Flr6",
+      "Room_5_1",
+      "Room_5_2",
+      "Corridor_Flr5",
+      "Fitness_Flr1"
+    ]
+  },
+  {
+    "id": "TC35",
+    "file": "TC35_MidriseApartment_4A.idf",
+    "building": "MidriseApartment",
+    "climate_zone": "4A",
+    "location": "Baltimore MD",
+    "num_zones": 5,
+    "zone_names": [
+      "G_Apartment",
+      "G_Corridor",
+      "F2_Apartment_1",
+      "F2_Apartment_2",
+      "F2_Corridor"
+    ]
+  },
+  {
+    "id": "TC36",
+    "file": "TC36_MidriseApartment_2A.idf",
+    "building": "MidriseApartment",
+    "climate_zone": "2A",
+    "location": "Houston TX",
+    "num_zones": 5,
+    "zone_names": [
+      "Apartment_1",
+      "Apartment_2",
+      "Apartment_3",
+      "Corridor",
+      "Lobby"
+    ]
+  },
+  {
+    "id": "TC37",
+    "file": "TC37_MidriseApartment_5A.idf",
+    "building": "MidriseApartment",
+    "climate_zone": "5A",
+    "location": "Chicago IL",
+    "num_zones": 6,
+    "zone_names": [
+      "Unit_1A",
+      "Unit_1B",
+      "Unit_2A",
+      "Unit_2B",
+      "Corridor_Flr1",
+      "Corridor_Flr2"
+    ]
+  },
+  {
+    "id": "TC38",
+    "file": "TC38_MidriseApartment_3B.idf",
+    "building": "MidriseApartment",
+    "climate_zone": "3B",
+    "location": "Los Angeles CA",
+    "num_zones": 5,
+    "zone_names": [
+      "Studio_1",
+      "Studio_2",
+      "One_Bed_1",
+      "One_Bed_2",
+      "Corridor"
+    ]
+  },
+  {
+    "id": "TC39",
+    "file": "TC39_MidriseApartment_1A.idf",
+    "building": "MidriseApartment",
+    "climate_zone": "1A",
+    "location": "Miami FL",
+    "num_zones": 5,
+    "zone_names": [
+      "Apt_101",
+      "Apt_102",
+      "Apt_201",
+      "Apt_202",
+      "Lobby"
+    ]
+  },
+  {
+    "id": "TC40",
+    "file": "TC40_MidriseApartment_6A.idf",
+    "building": "MidriseApartment",
+    "climate_zone": "6A",
+    "location": "Minneapolis MN",
+    "num_zones": 6,
+    "zone_names": [
+      "Unit_N1",
+      "Unit_S1",
+      "Unit_N2",
+      "Unit_S2",
+      "Common_Corridor",
+      "Storage"
+    ]
+  },
+  {
+    "id": "TC41",
+    "file": "TC41_PrimarySchool_4A.idf",
+    "building": "PrimarySchool",
+    "climate_zone": "4A",
+    "location": "Baltimore MD",
+    "num_zones": 5,
+    "zone_names": [
+      "Classroom_ZN_1_FLR_1",
+      "Classroom_ZN_2_FLR_1",
+      "Corridor_ZN_1_FLR_1",
+      "Gym_ZN_1_FLR_1",
+      "Offices_ZN_1_FLR_1"
+    ]
+  },
+  {
+    "id": "TC42",
+    "file": "TC42_PrimarySchool_2A.idf",
+    "building": "PrimarySchool",
+    "climate_zone": "2A",
+    "location": "Houston TX",
+    "num_zones": 5,
+    "zone_names": [
+      "Classroom_ZN_1_FLR_1",
+      "Classroom_ZN_2_FLR_1",
+      "Classroom_ZN_3_FLR_1",
+      "Corridor_ZN_1_FLR_1",
+      "Cafeteria_ZN_1_FLR_1"
+    ]
+  },
+  {
+    "id": "TC43",
+    "file": "TC43_PrimarySchool_5A.idf",
+    "building": "PrimarySchool",
+    "climate_zone": "5A",
+    "location": "Chicago IL",
+    "num_zones": 5,
+    "zone_names": [
+      "Classroom_ZN_1_FLR_1",
+      "Classroom_ZN_2_FLR_1",
+      "Gym_ZN_1_FLR_1",
+      "Cafeteria_ZN_1_FLR_1",
+      "Offices_ZN_1_FLR_1"
+    ]
+  },
+  {
+    "id": "TC44",
+    "file": "TC44_PrimarySchool_3B.idf",
+    "building": "PrimarySchool",
+    "climate_zone": "3B",
+    "location": "Los Angeles CA",
+    "num_zones": 5,
+    "zone_names": [
+      "Classroom_ZN_1_FLR_1",
+      "Classroom_ZN_2_FLR_1",
+      "Classroom_ZN_3_FLR_1",
+      "Library",
+      "Offices_ZN_1_FLR_1"
+    ]
+  },
+  {
+    "id": "TC45",
+    "file": "TC45_OutpatientHealthcare_4A.idf",
+    "building": "OutpatientHealthcare",
+    "climate_zone": "4A",
+    "location": "Baltimore MD",
+    "num_zones": 5,
+    "zone_names": [
+      "Floor1_Exam1",
+      "Floor1_Exam2",
+      "Floor1_Corridor",
+      "Floor1_Reception",
+      "Floor1_NurseStation"
+    ]
+  },
+  {
+    "id": "TC46",
+    "file": "TC46_OutpatientHealthcare_2A.idf",
+    "building": "OutpatientHealthcare",
+    "climate_zone": "2A",
+    "location": "Houston TX",
+    "num_zones": 5,
+    "zone_names": [
+      "Exam_Room_1",
+      "Exam_Room_2",
+      "Exam_Room_3",
+      "Waiting_Room",
+      "Corridor"
+    ]
+  },
+  {
+    "id": "TC47",
+    "file": "TC47_OutpatientHealthcare_5A.idf",
+    "building": "OutpatientHealthcare",
+    "climate_zone": "5A",
+    "location": "Chicago IL",
+    "num_zones": 6,
+    "zone_names": [
+      "Exam_Room_1",
+      "Exam_Room_2",
+      "Lab",
+      "Reception",
+      "Corridor",
+      "Office"
+    ]
+  },
+  {
+    "id": "TC48",
+    "file": "TC48_FullServiceRestaurant_4A.idf",
+    "building": "FullServiceRestaurant",
+    "climate_zone": "4A",
+    "location": "Baltimore MD",
+    "num_zones": 3,
+    "zone_names": [
+      "Dining",
+      "Kitchen",
+      "Bar"
+    ]
+  },
+  {
+    "id": "TC49",
+    "file": "TC49_FullServiceRestaurant_2A.idf",
+    "building": "FullServiceRestaurant",
+    "climate_zone": "2A",
+    "location": "Houston TX",
+    "num_zones": 3,
+    "zone_names": [
+      "Dining",
+      "Kitchen",
+      "Private_Dining"
+    ]
+  },
+  {
+    "id": "TC50",
+    "file": "TC50_FullServiceRestaurant_5A.idf",
+    "building": "FullServiceRestaurant",
+    "climate_zone": "5A",
+    "location": "Chicago IL",
+    "num_zones": 4,
+    "zone_names": [
+      "Main_Dining",
+      "Kitchen",
+      "Bar_Lounge",
+      "Storage"
+    ]
+  }
+]

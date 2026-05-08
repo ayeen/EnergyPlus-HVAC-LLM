@@ -1,0 +1,332 @@
+!-Generator IDFEditor 1.50
+!-NOTE: All comments with '!-' are ignored by the IDFEditor
+
+!-   ===========  ALL OBJECTS IN CLASS: VERSION ===========
+
+Version,
+    25.2;                    !- Version Identifier
+
+!-   ===========  ALL OBJECTS IN CLASS: BUILDING ===========
+
+Building,
+    Retail Store,            !- Name
+    0,                       !- North Axis {deg}
+    City,                    !- Terrain
+    0.04,                    !- Loads Convergence Tolerance Value {W}
+    0.4,                     !- Temperature Convergence Tolerance Value {deltaC}
+    FullInteriorAndExterior, !- Solar Distribution
+    25,                      !- Maximum Number of Warmup Days
+    6;                       !- Minimum Number of Warmup Days
+
+!-   ===========  ALL OBJECTS IN CLASS: TIMESTEP ===========
+
+Timestep,
+    6;                       !- Number of Timesteps per Hour
+
+!-   ===========  ALL OBJECTS IN CLASS: ZONE ===========
+
+Zone,
+    Sales_Floor,             !- Name
+    0,                       !- Direction of Relative North {deg}
+    0,                       !- X Origin {m}
+    0,                       !- Y Origin {m}
+    0,                       !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    autocalculate,           !- Ceiling Height {m}
+    autocalculate;           !- Volume {m3}
+
+Zone,
+    Storage,                 !- Name
+    0,                       !- Direction of Relative North {deg}
+    25,                      !- X Origin {m}
+    0,                       !- Y Origin {m}
+    0,                       !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    autocalculate,           !- Ceiling Height {m}
+    autocalculate;           !- Volume {m3}
+
+Zone,
+    Back_Office,             !- Name
+    0,                       !- Direction of Relative North {deg}
+    25,                      !- X Origin {m}
+    10,                      !- Y Origin {m}
+    0,                       !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    autocalculate,           !- Ceiling Height {m}
+    autocalculate;           !- Volume {m3}
+
+!-   ===========  ALL OBJECTS IN CLASS: PEOPLE ===========
+
+People,
+    Sales_Floor_People,      !- Name
+    Sales_Floor,             !- Zone or ZoneList Name
+    Retail_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    30,                      !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Retail_Activity;         !- Activity Level Schedule Name
+
+People,
+    Storage_People,          !- Name
+    Storage,                 !- Zone or ZoneList Name
+    Storage_Occupancy,       !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    3,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Retail_Activity;         !- Activity Level Schedule Name
+
+People,
+    Back_Office_People,      !- Name
+    Back_Office,             !- Zone or ZoneList Name
+    Office_Occupancy,        !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    4,                       !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Retail_Activity;         !- Activity Level Schedule Name
+
+!-   ===========  ALL OBJECTS IN CLASS: LIGHTS ===========
+
+Lights,
+    Sales_Floor_Lights,      !- Name
+    Sales_Floor,             !- Zone or ZoneList Name
+    Retail_Lighting,         !- Schedule Name
+    LightingLevel,           !- Design Level Calculation Method
+    3000,                    !- Lighting Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    Storage_Lights,          !- Name
+    Storage,                 !- Zone or ZoneList Name
+    Storage_Lighting,        !- Schedule Name
+    LightingLevel,           !- Design Level Calculation Method
+    400,                     !- Lighting Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    Back_Office_Lights,      !- Name
+    Back_Office,             !- Zone or ZoneList Name
+    Office_Lighting,         !- Schedule Name
+    LightingLevel,           !- Design Level Calculation Method
+    300,                     !- Lighting Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+!-   ===========  ALL OBJECTS IN CLASS: ELECTRICEQUIPMENT ===========
+
+ElectricEquipment,
+    Sales_Floor_Equipment,   !- Name
+    Sales_Floor,             !- Zone or ZoneList Name
+    Retail_Equipment,        !- Schedule Name
+    EquipmentLevel,          !- Design Level Calculation Method
+    2000,                    !- Design Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.3,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    Storage_Equipment,       !- Name
+    Storage,                 !- Zone or ZoneList Name
+    Storage_Equipment_Sched, !- Schedule Name
+    EquipmentLevel,          !- Design Level Calculation Method
+    200,                     !- Design Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.3,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    Back_Office_Equipment,   !- Name
+    Back_Office,             !- Zone or ZoneList Name
+    Office_Equipment,        !- Schedule Name
+    EquipmentLevel,          !- Design Level Calculation Method
+    500,                     !- Design Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.3,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+!-   ===========  ALL OBJECTS IN CLASS: SCHEDULETYPELIMITS ===========
+
+ScheduleTypeLimits,
+    Fraction,                !- Name
+    0,                       !- Lower Limit Value
+    1,                       !- Upper Limit Value
+    Continuous;              !- Numeric Type
+
+ScheduleTypeLimits,
+    Any Number;              !- Name
+
+!-   ===========  ALL OBJECTS IN CLASS: SCHEDULE:COMPACT ===========
+
+Schedule:Compact,
+    Retail_Occupancy,        !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 10:00, 0.0,       !- Field 3
+    Until: 12:00, 0.5,       !- Field 5
+    Until: 14:00, 0.8,       !- Field 7
+    Until: 17:00, 0.6,       !- Field 9
+    Until: 20:00, 1.0,       !- Field 11
+    Until: 21:00, 0.5,       !- Field 13
+    Until: 24:00, 0.0,       !- Field 15
+    For: Saturday,           !- Field 17
+    Until: 10:00, 0.0,       !- Field 18
+    Until: 20:00, 1.0,       !- Field 20
+    Until: 24:00, 0.0,       !- Field 22
+    For: Sunday Holidays,    !- Field 24
+    Until: 11:00, 0.0,       !- Field 25
+    Until: 18:00, 0.7,       !- Field 27
+    Until: 24:00, 0.0;       !- Field 29
+
+Schedule:Compact,
+    Storage_Occupancy,       !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.0,       !- Field 3
+    Until: 10:00, 1.0,       !- Field 5
+    Until: 12:00, 0.3,       !- Field 7
+    Until: 14:00, 0.5,       !- Field 9
+    Until: 17:00, 0.3,       !- Field 11
+    Until: 20:00, 0.5,       !- Field 13
+    Until: 21:00, 1.0,       !- Field 15
+    Until: 24:00, 0.0,       !- Field 17
+    For: Weekends Holidays,  !- Field 19
+    Until: 09:00, 0.0,       !- Field 20
+    Until: 21:00, 0.3,       !- Field 22
+    Until: 24:00, 0.0;       !- Field 24
+
+Schedule:Compact,
+    Office_Occupancy,        !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 09:00, 0.0,       !- Field 3
+    Until: 12:00, 1.0,       !- Field 5
+    Until: 13:00, 0.5,       !- Field 7
+    Until: 17:00, 1.0,       !- Field 9
+    Until: 24:00, 0.0,       !- Field 11
+    For: Weekends Holidays,  !- Field 13
+    Until: 24:00, 0.0;       !- Field 14
+
+Schedule:Compact,
+    Retail_Lighting,         !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 10:00, 0.1,       !- Field 3
+    Until: 21:00, 1.0,       !- Field 5
+    Until: 24:00, 0.1,       !- Field 7
+    For: Saturday,           !- Field 9
+    Until: 10:00, 0.1,       !- Field 10
+    Until: 20:00, 1.0,       !- Field 12
+    Until: 24:00, 0.1,       !- Field 14
+    For: Sunday Holidays,    !- Field 16
+    Until: 11:00, 0.1,       !- Field 17
+    Until: 18:00, 1.0,       !- Field 19
+    Until: 24:00, 0.1;       !- Field 21
+
+Schedule:Compact,
+    Storage_Lighting,        !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 08:00, 0.05,      !- Field 3
+    Until: 21:00, 0.5,       !- Field 5
+    Until: 24:00, 0.05;      !- Field 7
+
+Schedule:Compact,
+    Office_Lighting,         !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 09:00, 0.1,       !- Field 3
+    Until: 17:00, 1.0,       !- Field 5
+    Until: 24:00, 0.1,       !- Field 7
+    For: Weekends Holidays,  !- Field 9
+    Until: 24:00, 0.1;       !- Field 10
+
+Schedule:Compact,
+    Retail_Equipment,        !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 10:00, 0.2,       !- Field 3
+    Until: 21:00, 1.0,       !- Field 5
+    Until: 24:00, 0.2,       !- Field 7
+    For: Weekends Holidays,  !- Field 9
+    Until: 10:00, 0.2,       !- Field 10
+    Until: 20:00, 1.0,       !- Field 12
+    Until: 24:00, 0.2;       !- Field 14
+
+Schedule:Compact,
+    Storage_Equipment_Sched, !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 08:00, 0.1,       !- Field 3
+    Until: 21:00, 0.5,       !- Field 5
+    Until: 24:00, 0.1;       !- Field 7
+
+Schedule:Compact,
+    Office_Equipment,        !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 09:00, 0.1,       !- Field 3
+    Until: 17:00, 1.0,       !- Field 5
+    Until: 24:00, 0.1,       !- Field 7
+    For: Weekends Holidays,  !- Field 9
+    Until: 24:00, 0.1;       !- Field 10
+
+Schedule:Compact,
+    Retail_Activity,         !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00, 120;       !- Field 3
+
+!-   ===========  ALL OBJECTS IN CLASS: OUTPUT:VARIABLE ===========
+
+Output:Variable,
+    *,                       !- Key Value
+    Zone Mean Air Temperature,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Zone Air System Sensible Cooling Energy,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Zone Air System Sensible Heating Energy,  !- Variable Name
+    Hourly;                  !- Reporting Frequency

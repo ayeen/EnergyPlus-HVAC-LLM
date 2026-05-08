@@ -1,0 +1,322 @@
+!-Generator IDFEditor 1.50
+! Test Case TC04 | RetailStandalone | Climate Zone 3B | Los Angeles CA
+! No HVAC - ready for VRF template injection
+
+Version,
+    25.2;                    !- Version Identifier
+
+Building,
+    RetailStandalone_TC04,            !- Name
+    0,                       !- North Axis {deg}
+    City,                    !- Terrain
+    0.04,                    !- Loads Convergence Tolerance Value {W}
+    0.4,                     !- Temperature Convergence Tolerance Value {deltaC}
+    FullInteriorAndExterior, !- Solar Distribution
+    25,                      !- Maximum Number of Warmup Days
+    6;                       !- Minimum Number of Warmup Days
+
+Timestep,
+    6;                       !- Number of Timesteps per Hour
+
+Zone,
+    Sales_Floor,                    !- Name
+    0,                       !- Direction of Relative North {deg}
+    0,                !- X Origin {m}
+    0,                       !- Y Origin {m}
+    0,                       !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    autocalculate,           !- Ceiling Height {m}
+    autocalculate;           !- Volume {m3}
+
+Zone,
+    Storage_Room,                    !- Name
+    0,                       !- Direction of Relative North {deg}
+    25,                !- X Origin {m}
+    0,                       !- Y Origin {m}
+    0,                       !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    autocalculate,           !- Ceiling Height {m}
+    autocalculate;           !- Volume {m3}
+
+Zone,
+    Vestibule,                    !- Name
+    0,                       !- Direction of Relative North {deg}
+    50,                !- X Origin {m}
+    0,                       !- Y Origin {m}
+    0,                       !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    autocalculate,           !- Ceiling Height {m}
+    autocalculate;           !- Volume {m3}
+
+ScheduleTypeLimits,
+    Fraction,                !- Name
+    0,                       !- Lower Limit Value
+    1,                       !- Upper Limit Value
+    Continuous;              !- Numeric Type
+
+ScheduleTypeLimits,
+    Any Number;              !- Name
+
+Schedule:Compact,
+    Sales_Floor_Occ,              !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.0,       !- Field 3
+    Until: 09:00, 0.5,       !- Field 5
+    Until: 17:00, 1.0,       !- Field 7
+    Until: 18:00, 0.5,       !- Field 9
+    Until: 24:00, 0.0,       !- Field 11
+    For: Saturday,           !- Field 13
+    Until: 09:00, 0.0,       !- Field 14
+    Until: 13:00, 0.5,       !- Field 16
+    Until: 24:00, 0.0,       !- Field 18
+    For: Sunday Holidays,    !- Field 20
+    Until: 24:00, 0.0;       !- Field 21
+
+Schedule:Compact,
+    Sales_Floor_Ltg,              !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.1,       !- Field 3
+    Until: 17:00, 1.0,       !- Field 5
+    Until: 24:00, 0.1,       !- Field 7
+    For: Weekends Holidays,  !- Field 9
+    Until: 24:00, 0.1;       !- Field 10
+
+Schedule:Compact,
+    Sales_Floor_Eqp,              !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.1,       !- Field 3
+    Until: 17:00, 1.0,       !- Field 5
+    Until: 24:00, 0.1,       !- Field 7
+    For: Weekends Holidays,  !- Field 9
+    Until: 24:00, 0.1;       !- Field 10
+
+Schedule:Compact,
+    Sales_Floor_Act,              !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00, 120;       !- Field 3
+
+Schedule:Compact,
+    Storage_Room_Occ,              !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.0,       !- Field 3
+    Until: 09:00, 0.5,       !- Field 5
+    Until: 17:00, 1.0,       !- Field 7
+    Until: 18:00, 0.5,       !- Field 9
+    Until: 24:00, 0.0,       !- Field 11
+    For: Saturday,           !- Field 13
+    Until: 09:00, 0.0,       !- Field 14
+    Until: 13:00, 0.5,       !- Field 16
+    Until: 24:00, 0.0,       !- Field 18
+    For: Sunday Holidays,    !- Field 20
+    Until: 24:00, 0.0;       !- Field 21
+
+Schedule:Compact,
+    Storage_Room_Ltg,              !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.1,       !- Field 3
+    Until: 17:00, 1.0,       !- Field 5
+    Until: 24:00, 0.1,       !- Field 7
+    For: Weekends Holidays,  !- Field 9
+    Until: 24:00, 0.1;       !- Field 10
+
+Schedule:Compact,
+    Storage_Room_Eqp,              !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.1,       !- Field 3
+    Until: 17:00, 1.0,       !- Field 5
+    Until: 24:00, 0.1,       !- Field 7
+    For: Weekends Holidays,  !- Field 9
+    Until: 24:00, 0.1;       !- Field 10
+
+Schedule:Compact,
+    Storage_Room_Act,              !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00, 120;       !- Field 3
+
+Schedule:Compact,
+    Vestibule_Occ,              !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.0,       !- Field 3
+    Until: 09:00, 0.5,       !- Field 5
+    Until: 17:00, 1.0,       !- Field 7
+    Until: 18:00, 0.5,       !- Field 9
+    Until: 24:00, 0.0,       !- Field 11
+    For: Saturday,           !- Field 13
+    Until: 09:00, 0.0,       !- Field 14
+    Until: 13:00, 0.5,       !- Field 16
+    Until: 24:00, 0.0,       !- Field 18
+    For: Sunday Holidays,    !- Field 20
+    Until: 24:00, 0.0;       !- Field 21
+
+Schedule:Compact,
+    Vestibule_Ltg,              !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.1,       !- Field 3
+    Until: 17:00, 1.0,       !- Field 5
+    Until: 24:00, 0.1,       !- Field 7
+    For: Weekends Holidays,  !- Field 9
+    Until: 24:00, 0.1;       !- Field 10
+
+Schedule:Compact,
+    Vestibule_Eqp,              !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.1,       !- Field 3
+    Until: 17:00, 1.0,       !- Field 5
+    Until: 24:00, 0.1,       !- Field 7
+    For: Weekends Holidays,  !- Field 9
+    Until: 24:00, 0.1;       !- Field 10
+
+Schedule:Compact,
+    Vestibule_Act,              !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00, 120;       !- Field 3
+
+People,
+    Sales_Floor_People,             !- Name
+    Sales_Floor,                    !- Zone or ZoneList Name
+    Sales_Floor_Occ,              !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    28,                   !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Sales_Floor_Act;              !- Activity Level Schedule Name
+
+People,
+    Storage_Room_People,             !- Name
+    Storage_Room,                    !- Zone or ZoneList Name
+    Storage_Room_Occ,              !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    2,                   !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Storage_Room_Act;              !- Activity Level Schedule Name
+
+People,
+    Vestibule_People,             !- Name
+    Vestibule,                    !- Zone or ZoneList Name
+    Vestibule_Occ,              !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    1,                   !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Vestibule_Act;              !- Activity Level Schedule Name
+
+Lights,
+    Sales_Floor_Lights,             !- Name
+    Sales_Floor,                    !- Zone or ZoneList Name
+    Sales_Floor_Ltg,              !- Schedule Name
+    LightingLevel,           !- Design Level Calculation Method
+    2800,                    !- Lighting Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    Storage_Room_Lights,             !- Name
+    Storage_Room,                    !- Zone or ZoneList Name
+    Storage_Room_Ltg,              !- Schedule Name
+    LightingLevel,           !- Design Level Calculation Method
+    350,                    !- Lighting Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    Vestibule_Lights,             !- Name
+    Vestibule,                    !- Zone or ZoneList Name
+    Vestibule_Ltg,              !- Schedule Name
+    LightingLevel,           !- Design Level Calculation Method
+    100,                    !- Lighting Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+ElectricEquipment,
+    Sales_Floor_Equipment,          !- Name
+    Sales_Floor,                    !- Zone or ZoneList Name
+    Sales_Floor_Eqp,              !- Schedule Name
+    EquipmentLevel,          !- Design Level Calculation Method
+    1800,                    !- Design Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.3,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    Storage_Room_Equipment,          !- Name
+    Storage_Room,                    !- Zone or ZoneList Name
+    Storage_Room_Eqp,              !- Schedule Name
+    EquipmentLevel,          !- Design Level Calculation Method
+    150,                    !- Design Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.3,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    Vestibule_Equipment,          !- Name
+    Vestibule,                    !- Zone or ZoneList Name
+    Vestibule_Eqp,              !- Schedule Name
+    EquipmentLevel,          !- Design Level Calculation Method
+    50,                    !- Design Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.3,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+Output:Variable,
+    *,                       !- Key Value
+    Zone Mean Air Temperature,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Zone Air System Sensible Cooling Energy,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Zone Air System Sensible Heating Energy,  !- Variable Name
+    Hourly;                  !- Reporting Frequency

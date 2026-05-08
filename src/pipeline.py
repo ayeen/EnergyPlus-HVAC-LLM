@@ -4,6 +4,7 @@ HVAC-LLM Complete Pipeline
 
 import os
 import json
+import time
 from datetime import datetime
 from config import Config
 from src.core.idf_handler import IDFHandler
@@ -12,6 +13,7 @@ from src.core.validator import IDFValidator
 from src.agents.agent1_generator import HVACGenerator
 from src.agents.agent1_5_validator import QuickValidator
 from src.agents.agent3_corrector import ErrorCorrector
+from src.core.evaluator import evaluate as evaluate_idf
 
 class HVACLLMPipeline:
     """Complete HVAC-LLM pipeline"""
@@ -42,7 +44,7 @@ class HVACLLMPipeline:
         self.quick_validator = QuickValidator()
         self.corrector = ErrorCorrector(use_rag=self.use_rag, llm_provider=llm_provider)
     
-    def run(self, base_idf, zones=None, output_name="pipeline_output", system_name="VRF_System_1", user_request=None, enable_quick_validation=None, check_idd_compliance=True, auto_fix_compliance=True):
+    def run(self, base_idf, zones=None, output_name="pipeline_output", system_name="VRF_System_1", user_request=None, enable_quick_validation=None, check_idd_compliance=True, auto_fix_compliance=True, reference_idf=None):
         """
         Run complete pipeline with automatic building context extraction.
         
@@ -59,6 +61,8 @@ class HVACLLMPipeline:
             auto_fix_compliance: Automatically fix detected compliance issues (default: True)
         """
         
+        start_time = time.time()
+
         # Convert relative path to absolute
         if not os.path.isabs(base_idf):
             # Resolve relative to current working directory
@@ -565,11 +569,29 @@ class HVACLLMPipeline:
             shutil.copy(current_idf, final_output)
             print(f"\n✓ Final corrected IDF copied to: {final_output}")
             print(f"  Use this file in EP-Launch for simulation!")
+
+            # Evaluation: BLEU and ROUGE-L against reference IDF (optional)
+            if reference_idf and os.path.exists(reference_idf):
+                print(f"\n[Eval] Computing BLEU / ROUGE-L against reference...")
+                try:
+                    eval_scores = evaluate_idf(final_output, reference_idf)
+                    results["evaluation"] = eval_scores
+                    print(f"  BLEU:    {eval_scores['bleu']:.4f}")
+                    print(f"  ROUGE-L: {eval_scores['rouge_l']:.4f}")
+                except Exception as e:
+                    print(f"  ⚠ Evaluation failed: {e}")
+                    results["evaluation"] = {"error": str(e)}
+            else:
+                results["evaluation"] = None
         
         # Save results
         result_file = os.path.join(Config.OUTPUT_DIR, "logs", f"{output_name}_results.json")
         os.makedirs(os.path.dirname(result_file), exist_ok=True)
-        
+
+        results["total_execution_time_seconds"] = round(time.time() - start_time, 1)
+        results["llm_provider"] = self.llm_provider or Config.LLM_PROVIDER
+        results["correction_iterations"] = results.get("total_iterations", 0)
+
         with open(result_file, 'w') as f:
             json.dump(results, f, indent=2)
         

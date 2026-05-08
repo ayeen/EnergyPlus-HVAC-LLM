@@ -196,7 +196,7 @@ const FileUpload = ({ onFileUploaded }) => {
               sx={{ mt: 2 }}
               onClick={() => onFileUploaded(uploadResult)}
             >
-              Continue to HVAC Configuration
+              Continue to VRF-HVAC Configuration
             </Button>
           </Box>
         </Alert>

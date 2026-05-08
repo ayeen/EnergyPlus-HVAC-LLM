@@ -145,7 +145,7 @@ const ResultsDisplay = ({ executionId, onReset }) => {
             Step 4: Results
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Your HVAC system has been generated successfully
+            Your VRF-HVAC system has been generated successfully
           </Typography>
         </Box>
         <Button
@@ -256,7 +256,7 @@ const ResultsDisplay = ({ executionId, onReset }) => {
                 <>
                   <Box sx={{ p: 2, bgcolor: 'primary.main', color: 'white' }}>
                     <Typography variant="body2">
-                      📁 Showing: Generated IDF with HVAC content ({idfPreview.split('\n').length} lines)
+                      📁 Showing: Generated IDF with VRF-HVAC content ({idfPreview.split('\n').length} lines)
                     </Typography>
                   </Box>
                   <SyntaxHighlighter

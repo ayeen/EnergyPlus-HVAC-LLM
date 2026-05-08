@@ -72,10 +72,10 @@ function App() {
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              EnergyPlus HVAC-LLM Interface
+              HuBEL - EnergyPlus VRF-HVAC Interface
             </Typography>
             <Typography variant="body2">
-              Automated HVAC System Design with AI
+              Automated VRF-HVAC System Powered by AI
             </Typography>
           </Toolbar>
         </AppBar>
@@ -134,7 +134,7 @@ function App() {
         >
           <Container maxWidth="xl">
             <Typography variant="body2" color="text.secondary" align="center">
-              EnergyPlus HVAC-LLM Research Project | Version 1.0.0
+              EnergyPlus VRF-HVAC Research Project | Version 1.0.0
             </Typography>
           </Container>
         </Box>

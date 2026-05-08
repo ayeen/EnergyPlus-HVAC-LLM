@@ -1,0 +1,26 @@
+{
+  "workflows": {
+    "Get File Details": {
+      "files": {
+        "vrf_large_office_20zone_FINAL.idf": {
+          "result": {
+            "File Size [kB]": 274,
+            "File Type": ".idf"
+          }
+        }
+      }
+    },
+    "IDF Details": {
+      "files": {
+        "vrf_large_office_20zone_FINAL.idf": {
+          "result": {
+            "Version": "25.2",
+            "# Design Days": 2,
+            "# Run Periods": 1,
+            "# Zones": 20
+          }
+        }
+      }
+    }
+  }
+}

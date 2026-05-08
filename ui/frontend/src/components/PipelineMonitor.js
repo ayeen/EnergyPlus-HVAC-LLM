@@ -204,7 +204,7 @@ const PipelineMonitor = ({ executionId, onComplete }) => {
             Pipeline completed successfully!
           </Typography>
           <Typography variant="body2">
-            Your HVAC system has been generated and validated.
+            Your VRF-HVAC system has been generated and validated.
           </Typography>
         </Alert>
       )}
@@ -215,7 +215,7 @@ const PipelineMonitor = ({ executionId, onComplete }) => {
             Pipeline failed
           </Typography>
           <Typography variant="body2">
-            Unable to generate a valid HVAC system. Check logs for details.
+            Unable to generate a valid VRF-HVAC system. Check logs for details.
           </Typography>
         </Alert>
       )}

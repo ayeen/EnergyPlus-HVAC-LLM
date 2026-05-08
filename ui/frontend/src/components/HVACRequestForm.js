@@ -93,51 +93,10 @@ const HVACRequestForm = ({ uploadedFile, onPipelineStart, onBack }) => {
         <Typography variant="subtitle2">
           Uploaded File: <strong>{uploadedFile.filename}</strong>
         </Typography>
-        <Typography variant="body2">
+        {/* <Typography variant="body2">
           Zones: {uploadedFile.validation.zone_count} detected
-        </Typography>
+        </Typography> */}
       </Alert>
-
-      {/* Example Requests */}
-      {examples.length > 0 && (
-        <Box sx={{ mb: 4 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-            <LightbulbIcon sx={{ mr: 1, color: 'warning.main' }} />
-            <Typography variant="h6">Example Requests</Typography>
-          </Box>
-          <Grid container spacing={2}>
-            {examples.slice(0, 6).map((example, idx) => (
-              <Grid item xs={12} md={6} key={idx}>
-                <Card
-                  variant="outlined"
-                  sx={{
-                    cursor: 'pointer',
-                    transition: 'all 0.2s',
-                    '&:hover': {
-                      boxShadow: 3,
-                      borderColor: 'primary.main'
-                    }
-                  }}
-                  onClick={() => handleExampleClick(example)}
-                >
-                  <CardContent>
-                    <Typography variant="subtitle2" gutterBottom color="primary">
-                      {example.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {example.request.substring(0, 100)}
-                      {example.request.length > 100 ? '...' : ''}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">Use this example</Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-      )}
 
       <Divider sx={{ my: 3 }} />
 
@@ -178,10 +137,7 @@ const HVACRequestForm = ({ uploadedFile, onPipelineStart, onBack }) => {
                 onChange={(e) => setLlmProvider(e.target.value)}
               >
                 <MenuItem value="mistral">Mistral Fine-tuned (Recommended)</MenuItem>
-                <MenuItem value="claude-opus-4.6">Claude Opus 4.6</MenuItem>
-                <MenuItem value="gemini">Google Gemini 2.5 Flash</MenuItem>
-                <MenuItem value="mistral-pretrained">Mistral Pre-trained</MenuItem>
-                <MenuItem value="mistral-api">Mistral API</MenuItem>
+                <MenuItem value="mistral-api">Mistral Base Model</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -208,7 +164,7 @@ const HVACRequestForm = ({ uploadedFile, onPipelineStart, onBack }) => {
             />
           </Grid>
 
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
               Zone Configuration
             </Typography>
@@ -229,7 +185,7 @@ const HVACRequestForm = ({ uploadedFile, onPipelineStart, onBack }) => {
             <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
               Auto-detect automatically finds all zones in the IDF file
             </Typography>
-          </Grid>
+          </Grid> */}
 
           {error && (
             <Grid item xs={12}>
@@ -254,7 +210,7 @@ const HVACRequestForm = ({ uploadedFile, onPipelineStart, onBack }) => {
                 disabled={loading || !userRequest}
                 fullWidth
               >
-                {loading ? 'Starting Pipeline...' : 'Generate HVAC System'}
+                {loading ? 'Starting Pipeline...' : 'Generate IDF'}
               </Button>
             </Box>
           </Grid>
