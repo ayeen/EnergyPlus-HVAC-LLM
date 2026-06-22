@@ -15,10 +15,10 @@
     "zones": null,
     "base_idf": "data/base_idfs/building_with_zones_fixed.idf"
   },
-  "vrf_single_zone": {
-    "prompt": "Design a VRF HVAC system for efficient heating and cooling",
-    "zones": ["Zone1"],
-    "base_idf": "data/base_idfs/building_with_zones_fixed.idf"
+  "SmallOffice": {
+    "prompt":"Create a complete VRF HVAC configuration for a SmallOffice containing 6 thermal zones, with no heat recovery, where each thermal zone is served by one indoor terminal unit connected to a single shared outdoor condensing unit through a zone terminal unit list. Only assign VRF terminal units to zones that are occupied and conditioned. Skip any one that is unoccupied or unconditioned.",
+    "zones": null,
+    "base_idf": "data/base_idfs/SmallOffice.idf"
   },
   "vrf_broken_base_idf_test": {
     "prompt": "Design a VRF HVAC system for efficient heating and cooling",
@@ -83,5 +83,40 @@
     "prompt": "Design VRF for retail store with sales floor and storage",
     "zones": null,
     "base_idf": "data/base_idfs/retail_3zone.idf"
+  },
+
+  "Hospital": {
+    "prompt": "Design a comprehensive VRF HVAC system for a 55-zone hospital building. The hospital includes emergency rooms, patient rooms, operating theatres, ICU, corridors, stairwells, mechanical rooms, a kitchen, and support areas. Ensure independent temperature control for each clinical zone, with 24°C cooling setpoint and 21°C heating setpoint. Autosize all components for patient comfort and infection control requirements.",
+    "zones": null,
+    "base_idf": "data/base_idfs/Hospital.idf",
+    "note": "ASHRAE 90.1 Hospital prototype — 55 zones, v22.1 source"
+  },
+
+  "OfficeLarge": {
+    "prompt": "Design an energy-efficient VRF HVAC system for a large 20-zone office building with basement, perimeter, and core zones on multiple floors. Include independent temperature control for all zones, heat recovery between perimeter (heating) and core (cooling) zones, and efficient outdoor unit sizing. Use 24°C cooling and 21°C heating setpoints.",
+    "zones": null,
+    "base_idf": "data/base_idfs/OfficeLarge.idf",
+    "note": "ASHRAE 90.1 LargeOffice prototype — 20 conditioned zones (excl. plenums), v22.1 source"
+  },
+
+  "RestaurantFastFood": {
+    "prompt": "Design a VRF HVAC system for a fast-food restaurant with a dining area and kitchen. The kitchen requires enhanced cooling due to high cooking equipment loads. Use 23°C cooling and 20°C heating setpoints, with autosize for all components.",
+    "zones": null,
+    "base_idf": "data/base_idfs/RestaurantFastFood.idf",
+    "note": "ASHRAE 90.1 QuickServiceRestaurant prototype — 3 zones (Dining, Kitchen, attic), v22.1 source"
+  },
+
+  "SchoolSecondary": {
+    "prompt": "Design a VRF HVAC system for a secondary school with 46 zones including classrooms, corridors, gymnasium, cafeteria, library, auditorium, and administrative offices. Provide independent zone control with 24°C cooling and 21°C heating setpoints. Autosize all indoor and outdoor units.",
+    "zones": null,
+    "base_idf": "data/base_idfs/SchoolSecondary.idf",
+    "note": "ASHRAE 90.1 SecondarySchool prototype — 46 zones, v22.1 source"
+  },
+
+  "Warehouse": {
+    "prompt": "Design a VRF HVAC system for a warehouse facility with three zones: an office area, a fine-storage area, and a bulk-storage area. Provide appropriate temperature control for each zone — office at 24°C cooling / 21°C heating, storage zones at 18°C cooling / 15°C heating for energy efficiency.",
+    "zones": null,
+    "base_idf": "data/base_idfs/Warehouse.idf",
+    "note": "ASHRAE 90.1 Warehouse prototype — 3 zones (Office, Fine Storage, Bulk Storage), v22.1 source"
   }
 }

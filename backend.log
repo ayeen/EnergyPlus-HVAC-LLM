@@ -11,11 +11,11 @@ Couldn't import dot_parser, loading of dot files will not be possible.
 Werkzeug appears to be used in a production deployment. Consider switching to a production web server instead.
  * Debugger is active!
  * Debugger PIN: 129-709-520
-127.0.0.1 - - [08/May/2026 16:26:48] "POST /api/upload/idf HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:26:48] "GET /api/pipeline/examples HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:26:48] "GET /api/pipeline/examples HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:00] "POST /api/pipeline/run HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:00] "[35m[1mGET /socket.io/?EIO=4&transport=websocket HTTP/1.1[0m" 500 -
+127.0.0.1 - - [20/May/2026 17:48:26] "POST /api/upload/idf HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:48:26] "GET /api/pipeline/examples HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:48:26] "GET /api/pipeline/examples HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:49:34] "POST /api/pipeline/run HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:49:34] "[35m[1mGET /socket.io/?EIO=4&transport=websocket HTTP/1.1[0m" 500 -
 Error on request:
 Traceback (most recent call last):
   File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 371, in run_wsgi
@@ -26,26 +26,22 @@ Traceback (most recent call last):
     assert status_set is not None, "write() before start_response"
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: write() before start_response
-127.0.0.1 - - [08/May/2026 16:27:02] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:04] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:06] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:08] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
 `torch_dtype` is deprecated! Use `dtype` instead!
-127.0.0.1 - - [08/May/2026 16:27:10] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:49:36] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
 Couldn't import dot_parser, loading of dot files will not be possible.
+Client connected
 ✓ LLM instance reset. Next call will create new instance.
 ✓ Initializing NEW LLM instance (provider: mistral)
 ⏳ Loading Mistral fine-tuned model...
    Base model: mistralai/Mistral-7B-v0.1
    Fine-tuned path: /home/hubel/Documents/Ayeen/LLM-Fine-Tunning/mistral-7b-vrf-finetuned-v4
-Client connected
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]127.0.0.1 - - [08/May/2026 16:27:12] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:14] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:16] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:18] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-Loading checkpoint shards:  50%|█████     | 1/2 [00:07<00:07,  7.00s/it]127.0.0.1 - - [08/May/2026 16:27:20] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-Loading checkpoint shards: 100%|██████████| 2/2 [00:09<00:00,  4.52s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:09<00:00,  4.89s/it]
-127.0.0.1 - - [08/May/2026 16:27:22] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]127.0.0.1 - - [20/May/2026 17:49:38] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:49:40] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:49:42] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+Loading checkpoint shards:  50%|█████     | 1/2 [00:07<00:07,  7.25s/it]127.0.0.1 - - [20/May/2026 17:49:44] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:49:46] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+Loading checkpoint shards: 100%|██████████| 2/2 [00:10<00:00,  4.63s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:10<00:00,  5.02s/it]
+127.0.0.1 - - [20/May/2026 17:49:48] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
 ✓ Mistral fine-tuned model loaded successfully
    Model type: fine-tuned
    Device: cuda:0
@@ -60,37 +56,14 @@ Loading Agent 3 Fine-tuned Mistral Model
 ============================================================
    Base model: mistralai/Mistral-7B-v0.1
    Agent 3 path: /home/hubel/Documents/Ayeen/LLM-Fine-Tunning/mistral-7b-vrf-finetuned-agent3-balanced
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]127.0.0.1 - - [08/May/2026 16:27:24] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:26] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:28] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-Loading checkpoint shards:  50%|█████     | 1/2 [00:06<00:06,  6.14s/it]127.0.0.1 - - [08/May/2026 16:27:30] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:32] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-Loading checkpoint shards: 100%|██████████| 2/2 [00:08<00:00,  4.15s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:08<00:00,  4.45s/it]
-127.0.0.1 - - [08/May/2026 16:27:34] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:36] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:38] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:40] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:42] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:44] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:46] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:48] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:50] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:52] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:54] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:56] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:27:58] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:28:00] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:28:02] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:28:04] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:28:06] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:28:08] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:28:10] "GET /api/pipeline/status/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:28:12] "GET /api/files/preview/961ec47b-8433-411c-abd8-35b33c66f4ab?lines=500&t=1778225292429 HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:28:12] "GET /api/files/log/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:28:12] "GET /api/files/list/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:28:12] "GET /api/files/preview/961ec47b-8433-411c-abd8-35b33c66f4ab?lines=500&t=1778225292430 HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:28:12] "[35m[1mGET /socket.io/?EIO=4&transport=websocket HTTP/1.1[0m" 500 -
-127.0.0.1 - - [08/May/2026 16:28:12] "GET /api/files/log/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]127.0.0.1 - - [20/May/2026 17:49:50] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:49:52] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:49:54] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+Loading checkpoint shards:  50%|█████     | 1/2 [00:06<00:06,  6.18s/it]127.0.0.1 - - [20/May/2026 17:49:56] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+Loading checkpoint shards: 100%|██████████| 2/2 [00:08<00:00,  4.17s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:08<00:00,  4.48s/it]
+127.0.0.1 - - [20/May/2026 17:49:58] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:00] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:01] "[35m[1mGET /socket.io/?EIO=4&transport=websocket HTTP/1.1[0m" 500 -
 Error on request:
 Traceback (most recent call last):
   File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 371, in run_wsgi
@@ -101,11 +74,228 @@ Traceback (most recent call last):
     assert status_set is not None, "write() before start_response"
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: write() before start_response
-127.0.0.1 - - [08/May/2026 16:28:12] "GET /api/files/list/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:28:14] "GET /api/files/log/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:28:14] "GET /api/files/preview/961ec47b-8433-411c-abd8-35b33c66f4ab?lines=500&t=1778225294433 HTTP/1.1" 200 -
-127.0.0.1 - - [08/May/2026 16:28:14] "GET /api/files/list/961ec47b-8433-411c-abd8-35b33c66f4ab HTTP/1.1" 200 -
- * Detected change in '/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/src/pipeline.py', reloading
+127.0.0.1 - - [20/May/2026 17:50:03] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:05] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:07] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:09] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:11] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:13] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:15] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:17] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:19] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:21] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:23] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:25] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:27] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:29] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:31] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:33] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:35] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:37] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:39] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:41] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:43] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:45] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:47] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:49] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:51] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:53] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:55] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:57] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:50:59] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:01] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:03] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:05] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:07] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:09] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:11] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:13] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:15] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:17] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:19] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:21] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:23] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:25] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:27] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:29] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:31] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:33] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:35] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:37] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:39] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:41] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:43] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:45] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:47] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:49] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:51] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:53] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:55] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:57] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:51:59] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:01] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:03] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:05] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:07] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:09] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:11] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:13] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:15] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:17] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:19] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:21] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:23] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:25] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:27] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:29] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:31] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:33] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:35] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:37] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:39] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:41] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:43] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:45] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:47] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:49] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:51] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:53] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:55] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:57] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:52:59] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:01] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:03] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:05] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:07] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:09] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:11] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:13] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:15] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:17] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:19] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:21] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:23] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:25] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:27] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:29] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:31] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:33] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:35] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:37] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:39] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:41] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:43] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:45] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:47] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:49] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:51] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:53] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:55] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:57] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:53:59] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:01] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:03] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:05] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:07] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:09] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:11] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:13] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:15] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:17] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:19] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:21] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:23] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:25] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:27] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:29] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:31] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:33] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:35] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:37] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:39] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:41] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:43] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:45] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:47] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:49] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:51] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:53] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:55] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:57] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:54:59] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:01] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:03] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:05] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:07] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:09] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:11] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:13] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:15] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:17] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:19] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:21] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:23] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:25] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:27] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:29] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:31] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:33] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:35] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:37] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:39] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:41] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:43] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:45] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:47] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:49] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:51] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:53] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:55] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:57] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:55:59] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:01] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:03] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:05] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:07] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:09] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:11] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:13] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:15] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:17] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:19] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:21] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:23] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:25] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:27] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:29] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:31] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:33] "GET /api/pipeline/status/fd323e1a-c3af-462d-9a7e-c34e2f68f403 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:33] "[35m[1mGET /socket.io/?EIO=4&transport=websocket HTTP/1.1[0m" 500 -
+Error on request:
+Traceback (most recent call last):
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 371, in run_wsgi
+    execute(self.server.app)
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 337, in execute
+    write(b"")
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 262, in write
+    assert status_set is not None, "write() before start_response"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: write() before start_response
+127.0.0.1 - - [20/May/2026 17:56:42] "POST /api/upload/idf HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:42] "GET /api/pipeline/examples HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:42] "GET /api/pipeline/examples HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:50] "POST /api/pipeline/run HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:51] "[35m[1mGET /socket.io/?EIO=4&transport=websocket HTTP/1.1[0m" 500 -
+Error on request:
+Traceback (most recent call last):
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 371, in run_wsgi
+    execute(self.server.app)
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 337, in execute
+    write(b"")
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 262, in write
+    assert status_set is not None, "write() before start_response"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: write() before start_response
 ✓ Agent 3 Mistral model loaded successfully
    Device: cuda:0
    GPU: NVIDIA RTX A4000
@@ -117,83 +307,564 @@ HVAC-LLM PIPELINE
 ======================================================================
 
 [0] Analyzing base IDF...
-
-[0.1] Checking IDD compliance...
-✓ IDD compliance check complete
-  🔧 Auto-fixed 4 issue(s)
-     - Added SimulationControl object with sizing enabled
-     - Added default Site:Location (Chicago, IL)
-     - Added default design days (Chicago winter/summer)
-     - Generated basic geometry for 2 zone(s): Sales_Floor, Back_Space
-✓ Enabled zone/system sizing for HVAC autosizing
-✓ Auto-detected 2 zones from IDF
-  1. Sales_Floor
-  2. Back_Space
-
-📊 Building Context:
-  • Zones: 2
-  • Total Floor Area: 200.0 m²
-  • Total Volume: 600.0 m³
-  • Orientation: 0°
-  • Internal Loads: ✓ Yes
-    (People, Lights, Equipment)
-  • Location: Chicago_IL_USA
-
-[1] Generating HVAC...
-User Request: Design a vrf system
-✓ Calling LLM (mistral) to generate VRF system for zones: Sales_Floor, Back_Space
-  User Design Request: Design a vrf system
-✓ Generating with Mistral fine-tuned model...
-   Found 2 zones: Sales_Floor, Back_Space
-   System name: VRF_System_1
-   🔧 Generating System VRF...
-      ✅ System VRF generated (2632 chars)
-   🏢 Generating Zone VRFs for 2 zones...
-      Zone 1/2: Sales_Floor... ✅ (3455 chars)
-      Zone 2/2: Back_Space... ✅ (3453 chars)
-   🌡️  Generating Thermostats for 2 zones...
-      Thermostat 1/2: Sales_Floor... ✅ (315 chars)
-      Thermostat 2/2: Back_Space... ✅ (314 chars)
-   ✅ Complete VRF system generated (10177 chars)
-✓ Successfully generated VRF system with HVAC content
-✓ Generated 5 HVAC objects
-
-[1.5] LLM validation SKIPPED (disabled)
-  ✓ DEBUG: complete_idf is clean before write
-✓ Added 5 HVAC objects
-
-[2] Validating IDF...
-Valid: True, Errors: 0
-✓ Validation passed - proceeding to simulation
-
-[3] Simulating...
-Success: True, Errors: 0
-
-✓ Final corrected IDF copied to: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/961ec47b-8433-411c-abd8-35b33c66f4ab_FINAL.idf
-  Use this file in EP-Launch for simulation!
-
-======================================================================
-PIPELINE COMPLETE: SUCCESS
-Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/961ec47b-8433-411c-abd8-35b33c66f4ab_results.json
-
-🎉 SUCCESS! Use this file:
-   /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/961ec47b-8433-411c-abd8-35b33c66f4ab_FINAL.idf
-======================================================================
 Client disconnected
-[W508 16:42:02.666394325 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
- * Restarting with stat
-Couldn't import dot_parser, loading of dot files will not be possible.
+Client connected
+Client disconnected
+Client connected
+✓ LLM instance reset. Next call will create new instance.
+✓ Initializing NEW LLM instance (provider: mistral)
+⏳ Loading Mistral fine-tuned model...
+   Base model: mistralai/Mistral-7B-v0.1
+   Fine-tuned path: /home/hubel/Documents/Ayeen/LLM-Fine-Tunning/mistral-7b-vrf-finetuned-v4
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]127.0.0.1 - - [20/May/2026 17:56:52] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:54] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:56:56] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+Loading checkpoint shards:  50%|█████     | 1/2 [00:06<00:06,  6.41s/it]127.0.0.1 - - [20/May/2026 17:56:58] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:00] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+Loading checkpoint shards: 100%|██████████| 2/2 [00:09<00:00,  4.27s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:09<00:00,  4.59s/it]
+127.0.0.1 - - [20/May/2026 17:57:02] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:04] "[35m[1mGET /socket.io/?EIO=4&transport=websocket HTTP/1.1[0m" 500 -
+Error on request:
 Traceback (most recent call last):
-  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/ui/backend/app.py", line 16, in <module>
-    from routes.pipeline import pipeline_bp
-  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/ui/backend/routes/pipeline.py", line 12, in <module>
-    from services.pipeline_service import PipelineService
-  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/ui/backend/services/pipeline_service.py", line 13, in <module>
-    from src.pipeline import HVACLLMPipeline
-  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/src/pipeline.py", line 16, in <module>
-    from src.core.evaluator import evaluate as evaluate_idf
-  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/src/core/evaluator.py", line 8, in <module>
-    from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
-ModuleNotFoundError: No module named 'nltk'
-[W508 16:42:07.872698744 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
-[W508 16:42:08.797080740 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 371, in run_wsgi
+    execute(self.server.app)
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 337, in execute
+    write(b"")
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 262, in write
+    assert status_set is not None, "write() before start_response"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: write() before start_response
+127.0.0.1 - - [20/May/2026 17:57:06] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:08] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:10] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:12] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:14] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:16] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:18] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:20] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:22] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:24] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:26] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:28] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:30] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:32] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:34] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:36] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:38] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:40] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:42] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:44] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:46] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:48] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:50] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:52] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:54] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:56] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:57:58] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:00] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:02] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:04] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:06] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:08] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:10] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:12] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:14] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:16] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:18] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:20] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:22] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:24] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:26] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:28] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:30] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:32] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:34] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:36] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:38] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:40] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:42] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:44] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:46] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:48] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:50] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:52] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:54] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:56] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:58:58] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:00] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:02] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:04] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:06] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:08] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:10] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:12] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:14] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:16] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:18] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:20] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:22] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:24] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:26] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:28] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:30] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:32] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:34] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:36] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:38] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:40] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:42] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:44] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:46] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:48] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:50] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:52] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:54] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:56] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 17:59:58] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:00] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:02] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:04] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:06] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:08] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:10] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:12] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:14] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:16] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:18] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:20] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:22] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:24] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:26] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:28] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:30] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:32] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:34] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:36] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:38] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:40] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:42] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:44] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:46] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:49] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:51] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:53] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:55] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:57] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:00:59] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:01] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:03] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:05] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:07] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:09] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:11] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:13] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:15] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:17] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:19] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:21] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:23] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:25] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:27] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:29] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:31] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:33] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:35] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:37] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:39] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:41] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:43] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:45] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:01:47] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:02:00] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:02:41] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:02:42] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:02:44] "GET /api/pipeline/status/82929be7-06d2-45f8-9b03-09f8dcfc0f30 HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:02:46] "[35m[1mGET /socket.io/?EIO=4&transport=websocket HTTP/1.1[0m" 500 -
+Error on request:
+Traceback (most recent call last):
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 371, in run_wsgi
+    execute(self.server.app)
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 337, in execute
+    write(b"")
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 262, in write
+    assert status_set is not None, "write() before start_response"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: write() before start_response
+127.0.0.1 - - [20/May/2026 18:02:52] "POST /api/upload/idf HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:02:53] "GET /api/pipeline/examples HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:02:53] "GET /api/pipeline/examples HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:01] "POST /api/pipeline/run HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:02] "[35m[1mGET /socket.io/?EIO=4&transport=websocket HTTP/1.1[0m" 500 -
+Error on request:
+Traceback (most recent call last):
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 371, in run_wsgi
+    execute(self.server.app)
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 337, in execute
+    write(b"")
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 262, in write
+    assert status_set is not None, "write() before start_response"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: write() before start_response
+✓ Mistral fine-tuned model loaded successfully
+   Model type: fine-tuned
+   Device: cuda:0
+   GPU: NVIDIA RTX A4000
+⚠ RAG unavailable for Agent 1: Vector DB not found at data/vector_db. Run 'python -m src.rag.knowledge_builder' first!
+✓ Reusing existing LLM instance (no reload needed)
+
+🔧 Agent 3 using fine-tuned Mistral model for error correction
+⚠ RAG unavailable for Agent 3: Vector DB not found at data/vector_db. Run 'python -m src.rag.knowledge_builder' first!
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+Client disconnected
+Client connected
+Client disconnected
+Client connected
+✓ LLM instance reset. Next call will create new instance.
+✓ Initializing NEW LLM instance (provider: mistral)
+⏳ Loading Mistral fine-tuned model...
+   Base model: mistralai/Mistral-7B-v0.1
+   Fine-tuned path: /home/hubel/Documents/Ayeen/LLM-Fine-Tunning/mistral-7b-vrf-finetuned-v4
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]127.0.0.1 - - [20/May/2026 18:03:03] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:05] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:07] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:09] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+Loading checkpoint shards:  50%|█████     | 1/2 [00:07<00:07,  7.19s/it]127.0.0.1 - - [20/May/2026 18:03:11] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+Loading checkpoint shards: 100%|██████████| 2/2 [00:09<00:00,  4.57s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:09<00:00,  4.96s/it]
+127.0.0.1 - - [20/May/2026 18:03:13] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:15] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:16] "[35m[1mGET /socket.io/?EIO=4&transport=websocket HTTP/1.1[0m" 500 -
+Error on request:
+Traceback (most recent call last):
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 371, in run_wsgi
+    execute(self.server.app)
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 337, in execute
+    write(b"")
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/werkzeug/serving.py", line 262, in write
+    assert status_set is not None, "write() before start_response"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: write() before start_response
+127.0.0.1 - - [20/May/2026 18:03:18] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:20] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:22] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:24] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:26] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:28] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:30] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:32] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:34] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:36] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:38] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:40] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:42] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:44] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:46] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:48] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:50] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:52] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:54] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:56] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:03:58] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:00] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:02] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:04] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:06] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:08] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:10] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:12] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:14] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:16] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:18] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:20] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:22] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:24] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:26] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:28] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:30] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:32] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:34] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:36] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:38] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:40] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:42] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:44] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:46] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:48] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:50] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:52] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:54] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:56] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:04:58] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:00] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:02] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:04] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:06] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:08] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:10] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:12] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:14] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:16] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:18] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:20] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:22] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:24] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:26] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:28] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:30] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:32] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:34] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:36] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:38] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:40] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:42] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:44] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:46] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:48] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:50] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:52] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:54] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:56] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:05:59] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:01] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:03] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:05] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:07] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:09] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:11] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:13] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:15] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:17] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:19] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:20] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:22] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:24] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:26] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:28] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:30] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:32] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:34] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:36] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:38] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:40] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:42] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:44] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:46] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:48] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:50] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:52] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:54] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:56] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:06:58] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:00] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:02] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:04] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:06] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:08] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:10] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:12] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:14] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:16] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:18] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:20] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:22] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:24] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:26] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:28] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:30] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:32] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:34] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:36] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:38] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:40] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:42] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:44] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:46] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:48] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:50] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:52] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:54] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:56] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:07:58] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:00] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:02] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:04] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:06] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:08] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:10] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:12] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:14] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:16] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:18] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:20] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:22] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:24] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:26] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:28] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:30] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:32] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:34] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:36] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:38] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:40] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:42] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:44] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:46] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:48] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:50] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:52] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:54] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:56] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:08:58] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:00] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:02] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:04] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:06] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:08] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:10] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:12] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:14] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:16] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:18] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:20] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:22] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:24] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:26] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:28] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:30] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:32] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:34] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:36] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:38] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:40] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:42] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:44] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:46] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:48] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:50] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:52] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:54] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:56] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:09:58] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:00] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:02] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:04] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:06] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:08] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:10] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:12] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:14] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:16] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:18] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:20] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:22] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:24] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:26] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:28] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:30] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:32] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:34] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:36] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:38] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:40] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:42] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:44] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:46] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:48] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:50] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:52] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:54] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:56] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:10:58] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:00] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:02] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:04] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:06] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:08] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:10] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:12] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:14] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:16] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:18] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:20] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:22] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:24] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:26] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:28] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:30] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:32] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:34] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:36] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:38] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:40] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:42] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:44] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:46] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:48] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:50] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:52] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:54] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:56] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:11:58] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:00] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:02] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:04] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:06] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:08] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:10] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:12] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:14] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:16] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:18] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:20] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:22] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:24] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:26] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:28] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:30] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:32] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:34] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:36] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:38] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:40] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:42] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:44] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:46] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:48] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:50] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:52] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:54] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:56] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:12:58] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:00] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:02] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:04] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:06] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:08] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:10] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:12] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:14] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:16] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:18] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:20] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:22] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:24] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:26] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:28] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:30] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:32] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:34] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:36] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:38] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:40] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:42] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:44] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:46] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:48] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:50] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:52] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:54] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+127.0.0.1 - - [20/May/2026 18:13:56] "GET /api/pipeline/status/45e39a9d-808e-4e40-8fcf-70858660278f HTTP/1.1" 200 -
+[W520 18:13:58.418677391 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())

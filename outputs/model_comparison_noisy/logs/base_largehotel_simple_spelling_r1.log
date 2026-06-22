@@ -1,0 +1,255 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_Flr_1']
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_Flr_1']
+✓ Auto-detected 21 zones from IDF
+  1. Basement
+  2. Retail_1_Flr_1
+  3. Retail_2_Flr_1
+  4. Storage_Flr_1
+  5. Laundry_Flr_1
+  6. Cafe_Flr_1
+  7. Lobby_Flr_1
+  8. Room_1_Flr_3
+  9. Room_2_Flr_3
+  10. Room_3_Mult19_Flr_3
+  11. Room_4_Mult19_Flr_3
+  12. Room_5_Flr_3
+  13. Room_6_Flr_3
+  14. Corridor_Flr_3
+  15. Room_1_Flr_6
+  16. Room_2_Flr_6
+  17. Room_3_Mult9_Flr_6
+  18. Banquet_Flr_6
+  19. Dining_Flr_6
+  20. Kitchen_Flr_6
+  21. Corridor_Flr_6
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_Flr_1']
+
+📊 Building Context:
+  • Zones: 21
+  • Total Volume: 18384.9 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Generate a simulation-ready EnergyPlus IDF for a lare hoyel with 22 themral zones and a variabble refrigerant fpow HVAC system and no hsat recovery. AAssign VRF terminal unist only to occuped and conditioned zones. Do not assign VRF termunal uits to any unoccupied or unconditioend zoones.
+✓ Calling LLM (mistral-api) to generate VRF system for zones: Basement, Retail_1_Flr_1, Retail_2_Flr_1, Storage_Flr_1, Laundry_Flr_1, Cafe_Flr_1, Lobby_Flr_1, Room_1_Flr_3, Room_2_Flr_3, Room_3_Mult19_Flr_3, Room_4_Mult19_Flr_3, Room_5_Flr_3, Room_6_Flr_3, Corridor_Flr_3, Room_1_Flr_6, Room_2_Flr_6, Room_3_Mult9_Flr_6, Banquet_Flr_6, Dining_Flr_6, Kitchen_Flr_6, Corridor_Flr_6
+  User Design Request: Generate a simulation-ready EnergyPlus IDF for a lare hoyel with 22 themral zones and a variabble refrigerant fpow HVAC system and no hsat recovery. AAssign VRF terminal unist only to occuped and conditioned zones. Do not assign VRF termunal uits to any unoccupied or unconditioend zoones.
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (72225 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 23 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 23 HVAC objects
+
+[2] Validating IDF...
+Valid: False, Errors: 20
+
+[2.5] Validation failed. Attempting pre-simulation fix...
+      Found 20 validation errors
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_Flr_1']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (1598 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Basement",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Retail_1_Flr_1",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Retail_2_Flr_1",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Storage_Flr_1",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Laundry_Flr_1",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Cafe_Flr_1",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VR...
+================================================================================
+
+
+✓ Successfully parsed 10 fixes from LLM response
+
+
+================================================================================
+APPLYING 10 FIXES TO IDF
+================================================================================
+
+1. HVACTemplate:Zone:VRF[Basement].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Basement' to ''
+2. HVACTemplate:Zone:VRF[Retail_1_Flr_1].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Retail_1_Flr_1' to ''
+3. HVACTemplate:Zone:VRF[Retail_2_Flr_1].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Retail_2_Flr_1' to ''
+4. HVACTemplate:Zone:VRF[Storage_Flr_1].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Storage_Flr_1' to ''
+5. HVACTemplate:Zone:VRF[Laundry_Flr_1].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Laundry_Flr_1' to ''
+6. HVACTemplate:Zone:VRF[Cafe_Flr_1].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Cafe_Flr_1' to ''
+7. HVACTemplate:Zone:VRF[Lobby_Flr_1].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Lobby_Flr_1' to ''
+8. HVACTemplate:Zone:VRF[Room_1_Flr_3].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Room_1_Flr_3' to ''
+9. HVACTemplate:Zone:VRF[Room_2_Flr_3].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Room_2_Flr_3' to ''
+10. HVACTemplate:Zone:VRF[Room_3_Mult19_Flr_3].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Room_3_Mult19_Flr_3' to ''
+
+================================================================================
+FIXES APPLIED: 10 successful, 0 failed
+================================================================================
+
+✓ Applied 10 pre-simulation fixes
+[2.6] Re-validating after fix...
+⚠ Still 10 validation errors after fix
+✓ Reduced errors from 20 to 10
+  Proceeding to simulation with remaining errors...
+
+[3] Simulating...
+Success: False, Errors: 3
+
+[4.1] Fixing errors...
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_Flr_1']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (390 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "DesignSpecification:OutdoorAir",
+    "object_name": "SZ DSOA Banquet_Flr_6",
+    "field_to_change": "outdoor_air_flow_per_person",
+    "new_value": "autosize"
+  },
+  {
+    "object_type": "ZoneControl:Thermostat",
+    "object_name": "Thermostat_Banquet_Flr_6",
+    "field_to_change": "control_2_object_type",
+    "new_value": "ThermostatSetpoint:DualSetpoint"
+  }
+]
+================================================================================
+
+
+✓ Successfully parsed 2 fixes from LLM response
+
+
+================================================================================
+APPLYING 2 FIXES TO IDF
+================================================================================
+
+1. DesignSpecification:OutdoorAir[SZ DSOA Banquet_Flr_6].outdoor_air_flow_per_person = 'autosize'
+   ❌ No objects of type 'DesignSpecification:OutdoorAir' found in IDF
+2. ZoneControl:Thermostat[Thermostat_Banquet_Flr_6].control_2_object_type = 'ThermostatSetpoint:DualSetpoint'
+   ✓ Changed from 'Clg-SetP-Sch' to 'ThermostatSetpoint:DualSetpoint'
+
+================================================================================
+FIXES APPLIED: 1 successful, 1 failed
+================================================================================
+
+✓ Applied 1 fixes
+
+[5.1] Re-simulating...
+Success: False
+
+[4.2] Fixing errors...
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_Flr_1']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (543 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "DesignSpecification:OutdoorAir",
+    "object_name": "SZ DSOA Banquet_Flr_6",
+    "field_to_change": "outdoor_air_flow_per_person",
+    "new_value": "autosize"
+  },
+  {
+    "object_type": "ZoneControl:Thermostat",
+    "object_name": "Thermostat_Basement",
+    "field_to_change": "control_2_object_type",
+    "new_value": "ThermostatSetpoint:SingleHeating"
+  },
+  {
+    "object_type": "ZoneControl:Thermostat",
+    "object_name": "Thermostat_Basement",
+    "field_to_change": "control_2_name",
+    "new_value": ""
+  }
+]
+================================================================================
+
+
+✓ Successfully parsed 3 fixes from LLM response
+
+
+================================================================================
+APPLYING 3 FIXES TO IDF
+================================================================================
+
+1. DesignSpecification:OutdoorAir[SZ DSOA Banquet_Flr_6].outdoor_air_flow_per_person = 'autosize'
+   ❌ No objects of type 'DesignSpecification:OutdoorAir' found in IDF
+2. ZoneControl:Thermostat[Thermostat_Basement].control_2_object_type = 'ThermostatSetpoint:SingleHeating'
+   ✓ Changed from 'Clg-SetP-Sch' to 'ThermostatSetpoint:SingleHeating'
+3. ZoneControl:Thermostat[Thermostat_Basement].control_2_name = ''
+   ✓ Changed from '' to ''
+
+================================================================================
+FIXES APPLIED: 2 successful, 1 failed
+================================================================================
+
+✓ Applied 2 fixes
+
+[5.2] Re-simulating...
+Success: False
+
+======================================================================
+PIPELINE COMPLETE: FAILED
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/base_largehotel_simple_spelling_r1_results.json
+======================================================================

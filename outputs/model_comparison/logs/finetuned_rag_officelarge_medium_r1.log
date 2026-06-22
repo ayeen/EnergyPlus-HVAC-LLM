@@ -1,0 +1,137 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 3 non-HVAC zone(s): ['GroundFloor_Plenum', 'MidFloor_Plenum', 'TopFloor_Plenum']
+  ↳ Excluded 3 non-HVAC zone(s): ['GroundFloor_Plenum', 'MidFloor_Plenum', 'TopFloor_Plenum']
+✓ Auto-detected 20 zones from IDF
+  1. Basement
+  2. Core_bottom
+  3. Core_mid
+  4. Core_top
+  5. Perimeter_bot_ZN_3
+  6. Perimeter_bot_ZN_2
+  7. Perimeter_bot_ZN_1
+  8. Perimeter_bot_ZN_4
+  9. Perimeter_mid_ZN_3
+  10. Perimeter_mid_ZN_2
+  11. Perimeter_mid_ZN_1
+  12. Perimeter_mid_ZN_4
+  13. Perimeter_top_ZN_3
+  14. Perimeter_top_ZN_2
+  15. Perimeter_top_ZN_1
+  16. Perimeter_top_ZN_4
+  17. DataCenter_bot_ZN_6
+  18. DataCenter_mid_ZN_6
+  19. DataCenter_top_ZN_6
+  20. DataCenter_basement_ZN_6
+  ↳ Excluded 3 non-HVAC zone(s): ['GroundFloor_Plenum', 'MidFloor_Plenum', 'TopFloor_Plenum']
+
+📊 Building Context:
+  • Zones: 20
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Create a complete VRF HVAC configuration for a large office containing 23 thermal zones, with no heat recovery, where each thermal zone is served by one indoor terminal unit connected to a single shared outdoor condensing unit through a zone terminal unit list. Only assign VRF terminal units to zones that are occupied and conditioned. Skip any zone that is unoccupied or unconditioned.
+✓ Calling LLM (mistral) to generate VRF system for zones: Basement, Core_bottom, Core_mid, Core_top, Perimeter_bot_ZN_3, Perimeter_bot_ZN_2, Perimeter_bot_ZN_1, Perimeter_bot_ZN_4, Perimeter_mid_ZN_3, Perimeter_mid_ZN_2, Perimeter_mid_ZN_1, Perimeter_mid_ZN_4, Perimeter_top_ZN_3, Perimeter_top_ZN_2, Perimeter_top_ZN_1, Perimeter_top_ZN_4, DataCenter_bot_ZN_6, DataCenter_mid_ZN_6, DataCenter_top_ZN_6, DataCenter_basement_ZN_6
+  User Design Request: Create a complete VRF HVAC configuration for a large office containing 23 thermal zones, with no heat recovery, where each thermal zone is served by one indoor terminal unit connected to a single shared outdoor condensing unit through a zone terminal unit list. Only assign VRF terminal units to zones that are occupied and conditioned. Skip any zone that is unoccupied or unconditioned.
+✓ Generating with Mistral fine-tuned model...
+   Design intent: Create a complete VRF HVAC configuration for a large office containing 23 thermal zones, with no heat recovery, where ea…
+   Found 23 zones: Basement, Core_bottom, Core_mid, Core_top, Perimeter_bot_ZN_3, Perimeter_bot_ZN_2, Perimeter_bot_ZN_1, Perimeter_bot_ZN_4, Perimeter_mid_ZN_3, Perimeter_mid_ZN_2, Perimeter_mid_ZN_1, Perimeter_mid_ZN_4, Perimeter_top_ZN_3, Perimeter_top_ZN_2, Perimeter_top_ZN_1, Perimeter_top_ZN_4, GroundFloor_Plenum, MidFloor_Plenum, TopFloor_Plenum, DataCenter_bot_ZN_6, DataCenter_mid_ZN_6, DataCenter_top_ZN_6, DataCenter_basement_ZN_6
+   System name: VRF_System_1
+   🔧 Generating System VRF...
+      Model values: heating_cop=4.0, min_cool_temp=-15.0, max_cool_temp=43.0, min_heat_temp=-20.0, max_heat_temp=15.0, condenser_type=AirCooled, priority=LoadPriority, cooling_cop=3.5, heat_recovery=No
+      ✅ System VRF generated (2627 chars)
+   🏢 Generating Zone VRFs for 23 zones...
+      Zone 1/23: Basement... ✅ (3715 chars)
+      Zone 2/23: Core_bottom... ✅ (3721 chars)
+      Zone 3/23: Core_mid... ✅ (3715 chars)
+      Zone 4/23: Core_top... ✅ (3715 chars)
+      Zone 5/23: Perimeter_bot_ZN_3... ✅ (3735 chars)
+      Zone 6/23: Perimeter_bot_ZN_2... ✅ (3735 chars)
+      Zone 7/23: Perimeter_bot_ZN_1... ✅ (3735 chars)
+      Zone 8/23: Perimeter_bot_ZN_4... ✅ (3735 chars)
+      Zone 9/23: Perimeter_mid_ZN_3... ✅ (3735 chars)
+      Zone 10/23: Perimeter_mid_ZN_2... ✅ (3735 chars)
+      Zone 11/23: Perimeter_mid_ZN_1... ✅ (3735 chars)
+      Zone 12/23: Perimeter_mid_ZN_4... ✅ (3735 chars)
+      Zone 13/23: Perimeter_top_ZN_3... ✅ (3735 chars)
+      Zone 14/23: Perimeter_top_ZN_2... ✅ (3735 chars)
+      Zone 15/23: Perimeter_top_ZN_1... ✅ (3735 chars)
+      Zone 16/23: Perimeter_top_ZN_4... ✅ (3735 chars)
+      Zone 17/23: GroundFloor_Plenum... ✅ (3735 chars)
+      Zone 18/23: MidFloor_Plenum... ✅ (3729 chars)
+      Zone 19/23: TopFloor_Plenum... ✅ (3729 chars)
+      Zone 20/23: DataCenter_bot_ZN_6... ✅ (3737 chars)
+      Zone 21/23: DataCenter_mid_ZN_6... ✅ (3737 chars)
+      Zone 22/23: DataCenter_top_ZN_6... ✅ (3737 chars)
+      Zone 23/23: DataCenter_basement_ZN_6... ✅ (3747 chars)
+   🌡️  Generating Thermostats for 23 zones...
+      Thermostat 1/23: Basement... ✅ (312 chars)
+      Thermostat 2/23: Core_bottom... ✅ (315 chars)
+      Thermostat 3/23: Core_mid... ✅ (312 chars)
+      Thermostat 4/23: Core_top... ✅ (312 chars)
+      Thermostat 5/23: Perimeter_bot_ZN_3... ✅ (322 chars)
+      Thermostat 6/23: Perimeter_bot_ZN_2... ✅ (322 chars)
+      Thermostat 7/23: Perimeter_bot_ZN_1... ✅ (322 chars)
+      Thermostat 8/23: Perimeter_bot_ZN_4... ✅ (322 chars)
+      Thermostat 9/23: Perimeter_mid_ZN_3... ✅ (322 chars)
+      Thermostat 10/23: Perimeter_mid_ZN_2... ✅ (322 chars)
+      Thermostat 11/23: Perimeter_mid_ZN_1... ✅ (322 chars)
+      Thermostat 12/23: Perimeter_mid_ZN_4... ✅ (322 chars)
+      Thermostat 13/23: Perimeter_top_ZN_3... ✅ (322 chars)
+      Thermostat 14/23: Perimeter_top_ZN_2... ✅ (322 chars)
+      Thermostat 15/23: Perimeter_top_ZN_1... ✅ (322 chars)
+      Thermostat 16/23: Perimeter_top_ZN_4... ✅ (322 chars)
+      Thermostat 17/23: GroundFloor_Plenum... ✅ (322 chars)
+      Thermostat 18/23: MidFloor_Plenum... ✅ (319 chars)
+      Thermostat 19/23: TopFloor_Plenum... ✅ (319 chars)
+      Thermostat 20/23: DataCenter_bot_ZN_6... ✅ (323 chars)
+      Thermostat 21/23: DataCenter_mid_ZN_6... ✅ (323 chars)
+      Thermostat 22/23: DataCenter_top_ZN_6... ✅ (323 chars)
+      Thermostat 23/23: DataCenter_basement_ZN_6... ✅ (328 chars)
+   ✅ Complete VRF system generated (95928 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 47 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'GroundFloor_Plenum'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'MidFloor_Plenum'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'TopFloor_Plenum'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_GroundFloor_Plenum'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_MidFloor_Plenum'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_TopFloor_Plenum'
+  ⚠️  Removed 6 orphaned comment-only line(s) from HVAC section
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 47 HVAC objects
+
+[2] Validating IDF...
+Valid: True, Errors: 0
+✓ Validation passed - proceeding to simulation
+
+[3] Simulating...
+Success: True, Errors: 0
+
+✓ Final corrected IDF copied to: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/finetuned_rag_officelarge_medium_r1_FINAL.idf
+  Use this file in EP-Launch for simulation!
+
+[Eval] Running quality evaluation...
+  Syntax correctness:   1.00
+  Parameter accuracy:   1.00
+  Simulation success:   True
+
+======================================================================
+PIPELINE COMPLETE: SUCCESS
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/finetuned_rag_officelarge_medium_r1_results.json
+
+🎉 SUCCESS! Use this file:
+   /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/finetuned_rag_officelarge_medium_r1_FINAL.idf
+======================================================================

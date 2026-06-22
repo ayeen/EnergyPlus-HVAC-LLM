@@ -1,0 +1,210 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 1 non-HVAC zone(s): ['attic']
+  ↳ Excluded 1 non-HVAC zone(s): ['attic']
+✓ Auto-detected 2 zones from IDF
+  1. Dining
+  2. Kitchen
+  ↳ Excluded 1 non-HVAC zone(s): ['attic']
+
+📊 Building Context:
+  • Zones: 2
+  • Total Volume: 970.7 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Create a compleet VRF HVAC configuration for a fast food restaurant clntaining 3 thermal zones, with no heat recoveryy, where each thermal zone is esrved by one inoor terminal uniit connceted to a single shraed outdoor condesing unit throough a zone terinal nuit list. Only assugn VRF terminal units to zonse that are occupie and condiyioned. Skip any zzone thta is unoccupied or unconditioned.
+✓ Calling LLM (mistral-api) to generate VRF system for zones: Dining, Kitchen
+  User Design Request: Create a compleet VRF HVAC configuration for a fast food restaurant clntaining 3 thermal zones, with no heat recoveryy, where each thermal zone is esrved by one inoor terminal uniit connceted to a single shraed outdoor condesing unit throough a zone terinal nuit list. Only assugn VRF terminal units to zonse that are occupie and condiyioned. Skip any zzone thta is unoccupied or unconditioned.
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (5303 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 3 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 3 HVAC objects
+
+[2] Validating IDF...
+Valid: False, Errors: 2
+
+[2.5] Validation failed. Attempting pre-simulation fix...
+      Found 2 validation errors
+  ↳ Excluded 1 non-HVAC zone(s): ['attic']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (309 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Dining",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Kitchen",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  }
+]
+================================================================================
+
+
+✓ Successfully parsed 2 fixes from LLM response
+
+
+================================================================================
+APPLYING 2 FIXES TO IDF
+================================================================================
+
+1. HVACTemplate:Zone:VRF[Dining].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Dining' to ''
+2. HVACTemplate:Zone:VRF[Kitchen].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Kitchen' to ''
+
+================================================================================
+FIXES APPLIED: 2 successful, 0 failed
+================================================================================
+
+✓ Applied 2 pre-simulation fixes
+[2.6] Re-validating after fix...
+✓ Validation passed after fix!
+
+[3] Simulating...
+Success: False, Errors: 10
+
+[4.1] Fixing errors...
+  ↳ Excluded 1 non-HVAC zone(s): ['attic']
+✓ Generating with Mistral API (mistral-small-latest)...
+⚠ Mistral API generation failed: API error occurred: Status 429. Body: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+Traceback (most recent call last):
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/src/agents/llm_interface.py", line 394, in _generate_mistral_api
+    response = self.mistral_client.chat.complete(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/mistralai/chat.py", line 251, in complete
+    raise models.SDKError("API error occurred", http_res, http_res_text)
+mistralai.models.sdkerror.SDKError: API error occurred: Status 429. Body: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+************No response generated.*************
+================================================================================
+
+
+✓ Successfully parsed 0 fixes from LLM response
+
+
+================================================================================
+APPLYING 0 FIXES TO IDF
+================================================================================
+
+
+================================================================================
+FIXES APPLIED: 0 successful, 0 failed
+================================================================================
+
+✓ Applied 0 fixes
+
+[5.1] Re-simulating...
+Success: False
+
+[4.2] Fixing errors...
+  ↳ Excluded 1 non-HVAC zone(s): ['attic']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (1796 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "HVACTemplate:System:VRF",
+    "object_name": "VRF_System_1",
+    "field_to_change": "gross_rated_total_cooling_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "HVACTemplate:System:VRF",
+    "object_name": "VRF_System_1",
+    "field_to_change": "gross_rated_heating_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "Dining VRF Cooling Coil",
+    "field_to_change": "gross_rated_sensible_heat_ratio",
+    "new_value": 0.7
+  },
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "Dining VRF Cooling Coil",
+    "field_to_change": "gross_rated_total_cooling_capacity",
+    "new_value": 10000
+  },
+  {
+    "object_type": "Coil:Heating:DX:VariableRefrigerantFlow",
+    "object_name": "Dining VRF Heating Coil",
+    "field_to_change": "gross_rated_heating_capacity",
+    "new_value": 12000
+  },
+  {
+    "object_type": "DesignSpecification:OutdoorAir...
+================================================================================
+
+
+✓ Successfully parsed 10 fixes from LLM response
+
+
+================================================================================
+APPLYING 10 FIXES TO IDF
+================================================================================
+
+1. HVACTemplate:System:VRF[VRF_System_1].gross_rated_total_cooling_capacity = 'Autosize'
+   ✓ Changed from 'Autosize' to 'Autosize'
+2. HVACTemplate:System:VRF[VRF_System_1].gross_rated_heating_capacity = 'Autosize'
+   ✓ Changed from 'Autosize' to 'Autosize'
+3. Coil:Cooling:DX:VariableRefrigerantFlow[Dining VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.7'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+4. Coil:Cooling:DX:VariableRefrigerantFlow[Dining VRF Cooling Coil].gross_rated_total_cooling_capacity = '10000'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+5. Coil:Heating:DX:VariableRefrigerantFlow[Dining VRF Heating Coil].gross_rated_heating_capacity = '12000'
+   ❌ No objects of type 'Coil:Heating:DX:VariableRefrigerantFlow' found in IDF
+6. DesignSpecification:OutdoorAir[SZ DSOA Dining].outdoor_air_method = 'FixedFlowRate'
+   ❌ No objects of type 'DesignSpecification:OutdoorAir' found in IDF
+7. Fan:OnOff[Dining VRF Supply Fan].fan_total_efficiency = '0.7'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+8. Fan:OnOff[Dining VRF Supply Fan].pressure_rise = '125'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+9. ZoneControl:Thermostat[Thermostat_Dining].control_2_object_type = 'ThermostatSetpoint:SingleHeating'
+   ✓ Changed from 'Clg-SetP-Sch' to 'ThermostatSetpoint:SingleHeating'
+10. ZoneControl:Thermostat[Thermostat_Dining].control_2_name = 'Thermostat_Dining_Heating'
+   ✓ Changed from '' to 'Thermostat_Dining_Heating'
+
+================================================================================
+FIXES APPLIED: 4 successful, 6 failed
+================================================================================
+
+✓ Applied 4 fixes
+
+[5.2] Re-simulating...
+Success: False
+
+======================================================================
+PIPELINE COMPLETE: FAILED
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/base_restaurantfastfood_medium_spelling_r1_results.json
+======================================================================

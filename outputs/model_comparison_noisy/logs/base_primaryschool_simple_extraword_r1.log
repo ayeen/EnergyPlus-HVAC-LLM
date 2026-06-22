@@ -1,0 +1,363 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_ZN_1_FLR_1']
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_ZN_1_FLR_1']
+✓ Auto-detected 24 zones from IDF
+  1. Corner_Class_1_Pod_1_ZN_1_FLR_1
+  2. Mult_Class_1_Pod_1_ZN_1_FLR_1
+  3. Corridor_Pod_1_ZN_1_FLR_1
+  4. Corner_Class_2_Pod_1_ZN_1_FLR_1
+  5. Mult_Class_2_Pod_1_ZN_1_FLR_1
+  6. Corner_Class_1_Pod_2_ZN_1_FLR_1
+  7. Mult_Class_1_Pod_2_ZN_1_FLR_1
+  8. Corridor_Pod_2_ZN_1_FLR_1
+  9. Corner_Class_2_Pod_2_ZN_1_FLR_1
+  10. Mult_Class_2_Pod_2_ZN_1_FLR_1
+  11. Corner_Class_1_Pod_3_ZN_1_FLR_1
+  12. Mult_Class_1_Pod_3_ZN_1_FLR_1
+  13. Corridor_Pod_3_ZN_1_FLR_1
+  14. Corner_Class_2_Pod_3_ZN_1_FLR_1
+  15. Mult_Class_2_Pod_3_ZN_1_FLR_1
+  16. Computer_Class_ZN_1_FLR_1
+  17. Main_Corridor_ZN_1_FLR_1
+  18. Lobby_ZN_1_FLR_1
+  19. Bath_ZN_1_FLR_1
+  20. Offices_ZN_1_FLR_1
+  21. Gym_ZN_1_FLR_1
+  22. Kitchen_ZN_1_FLR_1
+  23. Cafeteria_ZN_1_FLR_1
+  24. Library_Media_Center_ZN_1_FLR_1
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_ZN_1_FLR_1']
+
+📊 Building Context:
+  • Zones: 24
+  • Total Volume: 27484.0 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Generate a simulation-ready EnergyPlus IDF for a primary school with 25 thermal zones and a variable thoroughly refrigerant practical flow HVAC system and no heat effectively recovery. Thus Assign VRF terminal units only to occupied and conditioned zones. Do not assign VRF terminal clean units to any unoccupied or mainly unconditioned typical zones.
+✓ Calling LLM (mistral-api) to generate VRF system for zones: Corner_Class_1_Pod_1_ZN_1_FLR_1, Mult_Class_1_Pod_1_ZN_1_FLR_1, Corridor_Pod_1_ZN_1_FLR_1, Corner_Class_2_Pod_1_ZN_1_FLR_1, Mult_Class_2_Pod_1_ZN_1_FLR_1, Corner_Class_1_Pod_2_ZN_1_FLR_1, Mult_Class_1_Pod_2_ZN_1_FLR_1, Corridor_Pod_2_ZN_1_FLR_1, Corner_Class_2_Pod_2_ZN_1_FLR_1, Mult_Class_2_Pod_2_ZN_1_FLR_1, Corner_Class_1_Pod_3_ZN_1_FLR_1, Mult_Class_1_Pod_3_ZN_1_FLR_1, Corridor_Pod_3_ZN_1_FLR_1, Corner_Class_2_Pod_3_ZN_1_FLR_1, Mult_Class_2_Pod_3_ZN_1_FLR_1, Computer_Class_ZN_1_FLR_1, Main_Corridor_ZN_1_FLR_1, Lobby_ZN_1_FLR_1, Bath_ZN_1_FLR_1, Offices_ZN_1_FLR_1, Gym_ZN_1_FLR_1, Kitchen_ZN_1_FLR_1, Cafeteria_ZN_1_FLR_1, Library_Media_Center_ZN_1_FLR_1
+  User Design Request: Generate a simulation-ready EnergyPlus IDF for a primary school with 25 thermal zones and a variable thoroughly refrigerant practical flow HVAC system and no heat effectively recovery. Thus Assign VRF terminal units only to occupied and conditioned zones. Do not assign VRF terminal clean units to any unoccupied or mainly unconditioned typical zones.
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (17406 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 7 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 7 HVAC objects
+
+[2] Validating IDF...
+Valid: False, Errors: 6
+
+[2.5] Validation failed. Attempting pre-simulation fix...
+      Found 6 validation errors
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_ZN_1_FLR_1']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (1060 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Corner_Class_1_Pod_1_ZN_1_FLR_1",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Mult_Class_1_Pod_1_ZN_1_FLR_1",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Corridor_Pod_1_ZN_1_FLR_1",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Corner_Class_2_Pod_1_ZN_1_FLR_1",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Mult_Class_2_Pod_1_ZN_1_FLR_1",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Corner_Class_1_Pod_2_ZN_1_FLR_1",
+    "field_to_ch...
+================================================================================
+
+
+✓ Successfully parsed 6 fixes from LLM response
+
+
+================================================================================
+APPLYING 6 FIXES TO IDF
+================================================================================
+
+1. HVACTemplate:Zone:VRF[Corner_Class_1_Pod_1_ZN_1_FLR_1].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Corner_Class_1_Pod_1_ZN_1_FLR_1' to ''
+2. HVACTemplate:Zone:VRF[Mult_Class_1_Pod_1_ZN_1_FLR_1].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Mult_Class_1_Pod_1_ZN_1_FLR_1' to ''
+3. HVACTemplate:Zone:VRF[Corridor_Pod_1_ZN_1_FLR_1].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Corridor_Pod_1_ZN_1_FLR_1' to ''
+4. HVACTemplate:Zone:VRF[Corner_Class_2_Pod_1_ZN_1_FLR_1].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Corner_Class_2_Pod_1_ZN_1_FLR_1' to ''
+5. HVACTemplate:Zone:VRF[Mult_Class_2_Pod_1_ZN_1_FLR_1].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Mult_Class_2_Pod_1_ZN_1_FLR_1' to ''
+6. HVACTemplate:Zone:VRF[Corner_Class_1_Pod_2_ZN_1_FLR_1].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Corner_Class_1_Pod_2_ZN_1_FLR_1' to ''
+
+================================================================================
+FIXES APPLIED: 6 successful, 0 failed
+================================================================================
+
+✓ Applied 6 pre-simulation fixes
+[2.6] Re-validating after fix...
+✓ Validation passed after fix!
+
+[3] Simulating...
+Success: False, Errors: 15
+
+[4.1] Fixing errors...
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_ZN_1_FLR_1']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (1182 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "Corner_Class_1_Pod_1_ZN_1_FLR_1 VRF Cooling Coil",
+    "field_to_change": "gross_rated_sensible_heat_ratio",
+    "new_value": 0.7
+  },
+  {
+    "object_type": "Fan:OnOff",
+    "object_name": "Corner_Class_1_Pod_1_ZN_1_FLR_1 VRF Supply Fan",
+    "field_to_change": "motor_efficiency",
+    "new_value": 0.7
+  },
+  {
+    "object_type": "ZoneControl:Thermostat",
+    "object_name": "Thermostat_Bath_ZN_1_FLR_1",
+    "field_to_change": "control_2_object_type",
+    "new_value": "ThermostatSetpoint:DualSetpoint"
+  },
+  {
+    "object_type": "ZoneHVAC:TerminalUnit:VariableRefrigerantFlow",
+    "object_name": "Corner_Class_1_Pod_1_ZN_1_FLR_1 VRF Terminal Unit",
+    "field_to_change": "supply_air_fan_placement",
+    "new_value": "BlowThrough"
+  },
+  {
+    "object_type": "HVACTemplate:System:VRF",
+    "object_name": "VRF_System_1",
+    "field_to_change": "gross_rated_total_cooling_capacity",
+    "new_value": "Autosi...
+================================================================================
+
+
+✓ Successfully parsed 6 fixes from LLM response
+
+
+================================================================================
+APPLYING 6 FIXES TO IDF
+================================================================================
+
+1. Coil:Cooling:DX:VariableRefrigerantFlow[Corner_Class_1_Pod_1_ZN_1_FLR_1 VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.7'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+2. Fan:OnOff[Corner_Class_1_Pod_1_ZN_1_FLR_1 VRF Supply Fan].motor_efficiency = '0.7'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+3. ZoneControl:Thermostat[Thermostat_Bath_ZN_1_FLR_1].control_2_object_type = 'ThermostatSetpoint:DualSetpoint'
+   ✓ Changed from 'Clg-SetP-Sch' to 'ThermostatSetpoint:DualSetpoint'
+4. ZoneHVAC:TerminalUnit:VariableRefrigerantFlow[Corner_Class_1_Pod_1_ZN_1_FLR_1 VRF Terminal Unit].supply_air_fan_placement = 'BlowThrough'
+   ❌ No objects of type 'ZoneHVAC:TerminalUnit:VariableRefrigerantFlow' found in IDF
+5. HVACTemplate:System:VRF[VRF_System_1].gross_rated_total_cooling_capacity = 'Autosize'
+   ✓ Changed from 'Autosize' to 'Autosize'
+6. HVACTemplate:System:VRF[VRF_System_1].gross_rated_heating_capacity = 'Autosize'
+   ✓ Changed from 'Autosize' to 'Autosize'
+
+================================================================================
+FIXES APPLIED: 3 successful, 3 failed
+================================================================================
+
+✓ Applied 3 fixes
+
+[5.1] Re-simulating...
+Success: False
+
+[4.2] Fixing errors...
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_ZN_1_FLR_1']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (9569 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "Corner_Class_1_Pod_1_ZN_1_FLR_1 VRF Cooling Coil",
+    "field_to_change": "gross_rated_sensible_heat_ratio",
+    "new_value": "0.7"
+  },
+  {
+    "object_type": "Fan:OnOff",
+    "object_name": "Corner_Class_1_Pod_1_ZN_1_FLR_1 VRF Supply Fan",
+    "field_to_change": "motor_efficiency",
+    "new_value": "0.8"
+  },
+  {
+    "object_type": "ZoneControl:Thermostat",
+    "object_name": "Thermostat_Cafeteria_ZN_1_FLR_1",
+    "field_to_change": "control_2_object_type",
+    "new_value": "ThermostatSetpoint:DualSetpoint"
+  },
+  {
+    "object_type": "ZoneHVAC:TerminalUnit:VariableRefrigerantFlow",
+    "object_name": "Corner_Class_1_Pod_1_ZN_1_FLR_1 VRF Terminal Unit",
+    "field_to_change": "supply_air_fan_placement",
+    "new_value": "BlowThrough"
+  },
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "Mult_Class_1_Pod_1_ZN_1_FLR_1 VRF Cooling Coil",
+    "field_to_change": "gr...
+================================================================================
+
+
+✓ Successfully parsed 46 fixes from LLM response
+
+
+================================================================================
+APPLYING 46 FIXES TO IDF
+================================================================================
+
+1. Coil:Cooling:DX:VariableRefrigerantFlow[Corner_Class_1_Pod_1_ZN_1_FLR_1 VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.7'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+2. Fan:OnOff[Corner_Class_1_Pod_1_ZN_1_FLR_1 VRF Supply Fan].motor_efficiency = '0.8'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+3. ZoneControl:Thermostat[Thermostat_Cafeteria_ZN_1_FLR_1].control_2_object_type = 'ThermostatSetpoint:DualSetpoint'
+   ✓ Changed from 'Clg-SetP-Sch' to 'ThermostatSetpoint:DualSetpoint'
+4. ZoneHVAC:TerminalUnit:VariableRefrigerantFlow[Corner_Class_1_Pod_1_ZN_1_FLR_1 VRF Terminal Unit].supply_air_fan_placement = 'BlowThrough'
+   ❌ No objects of type 'ZoneHVAC:TerminalUnit:VariableRefrigerantFlow' found in IDF
+5. Coil:Cooling:DX:VariableRefrigerantFlow[Mult_Class_1_Pod_1_ZN_1_FLR_1 VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.7'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+6. Coil:Cooling:DX:VariableRefrigerantFlow[Corridor_Pod_1_ZN_1_FLR_1 VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.7'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+7. Coil:Cooling:DX:VariableRefrigerantFlow[Corner_Class_2_Pod_1_ZN_1_FLR_1 VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.7'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+8. Coil:Cooling:DX:VariableRefrigerantFlow[Mult_Class_2_Pod_1_ZN_1_FLR_1 VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.7'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+9. Coil:Cooling:DX:VariableRefrigerantFlow[Corner_Class_1_Pod_2_ZN_1_FLR_1 VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.7'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+10. Coil:Cooling:DX:VariableRefrigerantFlow[Mult_Class_1_Pod_2_ZN_1_FLR_1 VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.7'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+11. Coil:Cooling:DX:VariableRefrigerantFlow[Corridor_Pod_2_ZN_1_FLR_1 VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.7'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+12. Coil:Cooling:DX:VariableRefrigerantFlow[Corner_Class_2_Pod_2_ZN_1_FLR_1 VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.7'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+13. Coil:Cooling:DX:VariableRefrigerantFlow[Mult_Class_2_Pod_2_ZN_1_FLR_1 VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.7'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+14. Coil:Cooling:DX:VariableRefrigerantFlow[Corner_Class_1_Pod_3_ZN_1_FLR_1 VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.7'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+15. Coil:Cooling:DX:VariableRefrigerantFlow[Mult_Class_1_Pod_3_ZN_1_FLR_1 VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.7'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+16. Coil:Cooling:DX:VariableRefrigerantFlow[Corridor_Pod_3_ZN_1_FLR_1 VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.7'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+17. Coil:Cooling:DX:VariableRefrigerantFlow[Corner_Class_2_Pod_3_ZN_1_FLR_1 VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.7'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+18. Coil:Cooling:DX:VariableRefrigerantFlow[Mult_Class_2_Pod_3_ZN_1_FLR_1 VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.7'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+19. Fan:OnOff[Mult_Class_1_Pod_1_ZN_1_FLR_1 VRF Supply Fan].motor_efficiency = '0.8'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+20. Fan:OnOff[Corridor_Pod_1_ZN_1_FLR_1 VRF Supply Fan].motor_efficiency = '0.8'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+21. Fan:OnOff[Corner_Class_2_Pod_1_ZN_1_FLR_1 VRF Supply Fan].motor_efficiency = '0.8'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+22. Fan:OnOff[Mult_Class_2_Pod_1_ZN_1_FLR_1 VRF Supply Fan].motor_efficiency = '0.8'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+23. Fan:OnOff[Corner_Class_1_Pod_2_ZN_1_FLR_1 VRF Supply Fan].motor_efficiency = '0.8'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+24. Fan:OnOff[Mult_Class_1_Pod_2_ZN_1_FLR_1 VRF Supply Fan].motor_efficiency = '0.8'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+25. Fan:OnOff[Corridor_Pod_2_ZN_1_FLR_1 VRF Supply Fan].motor_efficiency = '0.8'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+26. Fan:OnOff[Corner_Class_2_Pod_2_ZN_1_FLR_1 VRF Supply Fan].motor_efficiency = '0.8'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+27. Fan:OnOff[Mult_Class_2_Pod_2_ZN_1_FLR_1 VRF Supply Fan].motor_efficiency = '0.8'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+28. Fan:OnOff[Corner_Class_1_Pod_3_ZN_1_FLR_1 VRF Supply Fan].motor_efficiency = '0.8'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+29. Fan:OnOff[Mult_Class_1_Pod_3_ZN_1_FLR_1 VRF Supply Fan].motor_efficiency = '0.8'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+30. Fan:OnOff[Corridor_Pod_3_ZN_1_FLR_1 VRF Supply Fan].motor_efficiency = '0.8'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+31. Fan:OnOff[Corner_Class_2_Pod_3_ZN_1_FLR_1 VRF Supply Fan].motor_efficiency = '0.8'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+32. Fan:OnOff[Mult_Class_2_Pod_3_ZN_1_FLR_1 VRF Supply Fan].motor_efficiency = '0.8'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+33. ZoneHVAC:TerminalUnit:VariableRefrigerantFlow[Mult_Class_1_Pod_1_ZN_1_FLR_1 VRF Terminal Unit].supply_air_fan_placement = 'BlowThrough'
+   ❌ No objects of type 'ZoneHVAC:TerminalUnit:VariableRefrigerantFlow' found in IDF
+34. ZoneHVAC:TerminalUnit:VariableRefrigerantFlow[Corridor_Pod_1_ZN_1_FLR_1 VRF Terminal Unit].supply_air_fan_placement = 'BlowThrough'
+   ❌ No objects of type 'ZoneHVAC:TerminalUnit:VariableRefrigerantFlow' found in IDF
+35. ZoneHVAC:TerminalUnit:VariableRefrigerantFlow[Corner_Class_2_Pod_1_ZN_1_FLR_1 VRF Terminal Unit].supply_air_fan_placement = 'BlowThrough'
+   ❌ No objects of type 'ZoneHVAC:TerminalUnit:VariableRefrigerantFlow' found in IDF
+36. ZoneHVAC:TerminalUnit:VariableRefrigerantFlow[Mult_Class_2_Pod_1_ZN_1_FLR_1 VRF Terminal Unit].supply_air_fan_placement = 'BlowThrough'
+   ❌ No objects of type 'ZoneHVAC:TerminalUnit:VariableRefrigerantFlow' found in IDF
+37. ZoneHVAC:TerminalUnit:VariableRefrigerantFlow[Corner_Class_1_Pod_2_ZN_1_FLR_1 VRF Terminal Unit].supply_air_fan_placement = 'BlowThrough'
+   ❌ No objects of type 'ZoneHVAC:TerminalUnit:VariableRefrigerantFlow' found in IDF
+38. ZoneHVAC:TerminalUnit:VariableRefrigerantFlow[Mult_Class_1_Pod_2_ZN_1_FLR_1 VRF Terminal Unit].supply_air_fan_placement = 'BlowThrough'
+   ❌ No objects of type 'ZoneHVAC:TerminalUnit:VariableRefrigerantFlow' found in IDF
+39. ZoneHVAC:TerminalUnit:VariableRefrigerantFlow[Corridor_Pod_2_ZN_1_FLR_1 VRF Terminal Unit].supply_air_fan_placement = 'BlowThrough'
+   ❌ No objects of type 'ZoneHVAC:TerminalUnit:VariableRefrigerantFlow' found in IDF
+40. ZoneHVAC:TerminalUnit:VariableRefrigerantFlow[Corner_Class_2_Pod_2_ZN_1_FLR_1 VRF Terminal Unit].supply_air_fan_placement = 'BlowThrough'
+   ❌ No objects of type 'ZoneHVAC:TerminalUnit:VariableRefrigerantFlow' found in IDF
+41. ZoneHVAC:TerminalUnit:VariableRefrigerantFlow[Mult_Class_2_Pod_2_ZN_1_FLR_1 VRF Terminal Unit].supply_air_fan_placement = 'BlowThrough'
+   ❌ No objects of type 'ZoneHVAC:TerminalUnit:VariableRefrigerantFlow' found in IDF
+42. ZoneHVAC:TerminalUnit:VariableRefrigerantFlow[Corner_Class_1_Pod_3_ZN_1_FLR_1 VRF Terminal Unit].supply_air_fan_placement = 'BlowThrough'
+   ❌ No objects of type 'ZoneHVAC:TerminalUnit:VariableRefrigerantFlow' found in IDF
+43. ZoneHVAC:TerminalUnit:VariableRefrigerantFlow[Mult_Class_1_Pod_3_ZN_1_FLR_1 VRF Terminal Unit].supply_air_fan_placement = 'BlowThrough'
+   ❌ No objects of type 'ZoneHVAC:TerminalUnit:VariableRefrigerantFlow' found in IDF
+44. ZoneHVAC:TerminalUnit:VariableRefrigerantFlow[Corridor_Pod_3_ZN_1_FLR_1 VRF Terminal Unit].supply_air_fan_placement = 'BlowThrough'
+   ❌ No objects of type 'ZoneHVAC:TerminalUnit:VariableRefrigerantFlow' found in IDF
+45. ZoneHVAC:TerminalUnit:VariableRefrigerantFlow[Corner_Class_2_Pod_3_ZN_1_FLR_1 VRF Terminal Unit].supply_air_fan_placement = 'BlowThrough'
+   ❌ No objects of type 'ZoneHVAC:TerminalUnit:VariableRefrigerantFlow' found in IDF
+46. ZoneHVAC:TerminalUnit:VariableRefrigerantFlow[Mult_Class_2_Pod_3_ZN_1_FLR_1 VRF Terminal Unit].supply_air_fan_placement = 'BlowThrough'
+   ❌ No objects of type 'ZoneHVAC:TerminalUnit:VariableRefrigerantFlow' found in IDF
+
+================================================================================
+FIXES APPLIED: 1 successful, 45 failed
+================================================================================
+
+✓ Applied 1 fixes
+
+[5.2] Re-simulating...
+Success: False
+
+======================================================================
+PIPELINE COMPLETE: FAILED
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/base_primaryschool_simple_extraword_r1_results.json
+======================================================================

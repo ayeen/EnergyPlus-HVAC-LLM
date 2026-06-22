@@ -1,0 +1,58 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_Flr_1']
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_Flr_1']
+✓ Auto-detected 21 zones from IDF
+  1. Basement
+  2. Retail_1_Flr_1
+  3. Retail_2_Flr_1
+  4. Storage_Flr_1
+  5. Laundry_Flr_1
+  6. Cafe_Flr_1
+  7. Lobby_Flr_1
+  8. Room_1_Flr_3
+  9. Room_2_Flr_3
+  10. Room_3_Mult19_Flr_3
+  11. Room_4_Mult19_Flr_3
+  12. Room_5_Flr_3
+  13. Room_6_Flr_3
+  14. Corridor_Flr_3
+  15. Room_1_Flr_6
+  16. Room_2_Flr_6
+  17. Room_3_Mult9_Flr_6
+  18. Banquet_Flr_6
+  19. Dining_Flr_6
+  20. Kitchen_Flr_6
+  21. Corridor_Flr_6
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_Flr_1']
+
+📊 Building Context:
+  • Zones: 21
+  • Total Volume: 18384.9 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Designs the complete HVAC system of the hotel large 22 zones thermal uses variable flow refrigerant and no heat recovery. One terminal indoor units thermal zones connected into an single shares outdoor condensing units by a zones terminal units lists. Complete or valid objects relationships, references, but node connection every zones. Zone equipments list, equipments connection, or air node definitions of all zones. setpoint Dual thermostats controls at all zone by cool setpoint = 24°C but heating setpoints = 21°C. Availability schedule systems operation, fans operation, or thermostat controls. Using autosize all airflow rate, capacities, fan parameter, but sizing other-related input wherever permitted. Using default realistic value of each required inputs not explicitly specified. Generate any required schedule, curves, or supporting object necessary an complete, simulation-ready EnergyPlus IDF. Assigning VRF terminal unit into zone that are occupied or conditioned. Excluding any zones that is unconditioned, unoccupied, and does not served as the space habitable.
+✓ Calling LLM (mistral-api) to generate VRF system for zones: Basement, Retail_1_Flr_1, Retail_2_Flr_1, Storage_Flr_1, Laundry_Flr_1, Cafe_Flr_1, Lobby_Flr_1, Room_1_Flr_3, Room_2_Flr_3, Room_3_Mult19_Flr_3, Room_4_Mult19_Flr_3, Room_5_Flr_3, Room_6_Flr_3, Corridor_Flr_3, Room_1_Flr_6, Room_2_Flr_6, Room_3_Mult9_Flr_6, Banquet_Flr_6, Dining_Flr_6, Kitchen_Flr_6, Corridor_Flr_6
+  User Design Request: Designs the complete HVAC system of the hotel large 22 zones thermal uses variable flow refrigerant and no heat recovery. One terminal indoor units thermal zones connected into an single shares outdoor condensing units by a zones terminal units lists. Complete or valid objects relationships, references, but node connection every zones. Zone equipments list, equipments connection, or air node definitions of all zones. setpoint Dual thermostats controls at all zone by cool setpoint = 24°C but heating setpoints = 21°C. Availability schedule systems operation, fans operation, or thermostat controls. Using autosize all airflow rate, capacities, fan parameter, but sizing other-related input wherever permitted. Using default realistic value of each required inputs not explicitly specified. Generate any required schedule, curves, or supporting object necessary an complete, simulation-ready EnergyPlus IDF. Assigning VRF terminal unit into zone that are occupied or conditioned. Excluding any zones that is unconditioned, unoccupied, and does not served as the space habitable.
+✓ Generating with Mistral API (mistral-small-latest)...
+⚠ Mistral API generation failed: API error occurred: Status 429. Body: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+Traceback (most recent call last):
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/src/agents/llm_interface.py", line 394, in _generate_mistral_api
+    response = self.mistral_client.chat.complete(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/mistralai/chat.py", line 251, in complete
+    raise models.SDKError("API error occurred", http_res, http_res_text)
+mistralai.models.sdkerror.SDKError: API error occurred: Status 429. Body: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+✗ Prompt got empty response
+❌ Error: Empty HVAC configuration generated

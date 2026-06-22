@@ -63,7 +63,7 @@ class Config:
     
     # Pipeline Settings
     MAX_ERROR_CORRECTION_ITERATIONS = 3
-    SIMULATION_TIMEOUT = 120  # seconds
+    SIMULATION_TIMEOUT = 1800  # seconds (30 min — large buildings like SmallHotel/LargeHotel need more than 120s)
     
     # Paths
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

@@ -1,0 +1,82 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 1 non-HVAC zone(s): ['Attic']
+  ↳ Excluded 1 non-HVAC zone(s): ['Attic']
+✓ Auto-detected 5 zones from IDF
+  1. Core_ZN
+  2. Perimeter_ZN_1
+  3. Perimeter_ZN_2
+  4. Perimeter_ZN_3
+  5. Perimeter_ZN_4
+  ↳ Excluded 1 non-HVAC zone(s): ['Attic']
+
+📊 Building Context:
+  • Zones: 5
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Design a complete HVAC system for a smmall office with 6 thermal zoness using variable refrigerant flkw and no heat recovery. One indoor terminal uint per thermal zone connected to a snigle shared outdoor condensing unit via a zone terminal unit list. Complete and valid objec relationships, references, and node connections for all zones. Zone equipment lists, qeuipment connnections, and air node definitions for every zone. Dual setpoint themrostat control in all zones with cooling setplint = 24°C and heating setpoint = 21°C. Availability schedules for system operation, fan operaation, and thermostat conrol. Use autosize for all airflow rates, capacities, fan aprameters, and otherr sizing-related inputs wherever permitted. Use realistic default values for all required inputs not ecplicitly specified. Generate all required schedules, cufves, and supporting objects necessary for a complete, simulation-ready EnergyPlus IDF. Assign VRF terminal uniits to ones that are occupied and conditioned. Exclude any zone thaat is unconditioned, unoccupied, or does not serve as a habitable space.
+✓ Calling LLM (mistral) to generate VRF system for zones: Core_ZN, Perimeter_ZN_1, Perimeter_ZN_2, Perimeter_ZN_3, Perimeter_ZN_4
+  User Design Request: Design a complete HVAC system for a smmall office with 6 thermal zoness using variable refrigerant flkw and no heat recovery. One indoor terminal uint per thermal zone connected to a snigle shared outdoor condensing unit via a zone terminal unit list. Complete and valid objec relationships, references, and node connections for all zones. Zone equipment lists, qeuipment connnections, and air node definitions for every zone. Dual setpoint themrostat control in all zones with cooling setplint = 24°C and heating setpoint = 21°C. Availability schedules for system operation, fan operaation, and thermostat conrol. Use autosize for all airflow rates, capacities, fan aprameters, and otherr sizing-related inputs wherever permitted. Use realistic default values for all required inputs not ecplicitly specified. Generate all required schedules, cufves, and supporting objects necessary for a complete, simulation-ready EnergyPlus IDF. Assign VRF terminal uniits to ones that are occupied and conditioned. Exclude any zone thaat is unconditioned, unoccupied, or does not serve as a habitable space.
+✓ Generating with Mistral fine-tuned model...
+   Found 6 zones: Core_ZN, Perimeter_ZN_1, Perimeter_ZN_2, Perimeter_ZN_3, Perimeter_ZN_4, Attic
+   System name: VRF_System_1
+   🔧 Generating System VRF...
+      ✅ System VRF generated (2625 chars)
+   🏢 Generating Zone VRFs for 6 zones...
+      Zone 1/6: Core_ZN... ✅ (3447 chars)
+      Zone 2/6: Perimeter_ZN_1... ✅ (3461 chars)
+      Zone 3/6: Perimeter_ZN_2... ✅ (3461 chars)
+      Zone 4/6: Perimeter_ZN_3... ✅ (3461 chars)
+      Zone 5/6: Perimeter_ZN_4... ✅ (3461 chars)
+      Zone 6/6: Attic... ✅ (3443 chars)
+   🌡️  Generating Thermostats for 6 zones...
+      Thermostat 1/6: Core_ZN... ✅ (311 chars)
+      Thermostat 2/6: Perimeter_ZN_1... ✅ (318 chars)
+      Thermostat 3/6: Perimeter_ZN_2... ✅ (318 chars)
+      Thermostat 4/6: Perimeter_ZN_3... ✅ (318 chars)
+      Thermostat 5/6: Perimeter_ZN_4... ✅ (318 chars)
+      Thermostat 6/6: Attic... ✅ (309 chars)
+   ✅ Complete VRF system generated (25275 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 13 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'Attic'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_Attic'
+  ⚠️  Removed 2 orphaned comment-only line(s) from HVAC section
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 13 HVAC objects
+
+[2] Validating IDF...
+Valid: True, Errors: 0
+✓ Validation passed - proceeding to simulation
+
+[3] Simulating...
+Success: True, Errors: 0
+
+✓ Final corrected IDF copied to: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/finetuned_smalloffice_detailed_spelling_r1_FINAL.idf
+  Use this file in EP-Launch for simulation!
+
+[Eval] Running quality evaluation...
+  Syntax correctness:   1.00
+  Parameter accuracy:   1.00
+  Simulation success:   True
+
+======================================================================
+PIPELINE COMPLETE: SUCCESS
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/finetuned_smalloffice_detailed_spelling_r1_results.json
+
+🎉 SUCCESS! Use this file:
+   /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/finetuned_smalloffice_detailed_spelling_r1_FINAL.idf
+======================================================================

@@ -113,10 +113,10 @@ Review this VRF configuration and check for obvious errors in field values.
 CHECK ONLY THESE CRITICAL RANGES:
 1. Gross Rated Cooling COP: Should be 2.5 - 5.0 (typical VRF range)
 2. Gross Rated Heating COP: Should be 2.5 - 4.5 (typical VRF range)
-3. Minimum Outdoor Temperature in Cooling Mode: Should be -10°C to +10°C
-4. Maximum Outdoor Temperature in Cooling Mode: Should be 35°C to 50°C
-5. Minimum Outdoor Temperature in Heating Mode: Should be -30°C to 0°C
-6. Maximum Outdoor Temperature in Heating Mode: Should be 10°C to 25°C
+3. Minimum Outdoor Temperature in Cooling Mode: Should be -15°C to -5°C (correct: -6.0°C)
+4. Maximum Outdoor Temperature in Cooling Mode: Should be 35°C to 52°C (correct: 43.0°C)
+5. Minimum Outdoor Temperature in Heating Mode: Should be -25°C to -15°C (correct: -20.0°C)
+6. Maximum Outdoor Temperature in Heating Mode: Should be 12°C to 20°C (correct: 15.5°C)
 
 Return ONLY a JSON object with this exact structure (no markdown, no explanation):
 {

@@ -1,0 +1,155 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 13 non-HVAC zone(s): ['RearStairsFlr1', 'MechanicalRoomFlr1', 'ElevatorCoreFlr1', 'FrontStairsFlr1', 'RearStairsFlr2', 'ElevatorCoreFlr2', 'FrontStairsFlr2', 'RearStairsFlr3', 'ElevatorCoreFlr3', 'FrontStairsFlr3', 'RearStairsFlr4', 'ElevatorCoreFlr4', 'FrontStairsFlr4']
+  ↳ Excluded 13 non-HVAC zone(s): ['RearStairsFlr1', 'MechanicalRoomFlr1', 'ElevatorCoreFlr1', 'FrontStairsFlr1', 'RearStairsFlr2', 'ElevatorCoreFlr2', 'FrontStairsFlr2', 'RearStairsFlr3', 'ElevatorCoreFlr3', 'FrontStairsFlr3', 'RearStairsFlr4', 'ElevatorCoreFlr4', 'FrontStairsFlr4']
+✓ Auto-detected 54 zones from IDF
+  1. CorridorFlr1
+  2. RearStorageFlr1
+  3. FrontLoungeFlr1
+  4. RestroomFlr1
+  5. MeetingRoomFlr1
+  6. GuestRoom101
+  7. GuestRoom102
+  8. GuestRoom103
+  9. GuestRoom104
+  10. GuestRoom105
+  11. EmployeeLoungeFlr1
+  12. LaundryRoomFlr1
+  13. ExerciseCenterFlr1
+  14. FrontOfficeFlr1
+  15. FrontStorageFlr1
+  16. CorridorFlr2
+  17. RearStorageFlr2
+  18. GuestRoom201
+  19. GuestRoom202_205
+  20. GuestRoom206_208
+  21. GuestRoom209_212
+  22. GuestRoom213
+  23. GuestRoom214
+  24. GuestRoom215_218
+  25. GuestRoom219
+  26. GuestRoom220_223
+  27. GuestRoom224
+  28. FrontStorageFlr2
+  29. CorridorFlr3
+  30. RearStorageFlr3
+  31. GuestRoom301
+  32. GuestRoom302_305
+  33. GuestRoom306_308
+  34. GuestRoom309_312
+  35. GuestRoom313
+  36. GuestRoom314
+  37. GuestRoom315_318
+  38. GuestRoom319
+  39. GuestRoom320_323
+  40. GuestRoom324
+  41. FrontStorageFlr3
+  42. CorridorFlr4
+  43. RearStorageFlr4
+  44. GuestRoom401
+  45. GuestRoom402_405
+  46. GuestRoom406_408
+  47. GuestRoom409_412
+  48. GuestRoom413
+  49. GuestRoom414
+  50. GuestRoom415_418
+  51. GuestRoom419
+  52. GuestRoom420_423
+  53. GuestRoom424
+  54. FrontStorageFlr4
+  ↳ Excluded 13 non-HVAC zone(s): ['RearStairsFlr1', 'MechanicalRoomFlr1', 'ElevatorCoreFlr1', 'FrontStairsFlr1', 'RearStairsFlr2', 'ElevatorCoreFlr2', 'FrontStairsFlr2', 'RearStairsFlr3', 'ElevatorCoreFlr3', 'FrontStairsFlr3', 'RearStairsFlr4', 'ElevatorCoreFlr4', 'FrontStairsFlr4']
+
+📊 Building Context:
+  • Zones: 54
+  • Orientation: 180.0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Design HVAC system for hotel with 67 zones variable refrigerant flow no heat recovery. One indoor terminal unit per zone connected to single shared outdoor condensing unit via zone terminal unit list. object relationships, node connections for all zones. Zone equipment lists, equipment connections, for every zone. control in all zones with cooling = 24°C and heating setpoint = 21°C. Availability schedules for system operation, operation,. Use autosize for all airflow rates, capacities, parameters, sizing-. Use values for all inputs not explicitly. Generate all schedules, curves, supporting necessary for, EnergyPlus IDF. Assign VRF terminal units to zones that occupied conditioned. Exclude any zone that unconditioned, unoccupied, not serve as a habitable space.
+✓ Calling LLM (mistral-api) to generate VRF system for zones: CorridorFlr1, RearStorageFlr1, FrontLoungeFlr1, RestroomFlr1, MeetingRoomFlr1, GuestRoom101, GuestRoom102, GuestRoom103, GuestRoom104, GuestRoom105, EmployeeLoungeFlr1, LaundryRoomFlr1, ExerciseCenterFlr1, FrontOfficeFlr1, FrontStorageFlr1, CorridorFlr2, RearStorageFlr2, GuestRoom201, GuestRoom202_205, GuestRoom206_208, GuestRoom209_212, GuestRoom213, GuestRoom214, GuestRoom215_218, GuestRoom219, GuestRoom220_223, GuestRoom224, FrontStorageFlr2, CorridorFlr3, RearStorageFlr3, GuestRoom301, GuestRoom302_305, GuestRoom306_308, GuestRoom309_312, GuestRoom313, GuestRoom314, GuestRoom315_318, GuestRoom319, GuestRoom320_323, GuestRoom324, FrontStorageFlr3, CorridorFlr4, RearStorageFlr4, GuestRoom401, GuestRoom402_405, GuestRoom406_408, GuestRoom409_412, GuestRoom413, GuestRoom414, GuestRoom415_418, GuestRoom419, GuestRoom420_423, GuestRoom424, FrontStorageFlr4
+  User Design Request: Design HVAC system for hotel with 67 zones variable refrigerant flow no heat recovery. One indoor terminal unit per zone connected to single shared outdoor condensing unit via zone terminal unit list. object relationships, node connections for all zones. Zone equipment lists, equipment connections, for every zone. control in all zones with cooling = 24°C and heating setpoint = 21°C. Availability schedules for system operation, operation,. Use autosize for all airflow rates, capacities, parameters, sizing-. Use values for all inputs not explicitly. Generate all schedules, curves, supporting necessary for, EnergyPlus IDF. Assign VRF terminal units to zones that occupied conditioned. Exclude any zone that unconditioned, unoccupied, not serve as a habitable space.
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (26131 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 4 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ⚠️  Removed 1 orphaned comment-only line(s) from HVAC section
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 4 HVAC objects
+
+[2] Validating IDF...
+this node -ZONECONTROL:THERMOSTAR_GUESTROOM302_305-is not present in base dictionary
+this node -- SUPPLEMENTAL HEATING COIL MAXIMUM OUTDOOR DRY-BULB TEMPERATURE
+
+HVACTEMPLATE:ZONE:VRF-is not present in base dictionary
+this node -- SUPPLEMENTAL HEATING COIL MAXIMUM OUTDOOR DRY-BULB TEMPERATURE
+
+HVACTEMPLATE:ZONE:VRF-is not present in base dictionary
+Valid: False, Errors: 1
+
+[2.5] Validation failed. Attempting pre-simulation fix...
+      Found 1 validation errors
+this node -ZONECONTROL:THERMOSTAR_GUESTROOM302_305-is not present in base dictionary
+this node -- SUPPLEMENTAL HEATING COIL MAXIMUM OUTDOOR DRY-BULB TEMPERATURE
+
+HVACTEMPLATE:ZONE:VRF-is not present in base dictionary
+this node -- SUPPLEMENTAL HEATING COIL MAXIMUM OUTDOOR DRY-BULB TEMPERATURE
+
+HVACTEMPLATE:ZONE:VRF-is not present in base dictionary
+  ↳ Excluded 13 non-HVAC zone(s): ['RearStairsFlr1', 'MechanicalRoomFlr1', 'ElevatorCoreFlr1', 'FrontStairsFlr1', 'RearStairsFlr2', 'ElevatorCoreFlr2', 'FrontStairsFlr2', 'RearStairsFlr3', 'ElevatorCoreFlr3', 'FrontStairsFlr3', 'RearStairsFlr4', 'ElevatorCoreFlr4', 'FrontStairsFlr4']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (184 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "CorridorFlr1",
+    "field_to_change": "template_thermostat_name",
+    "new_value": "Thermostat_CorridorFlr1"
+  }
+]
+================================================================================
+
+
+✓ Successfully parsed 1 fixes from LLM response
+
+this node -ZONECONTROL:THERMOSTAR_GUESTROOM302_305-is not present in base dictionary
+this node -- SUPPLEMENTAL HEATING COIL MAXIMUM OUTDOOR DRY-BULB TEMPERATURE
+
+HVACTEMPLATE:ZONE:VRF-is not present in base dictionary
+this node -- SUPPLEMENTAL HEATING COIL MAXIMUM OUTDOOR DRY-BULB TEMPERATURE
+
+HVACTEMPLATE:ZONE:VRF-is not present in base dictionary
+
+================================================================================
+APPLYING 1 FIXES TO IDF
+================================================================================
+
+1. HVACTemplate:Zone:VRF[CorridorFlr1].template_thermostat_name = 'Thermostat_CorridorFlr1'
+   ✓ Changed from 'Thermostat_CorridorFlr1' to 'Thermostat_CorridorFlr1'
+
+================================================================================
+FIXES APPLIED: 1 successful, 0 failed
+================================================================================
+
+✓ Applied 1 pre-simulation fixes
+[2.6] Re-validating after fix...
+⚠ Still 1 validation errors after fix
+❌ Fixes didn't reduce errors. Stopping pipeline.
+
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/base_smallhotel_detailed_omission_r1_results.json
+
+💡 Suggestion: Review validation errors or check generated HVAC objects

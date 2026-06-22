@@ -1,0 +1,235 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+✓ Auto-detected 3 zones from IDF
+  1. Zone1 Office
+  2. Zone2 Fine Storage
+  3. Zone3 Bulk Storage
+
+📊 Building Context:
+  • Zones: 3
+  • Orientation: 90.0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Generate a simulation-ready EnergyPlus IDF for a warehouse with 3 thermql zoes and a variable refrigernat flw HVAC system and no heay recovery. Assing VRF terminnal uints only to occupied and conditioned zones. Do not assign VRF teerminal nits to any unoccupied or unconditioned zones.
+✓ Calling LLM (mistral-api) to generate VRF system for zones: Zone1 Office, Zone2 Fine Storage, Zone3 Bulk Storage
+  User Design Request: Generate a simulation-ready EnergyPlus IDF for a warehouse with 3 thermql zoes and a variable refrigernat flw HVAC system and no heay recovery. Assing VRF terminnal uints only to occupied and conditioned zones. Do not assign VRF teerminal nits to any unoccupied or unconditioned zones.
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (12377 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 4 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 4 HVAC objects
+
+[2] Validating IDF...
+Valid: False, Errors: 3
+
+[2.5] Validation failed. Attempting pre-simulation fix...
+      Found 3 validation errors
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (491 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Zone1 Office",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Zone2 Fine Storage",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Zone3 Bulk Storage",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  }
+]
+================================================================================
+
+
+✓ Successfully parsed 3 fixes from LLM response
+
+
+================================================================================
+APPLYING 3 FIXES TO IDF
+================================================================================
+
+1. HVACTemplate:Zone:VRF[Zone1 Office].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Zone1 Office' to ''
+2. HVACTemplate:Zone:VRF[Zone2 Fine Storage].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Zone2 Fine Storage' to ''
+3. HVACTemplate:Zone:VRF[Zone3 Bulk Storage].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Zone3 Bulk Storage' to ''
+
+================================================================================
+FIXES APPLIED: 3 successful, 0 failed
+================================================================================
+
+✓ Applied 3 pre-simulation fixes
+[2.6] Re-validating after fix...
+✓ Validation passed after fix!
+
+[3] Simulating...
+Success: False, Errors: 6
+
+[4.1] Fixing errors...
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (946 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "Zone1 Office VRF Cooling Coil",
+    "field_to_change": "gross_rated_sensible_heat_ratio",
+    "new_value": 0.75
+  },
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "Zone1 Office VRF Cooling Coil",
+    "field_to_change": "gross_rated_total_cooling_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "DesignSpecification:OutdoorAir",
+    "object_name": "SZ DSOA Zone1 Office",
+    "field_to_change": "outdoor_air_method",
+    "new_value": "Sum"
+  },
+  {
+    "object_type": "Fan:OnOff",
+    "object_name": "Zone1 Office VRF Supply Fan",
+    "field_to_change": "motor_efficiency",
+    "new_value": 0.85
+  },
+  {
+    "object_type": "ZoneControl:Thermostat",
+    "object_name": "Thermostat_Zone1 Office",
+    "field_to_change": "control_2_object_type",
+    "new_value": "ThermostatSetpoint:SingleHeating"
+  }
+]
+================================================================================
+
+
+✓ Successfully parsed 5 fixes from LLM response
+
+
+================================================================================
+APPLYING 5 FIXES TO IDF
+================================================================================
+
+1. Coil:Cooling:DX:VariableRefrigerantFlow[Zone1 Office VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.75'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+2. Coil:Cooling:DX:VariableRefrigerantFlow[Zone1 Office VRF Cooling Coil].gross_rated_total_cooling_capacity = 'Autosize'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+3. DesignSpecification:OutdoorAir[SZ DSOA Zone1 Office].outdoor_air_method = 'Sum'
+   ❌ No objects of type 'DesignSpecification:OutdoorAir' found in IDF
+4. Fan:OnOff[Zone1 Office VRF Supply Fan].motor_efficiency = '0.85'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+5. ZoneControl:Thermostat[Thermostat_Zone1 Office].control_2_object_type = 'ThermostatSetpoint:SingleHeating'
+   ✓ Changed from 'Clg-SetP-Sch' to 'ThermostatSetpoint:SingleHeating'
+
+================================================================================
+FIXES APPLIED: 1 successful, 4 failed
+================================================================================
+
+✓ Applied 1 fixes
+
+[5.1] Re-simulating...
+Success: False
+
+[4.2] Fixing errors...
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (951 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "Zone1 Office VRF Cooling Coil",
+    "field_to_change": "gross_rated_sensible_heat_ratio",
+    "new_value": 0.75
+  },
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "Zone1 Office VRF Cooling Coil",
+    "field_to_change": "gross_rated_total_cooling_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "DesignSpecification:OutdoorAir",
+    "object_name": "SZ DSOA Zone1 Office",
+    "field_to_change": "outdoor_air_method",
+    "new_value": "Sum"
+  },
+  {
+    "object_type": "Fan:OnOff",
+    "object_name": "Zone1 Office VRF Supply Fan",
+    "field_to_change": "motor_efficiency",
+    "new_value": 0.85
+  },
+  {
+    "object_type": "ZoneControl:Thermostat",
+    "object_name": "Thermostat_Zone2 Fine Storage",
+    "field_to_change": "control_2_object_type",
+    "new_value": "ThermostatSetpoint:DualSetpoint"
+  }
+]
+================================================================================
+
+
+✓ Successfully parsed 5 fixes from LLM response
+
+
+================================================================================
+APPLYING 5 FIXES TO IDF
+================================================================================
+
+1. Coil:Cooling:DX:VariableRefrigerantFlow[Zone1 Office VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.75'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+2. Coil:Cooling:DX:VariableRefrigerantFlow[Zone1 Office VRF Cooling Coil].gross_rated_total_cooling_capacity = 'Autosize'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+3. DesignSpecification:OutdoorAir[SZ DSOA Zone1 Office].outdoor_air_method = 'Sum'
+   ❌ No objects of type 'DesignSpecification:OutdoorAir' found in IDF
+4. Fan:OnOff[Zone1 Office VRF Supply Fan].motor_efficiency = '0.85'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+5. ZoneControl:Thermostat[Thermostat_Zone2 Fine Storage].control_2_object_type = 'ThermostatSetpoint:DualSetpoint'
+   ✓ Changed from 'Clg-SetP-Sch' to 'ThermostatSetpoint:DualSetpoint'
+
+================================================================================
+FIXES APPLIED: 1 successful, 4 failed
+================================================================================
+
+✓ Applied 1 fixes
+
+[5.2] Re-simulating...
+Success: False
+
+======================================================================
+PIPELINE COMPLETE: FAILED
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/base_rag_warehouse_simple_spelling_r1_results.json
+======================================================================

@@ -1,0 +1,152 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_ZN_1_FLR_1']
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_ZN_1_FLR_1']
+✓ Auto-detected 24 zones from IDF
+  1. Corner_Class_1_Pod_1_ZN_1_FLR_1
+  2. Mult_Class_1_Pod_1_ZN_1_FLR_1
+  3. Corridor_Pod_1_ZN_1_FLR_1
+  4. Corner_Class_2_Pod_1_ZN_1_FLR_1
+  5. Mult_Class_2_Pod_1_ZN_1_FLR_1
+  6. Corner_Class_1_Pod_2_ZN_1_FLR_1
+  7. Mult_Class_1_Pod_2_ZN_1_FLR_1
+  8. Corridor_Pod_2_ZN_1_FLR_1
+  9. Corner_Class_2_Pod_2_ZN_1_FLR_1
+  10. Mult_Class_2_Pod_2_ZN_1_FLR_1
+  11. Corner_Class_1_Pod_3_ZN_1_FLR_1
+  12. Mult_Class_1_Pod_3_ZN_1_FLR_1
+  13. Corridor_Pod_3_ZN_1_FLR_1
+  14. Corner_Class_2_Pod_3_ZN_1_FLR_1
+  15. Mult_Class_2_Pod_3_ZN_1_FLR_1
+  16. Computer_Class_ZN_1_FLR_1
+  17. Main_Corridor_ZN_1_FLR_1
+  18. Lobby_ZN_1_FLR_1
+  19. Bath_ZN_1_FLR_1
+  20. Offices_ZN_1_FLR_1
+  21. Gym_ZN_1_FLR_1
+  22. Kitchen_ZN_1_FLR_1
+  23. Cafeteria_ZN_1_FLR_1
+  24. Library_Media_Center_ZN_1_FLR_1
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_ZN_1_FLR_1']
+
+📊 Building Context:
+  • Zones: 24
+  • Total Volume: 27484.0 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Create a complete VRF HVAC configuration for a primary basically school clearly containing 25 relatively thermal general zones, with no heat recovery, where each thermal zone is served by one correctly indoor appropriately terminal unit typically connected to a single completely shared outdoor widely condensing strict unit through a zone terminal full unit list. Only assign VRF terminal units to basic zones that are occupied and basically conditioned. Skip any zone that is primarily unoccupied or unconditioned.
+✓ Calling LLM (mistral-api) to generate VRF system for zones: Corner_Class_1_Pod_1_ZN_1_FLR_1, Mult_Class_1_Pod_1_ZN_1_FLR_1, Corridor_Pod_1_ZN_1_FLR_1, Corner_Class_2_Pod_1_ZN_1_FLR_1, Mult_Class_2_Pod_1_ZN_1_FLR_1, Corner_Class_1_Pod_2_ZN_1_FLR_1, Mult_Class_1_Pod_2_ZN_1_FLR_1, Corridor_Pod_2_ZN_1_FLR_1, Corner_Class_2_Pod_2_ZN_1_FLR_1, Mult_Class_2_Pod_2_ZN_1_FLR_1, Corner_Class_1_Pod_3_ZN_1_FLR_1, Mult_Class_1_Pod_3_ZN_1_FLR_1, Corridor_Pod_3_ZN_1_FLR_1, Corner_Class_2_Pod_3_ZN_1_FLR_1, Mult_Class_2_Pod_3_ZN_1_FLR_1, Computer_Class_ZN_1_FLR_1, Main_Corridor_ZN_1_FLR_1, Lobby_ZN_1_FLR_1, Bath_ZN_1_FLR_1, Offices_ZN_1_FLR_1, Gym_ZN_1_FLR_1, Kitchen_ZN_1_FLR_1, Cafeteria_ZN_1_FLR_1, Library_Media_Center_ZN_1_FLR_1
+  User Design Request: Create a complete VRF HVAC configuration for a primary basically school clearly containing 25 relatively thermal general zones, with no heat recovery, where each thermal zone is served by one correctly indoor appropriately terminal unit typically connected to a single completely shared outdoor widely condensing strict unit through a zone terminal full unit list. Only assign VRF terminal units to basic zones that are occupied and basically conditioned. Skip any zone that is primarily unoccupied or unconditioned.
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (5590 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 0 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 0 HVAC objects
+
+[2] Validating IDF...
+Valid: True, Errors: 0
+✓ Validation passed - proceeding to simulation
+
+[3] Simulating...
+Success: False, Errors: 2
+
+[4.1] Fixing errors...
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_ZN_1_FLR_1']
+✓ Generating with Mistral API (mistral-small-latest)...
+⚠ Mistral API generation failed: API error occurred: Status 429. Body: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+Traceback (most recent call last):
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/src/agents/llm_interface.py", line 394, in _generate_mistral_api
+    response = self.mistral_client.chat.complete(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/mistralai/chat.py", line 251, in complete
+    raise models.SDKError("API error occurred", http_res, http_res_text)
+mistralai.models.sdkerror.SDKError: API error occurred: Status 429. Body: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+************No response generated.*************
+================================================================================
+
+
+✓ Successfully parsed 0 fixes from LLM response
+
+
+================================================================================
+APPLYING 0 FIXES TO IDF
+================================================================================
+
+
+================================================================================
+FIXES APPLIED: 0 successful, 0 failed
+================================================================================
+
+✓ Applied 0 fixes
+
+[5.1] Re-simulating...
+Success: False
+
+[4.2] Fixing errors...
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_ZN_1_FLR_1']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (413 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "ZoneControl:Thermostat",
+    "object_name": "Thermostat_Corner_Class_1_Pod_1_ZN_1_FLR_1",
+    "field_to_change": "control_2_object_type",
+    "new_value": "ThermostatSetpoint:SingleHeating"
+  },
+  {
+    "object_type": "ZoneControl:Thermostat",
+    "object_name": "Thermostat_Corner_Class_1_Pod_1_ZN_1_FLR_1",
+    "field_to_change": "control_2_name",
+    "new_value": "Clg-SetP-Sch"
+  }
+]
+================================================================================
+
+
+✓ Successfully parsed 2 fixes from LLM response
+
+
+================================================================================
+APPLYING 2 FIXES TO IDF
+================================================================================
+
+1. ZoneControl:Thermostat[Thermostat_Corner_Class_1_Pod_1_ZN_1_FLR_1].control_2_object_type = 'ThermostatSetpoint:SingleHeating'
+   ✓ Changed from 'Clg-SetP-Sch' to 'ThermostatSetpoint:SingleHeating'
+2. ZoneControl:Thermostat[Thermostat_Corner_Class_1_Pod_1_ZN_1_FLR_1].control_2_name = 'Clg-SetP-Sch'
+   ✓ Changed from '' to 'Clg-SetP-Sch'
+
+================================================================================
+FIXES APPLIED: 2 successful, 0 failed
+================================================================================
+
+✓ Applied 2 fixes
+
+[5.2] Re-simulating...
+Success: False
+
+======================================================================
+PIPELINE COMPLETE: FAILED
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/base_primaryschool_medium_extraword_r1_results.json
+======================================================================

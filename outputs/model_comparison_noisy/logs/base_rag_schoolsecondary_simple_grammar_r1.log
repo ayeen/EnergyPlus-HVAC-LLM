@@ -1,0 +1,81 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 2 non-HVAC zone(s): ['Mech_ZN_1_FLR_1', 'Mech_ZN_1_FLR_2']
+  ↳ Excluded 2 non-HVAC zone(s): ['Mech_ZN_1_FLR_1', 'Mech_ZN_1_FLR_2']
+✓ Auto-detected 44 zones from IDF
+  1. Corner_Class_1_Pod_1_ZN_1_FLR_1
+  2. Corner_Class_1_Pod_1_ZN_1_FLR_2
+  3. Mult_Class_1_Pod_1_ZN_1_FLR_1
+  4. Mult_Class_1_Pod_1_ZN_1_FLR_2
+  5. Corridor_Pod_1_ZN_1_FLR_1
+  6. Corridor_Pod_1_ZN_1_FLR_2
+  7. Corner_Class_2_Pod_1_ZN_1_FLR_1
+  8. Corner_Class_2_Pod_1_ZN_1_FLR_2
+  9. Mult_Class_2_Pod_1_ZN_1_FLR_1
+  10. Mult_Class_2_Pod_1_ZN_1_FLR_2
+  11. Corner_Class_1_Pod_2_ZN_1_FLR_1
+  12. Corner_Class_1_Pod_2_ZN_1_FLR_2
+  13. Mult_Class_1_Pod_2_ZN_1_FLR_1
+  14. Mult_Class_1_Pod_2_ZN_1_FLR_2
+  15. Corridor_Pod_2_ZN_1_FLR_1
+  16. Corridor_Pod_2_ZN_1_FLR_2
+  17. Corner_Class_2_Pod_2_ZN_1_FLR_1
+  18. Corner_Class_2_Pod_2_ZN_1_FLR_2
+  19. Mult_Class_2_Pod_2_ZN_1_FLR_1
+  20. Mult_Class_2_Pod_2_ZN_1_FLR_2
+  21. Corner_Class_1_Pod_3_ZN_1_FLR_1
+  22. Corner_Class_1_Pod_3_ZN_1_FLR_2
+  23. Mult_Class_1_Pod_3_ZN_1_FLR_1
+  24. Mult_Class_1_Pod_3_ZN_1_FLR_2
+  25. Corridor_Pod_3_ZN_1_FLR_1
+  26. Corridor_Pod_3_ZN_1_FLR_2
+  27. Corner_Class_2_Pod_3_ZN_1_FLR_1
+  28. Corner_Class_2_Pod_3_ZN_1_FLR_2
+  29. Mult_Class_2_Pod_3_ZN_1_FLR_1
+  30. Mult_Class_2_Pod_3_ZN_1_FLR_2
+  31. Main_Corridor_ZN_1_FLR_1
+  32. Main_Corridor_ZN_1_FLR_2
+  33. Lobby_ZN_1_FLR_1
+  34. Lobby_ZN_1_FLR_2
+  35. Bathrooms_ZN_1_FLR_1
+  36. Bathrooms_ZN_1_FLR_2
+  37. Offices_ZN_1_FLR_1
+  38. Offices_ZN_1_FLR_2
+  39. Gym_ZN_1_FLR_1
+  40. Aux_Gym_ZN_1_FLR_1
+  41. Auditorium_ZN_1_FLR_1
+  42. Kitchen_ZN_1_FLR_1
+  43. LIBRARY_MEDIA_CENTER_ZN_1_FLR_2
+  44. Cafeteria_ZN_1_FLR_1
+  ↳ Excluded 2 non-HVAC zone(s): ['Mech_ZN_1_FLR_1', 'Mech_ZN_1_FLR_2']
+
+📊 Building Context:
+  • Zones: 44
+  • Total Volume: 95216.0 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Generate a simulation-ready EnergyPlus IDF for a secondary school with 46 thermal zones and a variable refrigerant flow HVAC system and no heat recovery. Assigning VRF terminal unit only to occupied or conditioned zone. Do not assign VRF terminal units to any unoccupied or unconditioned zones.
+✓ Calling LLM (mistral-api) to generate VRF system for zones: Corner_Class_1_Pod_1_ZN_1_FLR_1, Corner_Class_1_Pod_1_ZN_1_FLR_2, Mult_Class_1_Pod_1_ZN_1_FLR_1, Mult_Class_1_Pod_1_ZN_1_FLR_2, Corridor_Pod_1_ZN_1_FLR_1, Corridor_Pod_1_ZN_1_FLR_2, Corner_Class_2_Pod_1_ZN_1_FLR_1, Corner_Class_2_Pod_1_ZN_1_FLR_2, Mult_Class_2_Pod_1_ZN_1_FLR_1, Mult_Class_2_Pod_1_ZN_1_FLR_2, Corner_Class_1_Pod_2_ZN_1_FLR_1, Corner_Class_1_Pod_2_ZN_1_FLR_2, Mult_Class_1_Pod_2_ZN_1_FLR_1, Mult_Class_1_Pod_2_ZN_1_FLR_2, Corridor_Pod_2_ZN_1_FLR_1, Corridor_Pod_2_ZN_1_FLR_2, Corner_Class_2_Pod_2_ZN_1_FLR_1, Corner_Class_2_Pod_2_ZN_1_FLR_2, Mult_Class_2_Pod_2_ZN_1_FLR_1, Mult_Class_2_Pod_2_ZN_1_FLR_2, Corner_Class_1_Pod_3_ZN_1_FLR_1, Corner_Class_1_Pod_3_ZN_1_FLR_2, Mult_Class_1_Pod_3_ZN_1_FLR_1, Mult_Class_1_Pod_3_ZN_1_FLR_2, Corridor_Pod_3_ZN_1_FLR_1, Corridor_Pod_3_ZN_1_FLR_2, Corner_Class_2_Pod_3_ZN_1_FLR_1, Corner_Class_2_Pod_3_ZN_1_FLR_2, Mult_Class_2_Pod_3_ZN_1_FLR_1, Mult_Class_2_Pod_3_ZN_1_FLR_2, Main_Corridor_ZN_1_FLR_1, Main_Corridor_ZN_1_FLR_2, Lobby_ZN_1_FLR_1, Lobby_ZN_1_FLR_2, Bathrooms_ZN_1_FLR_1, Bathrooms_ZN_1_FLR_2, Offices_ZN_1_FLR_1, Offices_ZN_1_FLR_2, Gym_ZN_1_FLR_1, Aux_Gym_ZN_1_FLR_1, Auditorium_ZN_1_FLR_1, Kitchen_ZN_1_FLR_1, LIBRARY_MEDIA_CENTER_ZN_1_FLR_2, Cafeteria_ZN_1_FLR_1
+  User Design Request: Generate a simulation-ready EnergyPlus IDF for a secondary school with 46 thermal zones and a variable refrigerant flow HVAC system and no heat recovery. Assigning VRF terminal unit only to occupied or conditioned zone. Do not assign VRF terminal units to any unoccupied or unconditioned zones.
+✓ Generating with Mistral API (mistral-small-latest)...
+⚠ Mistral API generation failed: API error occurred: Status 429. Body: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+Traceback (most recent call last):
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/src/agents/llm_interface.py", line 394, in _generate_mistral_api
+    response = self.mistral_client.chat.complete(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/mistralai/chat.py", line 251, in complete
+    raise models.SDKError("API error occurred", http_res, http_res_text)
+mistralai.models.sdkerror.SDKError: API error occurred: Status 429. Body: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+✗ Prompt got empty response
+❌ Error: Empty HVAC configuration generated

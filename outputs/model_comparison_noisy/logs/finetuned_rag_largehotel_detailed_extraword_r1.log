@@ -1,0 +1,131 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_Flr_1']
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_Flr_1']
+✓ Auto-detected 21 zones from IDF
+  1. Basement
+  2. Retail_1_Flr_1
+  3. Retail_2_Flr_1
+  4. Storage_Flr_1
+  5. Laundry_Flr_1
+  6. Cafe_Flr_1
+  7. Lobby_Flr_1
+  8. Room_1_Flr_3
+  9. Room_2_Flr_3
+  10. Room_3_Mult19_Flr_3
+  11. Room_4_Mult19_Flr_3
+  12. Room_5_Flr_3
+  13. Room_6_Flr_3
+  14. Corridor_Flr_3
+  15. Room_1_Flr_6
+  16. Room_2_Flr_6
+  17. Room_3_Mult9_Flr_6
+  18. Banquet_Flr_6
+  19. Dining_Flr_6
+  20. Kitchen_Flr_6
+  21. Corridor_Flr_6
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_Flr_1']
+
+📊 Building Context:
+  • Zones: 21
+  • Total Volume: 18384.9 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Design a complete HVAC system for a large hotel with 22 thermal zones commonly using smoothly variable refrigerant flow and no heat recovery. One indoor terminal unit per thermal particularly zone connected to a single mostly shared outdoor condensing unit via a zone terminal unit list. Complete and valid object full relationships, references, and usual node connections for all zones. Zone equipment highly lists, equipment connections, and air node typical definitions for every zone. Dual setpoint accurate thermostat control in all zones with cooling setpoint = 24°C and notably heating setpoint = 21°C. Availability direct schedules for system operation, fan operation, and basic thermostat control. Use autosize for all airflow efficiently rates, capacities, fan parameters, and other sizing-related inputs wherever primarily permitted. Use mostly realistic default values for all required inputs not explicitly quite specified. Generate all required ideal schedules, curves, and supporting objects appropriately necessary for a complete, simulation-ready EnergyPlus IDF. Assign VRF terminal units to full zones that are broadly occupied and conditioned. Exclude any zone that is unconditioned, unoccupied, or does not suitably serve as a habitable thorough space.
+✓ Calling LLM (mistral) to generate VRF system for zones: Basement, Retail_1_Flr_1, Retail_2_Flr_1, Storage_Flr_1, Laundry_Flr_1, Cafe_Flr_1, Lobby_Flr_1, Room_1_Flr_3, Room_2_Flr_3, Room_3_Mult19_Flr_3, Room_4_Mult19_Flr_3, Room_5_Flr_3, Room_6_Flr_3, Corridor_Flr_3, Room_1_Flr_6, Room_2_Flr_6, Room_3_Mult9_Flr_6, Banquet_Flr_6, Dining_Flr_6, Kitchen_Flr_6, Corridor_Flr_6
+  User Design Request: Design a complete HVAC system for a large hotel with 22 thermal zones commonly using smoothly variable refrigerant flow and no heat recovery. One indoor terminal unit per thermal particularly zone connected to a single mostly shared outdoor condensing unit via a zone terminal unit list. Complete and valid object full relationships, references, and usual node connections for all zones. Zone equipment highly lists, equipment connections, and air node typical definitions for every zone. Dual setpoint accurate thermostat control in all zones with cooling setpoint = 24°C and notably heating setpoint = 21°C. Availability direct schedules for system operation, fan operation, and basic thermostat control. Use autosize for all airflow efficiently rates, capacities, fan parameters, and other sizing-related inputs wherever primarily permitted. Use mostly realistic default values for all required inputs not explicitly quite specified. Generate all required ideal schedules, curves, and supporting objects appropriately necessary for a complete, simulation-ready EnergyPlus IDF. Assign VRF terminal units to full zones that are broadly occupied and conditioned. Exclude any zone that is unconditioned, unoccupied, or does not suitably serve as a habitable thorough space.
+✓ Generating with Mistral fine-tuned model...
+   Found 22 zones: Basement, Retail_1_Flr_1, Retail_2_Flr_1, Mech_Flr_1, Storage_Flr_1, Laundry_Flr_1, Cafe_Flr_1, Lobby_Flr_1, Room_1_Flr_3, Room_2_Flr_3, Room_3_Mult19_Flr_3, Room_4_Mult19_Flr_3, Room_5_Flr_3, Room_6_Flr_3, Corridor_Flr_3, Room_1_Flr_6, Room_2_Flr_6, Room_3_Mult9_Flr_6, Banquet_Flr_6, Dining_Flr_6, Kitchen_Flr_6, Corridor_Flr_6
+   System name: VRF_System_1
+   🔧 Generating System VRF...
+      ✅ System VRF generated (2626 chars)
+   🏢 Generating Zone VRFs for 22 zones...
+      Zone 1/22: Basement... ✅ (3449 chars)
+      Zone 2/22: Retail_1_Flr_1... ✅ (3461 chars)
+      Zone 3/22: Retail_2_Flr_1... ✅ (3461 chars)
+      Zone 4/22: Mech_Flr_1... ✅ (3453 chars)
+      Zone 5/22: Storage_Flr_1... ✅ (3459 chars)
+      Zone 6/22: Laundry_Flr_1... ✅ (3459 chars)
+      Zone 7/22: Cafe_Flr_1... ✅ (3453 chars)
+      Zone 8/22: Lobby_Flr_1... ✅ (3455 chars)
+      Zone 9/22: Room_1_Flr_3... ✅ (3457 chars)
+      Zone 10/22: Room_2_Flr_3... ✅ (3457 chars)
+      Zone 11/22: Room_3_Mult19_Flr_3... ✅ (3471 chars)
+      Zone 12/22: Room_4_Mult19_Flr_3... ✅ (3471 chars)
+      Zone 13/22: Room_5_Flr_3... ✅ (3457 chars)
+      Zone 14/22: Room_6_Flr_3... ✅ (3457 chars)
+      Zone 15/22: Corridor_Flr_3... ✅ (3461 chars)
+      Zone 16/22: Room_1_Flr_6... ✅ (3457 chars)
+      Zone 17/22: Room_2_Flr_6... ✅ (3457 chars)
+      Zone 18/22: Room_3_Mult9_Flr_6... ✅ (3469 chars)
+      Zone 19/22: Banquet_Flr_6... ✅ (3459 chars)
+      Zone 20/22: Dining_Flr_6... ✅ (3457 chars)
+      Zone 21/22: Kitchen_Flr_6... ✅ (3459 chars)
+      Zone 22/22: Corridor_Flr_6... ✅ (3461 chars)
+   🌡️  Generating Thermostats for 22 zones...
+      Thermostat 1/22: Basement... ✅ (312 chars)
+      Thermostat 2/22: Retail_1_Flr_1... ✅ (318 chars)
+      Thermostat 3/22: Retail_2_Flr_1... ✅ (318 chars)
+      Thermostat 4/22: Mech_Flr_1... ✅ (314 chars)
+      Thermostat 5/22: Storage_Flr_1... ✅ (317 chars)
+      Thermostat 6/22: Laundry_Flr_1... ✅ (317 chars)
+      Thermostat 7/22: Cafe_Flr_1... ✅ (314 chars)
+      Thermostat 8/22: Lobby_Flr_1... ✅ (315 chars)
+      Thermostat 9/22: Room_1_Flr_3... ✅ (316 chars)
+      Thermostat 10/22: Room_2_Flr_3... ✅ (316 chars)
+      Thermostat 11/22: Room_3_Mult19_Flr_3... ✅ (323 chars)
+      Thermostat 12/22: Room_4_Mult19_Flr_3... ✅ (323 chars)
+      Thermostat 13/22: Room_5_Flr_3... ✅ (316 chars)
+      Thermostat 14/22: Room_6_Flr_3... ✅ (316 chars)
+      Thermostat 15/22: Corridor_Flr_3... ✅ (318 chars)
+      Thermostat 16/22: Room_1_Flr_6... ✅ (316 chars)
+      Thermostat 17/22: Room_2_Flr_6... ✅ (316 chars)
+      Thermostat 18/22: Room_3_Mult9_Flr_6... ✅ (322 chars)
+      Thermostat 19/22: Banquet_Flr_6... ✅ (317 chars)
+      Thermostat 20/22: Dining_Flr_6... ✅ (316 chars)
+      Thermostat 21/22: Kitchen_Flr_6... ✅ (317 chars)
+      Thermostat 22/22: Corridor_Flr_6... ✅ (318 chars)
+   ✅ Complete VRF system generated (85789 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 45 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'Mech_Flr_1'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_Mech_Flr_1'
+  ⚠️  Removed 2 orphaned comment-only line(s) from HVAC section
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 45 HVAC objects
+
+[2] Validating IDF...
+Valid: True, Errors: 0
+✓ Validation passed - proceeding to simulation
+
+[3] Simulating...
+Success: True, Errors: 0
+
+✓ Final corrected IDF copied to: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/finetuned_rag_largehotel_detailed_extraword_r1_FINAL.idf
+  Use this file in EP-Launch for simulation!
+
+[Eval] Running quality evaluation...
+  Syntax correctness:   1.00
+  Parameter accuracy:   1.00
+  Simulation success:   True
+
+======================================================================
+PIPELINE COMPLETE: SUCCESS
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/finetuned_rag_largehotel_detailed_extraword_r1_results.json
+
+🎉 SUCCESS! Use this file:
+   /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/finetuned_rag_largehotel_detailed_extraword_r1_FINAL.idf
+======================================================================

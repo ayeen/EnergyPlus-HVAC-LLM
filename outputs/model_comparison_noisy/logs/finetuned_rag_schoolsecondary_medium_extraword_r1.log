@@ -1,0 +1,204 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 2 non-HVAC zone(s): ['Mech_ZN_1_FLR_1', 'Mech_ZN_1_FLR_2']
+  ↳ Excluded 2 non-HVAC zone(s): ['Mech_ZN_1_FLR_1', 'Mech_ZN_1_FLR_2']
+✓ Auto-detected 44 zones from IDF
+  1. Corner_Class_1_Pod_1_ZN_1_FLR_1
+  2. Corner_Class_1_Pod_1_ZN_1_FLR_2
+  3. Mult_Class_1_Pod_1_ZN_1_FLR_1
+  4. Mult_Class_1_Pod_1_ZN_1_FLR_2
+  5. Corridor_Pod_1_ZN_1_FLR_1
+  6. Corridor_Pod_1_ZN_1_FLR_2
+  7. Corner_Class_2_Pod_1_ZN_1_FLR_1
+  8. Corner_Class_2_Pod_1_ZN_1_FLR_2
+  9. Mult_Class_2_Pod_1_ZN_1_FLR_1
+  10. Mult_Class_2_Pod_1_ZN_1_FLR_2
+  11. Corner_Class_1_Pod_2_ZN_1_FLR_1
+  12. Corner_Class_1_Pod_2_ZN_1_FLR_2
+  13. Mult_Class_1_Pod_2_ZN_1_FLR_1
+  14. Mult_Class_1_Pod_2_ZN_1_FLR_2
+  15. Corridor_Pod_2_ZN_1_FLR_1
+  16. Corridor_Pod_2_ZN_1_FLR_2
+  17. Corner_Class_2_Pod_2_ZN_1_FLR_1
+  18. Corner_Class_2_Pod_2_ZN_1_FLR_2
+  19. Mult_Class_2_Pod_2_ZN_1_FLR_1
+  20. Mult_Class_2_Pod_2_ZN_1_FLR_2
+  21. Corner_Class_1_Pod_3_ZN_1_FLR_1
+  22. Corner_Class_1_Pod_3_ZN_1_FLR_2
+  23. Mult_Class_1_Pod_3_ZN_1_FLR_1
+  24. Mult_Class_1_Pod_3_ZN_1_FLR_2
+  25. Corridor_Pod_3_ZN_1_FLR_1
+  26. Corridor_Pod_3_ZN_1_FLR_2
+  27. Corner_Class_2_Pod_3_ZN_1_FLR_1
+  28. Corner_Class_2_Pod_3_ZN_1_FLR_2
+  29. Mult_Class_2_Pod_3_ZN_1_FLR_1
+  30. Mult_Class_2_Pod_3_ZN_1_FLR_2
+  31. Main_Corridor_ZN_1_FLR_1
+  32. Main_Corridor_ZN_1_FLR_2
+  33. Lobby_ZN_1_FLR_1
+  34. Lobby_ZN_1_FLR_2
+  35. Bathrooms_ZN_1_FLR_1
+  36. Bathrooms_ZN_1_FLR_2
+  37. Offices_ZN_1_FLR_1
+  38. Offices_ZN_1_FLR_2
+  39. Gym_ZN_1_FLR_1
+  40. Aux_Gym_ZN_1_FLR_1
+  41. Auditorium_ZN_1_FLR_1
+  42. Kitchen_ZN_1_FLR_1
+  43. LIBRARY_MEDIA_CENTER_ZN_1_FLR_2
+  44. Cafeteria_ZN_1_FLR_1
+  ↳ Excluded 2 non-HVAC zone(s): ['Mech_ZN_1_FLR_1', 'Mech_ZN_1_FLR_2']
+
+📊 Building Context:
+  • Zones: 44
+  • Total Volume: 95216.0 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Create a complete VRF HVAC configuration for a secondary essentially school plainly containing 46 actually thermal essentially zones, with no heat standard recovery, where each thermal zone is clearly served by one indoor mostly terminal unit particularly connected to a single shared normally outdoor condensing unit through a zone efficiently terminal unit list. Only assign VRF terminal units to typical zones that are evidently occupied and obviously conditioned. Skip any zone that is accurately unoccupied or unconditioned.
+✓ Calling LLM (mistral) to generate VRF system for zones: Corner_Class_1_Pod_1_ZN_1_FLR_1, Corner_Class_1_Pod_1_ZN_1_FLR_2, Mult_Class_1_Pod_1_ZN_1_FLR_1, Mult_Class_1_Pod_1_ZN_1_FLR_2, Corridor_Pod_1_ZN_1_FLR_1, Corridor_Pod_1_ZN_1_FLR_2, Corner_Class_2_Pod_1_ZN_1_FLR_1, Corner_Class_2_Pod_1_ZN_1_FLR_2, Mult_Class_2_Pod_1_ZN_1_FLR_1, Mult_Class_2_Pod_1_ZN_1_FLR_2, Corner_Class_1_Pod_2_ZN_1_FLR_1, Corner_Class_1_Pod_2_ZN_1_FLR_2, Mult_Class_1_Pod_2_ZN_1_FLR_1, Mult_Class_1_Pod_2_ZN_1_FLR_2, Corridor_Pod_2_ZN_1_FLR_1, Corridor_Pod_2_ZN_1_FLR_2, Corner_Class_2_Pod_2_ZN_1_FLR_1, Corner_Class_2_Pod_2_ZN_1_FLR_2, Mult_Class_2_Pod_2_ZN_1_FLR_1, Mult_Class_2_Pod_2_ZN_1_FLR_2, Corner_Class_1_Pod_3_ZN_1_FLR_1, Corner_Class_1_Pod_3_ZN_1_FLR_2, Mult_Class_1_Pod_3_ZN_1_FLR_1, Mult_Class_1_Pod_3_ZN_1_FLR_2, Corridor_Pod_3_ZN_1_FLR_1, Corridor_Pod_3_ZN_1_FLR_2, Corner_Class_2_Pod_3_ZN_1_FLR_1, Corner_Class_2_Pod_3_ZN_1_FLR_2, Mult_Class_2_Pod_3_ZN_1_FLR_1, Mult_Class_2_Pod_3_ZN_1_FLR_2, Main_Corridor_ZN_1_FLR_1, Main_Corridor_ZN_1_FLR_2, Lobby_ZN_1_FLR_1, Lobby_ZN_1_FLR_2, Bathrooms_ZN_1_FLR_1, Bathrooms_ZN_1_FLR_2, Offices_ZN_1_FLR_1, Offices_ZN_1_FLR_2, Gym_ZN_1_FLR_1, Aux_Gym_ZN_1_FLR_1, Auditorium_ZN_1_FLR_1, Kitchen_ZN_1_FLR_1, LIBRARY_MEDIA_CENTER_ZN_1_FLR_2, Cafeteria_ZN_1_FLR_1
+  User Design Request: Create a complete VRF HVAC configuration for a secondary essentially school plainly containing 46 actually thermal essentially zones, with no heat standard recovery, where each thermal zone is clearly served by one indoor mostly terminal unit particularly connected to a single shared normally outdoor condensing unit through a zone efficiently terminal unit list. Only assign VRF terminal units to typical zones that are evidently occupied and obviously conditioned. Skip any zone that is accurately unoccupied or unconditioned.
+✓ Generating with Mistral fine-tuned model...
+   Found 46 zones: Corner_Class_1_Pod_1_ZN_1_FLR_1, Corner_Class_1_Pod_1_ZN_1_FLR_2, Mult_Class_1_Pod_1_ZN_1_FLR_1, Mult_Class_1_Pod_1_ZN_1_FLR_2, Corridor_Pod_1_ZN_1_FLR_1, Corridor_Pod_1_ZN_1_FLR_2, Corner_Class_2_Pod_1_ZN_1_FLR_1, Corner_Class_2_Pod_1_ZN_1_FLR_2, Mult_Class_2_Pod_1_ZN_1_FLR_1, Mult_Class_2_Pod_1_ZN_1_FLR_2, Corner_Class_1_Pod_2_ZN_1_FLR_1, Corner_Class_1_Pod_2_ZN_1_FLR_2, Mult_Class_1_Pod_2_ZN_1_FLR_1, Mult_Class_1_Pod_2_ZN_1_FLR_2, Corridor_Pod_2_ZN_1_FLR_1, Corridor_Pod_2_ZN_1_FLR_2, Corner_Class_2_Pod_2_ZN_1_FLR_1, Corner_Class_2_Pod_2_ZN_1_FLR_2, Mult_Class_2_Pod_2_ZN_1_FLR_1, Mult_Class_2_Pod_2_ZN_1_FLR_2, Corner_Class_1_Pod_3_ZN_1_FLR_1, Corner_Class_1_Pod_3_ZN_1_FLR_2, Mult_Class_1_Pod_3_ZN_1_FLR_1, Mult_Class_1_Pod_3_ZN_1_FLR_2, Corridor_Pod_3_ZN_1_FLR_1, Corridor_Pod_3_ZN_1_FLR_2, Corner_Class_2_Pod_3_ZN_1_FLR_1, Corner_Class_2_Pod_3_ZN_1_FLR_2, Mult_Class_2_Pod_3_ZN_1_FLR_1, Mult_Class_2_Pod_3_ZN_1_FLR_2, Main_Corridor_ZN_1_FLR_1, Main_Corridor_ZN_1_FLR_2, Lobby_ZN_1_FLR_1, Lobby_ZN_1_FLR_2, Bathrooms_ZN_1_FLR_1, Bathrooms_ZN_1_FLR_2, Offices_ZN_1_FLR_1, Offices_ZN_1_FLR_2, Gym_ZN_1_FLR_1, Aux_Gym_ZN_1_FLR_1, Auditorium_ZN_1_FLR_1, Kitchen_ZN_1_FLR_1, LIBRARY_MEDIA_CENTER_ZN_1_FLR_2, Cafeteria_ZN_1_FLR_1, Mech_ZN_1_FLR_1, Mech_ZN_1_FLR_2
+   System name: VRF_System_1
+   🔧 Generating System VRF...
+      ✅ System VRF generated (2649 chars)
+   🏢 Generating Zone VRFs for 46 zones...
+      Zone 1/46: Corner_Class_1_Pod_1_ZN_1_FLR_1... ✅ (3495 chars)
+      Zone 2/46: Corner_Class_1_Pod_1_ZN_1_FLR_2... ✅ (3495 chars)
+      Zone 3/46: Mult_Class_1_Pod_1_ZN_1_FLR_1... ✅ (3491 chars)
+      Zone 4/46: Mult_Class_1_Pod_1_ZN_1_FLR_2... ✅ (3491 chars)
+      Zone 5/46: Corridor_Pod_1_ZN_1_FLR_1... ✅ (3483 chars)
+      Zone 6/46: Corridor_Pod_1_ZN_1_FLR_2... ✅ (3483 chars)
+      Zone 7/46: Corner_Class_2_Pod_1_ZN_1_FLR_1... ✅ (3495 chars)
+      Zone 8/46: Corner_Class_2_Pod_1_ZN_1_FLR_2... ✅ (3495 chars)
+      Zone 9/46: Mult_Class_2_Pod_1_ZN_1_FLR_1... ✅ (3491 chars)
+      Zone 10/46: Mult_Class_2_Pod_1_ZN_1_FLR_2... ✅ (3491 chars)
+      Zone 11/46: Corner_Class_1_Pod_2_ZN_1_FLR_1... ✅ (3495 chars)
+      Zone 12/46: Corner_Class_1_Pod_2_ZN_1_FLR_2... ✅ (3495 chars)
+      Zone 13/46: Mult_Class_1_Pod_2_ZN_1_FLR_1... ✅ (3491 chars)
+      Zone 14/46: Mult_Class_1_Pod_2_ZN_1_FLR_2... ✅ (3491 chars)
+      Zone 15/46: Corridor_Pod_2_ZN_1_FLR_1... ✅ (3483 chars)
+      Zone 16/46: Corridor_Pod_2_ZN_1_FLR_2... ✅ (3483 chars)
+      Zone 17/46: Corner_Class_2_Pod_2_ZN_1_FLR_1... ✅ (3495 chars)
+      Zone 18/46: Corner_Class_2_Pod_2_ZN_1_FLR_2... ✅ (3495 chars)
+      Zone 19/46: Mult_Class_2_Pod_2_ZN_1_FLR_1... ✅ (3491 chars)
+      Zone 20/46: Mult_Class_2_Pod_2_ZN_1_FLR_2... ✅ (3491 chars)
+      Zone 21/46: Corner_Class_1_Pod_3_ZN_1_FLR_1... ✅ (3495 chars)
+      Zone 22/46: Corner_Class_1_Pod_3_ZN_1_FLR_2... ✅ (3495 chars)
+      Zone 23/46: Mult_Class_1_Pod_3_ZN_1_FLR_1... ✅ (3491 chars)
+      Zone 24/46: Mult_Class_1_Pod_3_ZN_1_FLR_2... ✅ (3491 chars)
+      Zone 25/46: Corridor_Pod_3_ZN_1_FLR_1... ✅ (3483 chars)
+      Zone 26/46: Corridor_Pod_3_ZN_1_FLR_2... ✅ (3483 chars)
+      Zone 27/46: Corner_Class_2_Pod_3_ZN_1_FLR_1... ✅ (3495 chars)
+      Zone 28/46: Corner_Class_2_Pod_3_ZN_1_FLR_2... ✅ (3495 chars)
+      Zone 29/46: Mult_Class_2_Pod_3_ZN_1_FLR_1... ✅ (3491 chars)
+      Zone 30/46: Mult_Class_2_Pod_3_ZN_1_FLR_2... ✅ (3491 chars)
+      Zone 31/46: Main_Corridor_ZN_1_FLR_1... ✅ (3481 chars)
+      Zone 32/46: Main_Corridor_ZN_1_FLR_2... ✅ (3481 chars)
+      Zone 33/46: Lobby_ZN_1_FLR_1... ✅ (3465 chars)
+      Zone 34/46: Lobby_ZN_1_FLR_2... ✅ (3465 chars)
+      Zone 35/46: Bathrooms_ZN_1_FLR_1... ✅ (3473 chars)
+      Zone 36/46: Bathrooms_ZN_1_FLR_2... ✅ (3473 chars)
+      Zone 37/46: Offices_ZN_1_FLR_1... ✅ (3469 chars)
+      Zone 38/46: Offices_ZN_1_FLR_2... ✅ (3469 chars)
+      Zone 39/46: Gym_ZN_1_FLR_1... ✅ (3461 chars)
+      Zone 40/46: Aux_Gym_ZN_1_FLR_1... ✅ (3469 chars)
+      Zone 41/46: Auditorium_ZN_1_FLR_1... ✅ (3475 chars)
+      Zone 42/46: Kitchen_ZN_1_FLR_1... ✅ (3469 chars)
+      Zone 43/46: LIBRARY_MEDIA_CENTER_ZN_1_FLR_2... ✅ (3495 chars)
+      Zone 44/46: Cafeteria_ZN_1_FLR_1... ✅ (3473 chars)
+      Zone 45/46: Mech_ZN_1_FLR_1... ✅ (3463 chars)
+      Zone 46/46: Mech_ZN_1_FLR_2... ✅ (3463 chars)
+   🌡️  Generating Thermostats for 46 zones...
+      Thermostat 1/46: Corner_Class_1_Pod_1_ZN_1_FLR_1... ✅ (335 chars)
+      Thermostat 2/46: Corner_Class_1_Pod_1_ZN_1_FLR_2... ✅ (335 chars)
+      Thermostat 3/46: Mult_Class_1_Pod_1_ZN_1_FLR_1... ✅ (333 chars)
+      Thermostat 4/46: Mult_Class_1_Pod_1_ZN_1_FLR_2... ✅ (333 chars)
+      Thermostat 5/46: Corridor_Pod_1_ZN_1_FLR_1... ✅ (329 chars)
+      Thermostat 6/46: Corridor_Pod_1_ZN_1_FLR_2... ✅ (329 chars)
+      Thermostat 7/46: Corner_Class_2_Pod_1_ZN_1_FLR_1... ✅ (335 chars)
+      Thermostat 8/46: Corner_Class_2_Pod_1_ZN_1_FLR_2... ✅ (335 chars)
+      Thermostat 9/46: Mult_Class_2_Pod_1_ZN_1_FLR_1... ✅ (333 chars)
+      Thermostat 10/46: Mult_Class_2_Pod_1_ZN_1_FLR_2... ✅ (333 chars)
+      Thermostat 11/46: Corner_Class_1_Pod_2_ZN_1_FLR_1... ✅ (335 chars)
+      Thermostat 12/46: Corner_Class_1_Pod_2_ZN_1_FLR_2... ✅ (335 chars)
+      Thermostat 13/46: Mult_Class_1_Pod_2_ZN_1_FLR_1... ✅ (333 chars)
+      Thermostat 14/46: Mult_Class_1_Pod_2_ZN_1_FLR_2... ✅ (333 chars)
+      Thermostat 15/46: Corridor_Pod_2_ZN_1_FLR_1... ✅ (329 chars)
+      Thermostat 16/46: Corridor_Pod_2_ZN_1_FLR_2... ✅ (329 chars)
+      Thermostat 17/46: Corner_Class_2_Pod_2_ZN_1_FLR_1... ✅ (335 chars)
+      Thermostat 18/46: Corner_Class_2_Pod_2_ZN_1_FLR_2... ✅ (335 chars)
+      Thermostat 19/46: Mult_Class_2_Pod_2_ZN_1_FLR_1... ✅ (333 chars)
+      Thermostat 20/46: Mult_Class_2_Pod_2_ZN_1_FLR_2... ✅ (333 chars)
+      Thermostat 21/46: Corner_Class_1_Pod_3_ZN_1_FLR_1... ✅ (335 chars)
+      Thermostat 22/46: Corner_Class_1_Pod_3_ZN_1_FLR_2... ✅ (335 chars)
+      Thermostat 23/46: Mult_Class_1_Pod_3_ZN_1_FLR_1... ✅ (333 chars)
+      Thermostat 24/46: Mult_Class_1_Pod_3_ZN_1_FLR_2... ✅ (333 chars)
+      Thermostat 25/46: Corridor_Pod_3_ZN_1_FLR_1... ✅ (329 chars)
+      Thermostat 26/46: Corridor_Pod_3_ZN_1_FLR_2... ✅ (329 chars)
+      Thermostat 27/46: Corner_Class_2_Pod_3_ZN_1_FLR_1... ✅ (335 chars)
+      Thermostat 28/46: Corner_Class_2_Pod_3_ZN_1_FLR_2... ✅ (335 chars)
+      Thermostat 29/46: Mult_Class_2_Pod_3_ZN_1_FLR_1... ✅ (333 chars)
+      Thermostat 30/46: Mult_Class_2_Pod_3_ZN_1_FLR_2... ✅ (333 chars)
+      Thermostat 31/46: Main_Corridor_ZN_1_FLR_1... ✅ (328 chars)
+      Thermostat 32/46: Main_Corridor_ZN_1_FLR_2... ✅ (328 chars)
+      Thermostat 33/46: Lobby_ZN_1_FLR_1... ✅ (320 chars)
+      Thermostat 34/46: Lobby_ZN_1_FLR_2... ✅ (320 chars)
+      Thermostat 35/46: Bathrooms_ZN_1_FLR_1... ✅ (324 chars)
+      Thermostat 36/46: Bathrooms_ZN_1_FLR_2... ✅ (324 chars)
+      Thermostat 37/46: Offices_ZN_1_FLR_1... ✅ (322 chars)
+      Thermostat 38/46: Offices_ZN_1_FLR_2... ✅ (322 chars)
+      Thermostat 39/46: Gym_ZN_1_FLR_1... ✅ (318 chars)
+      Thermostat 40/46: Aux_Gym_ZN_1_FLR_1... ✅ (322 chars)
+      Thermostat 41/46: Auditorium_ZN_1_FLR_1... ✅ (325 chars)
+      Thermostat 42/46: Kitchen_ZN_1_FLR_1... ✅ (322 chars)
+      Thermostat 43/46: LIBRARY_MEDIA_CENTER_ZN_1_FLR_2... ✅ (335 chars)
+      Thermostat 44/46: Cafeteria_ZN_1_FLR_1... ✅ (324 chars)
+      Thermostat 45/46: Mech_ZN_1_FLR_1... ✅ (319 chars)
+      Thermostat 46/46: Mech_ZN_1_FLR_2... ✅ (319 chars)
+   ✅ Complete VRF system generated (178269 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 93 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'Mech_ZN_1_FLR_1'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'Mech_ZN_1_FLR_2'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_Mech_ZN_1_FLR_1'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_Mech_ZN_1_FLR_2'
+  ⚠️  Removed 4 orphaned comment-only line(s) from HVAC section
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 93 HVAC objects
+
+[2] Validating IDF...
+Valid: True, Errors: 0
+✓ Validation passed - proceeding to simulation
+
+[3] Simulating...
+Success: True, Errors: 0
+
+✓ Final corrected IDF copied to: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/finetuned_rag_schoolsecondary_medium_extraword_r1_FINAL.idf
+  Use this file in EP-Launch for simulation!
+
+[Eval] Running quality evaluation...
+  Syntax correctness:   1.00
+  Parameter accuracy:   1.00
+  Simulation success:   True
+
+======================================================================
+PIPELINE COMPLETE: SUCCESS
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/finetuned_rag_schoolsecondary_medium_extraword_r1_results.json
+
+🎉 SUCCESS! Use this file:
+   /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/finetuned_rag_schoolsecondary_medium_extraword_r1_FINAL.idf
+======================================================================

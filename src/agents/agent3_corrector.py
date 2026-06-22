@@ -434,29 +434,29 @@ Output ONLY a valid JSON array of fix objects."""
                         "object_type": "HVACTemplate:System:VRF",
                         "object_name": "N/A",
                         "field_to_change": "minimum_outdoor_temperature_in_cooling_mode",
-                        "new_value": "-10"
+                        "new_value": "-6.0"   # EnergyPlus default / real equipment: −5 to −6 °C
                     },
                     {
                         "object_type": "HVACTemplate:System:VRF",
                         "object_name": "N/A",
                         "field_to_change": "maximum_outdoor_temperature_in_cooling_mode",
-                        "new_value": "48"
+                        "new_value": "43.0"   # EnergyPlus default / standard spec
                     }
                 ])
-            
+
             elif 'heating_temperature_range' in error_id.lower():
                 fixes.extend([
                     {
                         "object_type": "HVACTemplate:System:VRF",
                         "object_name": "N/A",
                         "field_to_change": "minimum_outdoor_temperature_in_heating_mode",
-                        "new_value": "-25"
+                        "new_value": "-20.0"  # EnergyPlus default / standard cold-climate VRF
                     },
                     {
                         "object_type": "HVACTemplate:System:VRF",
                         "object_name": "N/A",
                         "field_to_change": "maximum_outdoor_temperature_in_heating_mode",
-                        "new_value": "18"
+                        "new_value": "15.5"   # Daikin VRV IV / Mitsubishi CITY MULTI spec
                     }
                 ])
             

@@ -1,0 +1,233 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 1 non-HVAC zone(s): ['attic']
+  ↳ Excluded 1 non-HVAC zone(s): ['attic']
+✓ Auto-detected 2 zones from IDF
+  1. Dining
+  2. Kitchen
+  ↳ Excluded 1 non-HVAC zone(s): ['attic']
+
+📊 Building Context:
+  • Zones: 2
+  • Total Volume: 2414.7 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Generate EnergyPlus IDF for a restaurant with 3 zones flow HVAC system and no heat recovery. Assign VRF terminal units only to occupied and conditioned zones. Do not assign VRF terminal units to any unoccupied or unconditioned zones.
+✓ Calling LLM (mistral-api) to generate VRF system for zones: Dining, Kitchen
+  User Design Request: Generate EnergyPlus IDF for a restaurant with 3 zones flow HVAC system and no heat recovery. Assign VRF terminal units only to occupied and conditioned zones. Do not assign VRF terminal units to any unoccupied or unconditioned zones.
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (6786 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 3 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 3 HVAC objects
+
+[2] Validating IDF...
+Valid: False, Errors: 2
+
+[2.5] Validation failed. Attempting pre-simulation fix...
+      Found 2 validation errors
+  ↳ Excluded 1 non-HVAC zone(s): ['attic']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (309 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Dining",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Kitchen",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  }
+]
+================================================================================
+
+
+✓ Successfully parsed 2 fixes from LLM response
+
+
+================================================================================
+APPLYING 2 FIXES TO IDF
+================================================================================
+
+1. HVACTemplate:Zone:VRF[Dining].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Dining' to ''
+2. HVACTemplate:Zone:VRF[Kitchen].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Kitchen' to ''
+
+================================================================================
+FIXES APPLIED: 2 successful, 0 failed
+================================================================================
+
+✓ Applied 2 pre-simulation fixes
+[2.6] Re-validating after fix...
+✓ Validation passed after fix!
+
+[3] Simulating...
+Success: False, Errors: 8
+
+[4.1] Fixing errors...
+  ↳ Excluded 1 non-HVAC zone(s): ['attic']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (890 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "HVACTemplate:System:VRF",
+    "object_name": "VRF_System_1",
+    "field_to_change": "gross_rated_total_cooling_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "HVACTemplate:System:VRF",
+    "object_name": "VRF_System_1",
+    "field_to_change": "gross_rated_heating_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "Sizing:Zone",
+    "object_name": "Sizing:Zone 1",
+    "field_to_change": "zone_cooling_design_supply_air_temperature",
+    "new_value": 14.0
+  },
+  {
+    "object_type": "ZoneControl:Thermostat",
+    "object_name": "Thermostat_Dining",
+    "field_to_change": "control_2_object_type",
+    "new_value": "ThermostatSetpoint:SingleHeating"
+  },
+  {
+    "object_type": "ZoneControl:Thermostat",
+    "object_name": "Thermostat_Dining",
+    "field_to_change": "control_2_name",
+    "new_value": "Heating Setpoints"
+  }
+]
+================================================================================
+
+
+✓ Successfully parsed 5 fixes from LLM response
+
+
+================================================================================
+APPLYING 5 FIXES TO IDF
+================================================================================
+
+1. HVACTemplate:System:VRF[VRF_System_1].gross_rated_total_cooling_capacity = 'Autosize'
+   ✓ Changed from 'Autosize' to 'Autosize'
+2. HVACTemplate:System:VRF[VRF_System_1].gross_rated_heating_capacity = 'Autosize'
+   ✓ Changed from 'Autosize' to 'Autosize'
+3. Sizing:Zone[Sizing:Zone 1].zone_cooling_design_supply_air_temperature = '14.0'
+   ❌ No objects of type 'Sizing:Zone' found in IDF
+4. ZoneControl:Thermostat[Thermostat_Dining].control_2_object_type = 'ThermostatSetpoint:SingleHeating'
+   ✓ Changed from 'Clg-SetP-Sch' to 'ThermostatSetpoint:SingleHeating'
+5. ZoneControl:Thermostat[Thermostat_Dining].control_2_name = 'Heating Setpoints'
+   ✓ Changed from '' to 'Heating Setpoints'
+
+================================================================================
+FIXES APPLIED: 4 successful, 1 failed
+================================================================================
+
+✓ Applied 4 fixes
+
+[5.1] Re-simulating...
+Success: False
+
+[4.2] Fixing errors...
+  ↳ Excluded 1 non-HVAC zone(s): ['attic']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (899 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "HVACTemplate:System:VRF",
+    "object_name": "VRF_System_1",
+    "field_to_change": "gross_rated_total_cooling_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "HVACTemplate:System:VRF",
+    "object_name": "VRF_System_1",
+    "field_to_change": "gross_rated_heating_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "Sizing:Zone",
+    "object_name": "Sizing:Zone 1",
+    "field_to_change": "zone_cooling_design_supply_air_temperature",
+    "new_value": 14.0
+  },
+  {
+    "object_type": "ZoneControl:Thermostat",
+    "object_name": "Thermostat_Kitchen",
+    "field_to_change": "control_2_object_type",
+    "new_value": "ThermostatSetpoint:SingleHeating"
+  },
+  {
+    "object_type": "ZoneControl:Thermostat",
+    "object_name": "Thermostat_Kitchen",
+    "field_to_change": "control_2_name",
+    "new_value": "Kitchen Heating Setpoint"
+  }
+]
+================================================================================
+
+
+✓ Successfully parsed 5 fixes from LLM response
+
+
+================================================================================
+APPLYING 5 FIXES TO IDF
+================================================================================
+
+1. HVACTemplate:System:VRF[VRF_System_1].gross_rated_total_cooling_capacity = 'Autosize'
+   ✓ Changed from 'Autosize' to 'Autosize'
+2. HVACTemplate:System:VRF[VRF_System_1].gross_rated_heating_capacity = 'Autosize'
+   ✓ Changed from 'Autosize' to 'Autosize'
+3. Sizing:Zone[Sizing:Zone 1].zone_cooling_design_supply_air_temperature = '14.0'
+   ❌ No objects of type 'Sizing:Zone' found in IDF
+4. ZoneControl:Thermostat[Thermostat_Kitchen].control_2_object_type = 'ThermostatSetpoint:SingleHeating'
+   ✓ Changed from 'Clg-SetP-Sch' to 'ThermostatSetpoint:SingleHeating'
+5. ZoneControl:Thermostat[Thermostat_Kitchen].control_2_name = 'Kitchen Heating Setpoint'
+   ✓ Changed from '' to 'Kitchen Heating Setpoint'
+
+================================================================================
+FIXES APPLIED: 4 successful, 1 failed
+================================================================================
+
+✓ Applied 4 fixes
+
+[5.2] Re-simulating...
+Success: False
+
+======================================================================
+PIPELINE COMPLETE: FAILED
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/base_restaurant_simple_omission_r1_results.json
+======================================================================

@@ -1,0 +1,61 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_ZN_1_FLR_1']
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_ZN_1_FLR_1']
+✓ Auto-detected 24 zones from IDF
+  1. Corner_Class_1_Pod_1_ZN_1_FLR_1
+  2. Mult_Class_1_Pod_1_ZN_1_FLR_1
+  3. Corridor_Pod_1_ZN_1_FLR_1
+  4. Corner_Class_2_Pod_1_ZN_1_FLR_1
+  5. Mult_Class_2_Pod_1_ZN_1_FLR_1
+  6. Corner_Class_1_Pod_2_ZN_1_FLR_1
+  7. Mult_Class_1_Pod_2_ZN_1_FLR_1
+  8. Corridor_Pod_2_ZN_1_FLR_1
+  9. Corner_Class_2_Pod_2_ZN_1_FLR_1
+  10. Mult_Class_2_Pod_2_ZN_1_FLR_1
+  11. Corner_Class_1_Pod_3_ZN_1_FLR_1
+  12. Mult_Class_1_Pod_3_ZN_1_FLR_1
+  13. Corridor_Pod_3_ZN_1_FLR_1
+  14. Corner_Class_2_Pod_3_ZN_1_FLR_1
+  15. Mult_Class_2_Pod_3_ZN_1_FLR_1
+  16. Computer_Class_ZN_1_FLR_1
+  17. Main_Corridor_ZN_1_FLR_1
+  18. Lobby_ZN_1_FLR_1
+  19. Bath_ZN_1_FLR_1
+  20. Offices_ZN_1_FLR_1
+  21. Gym_ZN_1_FLR_1
+  22. Kitchen_ZN_1_FLR_1
+  23. Cafeteria_ZN_1_FLR_1
+  24. Library_Media_Center_ZN_1_FLR_1
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_ZN_1_FLR_1']
+
+📊 Building Context:
+  • Zones: 24
+  • Total Volume: 27484.0 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Design a complete HVAC system for a primary school with 25 thermal zones using variable refrigerant flow and no heat recovery. One indoor terminal unit per thermal zone connected to a single shared outdoor condensing unit via a zone terminal unit list. Complete and valid object relationships, references, and node connections for all zones. Zone equipment lists, equipment connections, and air node definitions for every zone. Dual setpoint thermostat control in all zones with cooling setpoint = 24°C and heating setpoint = 21°C. Availability schedules for system operation, fan operation, and thermostat control. Use autosize for all airflow rates, capacities, fan parameters, and other sizing-related inputs wherever permitted. Use realistic default values for all required inputs not explicitly specified. Generate all required schedules, curves, and supporting objects necessary for a complete, simulation-ready EnergyPlus IDF. Assign VRF terminal units to zones that are occupied and conditioned. Exclude any zone that is unconditioned, unoccupied, or does not serve as a habitable space.
+✓ Calling LLM (mistral-api) to generate VRF system for zones: Corner_Class_1_Pod_1_ZN_1_FLR_1, Mult_Class_1_Pod_1_ZN_1_FLR_1, Corridor_Pod_1_ZN_1_FLR_1, Corner_Class_2_Pod_1_ZN_1_FLR_1, Mult_Class_2_Pod_1_ZN_1_FLR_1, Corner_Class_1_Pod_2_ZN_1_FLR_1, Mult_Class_1_Pod_2_ZN_1_FLR_1, Corridor_Pod_2_ZN_1_FLR_1, Corner_Class_2_Pod_2_ZN_1_FLR_1, Mult_Class_2_Pod_2_ZN_1_FLR_1, Corner_Class_1_Pod_3_ZN_1_FLR_1, Mult_Class_1_Pod_3_ZN_1_FLR_1, Corridor_Pod_3_ZN_1_FLR_1, Corner_Class_2_Pod_3_ZN_1_FLR_1, Mult_Class_2_Pod_3_ZN_1_FLR_1, Computer_Class_ZN_1_FLR_1, Main_Corridor_ZN_1_FLR_1, Lobby_ZN_1_FLR_1, Bath_ZN_1_FLR_1, Offices_ZN_1_FLR_1, Gym_ZN_1_FLR_1, Kitchen_ZN_1_FLR_1, Cafeteria_ZN_1_FLR_1, Library_Media_Center_ZN_1_FLR_1
+  User Design Request: Design a complete HVAC system for a primary school with 25 thermal zones using variable refrigerant flow and no heat recovery. One indoor terminal unit per thermal zone connected to a single shared outdoor condensing unit via a zone terminal unit list. Complete and valid object relationships, references, and node connections for all zones. Zone equipment lists, equipment connections, and air node definitions for every zone. Dual setpoint thermostat control in all zones with cooling setpoint = 24°C and heating setpoint = 21°C. Availability schedules for system operation, fan operation, and thermostat control. Use autosize for all airflow rates, capacities, fan parameters, and other sizing-related inputs wherever permitted. Use realistic default values for all required inputs not explicitly specified. Generate all required schedules, curves, and supporting objects necessary for a complete, simulation-ready EnergyPlus IDF. Assign VRF terminal units to zones that are occupied and conditioned. Exclude any zone that is unconditioned, unoccupied, or does not serve as a habitable space.
+✓ Generating with Mistral API (mistral-small-latest)...
+⚠ Mistral API generation failed: API error occurred: Status 429. Body: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+Traceback (most recent call last):
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/src/agents/llm_interface.py", line 394, in _generate_mistral_api
+    response = self.mistral_client.chat.complete(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/mistralai/chat.py", line 251, in complete
+    raise models.SDKError("API error occurred", http_res, http_res_text)
+mistralai.models.sdkerror.SDKError: API error occurred: Status 429. Body: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+✗ Prompt got empty response
+❌ Error: Empty HVAC configuration generated

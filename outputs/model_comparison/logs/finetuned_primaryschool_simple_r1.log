@@ -1,0 +1,142 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_ZN_1_FLR_1']
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_ZN_1_FLR_1']
+✓ Auto-detected 24 zones from IDF
+  1. Corner_Class_1_Pod_1_ZN_1_FLR_1
+  2. Mult_Class_1_Pod_1_ZN_1_FLR_1
+  3. Corridor_Pod_1_ZN_1_FLR_1
+  4. Corner_Class_2_Pod_1_ZN_1_FLR_1
+  5. Mult_Class_2_Pod_1_ZN_1_FLR_1
+  6. Corner_Class_1_Pod_2_ZN_1_FLR_1
+  7. Mult_Class_1_Pod_2_ZN_1_FLR_1
+  8. Corridor_Pod_2_ZN_1_FLR_1
+  9. Corner_Class_2_Pod_2_ZN_1_FLR_1
+  10. Mult_Class_2_Pod_2_ZN_1_FLR_1
+  11. Corner_Class_1_Pod_3_ZN_1_FLR_1
+  12. Mult_Class_1_Pod_3_ZN_1_FLR_1
+  13. Corridor_Pod_3_ZN_1_FLR_1
+  14. Corner_Class_2_Pod_3_ZN_1_FLR_1
+  15. Mult_Class_2_Pod_3_ZN_1_FLR_1
+  16. Computer_Class_ZN_1_FLR_1
+  17. Main_Corridor_ZN_1_FLR_1
+  18. Lobby_ZN_1_FLR_1
+  19. Bath_ZN_1_FLR_1
+  20. Offices_ZN_1_FLR_1
+  21. Gym_ZN_1_FLR_1
+  22. Kitchen_ZN_1_FLR_1
+  23. Cafeteria_ZN_1_FLR_1
+  24. Library_Media_Center_ZN_1_FLR_1
+  ↳ Excluded 1 non-HVAC zone(s): ['Mech_ZN_1_FLR_1']
+
+📊 Building Context:
+  • Zones: 24
+  • Total Volume: 27484.0 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Generate a simulation-ready EnergyPlus IDF for a primary school containing 25 thermal zones with a variable refrigerant flow HVAC system and no heat recovery. Assign VRF terminal units only to occupied and conditioned zones. Do not assign VRF terminal units to any unoccupied or unconditioned zones.
+✓ Calling LLM (mistral) to generate VRF system for zones: Corner_Class_1_Pod_1_ZN_1_FLR_1, Mult_Class_1_Pod_1_ZN_1_FLR_1, Corridor_Pod_1_ZN_1_FLR_1, Corner_Class_2_Pod_1_ZN_1_FLR_1, Mult_Class_2_Pod_1_ZN_1_FLR_1, Corner_Class_1_Pod_2_ZN_1_FLR_1, Mult_Class_1_Pod_2_ZN_1_FLR_1, Corridor_Pod_2_ZN_1_FLR_1, Corner_Class_2_Pod_2_ZN_1_FLR_1, Mult_Class_2_Pod_2_ZN_1_FLR_1, Corner_Class_1_Pod_3_ZN_1_FLR_1, Mult_Class_1_Pod_3_ZN_1_FLR_1, Corridor_Pod_3_ZN_1_FLR_1, Corner_Class_2_Pod_3_ZN_1_FLR_1, Mult_Class_2_Pod_3_ZN_1_FLR_1, Computer_Class_ZN_1_FLR_1, Main_Corridor_ZN_1_FLR_1, Lobby_ZN_1_FLR_1, Bath_ZN_1_FLR_1, Offices_ZN_1_FLR_1, Gym_ZN_1_FLR_1, Kitchen_ZN_1_FLR_1, Cafeteria_ZN_1_FLR_1, Library_Media_Center_ZN_1_FLR_1
+  User Design Request: Generate a simulation-ready EnergyPlus IDF for a primary school containing 25 thermal zones with a variable refrigerant flow HVAC system and no heat recovery. Assign VRF terminal units only to occupied and conditioned zones. Do not assign VRF terminal units to any unoccupied or unconditioned zones.
+✓ Generating with Mistral fine-tuned model...
+   Design intent: Generate a simulation-ready EnergyPlus IDF for a primary school containing 25 thermal zones with a variable refrigerant …
+   Found 25 zones: Corner_Class_1_Pod_1_ZN_1_FLR_1, Mult_Class_1_Pod_1_ZN_1_FLR_1, Corridor_Pod_1_ZN_1_FLR_1, Corner_Class_2_Pod_1_ZN_1_FLR_1, Mult_Class_2_Pod_1_ZN_1_FLR_1, Corner_Class_1_Pod_2_ZN_1_FLR_1, Mult_Class_1_Pod_2_ZN_1_FLR_1, Corridor_Pod_2_ZN_1_FLR_1, Corner_Class_2_Pod_2_ZN_1_FLR_1, Mult_Class_2_Pod_2_ZN_1_FLR_1, Corner_Class_1_Pod_3_ZN_1_FLR_1, Mult_Class_1_Pod_3_ZN_1_FLR_1, Corridor_Pod_3_ZN_1_FLR_1, Corner_Class_2_Pod_3_ZN_1_FLR_1, Mult_Class_2_Pod_3_ZN_1_FLR_1, Computer_Class_ZN_1_FLR_1, Main_Corridor_ZN_1_FLR_1, Lobby_ZN_1_FLR_1, Mech_ZN_1_FLR_1, Bath_ZN_1_FLR_1, Offices_ZN_1_FLR_1, Gym_ZN_1_FLR_1, Kitchen_ZN_1_FLR_1, Cafeteria_ZN_1_FLR_1, Library_Media_Center_ZN_1_FLR_1
+   System name: VRF_System_1
+   🔧 Generating System VRF...
+      Model values: heating_cop=4.0, min_cool_temp=-6.0, max_cool_temp=43.0, min_heat_temp=-20.0, max_heat_temp=15.5, condenser_type=AirCooled, priority=LoadPriority, cooling_cop=3.5, heat_recovery=No
+      ✅ System VRF generated (2649 chars)
+   🏢 Generating Zone VRFs for 25 zones...
+      Zone 1/25: Corner_Class_1_Pod_1_ZN_1_FLR_1... ✅ (3761 chars)
+      Zone 2/25: Mult_Class_1_Pod_1_ZN_1_FLR_1... ✅ (3757 chars)
+      Zone 3/25: Corridor_Pod_1_ZN_1_FLR_1... ✅ (3749 chars)
+      Zone 4/25: Corner_Class_2_Pod_1_ZN_1_FLR_1... ✅ (3761 chars)
+      Zone 5/25: Mult_Class_2_Pod_1_ZN_1_FLR_1... ✅ (3757 chars)
+      Zone 6/25: Corner_Class_1_Pod_2_ZN_1_FLR_1... ✅ (3761 chars)
+      Zone 7/25: Mult_Class_1_Pod_2_ZN_1_FLR_1... ✅ (3757 chars)
+      Zone 8/25: Corridor_Pod_2_ZN_1_FLR_1... ✅ (3749 chars)
+      Zone 9/25: Corner_Class_2_Pod_2_ZN_1_FLR_1... ✅ (3761 chars)
+      Zone 10/25: Mult_Class_2_Pod_2_ZN_1_FLR_1... ✅ (3757 chars)
+      Zone 11/25: Corner_Class_1_Pod_3_ZN_1_FLR_1... ✅ (3761 chars)
+      Zone 12/25: Mult_Class_1_Pod_3_ZN_1_FLR_1... ✅ (3757 chars)
+      Zone 13/25: Corridor_Pod_3_ZN_1_FLR_1... ✅ (3749 chars)
+      Zone 14/25: Corner_Class_2_Pod_3_ZN_1_FLR_1... ✅ (3761 chars)
+      Zone 15/25: Mult_Class_2_Pod_3_ZN_1_FLR_1... ✅ (3757 chars)
+      Zone 16/25: Computer_Class_ZN_1_FLR_1... ✅ (3749 chars)
+      Zone 17/25: Main_Corridor_ZN_1_FLR_1... ✅ (3747 chars)
+      Zone 18/25: Lobby_ZN_1_FLR_1... ✅ (3731 chars)
+      Zone 19/25: Mech_ZN_1_FLR_1... ✅ (3729 chars)
+      Zone 20/25: Bath_ZN_1_FLR_1... ✅ (3729 chars)
+      Zone 21/25: Offices_ZN_1_FLR_1... ✅ (3735 chars)
+      Zone 22/25: Gym_ZN_1_FLR_1... ✅ (3727 chars)
+      Zone 23/25: Kitchen_ZN_1_FLR_1... ✅ (3735 chars)
+      Zone 24/25: Cafeteria_ZN_1_FLR_1... ✅ (3739 chars)
+      Zone 25/25: Library_Media_Center_ZN_1_FLR_1... ✅ (3761 chars)
+   🌡️  Generating Thermostats for 25 zones...
+      Thermostat 1/25: Corner_Class_1_Pod_1_ZN_1_FLR_1... ✅ (335 chars)
+      Thermostat 2/25: Mult_Class_1_Pod_1_ZN_1_FLR_1... ✅ (333 chars)
+      Thermostat 3/25: Corridor_Pod_1_ZN_1_FLR_1... ✅ (329 chars)
+      Thermostat 4/25: Corner_Class_2_Pod_1_ZN_1_FLR_1... ✅ (335 chars)
+      Thermostat 5/25: Mult_Class_2_Pod_1_ZN_1_FLR_1... ✅ (333 chars)
+      Thermostat 6/25: Corner_Class_1_Pod_2_ZN_1_FLR_1... ✅ (335 chars)
+      Thermostat 7/25: Mult_Class_1_Pod_2_ZN_1_FLR_1... ✅ (333 chars)
+      Thermostat 8/25: Corridor_Pod_2_ZN_1_FLR_1... ✅ (329 chars)
+      Thermostat 9/25: Corner_Class_2_Pod_2_ZN_1_FLR_1... ✅ (335 chars)
+      Thermostat 10/25: Mult_Class_2_Pod_2_ZN_1_FLR_1... ✅ (333 chars)
+      Thermostat 11/25: Corner_Class_1_Pod_3_ZN_1_FLR_1... ✅ (335 chars)
+      Thermostat 12/25: Mult_Class_1_Pod_3_ZN_1_FLR_1... ✅ (333 chars)
+      Thermostat 13/25: Corridor_Pod_3_ZN_1_FLR_1... ✅ (329 chars)
+      Thermostat 14/25: Corner_Class_2_Pod_3_ZN_1_FLR_1... ✅ (335 chars)
+      Thermostat 15/25: Mult_Class_2_Pod_3_ZN_1_FLR_1... ✅ (333 chars)
+      Thermostat 16/25: Computer_Class_ZN_1_FLR_1... ✅ (329 chars)
+      Thermostat 17/25: Main_Corridor_ZN_1_FLR_1... ✅ (328 chars)
+      Thermostat 18/25: Lobby_ZN_1_FLR_1... ✅ (320 chars)
+      Thermostat 19/25: Mech_ZN_1_FLR_1... ✅ (319 chars)
+      Thermostat 20/25: Bath_ZN_1_FLR_1... ✅ (319 chars)
+      Thermostat 21/25: Offices_ZN_1_FLR_1... ✅ (322 chars)
+      Thermostat 22/25: Gym_ZN_1_FLR_1... ✅ (318 chars)
+      Thermostat 23/25: Kitchen_ZN_1_FLR_1... ✅ (322 chars)
+      Thermostat 24/25: Cafeteria_ZN_1_FLR_1... ✅ (324 chars)
+      Thermostat 25/25: Library_Media_Center_ZN_1_FLR_1... ✅ (335 chars)
+   ✅ Complete VRF system generated (104717 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 51 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'Mech_ZN_1_FLR_1'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_Mech_ZN_1_FLR_1'
+  ⚠️  Removed 2 orphaned comment-only line(s) from HVAC section
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 51 HVAC objects
+
+[2] Validating IDF...
+Valid: True, Errors: 0
+✓ Validation passed - proceeding to simulation
+
+[3] Simulating...
+Success: True, Errors: 0
+
+✓ Final corrected IDF copied to: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/finetuned_primaryschool_simple_r1_FINAL.idf
+  Use this file in EP-Launch for simulation!
+
+[Eval] Running quality evaluation...
+  Syntax correctness:   1.00
+  Parameter accuracy:   1.00
+  Simulation success:   True
+
+======================================================================
+PIPELINE COMPLETE: SUCCESS
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/finetuned_primaryschool_simple_r1_results.json
+
+🎉 SUCCESS! Use this file:
+   /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/finetuned_primaryschool_simple_r1_FINAL.idf
+======================================================================

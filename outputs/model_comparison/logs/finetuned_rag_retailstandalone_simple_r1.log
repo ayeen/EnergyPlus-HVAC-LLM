@@ -1,0 +1,82 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 1 non-HVAC zone(s): ['Back_Space']
+  ↳ Excluded 1 non-HVAC zone(s): ['Back_Space']
+✓ Auto-detected 4 zones from IDF
+  1. Core_Retail
+  2. Point_Of_Sale
+  3. Front_Retail
+  4. Front_Entry
+  ↳ Excluded 1 non-HVAC zone(s): ['Back_Space']
+
+📊 Building Context:
+  • Zones: 4
+  • Total Volume: 13993.4 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Generate a simulation-ready EnergyPlus IDF for a standalone retail building containing 5 thermal zones with a variable refrigerant flow HVAC system and no heat recovery. Assign VRF terminal units only to occupied and conditioned zones. Do not assign VRF terminal units to any unoccupied or unconditioned zones.
+✓ Calling LLM (mistral) to generate VRF system for zones: Core_Retail, Point_Of_Sale, Front_Retail, Front_Entry
+  User Design Request: Generate a simulation-ready EnergyPlus IDF for a standalone retail building containing 5 thermal zones with a variable refrigerant flow HVAC system and no heat recovery. Assign VRF terminal units only to occupied and conditioned zones. Do not assign VRF terminal units to any unoccupied or unconditioned zones.
+✓ Generating with Mistral fine-tuned model...
+   Design intent: Generate a simulation-ready EnergyPlus IDF for a standalone retail building containing 5 thermal zones with a variable r…
+   Found 5 zones: Back_Space, Core_Retail, Point_Of_Sale, Front_Retail, Front_Entry
+   System name: VRF_System_1
+   🔧 Generating System VRF...
+      Model values: heating_cop=4.44, min_cool_temp=-5.0, max_cool_temp=43.0, min_heat_temp=-20.0, max_heat_temp=15.0, condenser_type=AirCooled, priority=LoadPriority, cooling_cop=3.5, heat_recovery=No
+      ✅ System VRF generated (2629 chars)
+   🏢 Generating Zone VRFs for 5 zones...
+      Zone 1/5: Back_Space... ✅ (3719 chars)
+      Zone 2/5: Core_Retail... ✅ (3721 chars)
+      Zone 3/5: Point_Of_Sale... ✅ (3725 chars)
+      Zone 4/5: Front_Retail... ✅ (3723 chars)
+      Zone 5/5: Front_Entry... ✅ (3721 chars)
+   🌡️  Generating Thermostats for 5 zones...
+      Thermostat 1/5: Back_Space... ✅ (314 chars)
+      Thermostat 2/5: Core_Retail... ✅ (315 chars)
+      Thermostat 3/5: Point_Of_Sale... ✅ (317 chars)
+      Thermostat 4/5: Front_Retail... ✅ (316 chars)
+      Thermostat 5/5: Front_Entry... ✅ (315 chars)
+   ✅ Complete VRF system generated (22835 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 11 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'Back_Space'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_Back_Space'
+  ⚠️  Removed 2 orphaned comment-only line(s) from HVAC section
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 11 HVAC objects
+
+[2] Validating IDF...
+Valid: True, Errors: 0
+✓ Validation passed - proceeding to simulation
+
+[3] Simulating...
+Success: True, Errors: 0
+
+✓ Final corrected IDF copied to: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/finetuned_rag_retailstandalone_simple_r1_FINAL.idf
+  Use this file in EP-Launch for simulation!
+
+[Eval] Running quality evaluation...
+  Syntax correctness:   1.00
+  Parameter accuracy:   1.00
+  Simulation success:   True
+
+======================================================================
+PIPELINE COMPLETE: SUCCESS
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/finetuned_rag_retailstandalone_simple_r1_results.json
+
+🎉 SUCCESS! Use this file:
+   /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/finetuned_rag_retailstandalone_simple_r1_FINAL.idf
+======================================================================

@@ -1,0 +1,140 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+✓ Auto-detected 27 zones from IDF
+  1. G SW Apartment
+  2. G NW Apartment
+  3. Office
+  4. G NE Apartment
+  5. G N1 Apartment
+  6. G N2 Apartment
+  7. G S1 Apartment
+  8. G S2 Apartment
+  9. M SW Apartment
+  10. M NW Apartment
+  11. M SE Apartment
+  12. M NE Apartment
+  13. M N1 Apartment
+  14. M N2 Apartment
+  15. M S1 Apartment
+  16. M S2 Apartment
+  17. T SW Apartment
+  18. T NW Apartment
+  19. T SE Apartment
+  20. T NE Apartment
+  21. T N1 Apartment
+  22. T N2 Apartment
+  23. T S1 Apartment
+  24. T S2 Apartment
+  25. T Corridor
+  26. G Corridor
+  27. M Corridor
+
+📊 Building Context:
+  • Zones: 27
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Design HVAC system for a apartment with 27 zones variable flow no heat recovery. One indoor terminal unit per zone connected to single shared outdoor condensing unit via zone terminal unit list. valid relationships, references, connections for all zones. Zone equipment lists, equipment connections, for every zone. control in all zones with cooling setpoint = 24°C heating setpoint = 21°C. schedules for system operation, operation, control. Use for all airflow rates,, and sizing-related wherever. Use values for all required inputs not. Generate all schedules, curves, and objects for, EnergyPlus IDF. Assign VRF terminal units to zones that occupied conditioned. Exclude any zone that unconditioned, unoccupied, or not serve as habitable space.
+✓ Calling LLM (mistral) to generate VRF system for zones: G SW Apartment, G NW Apartment, Office, G NE Apartment, G N1 Apartment, G N2 Apartment, G S1 Apartment, G S2 Apartment, M SW Apartment, M NW Apartment, M SE Apartment, M NE Apartment, M N1 Apartment, M N2 Apartment, M S1 Apartment, M S2 Apartment, T SW Apartment, T NW Apartment, T SE Apartment, T NE Apartment, T N1 Apartment, T N2 Apartment, T S1 Apartment, T S2 Apartment, T Corridor, G Corridor, M Corridor
+  User Design Request: Design HVAC system for a apartment with 27 zones variable flow no heat recovery. One indoor terminal unit per zone connected to single shared outdoor condensing unit via zone terminal unit list. valid relationships, references, connections for all zones. Zone equipment lists, equipment connections, for every zone. control in all zones with cooling setpoint = 24°C heating setpoint = 21°C. schedules for system operation, operation, control. Use for all airflow rates,, and sizing-related wherever. Use values for all required inputs not. Generate all schedules, curves, and objects for, EnergyPlus IDF. Assign VRF terminal units to zones that occupied conditioned. Exclude any zone that unconditioned, unoccupied, or not serve as habitable space.
+✓ Generating with Mistral fine-tuned model...
+   Found 27 zones: G SW Apartment, G NW Apartment, Office, G NE Apartment, G N1 Apartment, G N2 Apartment, G S1 Apartment, G S2 Apartment, M SW Apartment, M NW Apartment, M SE Apartment, M NE Apartment, M N1 Apartment, M N2 Apartment, M S1 Apartment, M S2 Apartment, T SW Apartment, T NW Apartment, T SE Apartment, T NE Apartment, T N1 Apartment, T N2 Apartment, T S1 Apartment, T S2 Apartment, T Corridor, G Corridor, M Corridor
+   System name: VRF_System_1
+   🔧 Generating System VRF...
+      ✅ System VRF generated (2632 chars)
+   🏢 Generating Zone VRFs for 27 zones...
+      Zone 1/27: G SW Apartment... ✅ (3461 chars)
+      Zone 2/27: G NW Apartment... ✅ (3461 chars)
+      Zone 3/27: Office... ✅ (3445 chars)
+      Zone 4/27: G NE Apartment... ✅ (3461 chars)
+      Zone 5/27: G N1 Apartment... ✅ (3461 chars)
+      Zone 6/27: G N2 Apartment... ✅ (3461 chars)
+      Zone 7/27: G S1 Apartment... ✅ (3461 chars)
+      Zone 8/27: G S2 Apartment... ✅ (3461 chars)
+      Zone 9/27: M SW Apartment... ✅ (3461 chars)
+      Zone 10/27: M NW Apartment... ✅ (3461 chars)
+      Zone 11/27: M SE Apartment... ✅ (3461 chars)
+      Zone 12/27: M NE Apartment... ✅ (3461 chars)
+      Zone 13/27: M N1 Apartment... ✅ (3461 chars)
+      Zone 14/27: M N2 Apartment... ✅ (3461 chars)
+      Zone 15/27: M S1 Apartment... ✅ (3461 chars)
+      Zone 16/27: M S2 Apartment... ✅ (3461 chars)
+      Zone 17/27: T SW Apartment... ✅ (3461 chars)
+      Zone 18/27: T NW Apartment... ✅ (3461 chars)
+      Zone 19/27: T SE Apartment... ✅ (3461 chars)
+      Zone 20/27: T NE Apartment... ✅ (3461 chars)
+      Zone 21/27: T N1 Apartment... ✅ (3461 chars)
+      Zone 22/27: T N2 Apartment... ✅ (3461 chars)
+      Zone 23/27: T S1 Apartment... ✅ (3461 chars)
+      Zone 24/27: T S2 Apartment... ✅ (3461 chars)
+      Zone 25/27: T Corridor... ✅ (3453 chars)
+      Zone 26/27: G Corridor... ✅ (3453 chars)
+      Zone 27/27: M Corridor... ✅ (3453 chars)
+   🌡️  Generating Thermostats for 27 zones...
+      Thermostat 1/27: G SW Apartment... ✅ (318 chars)
+      Thermostat 2/27: G NW Apartment... ✅ (318 chars)
+      Thermostat 3/27: Office... ✅ (310 chars)
+      Thermostat 4/27: G NE Apartment... ✅ (318 chars)
+      Thermostat 5/27: G N1 Apartment... ✅ (318 chars)
+      Thermostat 6/27: G N2 Apartment... ✅ (318 chars)
+      Thermostat 7/27: G S1 Apartment... ✅ (318 chars)
+      Thermostat 8/27: G S2 Apartment... ✅ (318 chars)
+      Thermostat 9/27: M SW Apartment... ✅ (318 chars)
+      Thermostat 10/27: M NW Apartment... ✅ (318 chars)
+      Thermostat 11/27: M SE Apartment... ✅ (318 chars)
+      Thermostat 12/27: M NE Apartment... ✅ (318 chars)
+      Thermostat 13/27: M N1 Apartment... ✅ (318 chars)
+      Thermostat 14/27: M N2 Apartment... ✅ (318 chars)
+      Thermostat 15/27: M S1 Apartment... ✅ (318 chars)
+      Thermostat 16/27: M S2 Apartment... ✅ (318 chars)
+      Thermostat 17/27: T SW Apartment... ✅ (318 chars)
+      Thermostat 18/27: T NW Apartment... ✅ (318 chars)
+      Thermostat 19/27: T SE Apartment... ✅ (318 chars)
+      Thermostat 20/27: T NE Apartment... ✅ (318 chars)
+      Thermostat 21/27: T N1 Apartment... ✅ (318 chars)
+      Thermostat 22/27: T N2 Apartment... ✅ (318 chars)
+      Thermostat 23/27: T S1 Apartment... ✅ (318 chars)
+      Thermostat 24/27: T S2 Apartment... ✅ (318 chars)
+      Thermostat 25/27: T Corridor... ✅ (314 chars)
+      Thermostat 26/27: G Corridor... ✅ (314 chars)
+      Thermostat 27/27: M Corridor... ✅ (314 chars)
+   ✅ Complete VRF system generated (104713 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 55 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 55 HVAC objects
+
+[2] Validating IDF...
+Valid: True, Errors: 0
+✓ Validation passed - proceeding to simulation
+
+[3] Simulating...
+Success: True, Errors: 0
+
+✓ Final corrected IDF copied to: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/finetuned_rag_midriseapartment_detailed_omission_r1_FINAL.idf
+  Use this file in EP-Launch for simulation!
+
+[Eval] Running quality evaluation...
+  Syntax correctness:   1.00
+  Parameter accuracy:   1.00
+  Simulation success:   True
+
+======================================================================
+PIPELINE COMPLETE: SUCCESS
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/finetuned_rag_midriseapartment_detailed_omission_r1_results.json
+
+🎉 SUCCESS! Use this file:
+   /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/finetuned_rag_midriseapartment_detailed_omission_r1_FINAL.idf
+======================================================================
