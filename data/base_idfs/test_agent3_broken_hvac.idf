@@ -1,0 +1,578 @@
+! ===============================================================
+! TEST IDF WITH INTENTIONAL HVAC ERRORS - FOR AGENT 3 TESTING
+! This file contains broken HVAC objects to test error correction
+! The errors are in HVAC field VALUES, not structure
+! ===============================================================
+
+Version, 25.1;
+
+! ===============================================================
+! SIMULATION CONTROL
+! ===============================================================
+SimulationControl,
+    Yes,                      !- Do Zone Sizing Calculation
+    Yes,                      !- Do System Sizing Calculation
+    Yes,                      !- Do Plant Sizing Calculation
+    No,                       !- Run Simulation for Sizing Periods
+    Yes,                      !- Run Simulation for Weather File Run Periods
+    No,                       !- Do HVAC Sizing Simulation for Sizing Periods
+    1;                        !- Maximum Number of HVAC Sizing Simulation Passes
+
+! ===============================================================
+! BUILDING
+! ===============================================================
+Building,
+    TestBuilding_Agent3,      !- Name
+    0.0,                      !- North Axis {deg}
+    City,                     !- Terrain
+    0.04,                     !- Loads Convergence Tolerance Value {W}
+    0.4,                      !- Temperature Convergence Tolerance Value {deltaC}
+    FullExterior,             !- Solar Distribution
+    25,                       !- Maximum Number of Warmup Days
+    6;                        !- Minimum Number of Warmup Days
+
+Timestep, 6;
+
+! ===============================================================
+! RUN PERIOD
+! ===============================================================
+RunPeriod,
+    Annual,                   !- Name
+    1,                        !- Begin Month
+    1,                        !- Begin Day of Month
+    ,                         !- Begin Year
+    12,                       !- End Month
+    31,                       !- End Day of Month
+    ,                         !- End Year
+    Sunday,                   !- Day of Week for Start Day
+    Yes,                      !- Use Weather File Holidays and Special Days
+    Yes,                      !- Use Weather File Daylight Saving Period
+    No,                       !- Apply Weekend Holiday Rule
+    Yes,                      !- Use Weather File Rain Indicators
+    Yes;                      !- Use Weather File Snow Indicators
+
+! ===============================================================
+! LOCATION AND DESIGN DAY
+! ===============================================================
+Site:Location,
+    Chicago IL USA,           !- Name
+    41.78,                    !- Latitude {deg}
+    -87.75,                   !- Longitude {deg}
+    -6.0,                     !- Time Zone {hr}
+    190.0;                    !- Elevation {m}
+
+SizingPeriod:DesignDay,
+    Chicago Ann Htg 99.6% Condns DB,  !- Name
+    1,                        !- Month
+    21,                       !- Day of Month
+    WinterDesignDay,          !- Day Type
+    -20.6,                    !- Maximum Dry-Bulb Temperature {C}
+    0.0,                      !- Daily Dry-Bulb Temperature Range {deltaC}
+    ,                         !- Dry-Bulb Temperature Range Modifier Type
+    ,                         !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,                  !- Humidity Condition Type
+    -20.6,                    !- Wetbulb or DewPoint at Maximum Dry-Bulb {C}
+    ,                         !- Humidity Condition Day Schedule Name
+    ,                         !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+    ,                         !- Enthalpy at Maximum Dry-Bulb {J/kg}
+    ,                         !- Daily Wet-Bulb Temperature Range {deltaC}
+    98934.,                   !- Barometric Pressure {Pa}
+    4.9,                      !- Wind Speed {m/s}
+    270,                      !- Wind Direction {deg}
+    No,                       !- Rain Indicator
+    No,                       !- Snow Indicator
+    No,                       !- Daylight Saving Time Indicator
+    ASHRAEClearSky,           !- Solar Model Indicator
+    ,                         !- Beam Solar Day Schedule Name
+    ,                         !- Diffuse Solar Day Schedule Name
+    ,                         !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+    ,                         !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+    0.00;                     !- Sky Clearness
+
+SizingPeriod:DesignDay,
+    Chicago Ann Clg .4% Condns DB=>MWB,  !- Name
+    7,                        !- Month
+    21,                       !- Day of Month
+    SummerDesignDay,          !- Day Type
+    33.3,                     !- Maximum Dry-Bulb Temperature {C}
+    10.7,                     !- Daily Dry-Bulb Temperature Range {deltaC}
+    ,                         !- Dry-Bulb Temperature Range Modifier Type
+    ,                         !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,                  !- Humidity Condition Type
+    23.8,                     !- Wetbulb or DewPoint at Maximum Dry-Bulb {C}
+    ,                         !- Humidity Condition Day Schedule Name
+    ,                         !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+    ,                         !- Enthalpy at Maximum Dry-Bulb {J/kg}
+    ,                         !- Daily Wet-Bulb Temperature Range {deltaC}
+    98934.,                   !- Barometric Pressure {Pa}
+    5.3,                      !- Wind Speed {m/s}
+    230,                      !- Wind Direction {deg}
+    No,                       !- Rain Indicator
+    No,                       !- Snow Indicator
+    No,                       !- Daylight Saving Time Indicator
+    ASHRAEClearSky,           !- Solar Model Indicator
+    ,                         !- Beam Solar Day Schedule Name
+    ,                         !- Diffuse Solar Day Schedule Name
+    ,                         !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+    ,                         !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+    1.00;                     !- Sky Clearness
+
+! ===============================================================
+! GLOBAL GEOMETRY RULES
+! ===============================================================
+GlobalGeometryRules,
+    UpperLeftCorner,          !- Starting Vertex Position
+    Counterclockwise,         !- Vertex Entry Direction
+    Relative;                 !- Coordinate System
+
+! ===============================================================
+! ZONES
+! ===============================================================
+Zone,
+    TestZone1,                !- Name
+    0,                        !- Direction of Relative North {deg}
+    0,                        !- X Origin {m}
+    0,                        !- Y Origin {m}
+    0,                        !- Z Origin {m}
+    1,                        !- Type
+    1,                        !- Multiplier
+    3.0,                      !- Ceiling Height {m}
+    100.0;                    !- Volume {m3}
+
+Zone,
+    TestZone2,                !- Name
+    0,                        !- Direction of Relative North {deg}
+    10,                       !- X Origin {m}
+    0,                        !- Y Origin {m}
+    0,                        !- Z Origin {m}
+    1,                        !- Type
+    1,                        !- Multiplier
+    3.0,                      !- Ceiling Height {m}
+    100.0;                    !- Volume {m3}
+
+! ===============================================================
+! MATERIALS AND CONSTRUCTIONS
+! ===============================================================
+Material,
+    WallMaterial,             !- Name
+    MediumSmooth,             !- Roughness
+    0.2,                      !- Thickness {m}
+    1.5,                      !- Conductivity {W/m-K}
+    800,                      !- Density {kg/m3}
+    1000;                     !- Specific Heat {J/kg-K}
+
+Material,
+    RoofMaterial,             !- Name
+    MediumRough,              !- Roughness
+    0.15,                     !- Thickness {m}
+    0.5,                      !- Conductivity {W/m-K}
+    1200,                     !- Density {kg/m3}
+    900;                      !- Specific Heat {J/kg-K}
+
+Material,
+    FloorMaterial,            !- Name
+    MediumSmooth,             !- Roughness
+    0.2,                      !- Thickness {m}
+    1.8,                      !- Conductivity {W/m-K}
+    2400,                     !- Density {kg/m3}
+    900;                      !- Specific Heat {J/kg-K}
+
+Construction,
+    WallConstruction,         !- Name
+    WallMaterial;             !- Outside Layer
+
+Construction,
+    RoofConstruction,         !- Name
+    RoofMaterial;             !- Outside Layer
+
+Construction,
+    FloorConstruction,        !- Name
+    FloorMaterial;            !- Outside Layer
+
+! ===============================================================
+! SURFACES - ZONE 1
+! ===============================================================
+BuildingSurface:Detailed,
+    TestZone1_Floor,          !- Name
+    Floor,                    !- Surface Type
+    FloorConstruction,        !- Construction Name
+    TestZone1,                !- Zone Name
+    ,                         !- Space Name
+    Ground,                   !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    NoSun,                    !- Sun Exposure
+    NoWind,                   !- Wind Exposure
+    0.0,                      !- View Factor to Ground
+    4,                        !- Number of Vertices
+    0, 0, 0,
+    0, 10, 0,
+    10, 10, 0,
+    10, 0, 0;
+
+BuildingSurface:Detailed,
+    TestZone1_Roof,           !- Name
+    Roof,                     !- Surface Type
+    RoofConstruction,         !- Construction Name
+    TestZone1,                !- Zone Name
+    ,                         !- Space Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    0.0,                      !- View Factor to Ground
+    4,                        !- Number of Vertices
+    0, 10, 3,
+    0, 0, 3,
+    10, 0, 3,
+    10, 10, 3;
+
+BuildingSurface:Detailed,
+    TestZone1_Wall_South,     !- Name
+    Wall,                     !- Surface Type
+    WallConstruction,         !- Construction Name
+    TestZone1,                !- Zone Name
+    ,                         !- Space Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    0.5,                      !- View Factor to Ground
+    4,                        !- Number of Vertices
+    0, 0, 3,
+    0, 0, 0,
+    10, 0, 0,
+    10, 0, 3;
+
+BuildingSurface:Detailed,
+    TestZone1_Wall_North,     !- Name
+    Wall,                     !- Surface Type
+    WallConstruction,         !- Construction Name
+    TestZone1,                !- Zone Name
+    ,                         !- Space Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    0.5,                      !- View Factor to Ground
+    4,                        !- Number of Vertices
+    10, 10, 3,
+    10, 10, 0,
+    0, 10, 0,
+    0, 10, 3;
+
+BuildingSurface:Detailed,
+    TestZone1_Wall_East,      !- Name
+    Wall,                     !- Surface Type
+    WallConstruction,         !- Construction Name
+    TestZone1,                !- Zone Name
+    ,                         !- Space Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    0.5,                      !- View Factor to Ground
+    4,                        !- Number of Vertices
+    10, 0, 3,
+    10, 0, 0,
+    10, 10, 0,
+    10, 10, 3;
+
+BuildingSurface:Detailed,
+    TestZone1_Wall_West,      !- Name
+    Wall,                     !- Surface Type
+    WallConstruction,         !- Construction Name
+    TestZone1,                !- Zone Name
+    ,                         !- Space Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    0.5,                      !- View Factor to Ground
+    4,                        !- Number of Vertices
+    0, 10, 3,
+    0, 10, 0,
+    0, 0, 0,
+    0, 0, 3;
+
+! ===============================================================
+! SURFACES - ZONE 2
+! ===============================================================
+BuildingSurface:Detailed,
+    TestZone2_Floor,          !- Name
+    Floor,                    !- Surface Type
+    FloorConstruction,        !- Construction Name
+    TestZone2,                !- Zone Name
+    ,                         !- Space Name
+    Ground,                   !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    NoSun,                    !- Sun Exposure
+    NoWind,                   !- Wind Exposure
+    0.0,                      !- View Factor to Ground
+    4,                        !- Number of Vertices
+    10, 0, 0,
+    10, 10, 0,
+    20, 10, 0,
+    20, 0, 0;
+
+BuildingSurface:Detailed,
+    TestZone2_Roof,           !- Name
+    Roof,                     !- Surface Type
+    RoofConstruction,         !- Construction Name
+    TestZone2,                !- Zone Name
+    ,                         !- Space Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    0.0,                      !- View Factor to Ground
+    4,                        !- Number of Vertices
+    10, 10, 3,
+    10, 0, 3,
+    20, 0, 3,
+    20, 10, 3;
+
+BuildingSurface:Detailed,
+    TestZone2_Wall_South,     !- Name
+    Wall,                     !- Surface Type
+    WallConstruction,         !- Construction Name
+    TestZone2,                !- Zone Name
+    ,                         !- Space Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    0.5,                      !- View Factor to Ground
+    4,                        !- Number of Vertices
+    10, 0, 3,
+    10, 0, 0,
+    20, 0, 0,
+    20, 0, 3;
+
+BuildingSurface:Detailed,
+    TestZone2_Wall_North,     !- Name
+    Wall,                     !- Surface Type
+    WallConstruction,         !- Construction Name
+    TestZone2,                !- Zone Name
+    ,                         !- Space Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    0.5,                      !- View Factor to Ground
+    4,                        !- Number of Vertices
+    20, 10, 3,
+    20, 10, 0,
+    10, 10, 0,
+    10, 10, 3;
+
+BuildingSurface:Detailed,
+    TestZone2_Wall_East,      !- Name
+    Wall,                     !- Surface Type
+    WallConstruction,         !- Construction Name
+    TestZone2,                !- Zone Name
+    ,                         !- Space Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    0.5,                      !- View Factor to Ground
+    4,                        !- Number of Vertices
+    20, 0, 3,
+    20, 0, 0,
+    20, 10, 0,
+    20, 10, 3;
+
+BuildingSurface:Detailed,
+    TestZone2_Wall_West,      !- Name
+    Wall,                     !- Surface Type
+    WallConstruction,         !- Construction Name
+    TestZone2,                !- Zone Name
+    ,                         !- Space Name
+    Outdoors,                 !- Outside Boundary Condition
+    ,                         !- Outside Boundary Condition Object
+    SunExposed,               !- Sun Exposure
+    WindExposed,              !- Wind Exposure
+    0.5,                      !- View Factor to Ground
+    4,                        !- Number of Vertices
+    10, 10, 3,
+    10, 10, 0,
+    10, 0, 0,
+    10, 0, 3;
+
+! ===============================================================
+! SCHEDULES
+! ===============================================================
+ScheduleTypeLimits,
+    Any Number;
+
+ScheduleTypeLimits,
+    Fraction,
+    0.0,
+    1.0,
+    CONTINUOUS;
+
+ScheduleTypeLimits,
+    Temperature,
+    -60,
+    200,
+    CONTINUOUS;
+
+Schedule:Compact,
+    Always On,                !- Name
+    Any Number,               !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00, 1;          !- Field 3
+
+Schedule:Compact,
+    Heating Setpoint Schedule,
+    Temperature,
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00, 21.0;
+
+Schedule:Compact,
+    Cooling Setpoint Schedule,
+    Temperature,
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00, 24.0;
+
+! ===============================================================
+! INTENTIONALLY BROKEN HVAC OBJECTS - FOR AGENT 3 TESTING
+! ===============================================================
+! ERRORS IN THIS FILE:
+! 1. MasterThermostatPriority requires zone name but field 13 is empty
+! 2. Invalid condenser type "InvalidCondenserType" (should be AirCooled/WaterCooled)
+! 3. HVACTemplate:Zone:VRF references non-existent schedule "Missing_Schedule"
+! ===============================================================
+
+HVACTemplate:System:VRF,
+    Broken_VRF_System,        !- Name
+    Always On,                !- System Availability Schedule Name
+    Autosize,                 !- Gross Rated Total Cooling Capacity {W}
+    3.5,                      !- Gross Rated Cooling COP
+    -10,                      !- Minimum Outdoor Temperature in Cooling Mode {C}
+    48,                       !- Maximum Outdoor Temperature in Cooling Mode {C}
+    Autosize,                 !- Gross Rated Heating Capacity {W}
+    1.0,                      !- Rated Heating Capacity Sizing Ratio
+    3.5,                      !- Gross Rated Heating COP
+    -25,                      !- Minimum Outdoor Temperature in Heating Mode {C}
+    18,                       !- Maximum Outdoor Temperature in Heating Mode {C}
+    0.25,                     !- Minimum Heat Pump Part-Load Ratio
+    ,                         !- Zone Name for Master Thermostat Location (ERROR: empty but required)
+    MasterThermostatPriority, !- Master Thermostat Priority Control Type
+    ,                         !- Thermostat Priority Schedule Name
+    ,                         !- Zone Terminal Unit List Name
+    No,                       !- Heat Pump Waste Heat Recovery
+    50,                       !- Equivalent Piping Length used for Piping Correction Factor in Cooling Mode {m}
+    50,                       !- Vertical Height used for Piping Correction Factor {m}
+    ,                         !- Piping Correction Factor for Length in Cooling Mode
+    ,                         !- Piping Correction Factor for Height in Cooling Mode Coefficient
+    50,                       !- Equivalent Piping Length used for Piping Correction Factor in Heating Mode {m}
+    ,                         !- Piping Correction Factor for Length in Heating Mode
+    ,                         !- Piping Correction Factor for Height in Heating Mode Coefficient
+    15,                       !- Crankcase Heater Power per Compressor {W}
+    3,                        !- Number of Compressors
+    0.33,                     !- Ratio of Compressor Size to Total Compressor Capacity
+    7,                        !- Maximum Outdoor Dry-Bulb Temperature for Crankcase Heater {C}
+    Resistive,                !- Defrost Strategy
+    Timed,                    !- Defrost Control
+    ,                         !- Defrost Energy Input Ratio Modifier Function of Temperature Curve Name
+    0.058333,                 !- Defrost Time Period Fraction
+    Autosize,                 !- Resistive Defrost Heater Capacity {W}
+    5,                        !- Maximum Outdoor Dry-bulb Temperature for Defrost Operation {C}
+    InvalidCondenserType,     !- Condenser Type (ERROR: invalid enum value)
+    ,                         !- Water Condenser Volume Flow Rate {m3/s}
+    ,                         !- Evaporative Condenser Effectiveness {dimensionless}
+    Autosize,                 !- Evaporative Condenser Air Flow Rate {m3/s}
+    Autosize,                 !- Evaporative Condenser Pump Rated Power Consumption {W}
+    0,                        !- Basin Heater Capacity {W/K}
+    2,                        !- Basin Heater Setpoint Temperature {C}
+    ,                         !- Basin Heater Operating Schedule Name
+    Electricity;              !- Fuel Type
+
+HVACTemplate:Zone:VRF,
+    TestZone1,                !- Zone Name
+    Broken_VRF_System,        !- Template VRF System Name
+    Zone1_Thermostat,         !- Template Thermostat Name
+    Autosize,                 !- Cooling Supply Air Flow Rate {m3/s}
+    Autosize,                 !- No Cooling Supply Air Flow Rate {m3/s}
+    Autosize,                 !- Heating Supply Air Flow Rate {m3/s}
+    Autosize,                 !- No Heating Supply Air Flow Rate {m3/s}
+    Autosize,                 !- Cooling Outdoor Air Flow Rate {m3/s}
+    Autosize,                 !- Heating Outdoor Air Flow Rate {m3/s}
+    Autosize,                 !- No Load Outdoor Air Flow Rate {m3/s}
+    Missing_Schedule,         !- Supply Air Fan Operating Mode Schedule Name (ERROR: doesn't exist)
+    DrawThrough,              !- Supply Air Fan Placement
+    0.7,                      !- Supply Air Fan Total Efficiency
+    400,                      !- Supply Air Fan Delta Pressure {Pa}
+    0.9,                      !- Supply Air Fan Motor Efficiency
+    1,                        !- Supply Air Fan Motor in Air Stream Fraction
+    ,                         !- Cooling Coil Type
+    ,                         !- Cooling Coil Availability Schedule Name
+    ,                         !- Cooling Coil Gross Rated Total Capacity {W}
+    ,                         !- Cooling Coil Gross Rated Sensible Heat Ratio
+    ,                         !- Heat Pump Heating Coil Gross Rated Capacity {W}
+    ,                         !- Supplemental Heating Coil Availability Schedule Name
+    ,                         !- Supplemental Heating Coil Capacity {W}
+    ,                         !- Maximum Supply Air Temperature from Supplemental Heater {C}
+    ,                         !- Maximum Outdoor Dry-Bulb Temperature for Supplemental Heater Operation {C}
+    ,                         !- Outdoor Air Mixer Type
+    ,                         !- Baseboard Heating Type
+    ,                         !- Baseboard Heating Availability Schedule Name
+    ;                         !- Baseboard Heating Capacity {W}
+
+HVACTemplate:Zone:VRF,
+    TestZone2,                !- Zone Name
+    Broken_VRF_System,        !- Template VRF System Name
+    Zone2_Thermostat,         !- Template Thermostat Name
+    Autosize,                 !- Cooling Supply Air Flow Rate {m3/s}
+    Autosize,                 !- No Cooling Supply Air Flow Rate {m3/s}
+    Autosize,                 !- Heating Supply Air Flow Rate {m3/s}
+    Autosize,                 !- No Heating Supply Air Flow Rate {m3/s}
+    Autosize,                 !- Cooling Outdoor Air Flow Rate {m3/s}
+    Autosize,                 !- Heating Outdoor Air Flow Rate {m3/s}
+    Autosize,                 !- No Load Outdoor Air Flow Rate {m3/s}
+    ,                         !- Supply Air Fan Operating Mode Schedule Name
+    DrawThrough,              !- Supply Air Fan Placement
+    0.7,                      !- Supply Air Fan Total Efficiency
+    400,                      !- Supply Air Fan Delta Pressure {Pa}
+    0.9,                      !- Supply Air Fan Motor Efficiency
+    1,                        !- Supply Air Fan Motor in Air Stream Fraction
+    ,                         !- Cooling Coil Type
+    ,                         !- Cooling Coil Availability Schedule Name
+    ,                         !- Cooling Coil Gross Rated Total Capacity {W}
+    ,                         !- Cooling Coil Gross Rated Sensible Heat Ratio
+    ,                         !- Heat Pump Heating Coil Gross Rated Capacity {W}
+    ,                         !- Supplemental Heating Coil Availability Schedule Name
+    ,                         !- Supplemental Heating Coil Capacity {W}
+    ,                         !- Maximum Supply Air Temperature from Supplemental Heater {C}
+    ,                         !- Maximum Outdoor Dry-Bulb Temperature for Supplemental Heater Operation {C}
+    ,                         !- Outdoor Air Mixer Type
+    ,                         !- Baseboard Heating Type
+    ,                         !- Baseboard Heating Availability Schedule Name
+    ;                         !- Baseboard Heating Capacity {W}
+
+HVACTemplate:Thermostat,
+    Zone1_Thermostat,         !- Name
+    Heating Setpoint Schedule,!- Heating Setpoint Schedule Name
+    ,                         !- Constant Heating Setpoint {C}
+    Cooling Setpoint Schedule,!- Cooling Setpoint Schedule Name
+    ;                         !- Constant Cooling Setpoint {C}
+
+HVACTemplate:Thermostat,
+    Zone2_Thermostat,         !- Name
+    Heating Setpoint Schedule,!- Heating Setpoint Schedule Name
+    ,                         !- Constant Heating Setpoint {C}
+    Cooling Setpoint Schedule,!- Cooling Setpoint Schedule Name
+    ;                         !- Constant Cooling Setpoint {C}
+
+! ===============================================================
+! END OF FILE
+! Expected EnergyPlus validation errors:
+! 1. Zone Name for Master Thermostat Location must be entered when 
+!    Master Thermostat Priority Control Type = MasterThermostatPriority
+! 2. InvalidCondenserType - Failed to match against any enum values
+! 3. Missing_Schedule referenced but not found
+! ===============================================================

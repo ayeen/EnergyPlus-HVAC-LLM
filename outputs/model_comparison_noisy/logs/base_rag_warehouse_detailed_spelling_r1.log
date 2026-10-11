@@ -1,0 +1,36 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+✓ Auto-detected 3 zones from IDF
+  1. Zone1 Office
+  2. Zone2 Fine Storage
+  3. Zone3 Bulk Storage
+
+📊 Building Context:
+  • Zones: 3
+  • Orientation: 90.0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Design a complete HVAC system for a warehouse wwith 3 thermal zones using variable refrigerant flow and no heat recoovery. One indoor terminal unit per thermal zoone connected to a single shared outdoor condensig unit via a zone terminal unit llist. Complete and valid object relationships, references, and node connections for all zones. Zone equipmebt lists, equipment connectiosn, and air onde definitions for every zone. Dual setpoint thermmostat control in all zones iwth cooling setpoint = 24°C and heating setpoint = 21°C. Availability schedules for system operation, fan operatino, and thermostat control. Use autosize for all airflow rates, capaciites, fan parameters, and other sizing-related inputs whherever perimtted. Use realistic default values for all required inputs not epxlicitly specofied. Generate all required schedules, curves, and supporting objects necessayr for a comolete, simulation-ready EnergyPlus IDF. Asign VRF terminal units to zones that are occupied and conditioned. Exclude any zoone that is unconditioned, unoccupied, or does not serve as a habitabke space.
+✓ Calling LLM (mistral-api) to generate VRF system for zones: Zone1 Office, Zone2 Fine Storage, Zone3 Bulk Storage
+  User Design Request: Design a complete HVAC system for a warehouse wwith 3 thermal zones using variable refrigerant flow and no heat recoovery. One indoor terminal unit per thermal zoone connected to a single shared outdoor condensig unit via a zone terminal unit llist. Complete and valid object relationships, references, and node connections for all zones. Zone equipmebt lists, equipment connectiosn, and air onde definitions for every zone. Dual setpoint thermmostat control in all zones iwth cooling setpoint = 24°C and heating setpoint = 21°C. Availability schedules for system operation, fan operatino, and thermostat control. Use autosize for all airflow rates, capaciites, fan parameters, and other sizing-related inputs whherever perimtted. Use realistic default values for all required inputs not epxlicitly specofied. Generate all required schedules, curves, and supporting objects necessayr for a comolete, simulation-ready EnergyPlus IDF. Asign VRF terminal units to zones that are occupied and conditioned. Exclude any zoone that is unconditioned, unoccupied, or does not serve as a habitabke space.
+✓ Generating with Mistral API (mistral-small-latest)...
+⚠ Mistral API generation failed: API error occurred: Status 429. Body: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+Traceback (most recent call last):
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/src/agents/llm_interface.py", line 394, in _generate_mistral_api
+    response = self.mistral_client.chat.complete(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/mistralai/chat.py", line 251, in complete
+    raise models.SDKError("API error occurred", http_res, http_res_text)
+mistralai.models.sdkerror.SDKError: API error occurred: Status 429. Body: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+✗ Prompt got empty response
+❌ Error: Empty HVAC configuration generated

@@ -1,0 +1,60 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+✓ Auto-detected 27 zones from IDF
+  1. G SW Apartment
+  2. G NW Apartment
+  3. Office
+  4. G NE Apartment
+  5. G N1 Apartment
+  6. G N2 Apartment
+  7. G S1 Apartment
+  8. G S2 Apartment
+  9. M SW Apartment
+  10. M NW Apartment
+  11. M SE Apartment
+  12. M NE Apartment
+  13. M N1 Apartment
+  14. M N2 Apartment
+  15. M S1 Apartment
+  16. M S2 Apartment
+  17. T SW Apartment
+  18. T NW Apartment
+  19. T SE Apartment
+  20. T NE Apartment
+  21. T N1 Apartment
+  22. T N2 Apartment
+  23. T S1 Apartment
+  24. T S2 Apartment
+  25. T Corridor
+  26. G Corridor
+  27. M Corridor
+
+📊 Building Context:
+  • Zones: 27
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Generate EnergyPlus IDF for a apartment with 27 thermal zones and a refrigerant system and no heat recovery. Assign VRF terminal units only to occupied and conditioned zones. Do not assign VRF terminal units to any unoccupied unconditioned zones.
+✓ Calling LLM (mistral-api) to generate VRF system for zones: G SW Apartment, G NW Apartment, Office, G NE Apartment, G N1 Apartment, G N2 Apartment, G S1 Apartment, G S2 Apartment, M SW Apartment, M NW Apartment, M SE Apartment, M NE Apartment, M N1 Apartment, M N2 Apartment, M S1 Apartment, M S2 Apartment, T SW Apartment, T NW Apartment, T SE Apartment, T NE Apartment, T N1 Apartment, T N2 Apartment, T S1 Apartment, T S2 Apartment, T Corridor, G Corridor, M Corridor
+  User Design Request: Generate EnergyPlus IDF for a apartment with 27 thermal zones and a refrigerant system and no heat recovery. Assign VRF terminal units only to occupied and conditioned zones. Do not assign VRF terminal units to any unoccupied unconditioned zones.
+✓ Generating with Mistral API (mistral-small-latest)...
+⚠ Mistral API generation failed: API error occurred: Status 429. Body: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+Traceback (most recent call last):
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/src/agents/llm_interface.py", line 394, in _generate_mistral_api
+    response = self.mistral_client.chat.complete(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/mistralai/chat.py", line 251, in complete
+    raise models.SDKError("API error occurred", http_res, http_res_text)
+mistralai.models.sdkerror.SDKError: API error occurred: Status 429. Body: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+✗ Prompt got empty response
+❌ Error: Empty HVAC configuration generated

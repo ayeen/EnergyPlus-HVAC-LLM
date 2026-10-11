@@ -19,9 +19,51 @@ class IDFHandler:
         """Create new empty IDF"""
         return IDF()
     
+    # Zone name substrings (case-insensitive) that identify zones which should NOT
+    # receive a VRF terminal unit.  Derived from a full audit of all 16 DOE/ASHRAE
+    # prototype buildings in data/base_idfs/FinaIDF/:
+    #
+    #   plenum       — return/supply air plenums (MediumOffice, OfficeLarge)
+    #                  Adding VRF to a plenum causes an EnergyPlus segfault during
+    #                  daylighting factor initialisation.
+    #   attic        — unconditioned roof spaces (Restaurant*, SmallOffice)
+    #   stair        — stairwells (SmallHotel, HealthCare)
+    #   mech         — mechanical/plant rooms (SmallHotel MechanicalRoomFlr*,
+    #                  LargeHotel Mech_Flr_*, Schools Mech_ZN_*,
+    #                  HealthCare Floor 3 Mechanical*)
+    #   elevatorcore — elevator shaft/core (SmallHotel ElevatorCoreFlr*)
+    #   elevator pump— elevator pump room (HealthCare Floor 1 Elevator Pump Room)
+    #   back_space   — retail back-of-house storage (RetailStandalone)
+    #   undeveloped  — unfinished shell space (HealthCare Floor 3 Undeveloped*)
+    _NON_HVAC_ZONE_KEYWORDS = (
+        'plenum',
+        'attic',
+        'stair',
+        'mech',
+        'elevatorcore',
+        'elevator pump',
+        'back_space',
+        'undeveloped',
+    )
+
     def get_zones(self, idf):
-        """Get all zones from IDF"""
-        return [z.Name for z in idf.idfobjects.get('ZONE', [])]
+        """
+        Return conditioned zone names from the IDF, excluding zones that should
+        not receive a VRF terminal (plenums, attics, stairwells, mechanical rooms,
+        elevator shafts, retail back spaces, undeveloped shells).
+
+        Zones are identified by case-insensitive substring match against
+        _NON_HVAC_ZONE_KEYWORDS.  Prints a one-line report of excluded zones so
+        unexpected exclusions are visible in the pipeline log.
+        """
+        excluded_kw = self._NON_HVAC_ZONE_KEYWORDS
+        all_zones   = [z.Name for z in idf.idfobjects.get('ZONE', [])]
+        excluded    = [z for z in all_zones
+                       if any(kw in z.lower() for kw in excluded_kw)]
+        kept        = [z for z in all_zones if z not in excluded]
+        if excluded:
+            print(f"  ↳ Excluded {len(excluded)} non-HVAC zone(s): {excluded}")
+        return kept
     
     def get_hvac_systems(self, idf):
         """Get all HVAC systems"""
@@ -535,9 +577,32 @@ class IDFHandler:
         
         # ==== PEOPLE VALIDATION ====
         valid_people_methods = ['People', 'People/Area', 'Area/Person']
+        # EnergyPlus v25.x renamed ZoneAveraged → EnclosureAveraged in the IDD
+        valid_mrt_types = ['EnclosureAveraged', 'SurfaceWeighted', 'AngleFactor']
+        deprecated_mrt_map = {'ZoneAveraged': 'EnclosureAveraged'}
         for people in idf.idfobjects.get('PEOPLE', []):
             people_name = people.Name if hasattr(people, 'Name') else 'Unknown'
-            
+
+            # Check Mean_Radiant_Temperature_Calculation_Type (v25.x renamed ZoneAveraged → EnclosureAveraged)
+            mrt_type = getattr(people, 'Mean_Radiant_Temperature_Calculation_Type', None)
+            if mrt_type and mrt_type in deprecated_mrt_map:
+                new_mrt = deprecated_mrt_map[mrt_type]
+                issue = {
+                    'object': f'People: {people_name}',
+                    'field': 'Mean_Radiant_Temperature_Calculation_Type',
+                    'issue': f'Deprecated value "{mrt_type}" renamed to "{new_mrt}" in EnergyPlus v25.x IDD',
+                    'severity': 'error',
+                    'fix_applied': False
+                }
+                if auto_fix:
+                    people.Mean_Radiant_Temperature_Calculation_Type = new_mrt
+                    issue['fix_applied'] = True
+                    fixes_applied.append(
+                        f"Fixed People '{people_name}': Mean_Radiant_Temperature_Calculation_Type "
+                        f"{mrt_type} → {new_mrt} (EnergyPlus v25.x IDD change)"
+                    )
+                issues.append(issue)
+
             # Must have valid Number_of_People_Calculation_Method
             calc_method = getattr(people, 'Number_of_People_Calculation_Method', None)
             if not calc_method or calc_method == '' or calc_method not in valid_people_methods:
@@ -971,6 +1036,101 @@ class IDFHandler:
                 print(f"  🔧 {fix}")
         
         print("\n" + "="*60)
+
+    @staticmethod
+    def upgrade_idf_for_v25(text: str) -> str:
+        """
+        Upgrade IDF text to EnergyPlus 25.2 field format.
+
+        EnergyPlus 25.2 added new fields to several object types compared to older IDDs.
+        IDFs created without these fields have a field-offset mismatch when parsed positionally.
+
+        Fixes applied:
+        1. BuildingSurface:Detailed – insert blank Space Name (A5) between Zone Name and
+           Outside Boundary Condition.
+        2. People – insert blank Sensible Heat Fraction (N5) between Fraction Radiant and
+           Activity Level Schedule Name.
+        3. ThermostatSetpoint:DualSetpoint – remove any extra (4th+) data fields that exceed
+           the IDD maximum of 3.
+        """
+        import re
+
+        # ── 1. BuildingSurface:Detailed ──────────────────────────────────────────
+        # After Zone Name (A4, comment "!- Zone Name"), the next field is either
+        # Space Name (A5, new) or Outside BC (A5 in old IDDs).
+        # We detect the old format by checking whether the value immediately after
+        # "Zone Name" is a recognised Outside BC enum, and if so insert a blank field.
+
+        BC_VALUES = (
+            'Adiabatic', 'Surface', 'Zone', 'Space', 'Outdoors', 'Foundation', 'Ground',
+            'GroundFCfactorMethod', 'OtherSideCoefficients', 'OtherSideConditionsModel',
+            'GroundSlabPreprocessorAverage', 'GroundSlabPreprocessorCore',
+            'GroundSlabPreprocessorPerimeter', 'GroundBasementPreprocessorAverageWall',
+            'GroundBasementPreprocessorAverageFloor', 'GroundBasementPreprocessorUpperWall',
+            'GroundBasementPreprocessorLowerWall',
+        )
+        bc_alt = '(?:' + '|'.join(re.escape(v) for v in BC_VALUES) + ')'
+
+        def fix_bsd(match):
+            obj = match.group(0)
+            # Insert blank Space Name where Zone Name comment is followed by a BC value
+            return re.sub(
+                r'(!-[^\n]*\bZone\s+Name\b[^\n]*\n)(\s*)(' + bc_alt + r')(,)',
+                r'\1\2,                                        !- Space Name\n\2\3\4',
+                obj,
+                flags=re.IGNORECASE,
+            )
+
+        text = re.sub(r'BuildingSurface:Detailed,[\s\S]*?;', fix_bsd, text)
+
+        # ── 2. People ────────────────────────────────────────────────────────────
+        # Old IDD: Name(1) Zone(2) Sched(3) Method(4) Num(5) PPA(6) FAP(7)
+        #          FracRad(8) ActivitySched(9)                            = 9 data fields
+        # New IDD: same + SensibleHeatFraction(9) ActivitySched(10)      = 10 data fields
+        # Detect old format: exactly 9 data fields (10 tokens including "People" type).
+
+        def fix_people(match):
+            obj = match.group(0)
+            # Split preserving separators
+            tokens = re.split(r'([,;])', obj)
+            values = [tokens[i] for i in range(0, len(tokens), 2) if i < len(tokens)]
+            seps   = [tokens[i] for i in range(1, len(tokens), 2)]
+
+            if len(values) == 11 and not values[-1].strip() and seps and seps[-1] == ';':
+                # Insert blank SensibleHeatFraction between FractionRadiant (idx 8) and
+                # ActivitySchedule (idx 9 → now 10).
+                values.insert(9, ' ')
+                seps.insert(8, ',')
+
+            result = ''
+            for v, s in zip(values, seps):
+                result += v + s
+            if len(values) > len(seps):
+                result += values[-1]
+            return result
+
+        text = re.sub(r'\bPeople,[\s\S]*?;', fix_people, text, flags=re.IGNORECASE)
+
+        # ── 3. ThermostatSetpoint:DualSetpoint ───────────────────────────────────
+        # IDD allows exactly 3 data fields (Name, HeatingSchedule, CoolingSchedule).
+        # Some older IDFs include a spurious 4th field.  Remove any fields beyond the 3rd.
+        text = re.sub(
+            r'(ThermostatSetpoint:DualSetpoint,\s*[^,;]+,\s*[^,;]+,\s*[^,;]+?),\s*[^;]+;',
+            r'\1;',
+            text,
+            flags=re.IGNORECASE,
+        )
+
+        # ── 4. Version ───────────────────────────────────────────────────────────
+        # Prototype IDFs ship with Version,22.1; or Version,25.1; etc.
+        # Replace with the current EnergyPlus version to suppress version warnings.
+        text = re.sub(
+            r'(?im)^(\s*Version\s*,\s*)\S+(\s*;)',
+            r'\g<1>25.2\2',
+            text,
+        )
+
+        return text
 
     @staticmethod
     def apply_vrf_coil_type_defaults(hvac_content: str) -> str:

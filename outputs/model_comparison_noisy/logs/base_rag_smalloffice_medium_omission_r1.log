@@ -1,0 +1,41 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 1 non-HVAC zone(s): ['Attic']
+  ↳ Excluded 1 non-HVAC zone(s): ['Attic']
+✓ Auto-detected 5 zones from IDF
+  1. Core_ZN
+  2. Perimeter_ZN_1
+  3. Perimeter_ZN_2
+  4. Perimeter_ZN_3
+  5. Perimeter_ZN_4
+  ↳ Excluded 1 non-HVAC zone(s): ['Attic']
+
+📊 Building Context:
+  • Zones: 5
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Create complete VRF configuration for a small office containing 6 zones, with no heat recovery, zone is served by one indoor terminal unit connected to single shared outdoor condensing unit through zone terminal unit list. Only assign VRF terminal units to zones that occupied and conditioned. Skip any zone that unoccupied unconditioned.
+✓ Calling LLM (mistral-api) to generate VRF system for zones: Core_ZN, Perimeter_ZN_1, Perimeter_ZN_2, Perimeter_ZN_3, Perimeter_ZN_4
+  User Design Request: Create complete VRF configuration for a small office containing 6 zones, with no heat recovery, zone is served by one indoor terminal unit connected to single shared outdoor condensing unit through zone terminal unit list. Only assign VRF terminal units to zones that occupied and conditioned. Skip any zone that unoccupied unconditioned.
+✓ Generating with Mistral API (mistral-small-latest)...
+⚠ Mistral API generation failed: API error occurred: Status 429. Body: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+Traceback (most recent call last):
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/src/agents/llm_interface.py", line 394, in _generate_mistral_api
+    response = self.mistral_client.chat.complete(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/mistralai/chat.py", line 251, in complete
+    raise models.SDKError("API error occurred", http_res, http_res_text)
+mistralai.models.sdkerror.SDKError: API error occurred: Status 429. Body: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+✗ Prompt got empty response
+❌ Error: Empty HVAC configuration generated

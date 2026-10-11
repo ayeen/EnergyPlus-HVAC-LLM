@@ -1,0 +1,297 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+✓ Auto-detected 27 zones from IDF
+  1. G SW Apartment
+  2. G NW Apartment
+  3. Office
+  4. G NE Apartment
+  5. G N1 Apartment
+  6. G N2 Apartment
+  7. G S1 Apartment
+  8. G S2 Apartment
+  9. M SW Apartment
+  10. M NW Apartment
+  11. M SE Apartment
+  12. M NE Apartment
+  13. M N1 Apartment
+  14. M N2 Apartment
+  15. M S1 Apartment
+  16. M S2 Apartment
+  17. T SW Apartment
+  18. T NW Apartment
+  19. T SE Apartment
+  20. T NE Apartment
+  21. T N1 Apartment
+  22. T N2 Apartment
+  23. T S1 Apartment
+  24. T S2 Apartment
+  25. T Corridor
+  26. G Corridor
+  27. M Corridor
+
+📊 Building Context:
+  • Zones: 27
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Create complete VRF HVAC configuration for apartment 27 thermal zones, with no heat recovery, zone is by one indoor terminal unit connected to a single shared outdoor condensing unit through a zone terminal unit list. Only assign VRF terminal units to zones that occupied conditioned. Skip any zone that unoccupied or unconditioned.
+✓ Calling LLM (mistral-api) to generate VRF system for zones: G SW Apartment, G NW Apartment, Office, G NE Apartment, G N1 Apartment, G N2 Apartment, G S1 Apartment, G S2 Apartment, M SW Apartment, M NW Apartment, M SE Apartment, M NE Apartment, M N1 Apartment, M N2 Apartment, M S1 Apartment, M S2 Apartment, T SW Apartment, T NW Apartment, T SE Apartment, T NE Apartment, T N1 Apartment, T N2 Apartment, T S1 Apartment, T S2 Apartment, T Corridor, G Corridor, M Corridor
+  User Design Request: Create complete VRF HVAC configuration for apartment 27 thermal zones, with no heat recovery, zone is by one indoor terminal unit connected to a single shared outdoor condensing unit through a zone terminal unit list. Only assign VRF terminal units to zones that occupied conditioned. Skip any zone that unoccupied or unconditioned.
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (30563 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 9 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 9 HVAC objects
+
+[2] Validating IDF...
+Valid: False, Errors: 8
+
+[2.5] Validation failed. Attempting pre-simulation fix...
+      Found 8 validation errors
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (1282 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "G SW Apartment",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "G NW Apartment",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Office",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "G NE Apartment",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "G N1 Apartment",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "G N2 Apartment",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zon...
+================================================================================
+
+
+✓ Successfully parsed 8 fixes from LLM response
+
+
+================================================================================
+APPLYING 8 FIXES TO IDF
+================================================================================
+
+1. HVACTemplate:Zone:VRF[G SW Apartment].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_G SW Apartment' to ''
+2. HVACTemplate:Zone:VRF[G NW Apartment].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_G NW Apartment' to ''
+3. HVACTemplate:Zone:VRF[Office].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Office' to ''
+4. HVACTemplate:Zone:VRF[G NE Apartment].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_G NE Apartment' to ''
+5. HVACTemplate:Zone:VRF[G N1 Apartment].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_G N1 Apartment' to ''
+6. HVACTemplate:Zone:VRF[G N2 Apartment].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_G N2 Apartment' to ''
+7. HVACTemplate:Zone:VRF[G S1 Apartment].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_G S1 Apartment' to ''
+8. HVACTemplate:Zone:VRF[G S2 Apartment].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_G S2 Apartment' to ''
+
+================================================================================
+FIXES APPLIED: 8 successful, 0 failed
+================================================================================
+
+✓ Applied 8 pre-simulation fixes
+[2.6] Re-validating after fix...
+✓ Validation passed after fix!
+
+[3] Simulating...
+Success: False, Errors: 15
+
+[4.1] Fixing errors...
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (1422 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "G N1 Apartment VRF Cooling Coil",
+    "field_to_change": "gross_rated_sensible_heat_ratio",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "G N1 Apartment VRF Cooling Coil",
+    "field_to_change": "gross_rated_total_cooling_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "Coil:Heating:DX:VariableRefrigerantFlow",
+    "object_name": "G N1 Apartment VRF Heating Coil",
+    "field_to_change": "gross_rated_heating_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "DesignSpecification:OutdoorAir",
+    "object_name": "SZ DSOA G N1 Apartment",
+    "field_to_change": "outdoor_air_method",
+    "new_value": "Sum"
+  },
+  {
+    "object_type": "Sizing:Zone",
+    "object_name": "Sizing:Zone 5",
+    "field_to_change": "zone_cooling_design_supply_air_temperature_input_method",
+    "new_value": "SupplyAirTempera...
+================================================================================
+
+
+✓ Successfully parsed 7 fixes from LLM response
+
+
+================================================================================
+APPLYING 7 FIXES TO IDF
+================================================================================
+
+1. Coil:Cooling:DX:VariableRefrigerantFlow[G N1 Apartment VRF Cooling Coil].gross_rated_sensible_heat_ratio = 'Autosize'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+2. Coil:Cooling:DX:VariableRefrigerantFlow[G N1 Apartment VRF Cooling Coil].gross_rated_total_cooling_capacity = 'Autosize'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+3. Coil:Heating:DX:VariableRefrigerantFlow[G N1 Apartment VRF Heating Coil].gross_rated_heating_capacity = 'Autosize'
+   ❌ No objects of type 'Coil:Heating:DX:VariableRefrigerantFlow' found in IDF
+4. DesignSpecification:OutdoorAir[SZ DSOA G N1 Apartment].outdoor_air_method = 'Sum'
+   ❌ No objects of type 'DesignSpecification:OutdoorAir' found in IDF
+5. Sizing:Zone[Sizing:Zone 5].zone_cooling_design_supply_air_temperature_input_method = 'SupplyAirTemperature'
+   ❌ No objects of type 'Sizing:Zone' found in IDF
+6. ZoneControl:Thermostat[Thermostat_G Corridor].control_2_object_type = 'ThermostatSetpoint:DualSetpoint'
+   ✓ Changed from 'Clg-SetP-Sch' to 'ThermostatSetpoint:DualSetpoint'
+7. ZoneHVAC:TerminalUnit:VariableRefrigerantFlow[G N1 Apartment VRF Terminal Unit].supply_air_fan_placement = 'BlowThrough'
+   ❌ No objects of type 'ZoneHVAC:TerminalUnit:VariableRefrigerantFlow' found in IDF
+
+================================================================================
+FIXES APPLIED: 1 successful, 6 failed
+================================================================================
+
+✓ Applied 1 fixes
+
+[5.1] Re-simulating...
+Success: False
+
+[4.2] Fixing errors...
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (1772 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "G N1 Apartment VRF Cooling Coil",
+    "field_to_change": "gross_rated_sensible_heat_ratio",
+    "new_value": 0.7
+  },
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "G N1 Apartment VRF Cooling Coil",
+    "field_to_change": "gross_rated_total_cooling_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "Coil:Heating:DX:VariableRefrigerantFlow",
+    "object_name": "G N1 Apartment VRF Heating Coil",
+    "field_to_change": "gross_rated_heating_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "DesignSpecification:OutdoorAir",
+    "object_name": "SZ DSOA G N1 Apartment",
+    "field_to_change": "outdoor_air_method",
+    "new_value": "Sum"
+  },
+  {
+    "object_type": "Sizing:Zone",
+    "object_name": "Sizing:Zone 5",
+    "field_to_change": "zone_cooling_design_supply_air_temperature_input_method",
+    "new_value": "SupplyAirTemperature"
+ ...
+================================================================================
+
+
+✓ Successfully parsed 9 fixes from LLM response
+
+
+================================================================================
+APPLYING 9 FIXES TO IDF
+================================================================================
+
+1. Coil:Cooling:DX:VariableRefrigerantFlow[G N1 Apartment VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.7'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+2. Coil:Cooling:DX:VariableRefrigerantFlow[G N1 Apartment VRF Cooling Coil].gross_rated_total_cooling_capacity = 'Autosize'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+3. Coil:Heating:DX:VariableRefrigerantFlow[G N1 Apartment VRF Heating Coil].gross_rated_heating_capacity = 'Autosize'
+   ❌ No objects of type 'Coil:Heating:DX:VariableRefrigerantFlow' found in IDF
+4. DesignSpecification:OutdoorAir[SZ DSOA G N1 Apartment].outdoor_air_method = 'Sum'
+   ❌ No objects of type 'DesignSpecification:OutdoorAir' found in IDF
+5. Sizing:Zone[Sizing:Zone 5].zone_cooling_design_supply_air_temperature_input_method = 'SupplyAirTemperature'
+   ❌ No objects of type 'Sizing:Zone' found in IDF
+6. ZoneControl:Thermostat[Thermostat_G N1 Apartment].control_2_object_type = 'ThermostatSetpoint:SingleHeating'
+   ✓ Changed from 'Clg-SetP-Sch' to 'ThermostatSetpoint:SingleHeating'
+7. ZoneHVAC:TerminalUnit:VariableRefrigerantFlow[G N1 Apartment VRF Terminal Unit].supply_air_fan_placement = 'BlowThrough'
+   ❌ No objects of type 'ZoneHVAC:TerminalUnit:VariableRefrigerantFlow' found in IDF
+8. HVACTemplate:System:VRF[VRF_System_1].gross_rated_total_cooling_capacity = 'Autosize'
+   ✓ Changed from 'Autosize' to 'Autosize'
+9. HVACTemplate:System:VRF[VRF_System_1].gross_rated_heating_capacity = 'Autosize'
+   ✓ Changed from 'Autosize' to 'Autosize'
+
+================================================================================
+FIXES APPLIED: 3 successful, 6 failed
+================================================================================
+
+✓ Applied 3 fixes
+
+[5.2] Re-simulating...
+Success: False
+
+======================================================================
+PIPELINE COMPLETE: FAILED
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/base_rag_midriseapartment_medium_omission_r1_results.json
+======================================================================

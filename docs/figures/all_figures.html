@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Paper Figures - HVAC-LLM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background: #f5f5f5;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+        
+        .figure-container {
+            background: white;
+            margin: 30px auto;
+            padding: 30px;
+            max-width: 900px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .figure-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .figure-caption {
+            font-size: 12px;
+            color: #555;
+            margin-top: 15px;
+            text-align: justify;
+            font-style: italic;
+        }
+        
+        .figure-content {
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+        }
+        
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .export-note {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px auto;
+            max-width: 900px;
+            font-size: 14px;
+        }
+        
+        @media print {
+            .export-note { display: none; }
+            .figure-container {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                border: none;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Research Paper Figures</h1>
+<p class="subtitle">Automated HVAC System Design using Multi-Agent Large Language Models with RAG and Fine-Tuning</p>
+
+<div class="export-note">
+    <strong>📥 Export Instructions:</strong> Right-click on any figure and select "Save Image As" to download as PNG. For vector format, use browser's "Print to PDF" feature or copy the SVG code directly.
+</div>
+
+<!-- FIGURE 1: System Architecture -->
+<div class="figure-container">
+    <div class="figure-title">Figure 1. Multi-Agent System Architecture</div>
+    <div class="figure-content">
+        <svg width="800" height="650" viewBox="0 0 800 650" xmlns="http://www.w3.org/2000/svg">
+            <!-- Background -->
+            <defs>
+                <linearGradient id="inputGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#11998e"/>
+                    <stop offset="100%" style="stop-color:#38ef7d"/>
+                </linearGradient>
+                <linearGradient id="agent1Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#667eea"/>
+                    <stop offset="100%" style="stop-color:#764ba2"/>
+                </linearGradient>
+                <linearGradient id="agent2Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#f093fb"/>
+                    <stop offset="100%" style="stop-color:#f5576c"/>
+                </linearGradient>
+                <linearGradient id="agent3Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#4facfe"/>
+                    <stop offset="100%" style="stop-color:#00f2fe"/>
+                </linearGradient>
+                <linearGradient id="outputGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#43e97b"/>
+                    <stop offset="100%" style="stop-color:#38f9d7"/>
+                </linearGradient>
+                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+                </marker>
+            </defs>
+            
+            <!-- Title Box -->
+            <rect x="150" y="10" width="500" height="40" rx="5" fill="#2c3e50"/>
+            <text x="400" y="37" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="16">HVAC-LLM MULTI-AGENT PIPELINE</text>
+            
+            <!-- Input Phase -->
+            <rect x="200" y="70" width="400" height="80" rx="10" fill="url(#inputGrad)"/>
+            <text x="400" y="100" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="14">INPUT PHASE</text>
+            <text x="400" y="120" text-anchor="middle" fill="white" font-family="Arial" font-size="11">• Natural Language Request</text>
+            <text x="400" y="135" text-anchor="middle" fill="white" font-family="Arial" font-size="11">• Base Building IDF • Zone Specifications</text>
+            
+            <!-- Arrow 1 -->
+            <line x1="400" y1="150" x2="400" y2="175" stroke="#555" stroke-width="2" marker-end="url(#arrowhead)"/>
+            
+            <!-- Agent 1 -->
+            <rect x="150" y="180" width="500" height="100" rx="10" fill="url(#agent1Grad)"/>
+            <text x="400" y="210" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="14">AGENT 1: VRF TEMPLATE GENERATOR</text>
+            <text x="400" y="235" text-anchor="middle" fill="white" font-family="Arial" font-size="11">Input: User request + Building context + RAG knowledge</text>
+            <text x="400" y="252" text-anchor="middle" fill="white" font-family="Arial" font-size="11">Output: HVACTemplate objects (System:VRF, Zone:VRF, Thermostats)</text>
+            <text x="400" y="269" text-anchor="middle" fill="white" font-family="Arial" font-size="11">Model: Fine-tuned Mistral-7B (500+ VRF training examples)</text>
+            
+            <!-- Arrow 2 -->
+            <line x1="400" y1="280" x2="400" y2="305" stroke="#555" stroke-width="2" marker-end="url(#arrowhead)"/>
+            
+            <!-- Agent 1.5 (Optional) -->
+            <rect x="200" y="310" width="400" height="60" rx="10" fill="#95a5a6" stroke="#7f8c8d" stroke-width="2" stroke-dasharray="5,5"/>
+            <text x="400" y="335" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="12">AGENT 1.5: QUICK VALIDATION (Optional)</text>
+            <text x="400" y="355" text-anchor="middle" fill="white" font-family="Arial" font-size="10">Pre-simulation error detection (70-80% catch rate)</text>
+            
+            <!-- Arrow 3 -->
+            <line x1="400" y1="370" x2="400" y2="395" stroke="#555" stroke-width="2" marker-end="url(#arrowhead)"/>
+            
+            <!-- Agent 2 -->
+            <rect x="150" y="400" width="500" height="100" rx="10" fill="url(#agent2Grad)"/>
+            <text x="400" y="425" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="14">AGENT 2: VALIDATION AND SIMULATION ORCHESTRATOR</text>
+            <text x="400" y="450" text-anchor="middle" fill="white" font-family="Arial" font-size="11">Phase 1: IDF Syntax Validation (Eppy-based)</text>
+            <text x="400" y="467" text-anchor="middle" fill="white" font-family="Arial" font-size="11">Phase 2: HVACTemplate Expansion (ExpandObjects)</text>
+            <text x="400" y="484" text-anchor="middle" fill="white" font-family="Arial" font-size="11">Phase 3: EnergyPlus Simulation</text>
+            
+            <!-- Decision arrows -->
+            <line x1="300" y1="500" x2="300" y2="540" stroke="#555" stroke-width="2"/>
+            <line x1="500" y1="500" x2="500" y2="540" stroke="#555" stroke-width="2"/>
+            <line x1="300" y1="540" x2="200" y2="540" stroke="#555" stroke-width="2"/>
+            <line x1="500" y1="540" x2="600" y2="540" stroke="#555" stroke-width="2"/>
+            <line x1="200" y1="540" x2="200" y2="570" stroke="#555" stroke-width="2" marker-end="url(#arrowhead)"/>
+            <line x1="600" y1="540" x2="600" y2="570" stroke="#555" stroke-width="2" marker-end="url(#arrowhead)"/>
+            
+            <!-- Success/Failure labels -->
+            <text x="250" y="535" text-anchor="middle" fill="#27ae60" font-family="Arial" font-weight="bold" font-size="12">SUCCESS</text>
+            <text x="550" y="535" text-anchor="middle" fill="#e74c3c" font-family="Arial" font-weight="bold" font-size="12">FAILURE</text>
+            
+            <!-- Output (Success) -->
+            <rect x="100" y="575" width="200" height="60" rx="10" fill="url(#outputGrad)"/>
+            <text x="200" y="605" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="14">COMPLETE IDF</text>
+            <text x="200" y="622" text-anchor="middle" fill="white" font-family="Arial" font-size="11">Simulation-ready</text>
+            
+            <!-- Agent 3 (Failure) -->
+            <rect x="500" y="575" width="200" height="60" rx="10" fill="url(#agent3Grad)"/>
+            <text x="600" y="598" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="12">AGENT 3: ITERATIVE</text>
+            <text x="600" y="615" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="12">DEBUGGING AGENT</text>
+            <text x="600" y="630" text-anchor="middle" fill="white" font-family="Arial" font-size="10">Fine-tuned Mistral-7B</text>
+            
+            <!-- Re-simulate loop -->
+            <path d="M 700 605 Q 750 605 750 480 Q 750 420 650 420" fill="none" stroke="#555" stroke-width="2" marker-end="url(#arrowhead)"/>
+            <text x="765" y="510" text-anchor="middle" fill="#555" font-family="Arial" font-size="10" transform="rotate(-90, 765, 510)">Re-simulate (Max 3)</text>
+            
+            <!-- Legend -->
+            <rect x="50" y="70" width="120" height="120" rx="5" fill="#f8f9fa" stroke="#ddd"/>
+            <text x="110" y="90" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="11">Legend</text>
+            <rect x="60" y="100" width="15" height="12" fill="url(#inputGrad)"/>
+            <text x="80" y="110" font-family="Arial" font-size="9">Input</text>
+            <rect x="60" y="118" width="15" height="12" fill="url(#agent1Grad)"/>
+            <text x="80" y="128" font-family="Arial" font-size="9">Agent 1 (LLM)</text>
+            <rect x="60" y="136" width="15" height="12" fill="url(#agent2Grad)"/>
+            <text x="80" y="146" font-family="Arial" font-size="9">Agent 2 (Validator)</text>
+            <rect x="60" y="154" width="15" height="12" fill="url(#agent3Grad)"/>
+            <text x="80" y="164" font-family="Arial" font-size="9">Agent 3 (Corrector)</text>
+            <rect x="60" y="172" width="15" height="12" fill="url(#outputGrad)"/>
+            <text x="80" y="182" font-family="Arial" font-size="9">Output</text>
+        </svg>
+    </div>
+    <div class="figure-caption">
+        <strong>Figure 1.</strong> Multi-agent system architecture for automated HVAC generation. The pipeline consists of three specialized agents: Agent 1 (VRF Generator) transforms natural language requests into HVACTemplate objects using a fine-tuned Mistral-7B model; Agent 2 (Validation Orchestrator) performs syntax validation, template expansion, and EnergyPlus simulation; Agent 3 (Iterative Debugger) analyzes errors and applies corrections with a maximum of 3 iterations to ensure bounded execution time.
+    </div>
+</div>
+
+<!-- FIGURE 2: Agent 1 Workflow -->
+<div class="figure-container">
+    <div class="figure-title">Figure 2. Agent 1: VRF Generator Workflow</div>
+    <div class="figure-content">
+        <svg width="800" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="inputGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#74b9ff"/>
+                    <stop offset="100%" style="stop-color:#0984e3"/>
+                </linearGradient>
+                <linearGradient id="ragGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#a29bfe"/>
+                    <stop offset="100%" style="stop-color:#6c5ce7"/>
+                </linearGradient>
+                <linearGradient id="genGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#fd79a8"/>
+                    <stop offset="100%" style="stop-color:#e84393"/>
+                </linearGradient>
+                <linearGradient id="outGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#55efc4"/>
+                    <stop offset="100%" style="stop-color:#00b894"/>
+                </linearGradient>
+                <marker id="arrow2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+                </marker>
+            </defs>
+            
+            <!-- Title -->
+            <text x="400" y="30" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="16" fill="#2c3e50">Agent 1: VRF Template Generator Workflow</text>
+            
+            <!-- Input Box -->
+            <rect x="30" y="60" width="140" height="120" rx="10" fill="url(#inputGrad2)"/>
+            <text x="100" y="90" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="12">INPUT</text>
+            <text x="100" y="110" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Natural Language</text>
+            <text x="100" y="125" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Zone List</text>
+            <text x="100" y="140" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Building Context</text>
+            <text x="100" y="155" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• System Name</text>
+            
+            <!-- Arrow to RAG -->
+            <line x1="170" y1="120" x2="210" y2="120" stroke="#555" stroke-width="2" marker-end="url(#arrow2)"/>
+            
+            <!-- RAG Query Box -->
+            <rect x="220" y="60" width="140" height="120" rx="10" fill="url(#ragGrad)"/>
+            <text x="290" y="90" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="12">RAG QUERY</text>
+            <text x="290" y="110" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Field Specs</text>
+            <text x="290" y="125" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Design Rules</text>
+            <text x="290" y="140" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• User Examples</text>
+            <text x="290" y="155" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Dependencies</text>
+            
+            <!-- Arrow to Generation -->
+            <line x1="360" y1="120" x2="400" y2="120" stroke="#555" stroke-width="2" marker-end="url(#arrow2)"/>
+            
+            <!-- Generation Box (Main) -->
+            <rect x="410" y="50" width="180" height="140" rx="10" fill="url(#genGrad)"/>
+            <text x="500" y="75" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="12">ITERATIVE GENERATION</text>
+            <text x="500" y="95" text-anchor="middle" fill="white" font-family="Arial" font-size="10">Fine-tuned Mistral-7B</text>
+            
+            <!-- Sub-steps -->
+            <rect x="425" y="105" width="150" height="25" rx="3" fill="rgba(255,255,255,0.3)"/>
+            <text x="500" y="122" text-anchor="middle" fill="white" font-family="Arial" font-size="9">1. System:VRF (42 fields)</text>
+            
+            <rect x="425" y="135" width="150" height="25" rx="3" fill="rgba(255,255,255,0.3)"/>
+            <text x="500" y="152" text-anchor="middle" fill="white" font-family="Arial" font-size="9">2. Zone:VRF (per zone)</text>
+            
+            <rect x="425" y="165" width="150" height="25" rx="3" fill="rgba(255,255,255,0.3)"/>
+            <text x="500" y="182" text-anchor="middle" fill="white" font-family="Arial" font-size="9">3. Thermostats</text>
+            
+            <!-- Arrow to Output -->
+            <line x1="590" y1="120" x2="630" y2="120" stroke="#555" stroke-width="2" marker-end="url(#arrow2)"/>
+            
+            <!-- Output Box -->
+            <rect x="640" y="60" width="140" height="120" rx="10" fill="url(#outGrad2)"/>
+            <text x="710" y="90" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="12">OUTPUT</text>
+            <text x="710" y="110" text-anchor="middle" fill="white" font-family="Arial" font-size="9">HVACTemplate:</text>
+            <text x="710" y="125" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• System:VRF</text>
+            <text x="710" y="140" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Zone:VRF (n)</text>
+            <text x="710" y="155" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Thermostat (n)</text>
+            
+            <!-- Example Input/Output -->
+            <rect x="30" y="220" width="360" height="160" rx="5" fill="#2d2d2d"/>
+            <text x="210" y="245" text-anchor="middle" fill="#98c379" font-family="monospace" font-size="11">// Example Input</text>
+            <text x="45" y="270" fill="#e5c07b" font-family="monospace" font-size="10">"Design a VRF system with heat</text>
+            <text x="45" y="287" fill="#e5c07b" font-family="monospace" font-size="10">recovery for 4 office zones"</text>
+            <text x="45" y="320" fill="#7f8c8d" font-family="monospace" font-size="10">zones: ["Zone1", "Zone2", "Zone3", "Zone4"]</text>
+            <text x="45" y="340" fill="#7f8c8d" font-family="monospace" font-size="10">system_name: "VRF_System_1"</text>
+            <text x="45" y="360" fill="#7f8c8d" font-family="monospace" font-size="10">building_context: {area: 500m², volume: 1500m³}</text>
+            
+            <rect x="410" y="220" width="370" height="160" rx="5" fill="#2d2d2d"/>
+            <text x="595" y="245" text-anchor="middle" fill="#98c379" font-family="monospace" font-size="11">// Example Output (IDF format)</text>
+            <text x="425" y="270" fill="#61afef" font-family="monospace" font-size="10">HVACTemplate:System:VRF,</text>
+            <text x="435" y="287" fill="#e5c07b" font-family="monospace" font-size="10">VRF_System_1,        </text>
+            <text x="575" y="287" fill="#7f8c8d" font-family="monospace" font-size="9">!- Name</text>
+            <text x="435" y="304" fill="#e5c07b" font-family="monospace" font-size="10">VRFAvailSched,       </text>
+            <text x="575" y="304" fill="#7f8c8d" font-family="monospace" font-size="9">!- Availability</text>
+            <text x="435" y="321" fill="#d19a66" font-family="monospace" font-size="10">3.3,                 </text>
+            <text x="575" y="321" fill="#7f8c8d" font-family="monospace" font-size="9">!- Cooling COP</text>
+            <text x="435" y="338" fill="#d19a66" font-family="monospace" font-size="10">3.4,                 </text>
+            <text x="575" y="338" fill="#7f8c8d" font-family="monospace" font-size="9">!- Heating COP</text>
+            <text x="435" y="355" fill="#7f8c8d" font-family="monospace" font-size="10">...;                 </text>
+            <text x="575" y="355" fill="#7f8c8d" font-family="monospace" font-size="9">!- (42 fields)</text>
+        </svg>
+    </div>
+    <div class="figure-caption">
+        <strong>Figure 2.</strong> Agent 1 workflow showing the iterative generation strategy. The process begins with user input (natural language request, zone list, building context) which is enhanced with RAG-retrieved knowledge (field specifications, design rules, similar examples). The fine-tuned Mistral-7B model generates HVACTemplate objects in three sequential steps: System:VRF with all 42 fields, Zone:VRF for each thermal zone, and corresponding Thermostats with setpoint schedules.
+    </div>
+</div>
+
+<!-- FIGURE 3: Validation Pipeline -->
+<div class="figure-container">
+    <div class="figure-title">Figure 3. Agent 2: Four-Stage Validation Pipeline</div>
+    <div class="figure-content">
+        <svg width="800" height="350" viewBox="0 0 800 350" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="stage1" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#74b9ff"/>
+                    <stop offset="100%" style="stop-color:#0984e3"/>
+                </linearGradient>
+                <linearGradient id="stage2" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#a29bfe"/>
+                    <stop offset="100%" style="stop-color:#6c5ce7"/>
+                </linearGradient>
+                <linearGradient id="stage3" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#fd79a8"/>
+                    <stop offset="100%" style="stop-color:#e84393"/>
+                </linearGradient>
+                <linearGradient id="stage4" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#55efc4"/>
+                    <stop offset="100%" style="stop-color:#00b894"/>
+                </linearGradient>
+                <marker id="arrow3" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+                </marker>
+            </defs>
+            
+            <!-- Title -->
+            <text x="400" y="30" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="16" fill="#2c3e50">Agent 2: Four-Stage Validation Pipeline</text>
+            
+            <!-- Input -->
+            <rect x="20" y="100" width="100" height="80" rx="5" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="2"/>
+            <text x="70" y="135" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="11">Generated</text>
+            <text x="70" y="150" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="11">HVAC IDF</text>
+            <text x="70" y="168" text-anchor="middle" font-family="Arial" font-size="9">(from Agent 1)</text>
+            
+            <!-- Arrow -->
+            <line x1="120" y1="140" x2="150" y2="140" stroke="#555" stroke-width="2" marker-end="url(#arrow3)"/>
+            
+            <!-- Stage 1 -->
+            <rect x="160" y="70" width="130" height="140" rx="10" fill="url(#stage1)"/>
+            <text x="225" y="95" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="12">Stage 1</text>
+            <text x="225" y="115" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="11">IDD Compliance</text>
+            <rect x="170" y="125" width="110" height="75" rx="5" fill="rgba(255,255,255,0.2)"/>
+            <text x="225" y="145" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Validate object types</text>
+            <text x="225" y="160" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Check required fields</text>
+            <text x="225" y="175" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Verify value types</text>
+            <text x="225" y="190" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Auto-fix if enabled</text>
+            
+            <!-- Arrow -->
+            <line x1="290" y1="140" x2="320" y2="140" stroke="#555" stroke-width="2" marker-end="url(#arrow3)"/>
+            
+            <!-- Stage 2 -->
+            <rect x="330" y="70" width="130" height="140" rx="10" fill="url(#stage2)"/>
+            <text x="395" y="95" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="12">Stage 2</text>
+            <text x="395" y="115" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="11">Eppy Validation</text>
+            <rect x="340" y="125" width="110" height="75" rx="5" fill="rgba(255,255,255,0.2)"/>
+            <text x="395" y="145" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Parse IDF file</text>
+            <text x="395" y="160" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Check references</text>
+            <text x="395" y="175" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Validate zone links</text>
+            <text x="395" y="190" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Schema compliance</text>
+            
+            <!-- Arrow -->
+            <line x1="460" y1="140" x2="490" y2="140" stroke="#555" stroke-width="2" marker-end="url(#arrow3)"/>
+            
+            <!-- Stage 3 -->
+            <rect x="500" y="70" width="130" height="140" rx="10" fill="url(#stage3)"/>
+            <text x="565" y="95" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="12">Stage 3</text>
+            <text x="565" y="115" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="11">ExpandObjects</text>
+            <rect x="510" y="125" width="110" height="75" rx="5" fill="rgba(255,255,255,0.2)"/>
+            <text x="565" y="145" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Template → Detailed</text>
+            <text x="565" y="160" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Generate coils</text>
+            <text x="565" y="175" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Generate fans</text>
+            <text x="565" y="190" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Create schedules</text>
+            
+            <!-- Arrow -->
+            <line x1="630" y1="140" x2="660" y2="140" stroke="#555" stroke-width="2" marker-end="url(#arrow3)"/>
+            
+            <!-- Stage 4 -->
+            <rect x="670" y="70" width="110" height="140" rx="10" fill="url(#stage4)"/>
+            <text x="725" y="95" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="12">Stage 4</text>
+            <text x="725" y="115" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="11">EnergyPlus</text>
+            <rect x="680" y="125" width="90" height="75" rx="5" fill="rgba(255,255,255,0.2)"/>
+            <text x="725" y="145" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Full simulation</text>
+            <text x="725" y="160" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Parse errors</text>
+            <text x="725" y="175" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Generate ESO</text>
+            <text x="725" y="190" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Return status</text>
+            
+            <!-- Error Classification Table -->
+            <rect x="160" y="240" width="470" height="100" rx="5" fill="#f8f9fa" stroke="#ddd"/>
+            <text x="395" y="260" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="12">Error Classification</text>
+            
+            <rect x="170" y="270" width="100" height="25" fill="#f39c12"/>
+            <text x="220" y="287" text-anchor="middle" fill="white" font-family="Arial" font-size="10">Warning</text>
+            <text x="330" y="287" text-anchor="start" font-family="Arial" font-size="10">Non-fatal → Log only</text>
+            
+            <rect x="170" y="300" width="100" height="25" fill="#e74c3c"/>
+            <text x="220" y="317" text-anchor="middle" fill="white" font-family="Arial" font-size="10">Severe</text>
+            <text x="330" y="317" text-anchor="start" font-family="Arial" font-size="10">Significant → Pass to Agent 3</text>
+            
+            <rect x="170" y="330" width="100" height="25" fill="#8e44ad"/>
+            <text x="220" y="347" text-anchor="middle" fill="white" font-family="Arial" font-size="10">Fatal</text>
+            <text x="330" y="347" text-anchor="start" font-family="Arial" font-size="10">Critical → Immediate correction</text>
+        </svg>
+    </div>
+    <div class="figure-caption">
+        <strong>Figure 3.</strong> Four-stage validation pipeline in Agent 2. Stage 1 performs IDD (Input Data Dictionary) compliance checking to validate object types and required fields against the EnergyPlus schema. Stage 2 uses Eppy library for syntax validation and cross-object reference checking. Stage 3 runs the ExpandObjects preprocessor to transform HVACTemplate objects into detailed simulation objects. Stage 4 executes the full EnergyPlus simulation and parses the error log (eplusout.err) to classify errors by severity.
+    </div>
+</div>
+
+<!-- FIGURE 4: Agent 3 Correction Loop -->
+<div class="figure-container">
+    <div class="figure-title">Figure 4. Agent 3: Iterative Correction Workflow</div>
+    <div class="figure-content">
+        <svg width="800" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <marker id="arrow4" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+                </marker>
+                <marker id="arrow4red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
+                </marker>
+                <marker id="arrow4green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#27ae60"/>
+                </marker>
+            </defs>
+            
+            <!-- Title -->
+            <text x="400" y="30" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="16" fill="#2c3e50">Agent 3: Iterative Correction Workflow</text>
+            
+            <!-- Error Input -->
+            <rect x="30" y="80" width="120" height="80" rx="10" fill="#e74c3c"/>
+            <text x="90" y="110" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="11">Error Messages</text>
+            <text x="90" y="130" text-anchor="middle" fill="white" font-family="Arial" font-size="9">from Agent 2</text>
+            <text x="90" y="145" text-anchor="middle" fill="white" font-family="Arial" font-size="9">+ IDF Path</text>
+            
+            <!-- Arrow -->
+            <line x1="150" y1="120" x2="180" y2="120" stroke="#555" stroke-width="2" marker-end="url(#arrow4)"/>
+            
+            <!-- RAG Query -->
+            <rect x="190" y="80" width="120" height="80" rx="10" fill="#9b59b6"/>
+            <text x="250" y="105" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="11">RAG Query</text>
+            <text x="250" y="125" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Error patterns</text>
+            <text x="250" y="140" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Fix procedures</text>
+            <text x="250" y="155" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• Dependencies</text>
+            
+            <!-- Arrow -->
+            <line x1="310" y1="120" x2="340" y2="120" stroke="#555" stroke-width="2" marker-end="url(#arrow4)"/>
+            
+            <!-- Decision Diamond -->
+            <polygon points="400,70 450,120 400,170 350,120" fill="#f39c12" stroke="#d68910" stroke-width="2"/>
+            <text x="400" y="115" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="10">Similarity</text>
+            <text x="400" y="130" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="10">&gt;77%?</text>
+            
+            <!-- Yes path (Cached Fix) -->
+            <line x1="400" y1="70" x2="400" y2="40" stroke="#27ae60" stroke-width="2"/>
+            <line x1="400" y1="40" x2="550" y2="40" stroke="#27ae60" stroke-width="2" marker-end="url(#arrow4green)"/>
+            <text x="475" y="35" text-anchor="middle" fill="#27ae60" font-family="Arial" font-size="10">Yes</text>
+            
+            <rect x="560" y="20" width="100" height="45" rx="5" fill="#27ae60"/>
+            <text x="610" y="40" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="10">Cached Fix</text>
+            <text x="610" y="55" text-anchor="middle" fill="white" font-family="Arial" font-size="9">(Direct apply)</text>
+            
+            <!-- No path (LLM Generation) -->
+            <line x1="450" y1="120" x2="480" y2="120" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow4red)"/>
+            <text x="465" y="112" text-anchor="middle" fill="#e74c3c" font-family="Arial" font-size="10">No</text>
+            
+            <rect x="490" y="85" width="120" height="70" rx="10" fill="#3498db"/>
+            <text x="550" y="110" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="11">LLM Generation</text>
+            <text x="550" y="128" text-anchor="middle" fill="white" font-family="Arial" font-size="9">Fine-tuned</text>
+            <text x="550" y="143" text-anchor="middle" fill="white" font-family="Arial" font-size="9">Mistral-7B</text>
+            
+            <!-- Merge paths -->
+            <line x1="660" y1="42" x2="690" y2="42" stroke="#555" stroke-width="2"/>
+            <line x1="610" y1="120" x2="690" y2="120" stroke="#555" stroke-width="2"/>
+            <line x1="690" y1="42" x2="690" y2="120" stroke="#555" stroke-width="2"/>
+            <line x1="690" y1="81" x2="720" y2="81" stroke="#555" stroke-width="2" marker-end="url(#arrow4)"/>
+            
+            <!-- Apply Fix -->
+            <rect x="730" y="55" width="60" height="50" rx="10" fill="#1abc9c"/>
+            <text x="760" y="77" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="10">Apply</text>
+            <text x="760" y="92" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="10">Fix</text>
+            
+            <!-- Loop back -->
+            <path d="M 760 105 L 760 200 L 90 200 L 90 165" fill="none" stroke="#555" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrow4)"/>
+            <text x="425" y="215" text-anchor="middle" fill="#555" font-family="Arial" font-size="11">Re-simulate (iteration++)</text>
+            
+            <!-- Iteration counter -->
+            <rect x="320" y="230" width="160" height="50" rx="5" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="2"/>
+            <text x="400" y="255" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="11">Max Iterations: 3</text>
+            <text x="400" y="272" text-anchor="middle" font-family="Arial" font-size="10">iteration &gt; 3 → FAIL</text>
+            
+            <!-- Fix Specification Example -->
+            <rect x="30" y="300" width="350" height="90" rx="5" fill="#2d2d2d"/>
+            <text x="205" y="320" text-anchor="middle" fill="#98c379" font-family="monospace" font-size="10">// Fix Specification Format</text>
+            <text x="40" y="340" fill="#e5c07b" font-family="monospace" font-size="9">{</text>
+            <text x="50" y="355" fill="#61afef" font-family="monospace" font-size="9">"object_type"</text>
+            <text x="130" y="355" fill="white" font-family="monospace" font-size="9">: "HVACTemplate:System:VRF",</text>
+            <text x="50" y="370" fill="#61afef" font-family="monospace" font-size="9">"field_to_change"</text>
+            <text x="155" y="370" fill="white" font-family="monospace" font-size="9">: "zone_name_master",</text>
+            <text x="50" y="385" fill="#61afef" font-family="monospace" font-size="9">"new_value"</text>
+            <text x="118" y="385" fill="white" font-family="monospace" font-size="9">: "Zone1" }</text>
+            
+            <!-- Common Errors -->
+            <rect x="410" y="300" width="370" height="90" rx="5" fill="#f8f9fa" stroke="#ddd"/>
+            <text x="595" y="320" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="11">Common Error Patterns &amp; Fixes</text>
+            <text x="420" y="340" font-family="Arial" font-size="9">• Master Thermostat missing → Set first zone</text>
+            <text x="420" y="357" font-family="Arial" font-size="9">• Invalid Condenser Type → Use valid enum</text>
+            <text x="420" y="374" font-family="Arial" font-size="9">• Zone not found → Match from IDF zones</text>
+            <text x="420" y="391" font-family="Arial" font-size="9">• Value type mismatch → Use "Autosize"</text>
+        </svg>
+    </div>
+    <div class="figure-caption">
+        <strong>Figure 4.</strong> Agent 3 iterative correction workflow. Upon receiving error messages from Agent 2, Agent 3 queries the RAG knowledge base for similar error patterns. If similarity exceeds 77%, a cached fix is applied directly without LLM generation. Otherwise, the fine-tuned Mistral-7B model generates a JSON fix specification containing the object type, field to change, and new value. The correction is applied using Eppy, and the IDF is re-submitted for simulation. This process iterates up to 3 times to ensure bounded execution time.
+    </div>
+</div>
+
+<!-- FIGURE 5: RAG Architecture -->
+<div class="figure-container">
+    <div class="figure-title">Figure 5. RAG Knowledge Base Architecture</div>
+    <div class="figure-content">
+        <svg width="800" height="420" viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="dbGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#a29bfe"/>
+                    <stop offset="100%" style="stop-color:#6c5ce7"/>
+                </linearGradient>
+                <marker id="arrow5" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+                </marker>
+            </defs>
+            
+            <!-- Title -->
+            <text x="400" y="30" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="16" fill="#2c3e50">RAG Knowledge Base Architecture</text>
+            
+            <!-- ChromaDB Cylinder -->
+            <ellipse cx="400" cy="90" rx="150" ry="25" fill="url(#dbGrad)"/>
+            <rect x="250" y="90" width="300" height="150" fill="url(#dbGrad)"/>
+            <ellipse cx="400" cy="240" rx="150" ry="25" fill="#5f4bb6"/>
+            <text x="400" y="100" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="14">ChromaDB Vector Database</text>
+            <text x="400" y="120" text-anchor="middle" fill="white" font-family="Arial" font-size="11">718+ Documents</text>
+            
+            <!-- Collections -->
+            <rect x="265" y="135" width="130" height="25" rx="3" fill="rgba(255,255,255,0.3)"/>
+            <text x="330" y="152" text-anchor="middle" fill="white" font-family="Arial" font-size="10">📋 field_specs (42)</text>
+            
+            <rect x="405" y="135" width="130" height="25" rx="3" fill="rgba(255,255,255,0.3)"/>
+            <text x="470" y="152" text-anchor="middle" fill="white" font-family="Arial" font-size="10">⚠️ error_patterns (50+)</text>
+            
+            <rect x="265" y="165" width="130" height="25" rx="3" fill="rgba(255,255,255,0.3)"/>
+            <text x="330" y="182" text-anchor="middle" fill="white" font-family="Arial" font-size="10">📖 design_rules</text>
+            
+            <rect x="405" y="165" width="130" height="25" rx="3" fill="rgba(255,255,255,0.3)"/>
+            <text x="470" y="182" text-anchor="middle" fill="white" font-family="Arial" font-size="10">🔗 dependencies (25)</text>
+            
+            <rect x="335" y="195" width="130" height="25" rx="3" fill="rgba(255,255,255,0.3)"/>
+            <text x="400" y="212" text-anchor="middle" fill="white" font-family="Arial" font-size="10">🔧 fix_procedures (10)</text>
+            
+            <!-- Embedding Model -->
+            <rect x="600" y="120" width="180" height="80" rx="10" fill="#3498db"/>
+            <text x="690" y="150" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="11">Embedding Model</text>
+            <text x="690" y="170" text-anchor="middle" fill="white" font-family="Arial" font-size="10">BAAI/bge-small-en-v1.5</text>
+            <text x="690" y="188" text-anchor="middle" fill="white" font-family="Arial" font-size="10">384 dimensions</text>
+            
+            <!-- Arrow from Embedding to DB -->
+            <line x1="600" y1="160" x2="555" y2="160" stroke="#555" stroke-width="2" marker-end="url(#arrow5)"/>
+            
+            <!-- Query Interface -->
+            <rect x="30" y="280" width="180" height="120" rx="10" fill="#e67e22"/>
+            <text x="120" y="310" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="12">Query Interface</text>
+            <text x="120" y="335" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• query_field_specs()</text>
+            <text x="120" y="352" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• query_error_patterns()</text>
+            <text x="120" y="369" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• query_dependencies()</text>
+            <text x="120" y="386" text-anchor="middle" fill="white" font-family="Arial" font-size="9">• query_user_requests()</text>
+            
+            <!-- Arrow from Query to DB -->
+            <line x1="210" y1="340" x2="260" y2="250" stroke="#555" stroke-width="2" marker-end="url(#arrow5)"/>
+            
+            <!-- Agent 1 -->
+            <rect x="250" y="300" width="130" height="80" rx="10" fill="#667eea"/>
+            <text x="315" y="330" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="11">Agent 1</text>
+            <text x="315" y="350" text-anchor="middle" fill="white" font-family="Arial" font-size="9">Uses: field_specs,</text>
+            <text x="315" y="365" text-anchor="middle" fill="white" font-family="Arial" font-size="9">design_rules,</text>
+            <text x="315" y="380" text-anchor="middle" fill="white" font-family="Arial" font-size="9">user_requests</text>
+            
+            <!-- Arrow from Agent 1 to DB -->
+            <line x1="315" y1="300" x2="340" y2="260" stroke="#667eea" stroke-width="2" marker-end="url(#arrow5)"/>
+            
+            <!-- Agent 3 -->
+            <rect x="420" y="300" width="130" height="80" rx="10" fill="#4facfe"/>
+            <text x="485" y="330" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="11">Agent 3</text>
+            <text x="485" y="350" text-anchor="middle" fill="white" font-family="Arial" font-size="9">Uses: error_patterns,</text>
+            <text x="485" y="365" text-anchor="middle" fill="white" font-family="Arial" font-size="9">fix_procedures,</text>
+            <text x="485" y="380" text-anchor="middle" fill="white" font-family="Arial" font-size="9">dependencies</text>
+            
+            <!-- Arrow from Agent 3 to DB -->
+            <line x1="485" y1="300" x2="460" y2="260" stroke="#4facfe" stroke-width="2" marker-end="url(#arrow5)"/>
+            
+            <!-- Similarity Search -->
+            <rect x="590" y="280" width="180" height="100" rx="10" fill="#1abc9c"/>
+            <text x="680" y="310" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="11">Similarity Search</text>
+            <text x="680" y="335" text-anchor="middle" fill="white" font-family="Arial" font-size="10">Metric: Cosine</text>
+            <text x="680" y="355" text-anchor="middle" fill="white" font-family="Arial" font-size="10">Threshold: 77%</text>
+            <text x="680" y="375" text-anchor="middle" fill="white" font-family="Arial" font-size="10">Top-k: 3-5 results</text>
+            
+            <!-- Arrow from DB to Similarity -->
+            <line x1="550" y1="200" x2="600" y2="280" stroke="#555" stroke-width="2" marker-end="url(#arrow5)"/>
+        </svg>
+    </div>
+    <div class="figure-caption">
+        <strong>Figure 5.</strong> RAG knowledge base architecture using ChromaDB vector database. The knowledge base contains 718+ documents organized into specialized collections: field_specs (42 VRF field specifications), error_patterns (50+ historical error-fix pairs), design_rules (HVAC best practices), field_dependencies (25 inter-field validation rules), and fix_procedures (step-by-step correction guides). Documents are embedded using BAAI/bge-small-en-v1.5 (384 dimensions) with cosine similarity search. Agent 1 primarily queries field specifications and design rules, while Agent 3 focuses on error patterns and fix procedures.
+    </div>
+</div>
+
+<!-- FIGURE 6: Fine-Tuning Approach -->
+<div class="figure-container">
+    <div class="figure-title">Figure 6. LoRA Fine-Tuning Approach</div>
+    <div class="figure-content">
+        <svg width="800" height="380" viewBox="0 0 800 380" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="frozenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#74b9ff"/>
+                    <stop offset="100%" style="stop-color:#0984e3"/>
+                </linearGradient>
+                <linearGradient id="loraGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#fd79a8"/>
+                    <stop offset="100%" style="stop-color:#e84393"/>
+                </linearGradient>
+                <marker id="arrow6" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+                </marker>
+            </defs>
+            
+            <!-- Title -->
+            <text x="400" y="30" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="16" fill="#2c3e50">LoRA (Low-Rank Adaptation) Fine-Tuning Approach</text>
+            
+            <!-- Base Model (Frozen) -->
+            <rect x="50" y="60" width="200" height="200" rx="10" fill="url(#frozenGrad)"/>
+            <text x="150" y="90" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="14">Base Model</text>
+            <text x="150" y="110" text-anchor="middle" fill="white" font-family="Arial" font-size="11">Mistral-7B-v0.1</text>
+            
+            <!-- Frozen indicator -->
+            <rect x="70" y="125" width="160" height="30" rx="5" fill="rgba(255,255,255,0.3)"/>
+            <text x="150" y="145" text-anchor="middle" fill="white" font-family="Arial" font-size="10">❄️ FROZEN (7B params)</text>
+            
+            <!-- Layers -->
+            <rect x="70" y="165" width="160" height="20" rx="3" fill="rgba(255,255,255,0.2)"/>
+            <text x="150" y="180" text-anchor="middle" fill="white" font-family="Arial" font-size="9">Attention Layers (q, k, v, o)</text>
+            <rect x="70" y="190" width="160" height="20" rx="3" fill="rgba(255,255,255,0.2)"/>
+            <text x="150" y="205" text-anchor="middle" fill="white" font-family="Arial" font-size="9">Feed Forward Layers</text>
+            <rect x="70" y="215" width="160" height="20" rx="3" fill="rgba(255,255,255,0.2)"/>
+            <text x="150" y="230" text-anchor="middle" fill="white" font-family="Arial" font-size="9">Embeddings + Output</text>
+            
+            <!-- Plus sign -->
+            <text x="280" y="165" text-anchor="middle" fill="#2c3e50" font-family="Arial" font-weight="bold" font-size="36">+</text>
+            
+            <!-- LoRA Adapters -->
+            <rect x="310" y="60" width="180" height="200" rx="10" fill="url(#loraGrad)"/>
+            <text x="400" y="90" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="14">LoRA Adapters</text>
+            <text x="400" y="110" text-anchor="middle" fill="white" font-family="Arial" font-size="11">~0.1% trainable</text>
+            
+            <!-- Adapter matrices -->
+            <rect x="330" y="125" width="140" height="60" rx="5" fill="rgba(255,255,255,0.3)"/>
+            <text x="400" y="145" text-anchor="middle" fill="white" font-family="Arial" font-size="10">Matrix A (d × r)</text>
+            <text x="400" y="162" text-anchor="middle" fill="white" font-family="Arial" font-size="10">Matrix B (r × d)</text>
+            <text x="400" y="179" text-anchor="middle" fill="white" font-family="Arial" font-size="9">r = 16 (low rank)</text>
+            
+            <!-- Target modules -->
+            <rect x="330" y="195" width="140" height="55" rx="5" fill="rgba(255,255,255,0.3)"/>
+            <text x="400" y="215" text-anchor="middle" fill="white" font-family="Arial" font-size="10">Target Modules:</text>
+            <text x="400" y="232" text-anchor="middle" fill="white" font-family="Arial" font-size="9">q_proj, k_proj, v_proj, o_proj</text>
+            
+            <!-- Equals sign -->
+            <text x="520" y="165" text-anchor="middle" fill="#2c3e50" font-family="Arial" font-weight="bold" font-size="36">=</text>
+            
+            <!-- Combined Model -->
+            <rect x="550" y="60" width="220" height="200" rx="10" fill="#27ae60"/>
+            <text x="660" y="90" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="14">Fine-tuned Model</text>
+            <text x="660" y="115" text-anchor="middle" fill="white" font-family="Arial" font-size="11">Domain-Specific VRF</text>
+            
+            <rect x="570" y="130" width="180" height="40" rx="5" fill="rgba(255,255,255,0.3)"/>
+            <text x="660" y="150" text-anchor="middle" fill="white" font-family="Arial" font-size="10">Agent 1: 500+ VRF examples</text>
+            <text x="660" y="165" text-anchor="middle" fill="white" font-family="Arial" font-size="9">→ Generation capability</text>
+            
+            <rect x="570" y="180" width="180" height="40" rx="5" fill="rgba(255,255,255,0.3)"/>
+            <text x="660" y="200" text-anchor="middle" fill="white" font-family="Arial" font-size="10">Agent 3: 200+ error-fix pairs</text>
+            <text x="660" y="215" text-anchor="middle" fill="white" font-family="Arial" font-size="9">→ Correction capability</text>
+            
+            <rect x="570" y="230" width="180" height="25" rx="5" fill="rgba(255,255,255,0.3)"/>
+            <text x="660" y="248" text-anchor="middle" fill="white" font-family="Arial" font-size="10">🎯 80% first-try success</text>
+            
+            <!-- Configuration Table -->
+            <rect x="50" y="280" width="350" height="90" rx="5" fill="#f8f9fa" stroke="#ddd"/>
+            <text x="225" y="300" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="12">Training Configuration</text>
+            
+            <text x="70" y="320" font-family="Arial" font-size="10">LoRA Rank: 16</text>
+            <text x="70" y="337" font-family="Arial" font-size="10">LoRA Alpha: 32</text>
+            <text x="70" y="354" font-family="Arial" font-size="10">Dropout: 0.05</text>
+            
+            <text x="220" y="320" font-family="Arial" font-size="10">Learning Rate: 2e-4</text>
+            <text x="220" y="337" font-family="Arial" font-size="10">Batch Size: 4</text>
+            <text x="220" y="354" font-family="Arial" font-size="10">Epochs: 3</text>
+            
+            <!-- Quantization -->
+            <rect x="430" y="280" width="340" height="90" rx="5" fill="#f8f9fa" stroke="#ddd"/>
+            <text x="600" y="300" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="12">4-bit Quantization (QLoRA)</text>
+            
+            <text x="450" y="325" font-family="Arial" font-size="10">• Quant Type: NF4 (Normal Float 4)</text>
+            <text x="450" y="345" font-family="Arial" font-size="10">• Compute Dtype: float16</text>
+            <text x="450" y="365" font-family="Arial" font-size="10">• Memory: ~6GB VRAM (inference)</text>
+        </svg>
+    </div>
+    <div class="figure-caption">
+        <strong>Figure 6.</strong> LoRA (Low-Rank Adaptation) fine-tuning approach. The base Mistral-7B model remains frozen while small adapter matrices (A and B) are trained on domain-specific data. Only ~0.1% of parameters are updated, enabling efficient training in approximately 4 GPU hours. The adapters target attention projection layers (q, k, v, o). For inference, 4-bit quantization (QLoRA with NF4) reduces memory requirements to ~6GB, enabling deployment on consumer GPUs. Two separate adapters were trained: Agent 1 for VRF generation (500+ examples) and Agent 3 for error correction (200+ error-fix pairs).
+    </div>
+</div>
+
+<!-- FIGURE 7: Success Rate Comparison -->
+<div class="figure-container">
+    <div class="figure-title">Figure 7. Success Rate Comparison: Fine-tuned vs. Pre-trained Models</div>
+    <div class="figure-content">
+        <svg width="700" height="400" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+            <!-- Title -->
+            <text x="350" y="30" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="14" fill="#2c3e50">Success Rate Comparison</text>
+            
+            <!-- Y-axis -->
+            <line x1="100" y1="60" x2="100" y2="320" stroke="#333" stroke-width="2"/>
+            <text x="50" y="200" text-anchor="middle" font-family="Arial" font-size="12" fill="#333" transform="rotate(-90, 50, 200)">Success Rate (%)</text>
+            
+            <!-- Y-axis labels -->
+            <text x="90" y="65" text-anchor="end" font-family="Arial" font-size="10">100</text>
+            <line x1="95" y1="60" x2="100" y2="60" stroke="#333" stroke-width="1"/>
+            <text x="90" y="125" text-anchor="end" font-family="Arial" font-size="10">75</text>
+            <line x1="95" y1="125" x2="100" y2="125" stroke="#333" stroke-width="1"/>
+            <text x="90" y="190" text-anchor="end" font-family="Arial" font-size="10">50</text>
+            <line x1="95" y1="190" x2="100" y2="190" stroke="#333" stroke-width="1"/>
+            <text x="90" y="255" text-anchor="end" font-family="Arial" font-size="10">25</text>
+            <line x1="95" y1="255" x2="100" y2="255" stroke="#333" stroke-width="1"/>
+            <text x="90" y="320" text-anchor="end" font-family="Arial" font-size="10">0</text>
+            <line x1="95" y1="320" x2="100" y2="320" stroke="#333" stroke-width="1"/>
+            
+            <!-- X-axis -->
+            <line x1="100" y1="320" x2="650" y2="320" stroke="#333" stroke-width="2"/>
+            
+            <!-- Grid lines -->
+            <line x1="100" y1="60" x2="650" y2="60" stroke="#eee" stroke-width="1"/>
+            <line x1="100" y1="125" x2="650" y2="125" stroke="#eee" stroke-width="1"/>
+            <line x1="100" y1="190" x2="650" y2="190" stroke="#eee" stroke-width="1"/>
+            <line x1="100" y1="255" x2="650" y2="255" stroke="#eee" stroke-width="1"/>
+            
+            <!-- Fine-tuned Bars -->
+            <rect x="130" y="112" width="60" height="208" fill="#27ae60"/>
+            <text x="160" y="105" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="12" fill="#27ae60">80%</text>
+            
+            <rect x="200" y="60" width="60" height="260" fill="#2ecc71"/>
+            <text x="230" y="53" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="12" fill="#2ecc71">100%</text>
+            
+            <!-- Pre-trained w/ example Bars -->
+            <rect x="310" y="268" width="60" height="52" fill="#f39c12"/>
+            <text x="340" y="261" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="12" fill="#f39c12">20%</text>
+            
+            <rect x="380" y="268" width="60" height="52" fill="#e67e22"/>
+            <text x="410" y="261" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="12" fill="#e67e22">20%</text>
+            
+            <!-- Pre-trained no example Bars -->
+            <rect x="490" y="315" width="60" height="5" fill="#e74c3c"/>
+            <text x="520" y="308" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="12" fill="#e74c3c">0%</text>
+            
+            <rect x="560" y="315" width="60" height="5" fill="#c0392b"/>
+            <text x="590" y="308" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="12" fill="#c0392b">0%</text>
+            
+            <!-- X-axis labels -->
+            <text x="195" y="345" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="11">Fine-tuned</text>
+            <text x="195" y="360" text-anchor="middle" font-family="Arial" font-size="10">Mistral-7B</text>
+            
+            <text x="375" y="345" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="11">Pre-trained</text>
+            <text x="375" y="360" text-anchor="middle" font-family="Arial" font-size="10">(w/ examples)</text>
+            
+            <text x="555" y="345" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="11">Pre-trained</text>
+            <text x="555" y="360" text-anchor="middle" font-family="Arial" font-size="10">(no examples)</text>
+            
+            <!-- Legend -->
+            <rect x="150" y="375" width="15" height="15" fill="#27ae60"/>
+            <text x="170" y="387" font-family="Arial" font-size="10">First-try Success</text>
+            <rect x="300" y="375" width="15" height="15" fill="#2ecc71"/>
+            <text x="320" y="387" font-family="Arial" font-size="10">Final Success</text>
+            
+            <!-- Annotation -->
+            <rect x="450" y="375" width="200" height="20" rx="3" fill="#e8f8f5" stroke="#27ae60"/>
+            <text x="550" y="389" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="10" fill="#27ae60">+80% improvement from fine-tuning</text>
+        </svg>
+    </div>
+    <div class="figure-caption">
+        <strong>Figure 7.</strong> Success rate comparison between fine-tuned Mistral-7B and pre-trained models across five test cases (1-20 zones). Fine-tuned models achieve 80% first-try success and 100% final success through Agent 3 correction. Pre-trained models with in-context examples achieve only 20% success, while pre-trained models without examples fail completely (0%). The 80% improvement demonstrates that domain-specific fine-tuning is essential for specialized EnergyPlus HVAC generation tasks.
+    </div>
+</div>
+
+<!-- FIGURE 8: Scalability Analysis -->
+<div class="figure-container">
+    <div class="figure-title">Figure 8. Scalability Analysis: Output Quality vs. Zone Count</div>
+    <div class="figure-content">
+        <svg width="700" height="400" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <marker id="arrow8" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
+                </marker>
+            </defs>
+            
+            <!-- Title -->
+            <text x="350" y="30" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="14" fill="#2c3e50">Output Quality vs. Zone Count</text>
+            
+            <!-- Y-axis -->
+            <line x1="100" y1="60" x2="100" y2="320" stroke="#333" stroke-width="2"/>
+            <text x="45" y="200" text-anchor="middle" font-family="Arial" font-size="12" fill="#333" transform="rotate(-90, 45, 200)">Output Quality (%)</text>
+            
+            <!-- Y-axis labels -->
+            <text x="90" y="65" text-anchor="end" font-family="Arial" font-size="10">100</text>
+            <text x="90" y="125" text-anchor="end" font-family="Arial" font-size="10">75</text>
+            <text x="90" y="190" text-anchor="end" font-family="Arial" font-size="10">50</text>
+            <text x="90" y="255" text-anchor="end" font-family="Arial" font-size="10">25</text>
+            <text x="90" y="320" text-anchor="end" font-family="Arial" font-size="10">0</text>
+            
+            <!-- X-axis -->
+            <line x1="100" y1="320" x2="650" y2="320" stroke="#333" stroke-width="2"/>
+            <text x="375" y="360" text-anchor="middle" font-family="Arial" font-size="12" fill="#333">Zone Count</text>
+            
+            <!-- X-axis labels -->
+            <text x="150" y="340" text-anchor="middle" font-family="Arial" font-size="10">1</text>
+            <text x="250" y="340" text-anchor="middle" font-family="Arial" font-size="10">2</text>
+            <text x="350" y="340" text-anchor="middle" font-family="Arial" font-size="10">4</text>
+            <text x="480" y="340" text-anchor="middle" font-family="Arial" font-size="10">10</text>
+            <text x="600" y="340" text-anchor="middle" font-family="Arial" font-size="10">20</text>
+            
+            <!-- Grid lines -->
+            <line x1="100" y1="60" x2="650" y2="60" stroke="#eee" stroke-width="1" stroke-dasharray="5,5"/>
+            <line x1="100" y1="125" x2="650" y2="125" stroke="#eee" stroke-width="1" stroke-dasharray="5,5"/>
+            <line x1="100" y1="190" x2="650" y2="190" stroke="#eee" stroke-width="1" stroke-dasharray="5,5"/>
+            <line x1="100" y1="255" x2="650" y2="255" stroke="#eee" stroke-width="1" stroke-dasharray="5,5"/>
+            
+            <!-- Vertical grid -->
+            <line x1="150" y1="60" x2="150" y2="320" stroke="#eee" stroke-width="1" stroke-dasharray="5,5"/>
+            <line x1="250" y1="60" x2="250" y2="320" stroke="#eee" stroke-width="1" stroke-dasharray="5,5"/>
+            <line x1="350" y1="60" x2="350" y2="320" stroke="#eee" stroke-width="1" stroke-dasharray="5,5"/>
+            <line x1="480" y1="60" x2="480" y2="320" stroke="#eee" stroke-width="1" stroke-dasharray="5,5"/>
+            <line x1="600" y1="60" x2="600" y2="320" stroke="#eee" stroke-width="1" stroke-dasharray="5,5"/>
+            
+            <!-- Fine-tuned line (flat at 100%) -->
+            <polyline points="150,60 250,60 350,60 480,60 600,60" fill="none" stroke="#27ae60" stroke-width="3"/>
+            <circle cx="150" cy="60" r="6" fill="#27ae60"/>
+            <circle cx="250" cy="60" r="6" fill="#27ae60"/>
+            <circle cx="350" cy="60" r="6" fill="#27ae60"/>
+            <circle cx="480" cy="60" r="6" fill="#27ae60"/>
+            <circle cx="600" cy="60" r="6" fill="#27ae60"/>
+            
+            <!-- Pre-trained line (declining) -->
+            <polyline points="150,60 250,95 350,150 480,225 600,300" fill="none" stroke="#e74c3c" stroke-width="3"/>
+            <circle cx="150" cy="60" r="6" fill="#e74c3c"/>
+            <circle cx="250" cy="95" r="6" fill="#e74c3c"/>
+            <circle cx="350" cy="150" r="6" fill="#e74c3c"/>
+            <circle cx="480" cy="225" r="6" fill="#e74c3c"/>
+            <circle cx="600" cy="300" r="6" fill="#e74c3c"/>
+            
+            <!-- Breaking point annotation -->
+            <rect x="520" y="250" width="120" height="40" rx="5" fill="#fee" stroke="#e74c3c" stroke-width="2"/>
+            <text x="580" y="270" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="10" fill="#e74c3c">⚠️ Breaking Point</text>
+            <text x="580" y="283" text-anchor="middle" font-family="Arial" font-size="9" fill="#e74c3c">at 20 zones</text>
+            <line x1="600" y1="290" x2="600" y2="300" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow8)"/>
+            
+            <!-- Legend -->
+            <line x1="150" y1="380" x2="180" y2="380" stroke="#27ae60" stroke-width="3"/>
+            <circle cx="165" cy="380" r="4" fill="#27ae60"/>
+            <text x="190" y="384" font-family="Arial" font-size="11">Fine-tuned Mistral-7B (no degradation)</text>
+            
+            <line x1="450" y1="380" x2="480" y2="380" stroke="#e74c3c" stroke-width="3"/>
+            <circle cx="465" cy="380" r="4" fill="#e74c3c"/>
+            <text x="490" y="384" font-family="Arial" font-size="11">Pre-trained (w/ examples)</text>
+        </svg>
+    </div>
+    <div class="figure-caption">
+        <strong>Figure 8.</strong> Scalability analysis showing output quality versus zone count. Fine-tuned Mistral-7B maintains consistent 100% quality across all scales from 1 to 20 zones, demonstrating no degradation with increasing complexity. In contrast, pre-trained models with in-context examples show progressive quality decline: ~100% at 1 zone, ~85% at 2 zones, ~65% at 4 zones, ~35% at 10 zones, and complete failure (~8%) at 20 zones. The breaking point at 20 zones indicates fundamental limitations of in-context learning for complex, scale-dependent generation tasks.
+    </div>
+</div>
+
+<!-- FIGURE 9: RAG Contribution -->
+<div class="figure-container">
+    <div class="figure-title">Figure 9. RAG Contribution Analysis (Ablation Study)</div>
+    <div class="figure-content">
+        <svg width="700" height="350" viewBox="0 0 700 350" xmlns="http://www.w3.org/2000/svg">
+            <!-- Title -->
+            <text x="350" y="30" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="14" fill="#2c3e50">RAG Contribution Analysis</text>
+            
+            <!-- Y-axis -->
+            <line x1="120" y1="60" x2="120" y2="280" stroke="#333" stroke-width="2"/>
+            <text x="60" y="175" text-anchor="middle" font-family="Arial" font-size="12" fill="#333" transform="rotate(-90, 60, 175)">Success Rate (%)</text>
+            
+            <!-- Y-axis labels -->
+            <text x="110" y="65" text-anchor="end" font-family="Arial" font-size="10">100</text>
+            <text x="110" y="115" text-anchor="end" font-family="Arial" font-size="10">80</text>
+            <text x="110" y="170" text-anchor="end" font-family="Arial" font-size="10">60</text>
+            <text x="110" y="225" text-anchor="end" font-family="Arial" font-size="10">40</text>
+            <text x="110" y="280" text-anchor="end" font-family="Arial" font-size="10">20</text>
+            
+            <!-- X-axis -->
+            <line x1="120" y1="280" x2="650" y2="280" stroke="#333" stroke-width="2"/>
+            
+            <!-- Grid lines -->
+            <line x1="120" y1="60" x2="650" y2="60" stroke="#eee" stroke-width="1"/>
+            <line x1="120" y1="115" x2="650" y2="115" stroke="#eee" stroke-width="1"/>
+            <line x1="120" y1="170" x2="650" y2="170" stroke="#eee" stroke-width="1"/>
+            <line x1="120" y1="225" x2="650" y2="225" stroke="#eee" stroke-width="1"/>
+            
+            <!-- Fine-tuned + RAG -->
+            <rect x="150" y="60" width="80" height="220" fill="#27ae60"/>
+            <text x="190" y="53" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="11" fill="#27ae60">100%</text>
+            <text x="190" y="300" text-anchor="middle" font-family="Arial" font-size="9">Fine-tuned</text>
+            <text x="190" y="312" text-anchor="middle" font-family="Arial" font-size="9">+ RAG</text>
+            
+            <!-- Fine-tuned only -->
+            <rect x="260" y="71" width="80" height="209" fill="#2ecc71"/>
+            <text x="300" y="64" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="11" fill="#2ecc71">95%</text>
+            <text x="300" y="300" text-anchor="middle" font-family="Arial" font-size="9">Fine-tuned</text>
+            <text x="300" y="312" text-anchor="middle" font-family="Arial" font-size="9">only</text>
+            
+            <!-- Annotation: +5% from RAG -->
+            <line x1="230" y1="65" x2="260" y2="65" stroke="#667eea" stroke-width="2"/>
+            <line x1="230" y1="60" x2="230" y2="71" stroke="#667eea" stroke-width="2"/>
+            <text x="245" y="50" text-anchor="middle" font-family="Arial" font-size="9" fill="#667eea">+5%</text>
+            
+            <!-- Pre-trained + RAG -->
+            <rect x="400" y="236" width="80" height="44" fill="#e74c3c"/>
+            <text x="440" y="229" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="11" fill="#e74c3c">20%</text>
+            <text x="440" y="300" text-anchor="middle" font-family="Arial" font-size="9">Pre-trained</text>
+            <text x="440" y="312" text-anchor="middle" font-family="Arial" font-size="9">+ RAG</text>
+            
+            <!-- Pre-trained only -->
+            <rect x="510" y="275" width="80" height="5" fill="#c0392b"/>
+            <text x="550" y="268" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="11" fill="#c0392b">0%</text>
+            <text x="550" y="300" text-anchor="middle" font-family="Arial" font-size="9">Pre-trained</text>
+            <text x="550" y="312" text-anchor="middle" font-family="Arial" font-size="9">only</text>
+            
+            <!-- Annotation: RAG can't help -->
+            <rect x="400" y="320" width="190" height="25" rx="3" fill="#fee" stroke="#e74c3c"/>
+            <text x="495" y="337" text-anchor="middle" font-family="Arial" font-size="10" fill="#e74c3c">❌ RAG cannot rescue pre-trained models</text>
+            
+            <!-- Key insight box -->
+            <rect x="150" y="320" width="200" height="25" rx="3" fill="#e8f8f5" stroke="#27ae60"/>
+            <text x="250" y="337" text-anchor="middle" font-family="Arial" font-size="10" fill="#27ae60">✅ RAG enhances fine-tuned (+5-15%)</text>
+        </svg>
+    </div>
+    <div class="figure-caption">
+        <strong>Figure 9.</strong> RAG contribution analysis through ablation study comparing four configurations: Fine-tuned+RAG (100% success), Fine-tuned only (95% success), Pre-trained+RAG (20% success), and Pre-trained only (0% success). RAG provides a modest +5% improvement for fine-tuned models by enhancing edge case handling through retrieved field specifications and error patterns. However, RAG cannot compensate for the lack of domain-specific training in pre-trained models, demonstrating that RAG enhances but cannot replace fine-tuning.
+    </div>
+</div>
+
+<!-- FIGURE 10: Multi-Agent Synergy -->
+<div class="figure-container">
+    <div class="figure-title">Figure 10. Multi-Agent Synergy Effect</div>
+    <div class="figure-content">
+        <svg width="750" height="350" viewBox="0 0 750 350" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="synergyGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#667eea"/>
+                    <stop offset="100%" style="stop-color:#27ae60"/>
+                </linearGradient>
+                <marker id="arrow10" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+                </marker>
+            </defs>
+            
+            <!-- Title -->
+            <text x="375" y="30" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="14" fill="#2c3e50">Multi-Agent Synergy: From 80% to 100% Success</text>
+            
+            <!-- Agent 1 Circle -->
+            <circle cx="150" cy="150" r="80" fill="#667eea" opacity="0.9"/>
+            <text x="150" y="135" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="14">Agent 1</text>
+            <text x="150" y="155" text-anchor="middle" fill="white" font-family="Arial" font-size="11">VRF Generator</text>
+            <text x="150" y="180" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="18">80%</text>
+            <text x="150" y="198" text-anchor="middle" fill="white" font-family="Arial" font-size="10">first-try success</text>
+            
+            <!-- Plus sign -->
+            <text x="275" y="155" text-anchor="middle" fill="#2c3e50" font-family="Arial" font-weight="bold" font-size="36">+</text>
+            
+            <!-- Agent 3 Circle -->
+            <circle cx="400" cy="150" r="80" fill="#4facfe" opacity="0.9"/>
+            <text x="400" y="135" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="14">Agent 3</text>
+            <text x="400" y="155" text-anchor="middle" fill="white" font-family="Arial" font-size="11">Error Corrector</text>
+            <text x="400" y="180" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="18">+20%</text>
+            <text x="400" y="198" text-anchor="middle" fill="white" font-family="Arial" font-size="10">correction success</text>
+            
+            <!-- Equals sign -->
+            <text x="525" y="155" text-anchor="middle" fill="#2c3e50" font-family="Arial" font-weight="bold" font-size="36">=</text>
+            
+            <!-- Combined Result Circle -->
+            <circle cx="650" cy="150" r="80" fill="#27ae60"/>
+            <text x="650" y="135" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="14">Combined</text>
+            <text x="650" y="155" text-anchor="middle" fill="white" font-family="Arial" font-size="11">System</text>
+            <text x="650" y="180" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold" font-size="24">100%</text>
+            <text x="650" y="200" text-anchor="middle" fill="white" font-family="Arial" font-size="10">final success</text>
+            
+            <!-- Breakdown table -->
+            <rect x="100" y="260" width="550" height="80" rx="5" fill="#f8f9fa" stroke="#ddd"/>
+            <text x="375" y="282" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="12">Agent Contribution Breakdown</text>
+            
+            <!-- Table headers -->
+            <text x="180" y="305" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="10">Agent</text>
+            <text x="300" y="305" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="10">Role</text>
+            <text x="480" y="305" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="10">Contribution</text>
+            
+            <!-- Table rows -->
+            <line x1="120" y1="310" x2="630" y2="310" stroke="#ddd" stroke-width="1"/>
+            <text x="180" y="328" text-anchor="middle" font-family="Arial" font-size="10">Agent 1</text>
+            <text x="300" y="328" text-anchor="middle" font-family="Arial" font-size="10">Generation</text>
+            <text x="480" y="328" text-anchor="middle" font-family="Arial" font-size="10" fill="#667eea">80% first-try success</text>
+            
+            <text x="180" y="345" text-anchor="middle" font-family="Arial" font-size="10">Agent 3</text>
+            <text x="300" y="345" text-anchor="middle" font-family="Arial" font-size="10">Correction</text>
+            <text x="480" y="345" text-anchor="middle" font-family="Arial" font-size="10" fill="#4facfe">100% fix rate (20% of cases)</text>
+        </svg>
+    </div>
+    <div class="figure-caption">
+        <strong>Figure 10.</strong> Multi-agent synergy effect demonstrating how the combination of Agent 1 (VRF Generator) and Agent 3 (Error Corrector) achieves 100% final success from 80% first-try success. Agent 1's fine-tuned Mistral-7B achieves 80% first-try success across five test cases (1-20 zones). For the remaining 20% of cases where initial generation fails, Agent 3's error correction mechanism achieves 100% fix success rate within the 3-iteration limit. This generate-validate-correct paradigm provides robustness without requiring any single component to be perfect, enabling production-ready reliability for automated HVAC system design.
+    </div>
+</div>
+
+</body>
+</html>

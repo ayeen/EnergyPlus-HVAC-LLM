@@ -1,0 +1,51 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 3 non-HVAC zone(s): ['TopFloor_Plenum', 'MidFloor_Plenum', 'FirstFloor_Plenum']
+  ↳ Excluded 3 non-HVAC zone(s): ['TopFloor_Plenum', 'MidFloor_Plenum', 'FirstFloor_Plenum']
+✓ Auto-detected 15 zones from IDF
+  1. Core_bottom
+  2. Core_mid
+  3. Core_top
+  4. Perimeter_top_ZN_3
+  5. Perimeter_top_ZN_2
+  6. Perimeter_top_ZN_1
+  7. Perimeter_top_ZN_4
+  8. Perimeter_bot_ZN_3
+  9. Perimeter_bot_ZN_2
+  10. Perimeter_bot_ZN_1
+  11. Perimeter_bot_ZN_4
+  12. Perimeter_mid_ZN_3
+  13. Perimeter_mid_ZN_2
+  14. Perimeter_mid_ZN_1
+  15. Perimeter_mid_ZN_4
+  ↳ Excluded 3 non-HVAC zone(s): ['TopFloor_Plenum', 'MidFloor_Plenum', 'FirstFloor_Plenum']
+
+📊 Building Context:
+  • Zones: 15
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Create a complete VRF HVAC configuration for a medium office containing 15 thermal zones, with no heat recovery, where each thermal zone is served one indoor terminal unit connected to a single shared outdoor condensing units through a zone terminal unit lists. Only assigning VRF terminal unit to zone that are occupied but conditioned. Skipped any zone that is unoccupied or unconditioned.
+✓ Calling LLM (mistral-api) to generate VRF system for zones: Core_bottom, Core_mid, Core_top, Perimeter_top_ZN_3, Perimeter_top_ZN_2, Perimeter_top_ZN_1, Perimeter_top_ZN_4, Perimeter_bot_ZN_3, Perimeter_bot_ZN_2, Perimeter_bot_ZN_1, Perimeter_bot_ZN_4, Perimeter_mid_ZN_3, Perimeter_mid_ZN_2, Perimeter_mid_ZN_1, Perimeter_mid_ZN_4
+  User Design Request: Create a complete VRF HVAC configuration for a medium office containing 15 thermal zones, with no heat recovery, where each thermal zone is served one indoor terminal unit connected to a single shared outdoor condensing units through a zone terminal unit lists. Only assigning VRF terminal unit to zone that are occupied but conditioned. Skipped any zone that is unoccupied or unconditioned.
+✓ Generating with Mistral API (mistral-small-latest)...
+⚠ Mistral API generation failed: API error occurred: Status 429. Body: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+Traceback (most recent call last):
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/src/agents/llm_interface.py", line 394, in _generate_mistral_api
+    response = self.mistral_client.chat.complete(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/mistralai/chat.py", line 251, in complete
+    raise models.SDKError("API error occurred", http_res, http_res_text)
+mistralai.models.sdkerror.SDKError: API error occurred: Status 429. Body: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+✗ Prompt got empty response
+❌ Error: Empty HVAC configuration generated

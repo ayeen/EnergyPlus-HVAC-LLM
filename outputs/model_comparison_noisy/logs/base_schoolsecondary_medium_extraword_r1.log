@@ -1,0 +1,187 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 2 non-HVAC zone(s): ['Mech_ZN_1_FLR_1', 'Mech_ZN_1_FLR_2']
+  ↳ Excluded 2 non-HVAC zone(s): ['Mech_ZN_1_FLR_1', 'Mech_ZN_1_FLR_2']
+✓ Auto-detected 44 zones from IDF
+  1. Corner_Class_1_Pod_1_ZN_1_FLR_1
+  2. Corner_Class_1_Pod_1_ZN_1_FLR_2
+  3. Mult_Class_1_Pod_1_ZN_1_FLR_1
+  4. Mult_Class_1_Pod_1_ZN_1_FLR_2
+  5. Corridor_Pod_1_ZN_1_FLR_1
+  6. Corridor_Pod_1_ZN_1_FLR_2
+  7. Corner_Class_2_Pod_1_ZN_1_FLR_1
+  8. Corner_Class_2_Pod_1_ZN_1_FLR_2
+  9. Mult_Class_2_Pod_1_ZN_1_FLR_1
+  10. Mult_Class_2_Pod_1_ZN_1_FLR_2
+  11. Corner_Class_1_Pod_2_ZN_1_FLR_1
+  12. Corner_Class_1_Pod_2_ZN_1_FLR_2
+  13. Mult_Class_1_Pod_2_ZN_1_FLR_1
+  14. Mult_Class_1_Pod_2_ZN_1_FLR_2
+  15. Corridor_Pod_2_ZN_1_FLR_1
+  16. Corridor_Pod_2_ZN_1_FLR_2
+  17. Corner_Class_2_Pod_2_ZN_1_FLR_1
+  18. Corner_Class_2_Pod_2_ZN_1_FLR_2
+  19. Mult_Class_2_Pod_2_ZN_1_FLR_1
+  20. Mult_Class_2_Pod_2_ZN_1_FLR_2
+  21. Corner_Class_1_Pod_3_ZN_1_FLR_1
+  22. Corner_Class_1_Pod_3_ZN_1_FLR_2
+  23. Mult_Class_1_Pod_3_ZN_1_FLR_1
+  24. Mult_Class_1_Pod_3_ZN_1_FLR_2
+  25. Corridor_Pod_3_ZN_1_FLR_1
+  26. Corridor_Pod_3_ZN_1_FLR_2
+  27. Corner_Class_2_Pod_3_ZN_1_FLR_1
+  28. Corner_Class_2_Pod_3_ZN_1_FLR_2
+  29. Mult_Class_2_Pod_3_ZN_1_FLR_1
+  30. Mult_Class_2_Pod_3_ZN_1_FLR_2
+  31. Main_Corridor_ZN_1_FLR_1
+  32. Main_Corridor_ZN_1_FLR_2
+  33. Lobby_ZN_1_FLR_1
+  34. Lobby_ZN_1_FLR_2
+  35. Bathrooms_ZN_1_FLR_1
+  36. Bathrooms_ZN_1_FLR_2
+  37. Offices_ZN_1_FLR_1
+  38. Offices_ZN_1_FLR_2
+  39. Gym_ZN_1_FLR_1
+  40. Aux_Gym_ZN_1_FLR_1
+  41. Auditorium_ZN_1_FLR_1
+  42. Kitchen_ZN_1_FLR_1
+  43. LIBRARY_MEDIA_CENTER_ZN_1_FLR_2
+  44. Cafeteria_ZN_1_FLR_1
+  ↳ Excluded 2 non-HVAC zone(s): ['Mech_ZN_1_FLR_1', 'Mech_ZN_1_FLR_2']
+
+📊 Building Context:
+  • Zones: 44
+  • Total Volume: 95216.0 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Create a complete VRF HVAC configuration for a secondary essentially school plainly containing 46 actually thermal essentially zones, with no heat standard recovery, where each thermal zone is clearly served by one indoor mostly terminal unit particularly connected to a single shared normally outdoor condensing unit through a zone efficiently terminal unit list. Only assign VRF terminal units to typical zones that are evidently occupied and obviously conditioned. Skip any zone that is accurately unoccupied or unconditioned.
+✓ Calling LLM (mistral-api) to generate VRF system for zones: Corner_Class_1_Pod_1_ZN_1_FLR_1, Corner_Class_1_Pod_1_ZN_1_FLR_2, Mult_Class_1_Pod_1_ZN_1_FLR_1, Mult_Class_1_Pod_1_ZN_1_FLR_2, Corridor_Pod_1_ZN_1_FLR_1, Corridor_Pod_1_ZN_1_FLR_2, Corner_Class_2_Pod_1_ZN_1_FLR_1, Corner_Class_2_Pod_1_ZN_1_FLR_2, Mult_Class_2_Pod_1_ZN_1_FLR_1, Mult_Class_2_Pod_1_ZN_1_FLR_2, Corner_Class_1_Pod_2_ZN_1_FLR_1, Corner_Class_1_Pod_2_ZN_1_FLR_2, Mult_Class_1_Pod_2_ZN_1_FLR_1, Mult_Class_1_Pod_2_ZN_1_FLR_2, Corridor_Pod_2_ZN_1_FLR_1, Corridor_Pod_2_ZN_1_FLR_2, Corner_Class_2_Pod_2_ZN_1_FLR_1, Corner_Class_2_Pod_2_ZN_1_FLR_2, Mult_Class_2_Pod_2_ZN_1_FLR_1, Mult_Class_2_Pod_2_ZN_1_FLR_2, Corner_Class_1_Pod_3_ZN_1_FLR_1, Corner_Class_1_Pod_3_ZN_1_FLR_2, Mult_Class_1_Pod_3_ZN_1_FLR_1, Mult_Class_1_Pod_3_ZN_1_FLR_2, Corridor_Pod_3_ZN_1_FLR_1, Corridor_Pod_3_ZN_1_FLR_2, Corner_Class_2_Pod_3_ZN_1_FLR_1, Corner_Class_2_Pod_3_ZN_1_FLR_2, Mult_Class_2_Pod_3_ZN_1_FLR_1, Mult_Class_2_Pod_3_ZN_1_FLR_2, Main_Corridor_ZN_1_FLR_1, Main_Corridor_ZN_1_FLR_2, Lobby_ZN_1_FLR_1, Lobby_ZN_1_FLR_2, Bathrooms_ZN_1_FLR_1, Bathrooms_ZN_1_FLR_2, Offices_ZN_1_FLR_1, Offices_ZN_1_FLR_2, Gym_ZN_1_FLR_1, Aux_Gym_ZN_1_FLR_1, Auditorium_ZN_1_FLR_1, Kitchen_ZN_1_FLR_1, LIBRARY_MEDIA_CENTER_ZN_1_FLR_2, Cafeteria_ZN_1_FLR_1
+  User Design Request: Create a complete VRF HVAC configuration for a secondary essentially school plainly containing 46 actually thermal essentially zones, with no heat standard recovery, where each thermal zone is clearly served by one indoor mostly terminal unit particularly connected to a single shared normally outdoor condensing unit through a zone efficiently terminal unit list. Only assign VRF terminal units to typical zones that are evidently occupied and obviously conditioned. Skip any zone that is accurately unoccupied or unconditioned.
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (54960 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 21 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 21 HVAC objects
+
+[2] Validating IDF...
+Valid: False, Errors: 18
+
+[2.5] Validation failed. Attempting pre-simulation fix...
+      Found 18 validation errors
+  ↳ Excluded 2 non-HVAC zone(s): ['Mech_ZN_1_FLR_1', 'Mech_ZN_1_FLR_2']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (7616 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Corner_Class_1_Pod_1_ZN_1_FLR_1",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Corner_Class_1_Pod_1_ZN_1_FLR_2",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Mult_Class_1_Pod_1_ZN_1_FLR_1",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Mult_Class_1_Pod_1_ZN_1_FLR_2",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Corridor_Pod_1_ZN_1_FLR_1",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Corridor_Pod_1_ZN_1_FLR_2",
+    "field_to_change":...
+================================================================================
+
+
+✓ Successfully parsed 44 fixes from LLM response
+
+
+================================================================================
+APPLYING 44 FIXES TO IDF
+================================================================================
+
+1. HVACTemplate:Zone:VRF[Corner_Class_1_Pod_1_ZN_1_FLR_1].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Corner_Class_1_Pod_1_ZN_1_FLR_1' to ''
+2. HVACTemplate:Zone:VRF[Corner_Class_1_Pod_1_ZN_1_FLR_2].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Corner_Class_1_Pod_1_ZN_1_FLR_2' to ''
+3. HVACTemplate:Zone:VRF[Mult_Class_1_Pod_1_ZN_1_FLR_1].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Mult_Class_1_Pod_1_ZN_1_FLR_1' to ''
+4. HVACTemplate:Zone:VRF[Mult_Class_1_Pod_1_ZN_1_FLR_2].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Mult_Class_1_Pod_1_ZN_1_FLR_2' to ''
+5. HVACTemplate:Zone:VRF[Corridor_Pod_1_ZN_1_FLR_1].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Corridor_Pod_1_ZN_1_FLR_1' to ''
+6. HVACTemplate:Zone:VRF[Corridor_Pod_1_ZN_1_FLR_2].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Corridor_Pod_1_ZN_1_FLR_2' to ''
+7. HVACTemplate:Zone:VRF[Corner_Class_2_Pod_1_ZN_1_FLR_1].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Corner_Class_2_Pod_1_ZN_1_FLR_1' to ''
+8. HVACTemplate:Zone:VRF[Corner_Class_2_Pod_1_ZN_1_FLR_2].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Corner_Class_2_Pod_1_ZN_1_FLR_2' to ''
+9. HVACTemplate:Zone:VRF[Mult_Class_2_Pod_1_ZN_1_FLR_1].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Mult_Class_2_Pod_1_ZN_1_FLR_1' to ''
+10. HVACTemplate:Zone:VRF[Mult_Class_2_Pod_1_ZN_1_FLR_2].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Mult_Class_2_Pod_1_ZN_1_FLR_2' to ''
+11. HVACTemplate:Zone:VRF[Corner_Class_1_Pod_2_ZN_1_FLR_1].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Corner_Class_1_Pod_2_ZN_1_FLR_1' to ''
+12. HVACTemplate:Zone:VRF[Corner_Class_1_Pod_2_ZN_1_FLR_2].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Corner_Class_1_Pod_2_ZN_1_FLR_2' to ''
+13. HVACTemplate:Zone:VRF[Mult_Class_1_Pod_2_ZN_1_FLR_1].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Mult_Class_1_Pod_2_ZN_1_FLR_1' to ''
+14. HVACTemplate:Zone:VRF[Mult_Class_1_Pod_2_ZN_1_FLR_2].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Mult_Class_1_Pod_2_ZN_1_FLR_2' to ''
+15. HVACTemplate:Zone:VRF[Corridor_Pod_2_ZN_1_FLR_1].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Corridor_Pod_2_ZN_1_FLR_1' to ''
+16. HVACTemplate:Zone:VRF[Corridor_Pod_2_ZN_1_FLR_2].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Corridor_Pod_2_ZN_1_FLR_2' to ''
+17. HVACTemplate:Zone:VRF[Corner_Class_2_Pod_2_ZN_1_FLR_1].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Corner_Class_2_Pod_2_ZN_1_FLR_1' to ''
+18. HVACTemplate:Zone:VRF[Corner_Class_2_Pod_2_ZN_1_FLR_2].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Corner_Class_2_Pod_2_ZN_1_FLR_2' to ''
+19. HVACTemplate:Zone:VRF[Mult_Class_2_Pod_2_ZN_1_FLR_1].template_thermostat_name = ''
+   ⚠ No matching object found for 'Mult_Class_2_Pod_2_ZN_1_FLR_1'
+20. HVACTemplate:Zone:VRF[Mult_Class_2_Pod_2_ZN_1_FLR_2].template_thermostat_name = ''
+21. HVACTemplate:Zone:VRF[Corner_Class_1_Pod_3_ZN_1_FLR_1].template_thermostat_name = ''
+22. HVACTemplate:Zone:VRF[Corner_Class_1_Pod_3_ZN_1_FLR_2].template_thermostat_name = ''
+23. HVACTemplate:Zone:VRF[Mult_Class_1_Pod_3_ZN_1_FLR_1].template_thermostat_name = ''
+24. HVACTemplate:Zone:VRF[Mult_Class_1_Pod_3_ZN_1_FLR_2].template_thermostat_name = ''
+25. HVACTemplate:Zone:VRF[Corridor_Pod_3_ZN_1_FLR_1].template_thermostat_name = ''
+26. HVACTemplate:Zone:VRF[Corridor_Pod_3_ZN_1_FLR_2].template_thermostat_name = ''
+27. HVACTemplate:Zone:VRF[Corner_Class_2_Pod_3_ZN_1_FLR_1].template_thermostat_name = ''
+28. HVACTemplate:Zone:VRF[Corner_Class_2_Pod_3_ZN_1_FLR_2].template_thermostat_name = ''
+29. HVACTemplate:Zone:VRF[Mult_Class_2_Pod_3_ZN_1_FLR_1].template_thermostat_name = ''
+❌ Pre-simulation fix failed with error: 'field_to_change'
+
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/base_schoolsecondary_medium_extraword_r1_results.json

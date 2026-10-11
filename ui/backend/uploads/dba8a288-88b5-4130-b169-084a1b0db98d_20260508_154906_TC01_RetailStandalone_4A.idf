@@ -1,0 +1,352 @@
+! EnergyPlus IDF v25.2 - TC01 | RetailStandalone | CZ4A | Baltimore MD
+! No HVAC objects - ready for VRF template injection
+
+  Version,25.2;
+
+  Building,
+    RetailStandalone_TC01,          !- Name
+    0.0,                    !- North Axis
+    City,                   !- Terrain
+    0.04,                   !- Loads Convergence Tolerance
+    0.4,                    !- Temperature Convergence Tolerance
+    FullInteriorAndExterior,!- Solar Distribution
+    25,                     !- Max Warmup Days
+    6;                      !- Min Warmup Days
+
+  Timestep, 6;
+
+  SimulationControl,
+    Yes,  !- Zone Sizing
+    No,   !- System Sizing
+    No,   !- Plant Sizing
+    No,   !- Run Sizing Periods
+    Yes;  !- Run Weather File
+
+  RunPeriod,
+    Annual,
+    1, 1, , 12, 31, ,
+    Sunday, Yes, Yes, Yes, Yes, Yes;
+
+  GlobalGeometryRules,
+    UpperLeftCorner,
+    CounterClockWise,
+    World;
+
+  Site:Location,
+    Baltimore MD,
+    39.17,    !- Latitude
+    -76.68,    !- Longitude
+    -5.0,         !- Time Zone
+    14.0;  !- Elevation
+
+  SizingPeriod:DesignDay,
+    Summer Design Day,
+    7, 21, SummerDesignDay,
+    33.0, 14.0, DefaultMultipliers, ,
+    Wetbulb, 23.9, , , , ,
+    101325.0, 5.0, 270, No, No, No;
+
+  SizingPeriod:DesignDay,
+    Winter Design Day,
+    1, 21, WinterDesignDay,
+    -8.3, 0.0, DefaultMultipliers, ,
+    Wetbulb, -8.3, , , , ,
+    101325.0, 4.9, 270, No, No, No;
+
+  Sizing:Parameters, 1.25, 1.15;
+
+  Material, Generic Wall Mat,  MediumRough, 0.20, 0.72, 1860.0, 840.0, 0.9, 0.65, 0.65;
+  Material, Generic Roof Mat,  MediumRough, 0.15, 0.60, 1800.0, 840.0, 0.9, 0.65, 0.65;
+  Material, Generic Floor Mat, MediumRough, 0.10, 1.73, 2243.0, 837.0, 0.9, 0.65, 0.65;
+  Construction, Generic Wall,  Generic Wall Mat;
+  Construction, Generic Roof,  Generic Roof Mat;
+  Construction, Generic Floor, Generic Floor Mat;
+
+  ScheduleTypeLimits, Any Number;
+  ScheduleTypeLimits, Fraction,    0.0, 1.0,   CONTINUOUS;
+  ScheduleTypeLimits, Temperature, -60, 200,   CONTINUOUS;
+  ScheduleTypeLimits, Control Type, 0,  4,     DISCRETE;
+
+  Schedule:Compact, ALWAYS_ON, Fraction,
+    Through: 12/31, For: AllDays, Until: 24:00, 1.0;
+
+  Schedule:Compact, OfficeLighting, Fraction,
+    Through: 12/31,
+    For: Weekdays,
+    Until: 08:00,0.05, Until: 09:00,0.90, Until: 17:00,0.95,
+    Until: 18:00,0.70, Until: 24:00,0.05,
+    For: Saturday,
+    Until: 09:00,0.05, Until: 13:00,0.50, Until: 24:00,0.05,
+    For: SummerDesignDay, Until: 24:00,1.0,
+    For: WinterDesignDay AllOtherDays, Until: 24:00,0.05;
+
+  Schedule:Compact, OfficeEquipment, Fraction,
+    Through: 12/31,
+    For: Weekdays,
+    Until: 08:00,0.40, Until: 12:00,0.90, Until: 13:00,0.80,
+    Until: 17:00,0.90, Until: 18:00,0.50, Until: 24:00,0.40,
+    For: Saturday,
+    Until: 09:00,0.30, Until: 13:00,0.50, Until: 24:00,0.30,
+    For: SummerDesignDay, Until: 24:00,1.0,
+    For: WinterDesignDay AllOtherDays, Until: 24:00,0.30;
+
+  Schedule:Compact, OccupancySched, Fraction,
+    Through: 12/31,
+    For: Weekdays,
+    Until: 08:00,0.00, Until: 09:00,0.50, Until: 17:00,1.00,
+    Until: 18:00,0.50, Until: 24:00,0.00,
+    For: Saturday,
+    Until: 09:00,0.00, Until: 13:00,0.30, Until: 24:00,0.00,
+    For: SummerDesignDay, Until: 24:00,1.0,
+    For: WinterDesignDay AllOtherDays, Until: 24:00,0.00;
+
+  Schedule:Compact, InfiltrationSched, Fraction,
+    Through: 12/31,
+    For: Weekdays,
+    Until: 08:00,1.0, Until: 18:00,0.25, Until: 24:00,1.0,
+    For: Saturday,
+    Until: 09:00,1.0, Until: 13:00,0.25, Until: 24:00,1.0,
+    For: SummerDesignDay WinterDesignDay AllOtherDays,
+    Until: 24:00,1.0;
+
+  Schedule:Compact, Htg-SetP-Sch, Temperature,
+    Through: 12/31,
+    For: Weekdays,
+    Until: 08:00,15.6, Until: 21:00,21.0, Until: 24:00,15.6,
+    For: Saturday,
+    Until: 08:00,15.6, Until: 13:00,21.0, Until: 24:00,15.6,
+    For: SummerDesignDay, Until: 24:00,15.6,
+    For: WinterDesignDay AllOtherDays, Until: 24:00,15.6;
+
+  Schedule:Compact, Clg-SetP-Sch, Temperature,
+    Through: 12/31,
+    For: Weekdays,
+    Until: 08:00,32.2, Until: 21:00,24.0, Until: 24:00,32.2,
+    For: Saturday,
+    Until: 08:00,32.2, Until: 13:00,24.0, Until: 24:00,32.2,
+    For: SummerDesignDay, Until: 24:00,24.0,
+    For: WinterDesignDay AllOtherDays, Until: 24:00,32.2;
+
+  Schedule:Compact, Zone Control Type Sched, Control Type,
+    Through: 12/31, For: AllDays, Until: 24:00, 4;
+
+  Zone, Sales_Floor, 0.0, 0.0000, 0.0, 0.0, 1, 1, autocalculate, autocalculate;
+
+  BuildingSurface:Detailed,
+    Sales_Floor_Floor,            !- Name
+    Floor,            !- Surface Type
+    Generic Floor,     !- Construction Name
+    Sales_Floor,             !- Zone Name
+    Ground,              !- Outside Boundary Condition
+    NoSun,             !- Sun Exposure
+    NoWind,            !- Wind Exposure
+    0.0000, 0.0000, 0.0000,  !- Vertex 1
+    0.0000, 24.4949, 0.0000,  !- Vertex 2
+    24.4949, 24.4949, 0.0000,  !- Vertex 3
+    24.4949, 0.0000, 0.0000;  !- Vertex 4
+
+  BuildingSurface:Detailed,
+    Sales_Floor_Ceiling,            !- Name
+    Roof,            !- Surface Type
+    Generic Roof,     !- Construction Name
+    Sales_Floor,             !- Zone Name
+    Outdoors,              !- Outside Boundary Condition
+    SunExposed,             !- Sun Exposure
+    WindExposed,            !- Wind Exposure
+    0.0000, 0.0000, 4.5000,  !- Vertex 1
+    24.4949, 0.0000, 4.5000,  !- Vertex 2
+    24.4949, 24.4949, 4.5000,  !- Vertex 3
+    0.0000, 24.4949, 4.5000;  !- Vertex 4
+
+  BuildingSurface:Detailed,
+    Sales_Floor_Wall_S,            !- Name
+    Wall,            !- Surface Type
+    Generic Wall,     !- Construction Name
+    Sales_Floor,             !- Zone Name
+    Outdoors,              !- Outside Boundary Condition
+    SunExposed,             !- Sun Exposure
+    WindExposed,            !- Wind Exposure
+    0.0000, 0.0000, 0.0000,  !- Vertex 1
+    24.4949, 0.0000, 0.0000,  !- Vertex 2
+    24.4949, 0.0000, 4.5000,  !- Vertex 3
+    0.0000, 0.0000, 4.5000;  !- Vertex 4
+
+  BuildingSurface:Detailed,
+    Sales_Floor_Wall_N,            !- Name
+    Wall,            !- Surface Type
+    Generic Wall,     !- Construction Name
+    Sales_Floor,             !- Zone Name
+    Outdoors,              !- Outside Boundary Condition
+    SunExposed,             !- Sun Exposure
+    WindExposed,            !- Wind Exposure
+    24.4949, 24.4949, 0.0000,  !- Vertex 1
+    0.0000, 24.4949, 0.0000,  !- Vertex 2
+    0.0000, 24.4949, 4.5000,  !- Vertex 3
+    24.4949, 24.4949, 4.5000;  !- Vertex 4
+
+  BuildingSurface:Detailed,
+    Sales_Floor_Wall_W,            !- Name
+    Wall,            !- Surface Type
+    Generic Wall,     !- Construction Name
+    Sales_Floor,             !- Zone Name
+    Outdoors,              !- Outside Boundary Condition
+    SunExposed,             !- Sun Exposure
+    WindExposed,            !- Wind Exposure
+    0.0000, 24.4949, 0.0000,  !- Vertex 1
+    0.0000, 0.0000, 0.0000,  !- Vertex 2
+    0.0000, 0.0000, 4.5000,  !- Vertex 3
+    0.0000, 24.4949, 4.5000;  !- Vertex 4
+
+  BuildingSurface:Detailed,
+    Sales_Floor_Wall_E,            !- Name
+    Wall,            !- Surface Type
+    Generic Wall,     !- Construction Name
+    Sales_Floor,             !- Zone Name
+    Outdoors,              !- Outside Boundary Condition
+    SunExposed,             !- Sun Exposure
+    WindExposed,            !- Wind Exposure
+    24.4949, 0.0000, 0.0000,  !- Vertex 1
+    24.4949, 24.4949, 0.0000,  !- Vertex 2
+    24.4949, 24.4949, 4.5000,  !- Vertex 3
+    24.4949, 0.0000, 4.5000;  !- Vertex 4
+
+  People,
+    Sales_Floor_People, Sales_Floor, OccupancySched,
+    Area/Person, , 10.0, 0.3, autocalculate, ;
+
+  Lights,
+    Sales_Floor_Lights, Sales_Floor, OfficeLighting,
+    Watts/Area, , 9.0, , 0.32, 0.0, 0.0, 1.0, GeneralLights;
+
+  ElectricEquipment,
+    Sales_Floor_Equipment, Sales_Floor, OfficeEquipment,
+    Watts/Area, , 10.0, , 0.5, 0.0, 0.0;
+
+  ZoneInfiltration:DesignFlowRate,
+    Sales_Floor_Infiltration, Sales_Floor, InfiltrationSched,
+    Flow/ExteriorArea, , , 0.0003, , 1.0, 0.0, 0.0, 0.0;
+
+  Sizing:Zone,
+    Sales_Floor,
+    SupplyAirTemperature, 12.8, ,
+    SupplyAirTemperature, 50.0, ,
+    0.0085, 0.008, , , ,
+    DesignDay, , , , 0.0,
+    DesignDay, , , 0.3;
+
+  DesignSpecification:OutdoorAir,
+    Sales_Floor_DSOA, Sum, 0.00944, 0.000305, , ;
+
+  Zone, Back_Space, 0.0, 26.4949, 0.0, 0.0, 1, 1, autocalculate, autocalculate;
+
+  BuildingSurface:Detailed,
+    Back_Space_Floor,            !- Name
+    Floor,            !- Surface Type
+    Generic Floor,     !- Construction Name
+    Back_Space,             !- Zone Name
+    Ground,              !- Outside Boundary Condition
+    NoSun,             !- Sun Exposure
+    NoWind,            !- Wind Exposure
+    26.4949, 0.0000, 0.0000,  !- Vertex 1
+    26.4949, 14.1422, 0.0000,  !- Vertex 2
+    40.6370, 14.1422, 0.0000,  !- Vertex 3
+    40.6370, 0.0000, 0.0000;  !- Vertex 4
+
+  BuildingSurface:Detailed,
+    Back_Space_Ceiling,            !- Name
+    Roof,            !- Surface Type
+    Generic Roof,     !- Construction Name
+    Back_Space,             !- Zone Name
+    Outdoors,              !- Outside Boundary Condition
+    SunExposed,             !- Sun Exposure
+    WindExposed,            !- Wind Exposure
+    26.4949, 0.0000, 3.0000,  !- Vertex 1
+    40.6370, 0.0000, 3.0000,  !- Vertex 2
+    40.6370, 14.1422, 3.0000,  !- Vertex 3
+    26.4949, 14.1422, 3.0000;  !- Vertex 4
+
+  BuildingSurface:Detailed,
+    Back_Space_Wall_S,            !- Name
+    Wall,            !- Surface Type
+    Generic Wall,     !- Construction Name
+    Back_Space,             !- Zone Name
+    Outdoors,              !- Outside Boundary Condition
+    SunExposed,             !- Sun Exposure
+    WindExposed,            !- Wind Exposure
+    26.4949, 0.0000, 0.0000,  !- Vertex 1
+    40.6370, 0.0000, 0.0000,  !- Vertex 2
+    40.6370, 0.0000, 3.0000,  !- Vertex 3
+    26.4949, 0.0000, 3.0000;  !- Vertex 4
+
+  BuildingSurface:Detailed,
+    Back_Space_Wall_N,            !- Name
+    Wall,            !- Surface Type
+    Generic Wall,     !- Construction Name
+    Back_Space,             !- Zone Name
+    Outdoors,              !- Outside Boundary Condition
+    SunExposed,             !- Sun Exposure
+    WindExposed,            !- Wind Exposure
+    40.6370, 14.1422, 0.0000,  !- Vertex 1
+    26.4949, 14.1422, 0.0000,  !- Vertex 2
+    26.4949, 14.1422, 3.0000,  !- Vertex 3
+    40.6370, 14.1422, 3.0000;  !- Vertex 4
+
+  BuildingSurface:Detailed,
+    Back_Space_Wall_W,            !- Name
+    Wall,            !- Surface Type
+    Generic Wall,     !- Construction Name
+    Back_Space,             !- Zone Name
+    Outdoors,              !- Outside Boundary Condition
+    SunExposed,             !- Sun Exposure
+    WindExposed,            !- Wind Exposure
+    26.4949, 14.1422, 0.0000,  !- Vertex 1
+    26.4949, 0.0000, 0.0000,  !- Vertex 2
+    26.4949, 0.0000, 3.0000,  !- Vertex 3
+    26.4949, 14.1422, 3.0000;  !- Vertex 4
+
+  BuildingSurface:Detailed,
+    Back_Space_Wall_E,            !- Name
+    Wall,            !- Surface Type
+    Generic Wall,     !- Construction Name
+    Back_Space,             !- Zone Name
+    Outdoors,              !- Outside Boundary Condition
+    SunExposed,             !- Sun Exposure
+    WindExposed,            !- Wind Exposure
+    40.6370, 0.0000, 0.0000,  !- Vertex 1
+    40.6370, 14.1422, 0.0000,  !- Vertex 2
+    40.6370, 14.1422, 3.0000,  !- Vertex 3
+    40.6370, 0.0000, 3.0000;  !- Vertex 4
+
+  People,
+    Back_Space_People, Back_Space, OccupancySched,
+    Area/Person, , 10.0, 0.3, autocalculate, ;
+
+  Lights,
+    Back_Space_Lights, Back_Space, OfficeLighting,
+    Watts/Area, , 9.0, , 0.32, 0.0, 0.0, 1.0, GeneralLights;
+
+  ElectricEquipment,
+    Back_Space_Equipment, Back_Space, OfficeEquipment,
+    Watts/Area, , 10.0, , 0.5, 0.0, 0.0;
+
+  ZoneInfiltration:DesignFlowRate,
+    Back_Space_Infiltration, Back_Space, InfiltrationSched,
+    Flow/ExteriorArea, , , 0.0003, , 1.0, 0.0, 0.0, 0.0;
+
+  Sizing:Zone,
+    Back_Space,
+    SupplyAirTemperature, 12.8, ,
+    SupplyAirTemperature, 50.0, ,
+    0.0085, 0.008, , , ,
+    DesignDay, , , , 0.0,
+    DesignDay, , , 0.3;
+
+  DesignSpecification:OutdoorAir,
+    Back_Space_DSOA, Sum, 0.00944, 0.000305, , ;
+
+  Output:Variable,*,Zone Mean Air Temperature,Hourly;
+  Output:Variable,*,Lights Electric Energy,Hourly;
+  Output:Variable,*,Electric Equipment Electric Energy,Hourly;
+  Output:Meter,Electricity:Facility,Hourly;
+  OutputControl:Table:Style, HTML;
+  Output:Table:SummaryReports, AllSummary;

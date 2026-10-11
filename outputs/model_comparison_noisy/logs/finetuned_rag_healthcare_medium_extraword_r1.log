@@ -1,0 +1,414 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 8 non-HVAC zone(s): ['Floor 1 Elevator Pump Room', 'Floor 3 Mechanical', 'Floor 3 Mechanical Hall', 'Floor 3 Undeveloped 1', 'Floor 3 Undeveloped 2', 'NE Stair', 'NW Stair', 'SW Stair']
+  ↳ Excluded 8 non-HVAC zone(s): ['Floor 1 Elevator Pump Room', 'Floor 3 Mechanical', 'Floor 3 Mechanical Hall', 'Floor 3 Undeveloped 1', 'Floor 3 Undeveloped 2', 'NE Stair', 'NW Stair', 'SW Stair']
+✓ Auto-detected 110 zones from IDF
+  1. Floor 1 Anesthesia
+  2. Floor 1 Bio Haz
+  3. Floor 1 Cafe
+  4. Floor 1 Clean
+  5. Floor 1 Clean Work
+  6. Floor 1 Dictation
+  7. Floor 1 Dressing Room
+  8. Floor 1 Electrical Room
+  9. Floor 1 Humid
+  10. Floor 1 IT Hall
+  11. Floor 1 IT Room
+  12. Floor 1 Lobby
+  13. Floor 1 Lobby Hall
+  14. Floor 1 Lobby Toilet
+  15. Floor 1 Locker Room
+  16. Floor 1 Locker Room Hall
+  17. Floor 1 Lounge
+  18. Floor 1 Med Gas
+  19. Floor 1 MRI Control Room
+  20. Floor 1 MRI Hall
+  21. Floor 1 MRI Room
+  22. Floor 1 MRI Toilet
+  23. Floor 1 Nourishment
+  24. Floor 1 Nurse Hall
+  25. Floor 1 Nurse Janitor
+  26. Floor 1 Nurse Station
+  27. Floor 1 Nurse Toilet
+  28. Floor 1 Office
+  29. Floor 1 Operating Room 1
+  30. Floor 1 Operating Room 2
+  31. Floor 1 Operating Room 3
+  32. Floor 1 PACU
+  33. Floor 1 Pre-Op Hall
+  34. Floor 1 Pre-Op Room 1
+  35. Floor 1 Pre-Op Room 2
+  36. Floor 1 Pre-Op Toilet
+  37. Floor 1 Procedure Room
+  38. Floor 1 Reception
+  39. Floor 1 Reception Hall
+  40. Floor 1 Recovery Room
+  41. Floor 1 Scheduling
+  42. Floor 1 Scrub
+  43. Floor 1 Soil
+  44. Floor 1 Soil Hold
+  45. Floor 1 Soil Work
+  46. Floor 1 Step Down
+  47. Floor 1 Sterile Hall
+  48. Floor 1 Sterile Storage
+  49. Floor 1 Storage
+  50. Floor 1 Sub-Sterile
+  51. Floor 1 Utility Hall
+  52. Floor 1 Utility Janitor
+  53. Floor 1 Utility Room
+  54. Floor 1 Vestibule
+  55. Floor 2 Conference
+  56. Floor 2 Conference Toilet
+  57. Floor 2 Dictation
+  58. Floor 2 Exam 1
+  59. Floor 2 Exam 2
+  60. Floor 2 Exam 3
+  61. Floor 2 Exam 4
+  62. Floor 2 Exam 5
+  63. Floor 2 Exam 6
+  64. Floor 2 Exam 7
+  65. Floor 2 Exam 8
+  66. Floor 2 Exam 9
+  67. Floor 2 Exam Hall 1
+  68. Floor 2 Exam Hall 2
+  69. Floor 2 Exam Hall 3
+  70. Floor 2 Exam Hall 4
+  71. Floor 2 Exam Hall 5
+  72. Floor 2 Exam Hall 6
+  73. Floor 2 Janitor
+  74. Floor 2 Lounge
+  75. Floor 2 Nurse Station 1
+  76. Floor 2 Nurse Station 2
+  77. Floor 2 Office
+  78. Floor 2 Office Hall
+  79. Floor 2 Reception
+  80. Floor 2 Reception Hall
+  81. Floor 2 Reception Toilet
+  82. Floor 2 Scheduling 1
+  83. Floor 2 Scheduling 2
+  84. Floor 2 Storage 1
+  85. Floor 2 Storage 2
+  86. Floor 2 Storage 3
+  87. Floor 2 Utility
+  88. Floor 2 Work
+  89. Floor 2 Work Hall
+  90. Floor 2 Work Toilet
+  91. Floor 2 X-Ray
+  92. Floor 3 Dressing Room
+  93. Floor 3 Elevator Hall
+  94. Floor 3 Humid
+  95. Floor 3 Janitor
+  96. Floor 3 Locker
+  97. Floor 3 Lounge
+  98. Floor 3 Lounge Toilet
+  99. Floor 3 Office
+  100. Floor 3 Office Hall
+  101. Floor 3 Office Toilet
+  102. Floor 3 Physical Therapy 1
+  103. Floor 3 Physical Therapy 2
+  104. Floor 3 Physical Therapy Toilet
+  105. Floor 3 Storage 1
+  106. Floor 3 Storage 2
+  107. Floor 3 Treatment
+  108. Floor 3 Utility
+  109. Floor 3 Work
+  110. NW Elevator
+  ↳ Excluded 8 non-HVAC zone(s): ['Floor 1 Elevator Pump Room', 'Floor 3 Mechanical', 'Floor 3 Mechanical Hall', 'Floor 3 Undeveloped 1', 'Floor 3 Undeveloped 2', 'NE Stair', 'NW Stair', 'SW Stair']
+
+📊 Building Context:
+  • Zones: 110
+  • Total Volume: 11932.2 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Create a complete VRF HVAC configuration for an outpatient healthcare facility naturally containing 118 largely thermal zones, with no heat specifically recovery, where each thermal clearly zone is served by one naturally indoor terminal generally unit connected to a single shared evidently outdoor adequately condensing unit through a zone terminal unit typically list. Only quite assign VRF quite terminal standardized units to sufficiently zones that are occupied and conditioned. Skip any zone that is unoccupied or fully unconditioned.
+✓ Calling LLM (mistral) to generate VRF system for zones: Floor 1 Anesthesia, Floor 1 Bio Haz, Floor 1 Cafe, Floor 1 Clean, Floor 1 Clean Work, Floor 1 Dictation, Floor 1 Dressing Room, Floor 1 Electrical Room, Floor 1 Humid, Floor 1 IT Hall, Floor 1 IT Room, Floor 1 Lobby, Floor 1 Lobby Hall, Floor 1 Lobby Toilet, Floor 1 Locker Room, Floor 1 Locker Room Hall, Floor 1 Lounge, Floor 1 Med Gas, Floor 1 MRI Control Room, Floor 1 MRI Hall, Floor 1 MRI Room, Floor 1 MRI Toilet, Floor 1 Nourishment, Floor 1 Nurse Hall, Floor 1 Nurse Janitor, Floor 1 Nurse Station, Floor 1 Nurse Toilet, Floor 1 Office, Floor 1 Operating Room 1, Floor 1 Operating Room 2, Floor 1 Operating Room 3, Floor 1 PACU, Floor 1 Pre-Op Hall, Floor 1 Pre-Op Room 1, Floor 1 Pre-Op Room 2, Floor 1 Pre-Op Toilet, Floor 1 Procedure Room, Floor 1 Reception, Floor 1 Reception Hall, Floor 1 Recovery Room, Floor 1 Scheduling, Floor 1 Scrub, Floor 1 Soil, Floor 1 Soil Hold, Floor 1 Soil Work, Floor 1 Step Down, Floor 1 Sterile Hall, Floor 1 Sterile Storage, Floor 1 Storage, Floor 1 Sub-Sterile, Floor 1 Utility Hall, Floor 1 Utility Janitor, Floor 1 Utility Room, Floor 1 Vestibule, Floor 2 Conference, Floor 2 Conference Toilet, Floor 2 Dictation, Floor 2 Exam 1, Floor 2 Exam 2, Floor 2 Exam 3, Floor 2 Exam 4, Floor 2 Exam 5, Floor 2 Exam 6, Floor 2 Exam 7, Floor 2 Exam 8, Floor 2 Exam 9, Floor 2 Exam Hall 1, Floor 2 Exam Hall 2, Floor 2 Exam Hall 3, Floor 2 Exam Hall 4, Floor 2 Exam Hall 5, Floor 2 Exam Hall 6, Floor 2 Janitor, Floor 2 Lounge, Floor 2 Nurse Station 1, Floor 2 Nurse Station 2, Floor 2 Office, Floor 2 Office Hall, Floor 2 Reception, Floor 2 Reception Hall, Floor 2 Reception Toilet, Floor 2 Scheduling 1, Floor 2 Scheduling 2, Floor 2 Storage 1, Floor 2 Storage 2, Floor 2 Storage 3, Floor 2 Utility, Floor 2 Work, Floor 2 Work Hall, Floor 2 Work Toilet, Floor 2 X-Ray, Floor 3 Dressing Room, Floor 3 Elevator Hall, Floor 3 Humid, Floor 3 Janitor, Floor 3 Locker, Floor 3 Lounge, Floor 3 Lounge Toilet, Floor 3 Office, Floor 3 Office Hall, Floor 3 Office Toilet, Floor 3 Physical Therapy 1, Floor 3 Physical Therapy 2, Floor 3 Physical Therapy Toilet, Floor 3 Storage 1, Floor 3 Storage 2, Floor 3 Treatment, Floor 3 Utility, Floor 3 Work, NW Elevator
+  User Design Request: Create a complete VRF HVAC configuration for an outpatient healthcare facility naturally containing 118 largely thermal zones, with no heat specifically recovery, where each thermal clearly zone is served by one naturally indoor terminal generally unit connected to a single shared evidently outdoor adequately condensing unit through a zone terminal unit typically list. Only quite assign VRF quite terminal standardized units to sufficiently zones that are occupied and conditioned. Skip any zone that is unoccupied or fully unconditioned.
+✓ Generating with Mistral fine-tuned model...
+   Found 112 zones: Floor 1 Anesthesia, Floor 1 Bio Haz, Floor 1 Cafe, Floor 1 Clean, Floor 1 Clean Work, Floor 1 Dictation, Floor 1 Dressing Room, Floor 1 Electrical Room, Floor 1 Elevator Pump Room, Floor 1 Humid, Floor 1 IT Hall, Floor 1 IT Room, Floor 1 Lobby, Floor 1 Lobby Hall, Floor 1 Lobby Toilet, Floor 1 Locker Room, Floor 1 Locker Room Hall, Floor 1 Lounge, Floor 1 Med Gas, Floor 1 MRI Control Room, Floor 1 MRI Hall, Floor 1 MRI Room, Floor 1 MRI Toilet, Floor 1 Nourishment, Floor 1 Nurse Hall, Floor 1 Nurse Janitor, Floor 1 Nurse Station, Floor 1 Nurse Toilet, Floor 1 Office, Floor 1 Operating Room 1, Floor 1 Operating Room 2, Floor 1 Operating Room 3, Floor 1 PACU, Floor 1 Procedure Room, Floor 1 Reception, Floor 1 Reception Hall, Floor 1 Recovery Room, Floor 1 Scheduling, Floor 1 Scrub, Floor 1 Soil, Floor 1 Soil Hold, Floor 1 Soil Work, Floor 1 Step Down, Floor 1 Sterile Hall, Floor 1 Sterile Storage, Floor 1 Storage, Floor 1 Utility Hall, Floor 1 Utility Janitor, Floor 1 Utility Room, Floor 1 Vestibule, Floor 2 Conference, Floor 2 Conference Toilet, Floor 2 Dictation, Floor 2 Exam 1, Floor 2 Exam 2, Floor 2 Exam 3, Floor 2 Exam 4, Floor 2 Exam 5, Floor 2 Exam 6, Floor 2 Exam 7, Floor 2 Exam 8, Floor 2 Exam 9, Floor 2 Exam Hall 1, Floor 2 Exam Hall 2, Floor 2 Exam Hall 3, Floor 2 Exam Hall 4, Floor 2 Exam Hall 5, Floor 2 Exam Hall 6, Floor 2 Janitor, Floor 2 Lounge, Floor 2 Nurse Station 1, Floor 2 Nurse Station 2, Floor 2 Office, Floor 2 Office Hall, Floor 2 Reception, Floor 2 Reception Hall, Floor 2 Reception Toilet, Floor 2 Scheduling 1, Floor 2 Scheduling 2, Floor 2 Storage 1, Floor 2 Storage 2, Floor 2 Storage 3, Floor 2 Utility, Floor 2 Work, Floor 2 Work Hall, Floor 2 Work Toilet, Floor 3 Dressing Room, Floor 3 Elevator Hall, Floor 3 Humid, Floor 3 Janitor, Floor 3 Locker, Floor 3 Lounge, Floor 3 Lounge Toilet, Floor 3 Mechanical, Floor 3 Mechanical Hall, Floor 3 Office, Floor 3 Office Hall, Floor 3 Office Toilet, Floor 3 Physical Therapy 1, Floor 3 Physical Therapy 2, Floor 3 Physical Therapy Toilet, Floor 3 Storage 1, Floor 3 Storage 2, Floor 3 Treatment, Floor 3 Undeveloped 1, Floor 3 Undeveloped 2, Floor 3 Utility, Floor 3 Work, NE Stair, NW Elevator, NW Stair, SW Stair
+   System name: VRF_System_1
+   🔧 Generating System VRF...
+      ✅ System VRF generated (2636 chars)
+   🏢 Generating Zone VRFs for 112 zones...
+      Zone 1/112: Floor 1 Anesthesia... ✅ (3469 chars)
+      Zone 2/112: Floor 1 Bio Haz... ✅ (3463 chars)
+      Zone 3/112: Floor 1 Cafe... ✅ (3457 chars)
+      Zone 4/112: Floor 1 Clean... ✅ (3459 chars)
+      Zone 5/112: Floor 1 Clean Work... ✅ (3469 chars)
+      Zone 6/112: Floor 1 Dictation... ✅ (3467 chars)
+      Zone 7/112: Floor 1 Dressing Room... ✅ (3475 chars)
+      Zone 8/112: Floor 1 Electrical Room... ✅ (3479 chars)
+      Zone 9/112: Floor 1 Elevator Pump Room... ✅ (3485 chars)
+      Zone 10/112: Floor 1 Humid... ✅ (3459 chars)
+      Zone 11/112: Floor 1 IT Hall... ✅ (3463 chars)
+      Zone 12/112: Floor 1 IT Room... ✅ (3463 chars)
+      Zone 13/112: Floor 1 Lobby... ✅ (3459 chars)
+      Zone 14/112: Floor 1 Lobby Hall... ✅ (3469 chars)
+      Zone 15/112: Floor 1 Lobby Toilet... ✅ (3473 chars)
+      Zone 16/112: Floor 1 Locker Room... ✅ (3471 chars)
+      Zone 17/112: Floor 1 Locker Room Hall... ✅ (3481 chars)
+      Zone 18/112: Floor 1 Lounge... ✅ (3461 chars)
+      Zone 19/112: Floor 1 Med Gas... ✅ (3463 chars)
+      Zone 20/112: Floor 1 MRI Control Room... ✅ (3481 chars)
+      Zone 21/112: Floor 1 MRI Hall... ✅ (3465 chars)
+      Zone 22/112: Floor 1 MRI Room... ✅ (3465 chars)
+      Zone 23/112: Floor 1 MRI Toilet... ✅ (3469 chars)
+      Zone 24/112: Floor 1 Nourishment... ✅ (3471 chars)
+      Zone 25/112: Floor 1 Nurse Hall... ✅ (3469 chars)
+      Zone 26/112: Floor 1 Nurse Janitor... ✅ (3475 chars)
+      Zone 27/112: Floor 1 Nurse Station... ✅ (3475 chars)
+      Zone 28/112: Floor 1 Nurse Toilet... ✅ (3473 chars)
+      Zone 29/112: Floor 1 Office... ✅ (3461 chars)
+      Zone 30/112: Floor 1 Operating Room 1... ✅ (3481 chars)
+      Zone 31/112: Floor 1 Operating Room 2... ✅ (3481 chars)
+      Zone 32/112: Floor 1 Operating Room 3... ✅ (3481 chars)
+      Zone 33/112: Floor 1 PACU... ✅ (3457 chars)
+      Zone 34/112: Floor 1 Procedure Room... ✅ (3477 chars)
+      Zone 35/112: Floor 1 Reception... ✅ (3467 chars)
+      Zone 36/112: Floor 1 Reception Hall... ✅ (3477 chars)
+      Zone 37/112: Floor 1 Recovery Room... ✅ (3475 chars)
+      Zone 38/112: Floor 1 Scheduling... ✅ (3469 chars)
+      Zone 39/112: Floor 1 Scrub... ✅ (3459 chars)
+      Zone 40/112: Floor 1 Soil... ✅ (3457 chars)
+      Zone 41/112: Floor 1 Soil Hold... ✅ (3467 chars)
+      Zone 42/112: Floor 1 Soil Work... ✅ (3467 chars)
+      Zone 43/112: Floor 1 Step Down... ✅ (3467 chars)
+      Zone 44/112: Floor 1 Sterile Hall... ✅ (3473 chars)
+      Zone 45/112: Floor 1 Sterile Storage... ✅ (3479 chars)
+      Zone 46/112: Floor 1 Storage... ✅ (3463 chars)
+      Zone 47/112: Floor 1 Utility Hall... ✅ (3473 chars)
+      Zone 48/112: Floor 1 Utility Janitor... ✅ (3479 chars)
+      Zone 49/112: Floor 1 Utility Room... ✅ (3473 chars)
+      Zone 50/112: Floor 1 Vestibule... ✅ (3467 chars)
+      Zone 51/112: Floor 2 Conference... ✅ (3469 chars)
+      Zone 52/112: Floor 2 Conference Toilet... ✅ (3483 chars)
+      Zone 53/112: Floor 2 Dictation... ✅ (3467 chars)
+      Zone 54/112: Floor 2 Exam 1... ✅ (3461 chars)
+      Zone 55/112: Floor 2 Exam 2... ✅ (3461 chars)
+      Zone 56/112: Floor 2 Exam 3... ✅ (3461 chars)
+      Zone 57/112: Floor 2 Exam 4... ✅ (3461 chars)
+      Zone 58/112: Floor 2 Exam 5... ✅ (3461 chars)
+      Zone 59/112: Floor 2 Exam 6... ✅ (3461 chars)
+      Zone 60/112: Floor 2 Exam 7... ✅ (3461 chars)
+      Zone 61/112: Floor 2 Exam 8... ✅ (3461 chars)
+      Zone 62/112: Floor 2 Exam 9... ✅ (3461 chars)
+      Zone 63/112: Floor 2 Exam Hall 1... ✅ (3471 chars)
+      Zone 64/112: Floor 2 Exam Hall 2... ✅ (3471 chars)
+      Zone 65/112: Floor 2 Exam Hall 3... ✅ (3471 chars)
+      Zone 66/112: Floor 2 Exam Hall 4... ✅ (3471 chars)
+      Zone 67/112: Floor 2 Exam Hall 5... ✅ (3471 chars)
+      Zone 68/112: Floor 2 Exam Hall 6... ✅ (3471 chars)
+      Zone 69/112: Floor 2 Janitor... ✅ (3463 chars)
+      Zone 70/112: Floor 2 Lounge... ✅ (3461 chars)
+      Zone 71/112: Floor 2 Nurse Station 1... ✅ (3479 chars)
+      Zone 72/112: Floor 2 Nurse Station 2... ✅ (3479 chars)
+      Zone 73/112: Floor 2 Office... ✅ (3461 chars)
+      Zone 74/112: Floor 2 Office Hall... ✅ (3471 chars)
+      Zone 75/112: Floor 2 Reception... ✅ (3467 chars)
+      Zone 76/112: Floor 2 Reception Hall... ✅ (3477 chars)
+      Zone 77/112: Floor 2 Reception Toilet... ✅ (3481 chars)
+      Zone 78/112: Floor 2 Scheduling 1... ✅ (3473 chars)
+      Zone 79/112: Floor 2 Scheduling 2... ✅ (3473 chars)
+      Zone 80/112: Floor 2 Storage 1... ✅ (3467 chars)
+      Zone 81/112: Floor 2 Storage 2... ✅ (3467 chars)
+      Zone 82/112: Floor 2 Storage 3... ✅ (3467 chars)
+      Zone 83/112: Floor 2 Utility... ✅ (3463 chars)
+      Zone 84/112: Floor 2 Work... ✅ (3457 chars)
+      Zone 85/112: Floor 2 Work Hall... ✅ (3467 chars)
+      Zone 86/112: Floor 2 Work Toilet... ✅ (3471 chars)
+      Zone 87/112: Floor 3 Dressing Room... ✅ (3475 chars)
+      Zone 88/112: Floor 3 Elevator Hall... ✅ (3475 chars)
+      Zone 89/112: Floor 3 Humid... ✅ (3459 chars)
+      Zone 90/112: Floor 3 Janitor... ✅ (3463 chars)
+      Zone 91/112: Floor 3 Locker... ✅ (3461 chars)
+      Zone 92/112: Floor 3 Lounge... ✅ (3461 chars)
+      Zone 93/112: Floor 3 Lounge Toilet... ✅ (3475 chars)
+      Zone 94/112: Floor 3 Mechanical... ✅ (3469 chars)
+      Zone 95/112: Floor 3 Mechanical Hall... ✅ (3479 chars)
+      Zone 96/112: Floor 3 Office... ✅ (3461 chars)
+      Zone 97/112: Floor 3 Office Hall... ✅ (3471 chars)
+      Zone 98/112: Floor 3 Office Toilet... ✅ (3475 chars)
+      Zone 99/112: Floor 3 Physical Therapy 1... ✅ (3485 chars)
+      Zone 100/112: Floor 3 Physical Therapy 2... ✅ (3485 chars)
+      Zone 101/112: Floor 3 Physical Therapy Toilet... ✅ (3495 chars)
+      Zone 102/112: Floor 3 Storage 1... ✅ (3467 chars)
+      Zone 103/112: Floor 3 Storage 2... ✅ (3467 chars)
+      Zone 104/112: Floor 3 Treatment... ✅ (3467 chars)
+      Zone 105/112: Floor 3 Undeveloped 1... ✅ (3475 chars)
+      Zone 106/112: Floor 3 Undeveloped 2... ✅ (3475 chars)
+      Zone 107/112: Floor 3 Utility... ✅ (3463 chars)
+      Zone 108/112: Floor 3 Work... ✅ (3457 chars)
+      Zone 109/112: NE Stair... ✅ (3449 chars)
+      Zone 110/112: NW Elevator... ✅ (3455 chars)
+      Zone 111/112: NW Stair... ✅ (3449 chars)
+      Zone 112/112: SW Stair... ✅ (3449 chars)
+   🌡️  Generating Thermostats for 112 zones...
+      Thermostat 1/112: Floor 1 Anesthesia... ✅ (322 chars)
+      Thermostat 2/112: Floor 1 Bio Haz... ✅ (319 chars)
+      Thermostat 3/112: Floor 1 Cafe... ✅ (316 chars)
+      Thermostat 4/112: Floor 1 Clean... ✅ (317 chars)
+      Thermostat 5/112: Floor 1 Clean Work... ✅ (322 chars)
+      Thermostat 6/112: Floor 1 Dictation... ✅ (321 chars)
+      Thermostat 7/112: Floor 1 Dressing Room... ✅ (325 chars)
+      Thermostat 8/112: Floor 1 Electrical Room... ✅ (327 chars)
+      Thermostat 9/112: Floor 1 Elevator Pump Room... ✅ (330 chars)
+      Thermostat 10/112: Floor 1 Humid... ✅ (317 chars)
+      Thermostat 11/112: Floor 1 IT Hall... ✅ (319 chars)
+      Thermostat 12/112: Floor 1 IT Room... ✅ (319 chars)
+      Thermostat 13/112: Floor 1 Lobby... ✅ (317 chars)
+      Thermostat 14/112: Floor 1 Lobby Hall... ✅ (322 chars)
+      Thermostat 15/112: Floor 1 Lobby Toilet... ✅ (324 chars)
+      Thermostat 16/112: Floor 1 Locker Room... ✅ (323 chars)
+      Thermostat 17/112: Floor 1 Locker Room Hall... ✅ (328 chars)
+      Thermostat 18/112: Floor 1 Lounge... ✅ (318 chars)
+      Thermostat 19/112: Floor 1 Med Gas... ✅ (319 chars)
+      Thermostat 20/112: Floor 1 MRI Control Room... ✅ (328 chars)
+      Thermostat 21/112: Floor 1 MRI Hall... ✅ (320 chars)
+      Thermostat 22/112: Floor 1 MRI Room... ✅ (320 chars)
+      Thermostat 23/112: Floor 1 MRI Toilet... ✅ (322 chars)
+      Thermostat 24/112: Floor 1 Nourishment... ✅ (323 chars)
+      Thermostat 25/112: Floor 1 Nurse Hall... ✅ (322 chars)
+      Thermostat 26/112: Floor 1 Nurse Janitor... ✅ (325 chars)
+      Thermostat 27/112: Floor 1 Nurse Station... ✅ (325 chars)
+      Thermostat 28/112: Floor 1 Nurse Toilet... ✅ (324 chars)
+      Thermostat 29/112: Floor 1 Office... ✅ (318 chars)
+      Thermostat 30/112: Floor 1 Operating Room 1... ✅ (328 chars)
+      Thermostat 31/112: Floor 1 Operating Room 2... ✅ (328 chars)
+      Thermostat 32/112: Floor 1 Operating Room 3... ✅ (328 chars)
+      Thermostat 33/112: Floor 1 PACU... ✅ (316 chars)
+      Thermostat 34/112: Floor 1 Procedure Room... ✅ (326 chars)
+      Thermostat 35/112: Floor 1 Reception... ✅ (321 chars)
+      Thermostat 36/112: Floor 1 Reception Hall... ✅ (326 chars)
+      Thermostat 37/112: Floor 1 Recovery Room... ✅ (325 chars)
+      Thermostat 38/112: Floor 1 Scheduling... ✅ (322 chars)
+      Thermostat 39/112: Floor 1 Scrub... ✅ (317 chars)
+      Thermostat 40/112: Floor 1 Soil... ✅ (316 chars)
+      Thermostat 41/112: Floor 1 Soil Hold... ✅ (321 chars)
+      Thermostat 42/112: Floor 1 Soil Work... ✅ (321 chars)
+      Thermostat 43/112: Floor 1 Step Down... ✅ (321 chars)
+      Thermostat 44/112: Floor 1 Sterile Hall... ✅ (324 chars)
+      Thermostat 45/112: Floor 1 Sterile Storage... ✅ (327 chars)
+      Thermostat 46/112: Floor 1 Storage... ✅ (319 chars)
+      Thermostat 47/112: Floor 1 Utility Hall... ✅ (324 chars)
+      Thermostat 48/112: Floor 1 Utility Janitor... ✅ (327 chars)
+      Thermostat 49/112: Floor 1 Utility Room... ✅ (324 chars)
+      Thermostat 50/112: Floor 1 Vestibule... ✅ (321 chars)
+      Thermostat 51/112: Floor 2 Conference... ✅ (322 chars)
+      Thermostat 52/112: Floor 2 Conference Toilet... ✅ (329 chars)
+      Thermostat 53/112: Floor 2 Dictation... ✅ (321 chars)
+      Thermostat 54/112: Floor 2 Exam 1... ✅ (318 chars)
+      Thermostat 55/112: Floor 2 Exam 2... ✅ (318 chars)
+      Thermostat 56/112: Floor 2 Exam 3... ✅ (318 chars)
+      Thermostat 57/112: Floor 2 Exam 4... ✅ (318 chars)
+      Thermostat 58/112: Floor 2 Exam 5... ✅ (318 chars)
+      Thermostat 59/112: Floor 2 Exam 6... ✅ (318 chars)
+      Thermostat 60/112: Floor 2 Exam 7... ✅ (318 chars)
+      Thermostat 61/112: Floor 2 Exam 8... ✅ (318 chars)
+      Thermostat 62/112: Floor 2 Exam 9... ✅ (318 chars)
+      Thermostat 63/112: Floor 2 Exam Hall 1... ✅ (323 chars)
+      Thermostat 64/112: Floor 2 Exam Hall 2... ✅ (323 chars)
+      Thermostat 65/112: Floor 2 Exam Hall 3... ✅ (323 chars)
+      Thermostat 66/112: Floor 2 Exam Hall 4... ✅ (323 chars)
+      Thermostat 67/112: Floor 2 Exam Hall 5... ✅ (323 chars)
+      Thermostat 68/112: Floor 2 Exam Hall 6... ✅ (323 chars)
+      Thermostat 69/112: Floor 2 Janitor... ✅ (319 chars)
+      Thermostat 70/112: Floor 2 Lounge... ✅ (318 chars)
+      Thermostat 71/112: Floor 2 Nurse Station 1... ✅ (327 chars)
+      Thermostat 72/112: Floor 2 Nurse Station 2... ✅ (327 chars)
+      Thermostat 73/112: Floor 2 Office... ✅ (318 chars)
+      Thermostat 74/112: Floor 2 Office Hall... ✅ (323 chars)
+      Thermostat 75/112: Floor 2 Reception... ✅ (321 chars)
+      Thermostat 76/112: Floor 2 Reception Hall... ✅ (326 chars)
+      Thermostat 77/112: Floor 2 Reception Toilet... ✅ (328 chars)
+      Thermostat 78/112: Floor 2 Scheduling 1... ✅ (324 chars)
+      Thermostat 79/112: Floor 2 Scheduling 2... ✅ (324 chars)
+      Thermostat 80/112: Floor 2 Storage 1... ✅ (321 chars)
+      Thermostat 81/112: Floor 2 Storage 2... ✅ (321 chars)
+      Thermostat 82/112: Floor 2 Storage 3... ✅ (321 chars)
+      Thermostat 83/112: Floor 2 Utility... ✅ (319 chars)
+      Thermostat 84/112: Floor 2 Work... ✅ (316 chars)
+      Thermostat 85/112: Floor 2 Work Hall... ✅ (321 chars)
+      Thermostat 86/112: Floor 2 Work Toilet... ✅ (323 chars)
+      Thermostat 87/112: Floor 3 Dressing Room... ✅ (325 chars)
+      Thermostat 88/112: Floor 3 Elevator Hall... ✅ (325 chars)
+      Thermostat 89/112: Floor 3 Humid... ✅ (317 chars)
+      Thermostat 90/112: Floor 3 Janitor... ✅ (319 chars)
+      Thermostat 91/112: Floor 3 Locker... ✅ (318 chars)
+      Thermostat 92/112: Floor 3 Lounge... ✅ (318 chars)
+      Thermostat 93/112: Floor 3 Lounge Toilet... ✅ (325 chars)
+      Thermostat 94/112: Floor 3 Mechanical... ✅ (322 chars)
+      Thermostat 95/112: Floor 3 Mechanical Hall... ✅ (327 chars)
+      Thermostat 96/112: Floor 3 Office... ✅ (318 chars)
+      Thermostat 97/112: Floor 3 Office Hall... ✅ (323 chars)
+      Thermostat 98/112: Floor 3 Office Toilet... ✅ (325 chars)
+      Thermostat 99/112: Floor 3 Physical Therapy 1... ✅ (330 chars)
+      Thermostat 100/112: Floor 3 Physical Therapy 2... ✅ (330 chars)
+      Thermostat 101/112: Floor 3 Physical Therapy Toilet... ✅ (335 chars)
+      Thermostat 102/112: Floor 3 Storage 1... ✅ (321 chars)
+      Thermostat 103/112: Floor 3 Storage 2... ✅ (321 chars)
+      Thermostat 104/112: Floor 3 Treatment... ✅ (321 chars)
+      Thermostat 105/112: Floor 3 Undeveloped 1... ✅ (325 chars)
+      Thermostat 106/112: Floor 3 Undeveloped 2... ✅ (325 chars)
+      Thermostat 107/112: Floor 3 Utility... ✅ (319 chars)
+      Thermostat 108/112: Floor 3 Work... ✅ (316 chars)
+      Thermostat 109/112: NE Stair... ✅ (312 chars)
+      Thermostat 110/112: NW Elevator... ✅ (315 chars)
+      Thermostat 111/112: NW Stair... ✅ (312 chars)
+      Thermostat 112/112: SW Stair... ✅ (312 chars)
+   ✅ Complete VRF system generated (427601 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 225 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'Floor 1 Elevator Pump Room'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'Floor 3 Mechanical'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'Floor 3 Mechanical Hall'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'Floor 3 Undeveloped 1'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'Floor 3 Undeveloped 2'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'NE Stair'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'NW Stair'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'SW Stair'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_Floor 1 Elevator Pump Room'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_Floor 3 Mechanical'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_Floor 3 Mechanical Hall'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_Floor 3 Undeveloped 1'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_Floor 3 Undeveloped 2'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_NE Stair'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_NW Stair'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_SW Stair'
+  ⚠️  Removed 16 orphaned comment-only line(s) from HVAC section
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 225 HVAC objects
+
+[2] Validating IDF...
+Valid: True, Errors: 0
+✓ Validation passed - proceeding to simulation
+
+[3] Simulating...
+Success: True, Errors: 0
+
+✓ Final corrected IDF copied to: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/finetuned_rag_healthcare_medium_extraword_r1_FINAL.idf
+  Use this file in EP-Launch for simulation!
+
+[Eval] Running quality evaluation...
+  Syntax correctness:   0.71
+  Parameter accuracy:   1.00
+  Simulation success:   True
+
+======================================================================
+PIPELINE COMPLETE: SUCCESS
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/finetuned_rag_healthcare_medium_extraword_r1_results.json
+
+🎉 SUCCESS! Use this file:
+   /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/finetuned_rag_healthcare_medium_extraword_r1_FINAL.idf
+======================================================================

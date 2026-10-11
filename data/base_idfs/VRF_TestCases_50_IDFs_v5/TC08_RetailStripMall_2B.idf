@@ -1,0 +1,415 @@
+!-Generator IDFEditor 1.50
+! Test Case TC08 | RetailStripMall | Climate Zone 2B | Phoenix AZ
+! No HVAC - ready for VRF template injection
+
+Version,
+    25.2;                    !- Version Identifier
+
+Building,
+    RetailStripMall_TC08,            !- Name
+    0,                       !- North Axis {deg}
+    City,                    !- Terrain
+    0.04,                    !- Loads Convergence Tolerance Value {W}
+    0.4,                     !- Temperature Convergence Tolerance Value {deltaC}
+    FullInteriorAndExterior, !- Solar Distribution
+    25,                      !- Maximum Number of Warmup Days
+    6;                       !- Minimum Number of Warmup Days
+
+Timestep,
+    6;                       !- Number of Timesteps per Hour
+
+Zone,
+    Shop_1,                    !- Name
+    0,                       !- Direction of Relative North {deg}
+    0,                !- X Origin {m}
+    0,                       !- Y Origin {m}
+    0,                       !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    autocalculate,           !- Ceiling Height {m}
+    autocalculate;           !- Volume {m3}
+
+Zone,
+    Shop_2,                    !- Name
+    0,                       !- Direction of Relative North {deg}
+    25,                !- X Origin {m}
+    0,                       !- Y Origin {m}
+    0,                       !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    autocalculate,           !- Ceiling Height {m}
+    autocalculate;           !- Volume {m3}
+
+Zone,
+    Shop_3,                    !- Name
+    0,                       !- Direction of Relative North {deg}
+    50,                !- X Origin {m}
+    0,                       !- Y Origin {m}
+    0,                       !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    autocalculate,           !- Ceiling Height {m}
+    autocalculate;           !- Volume {m3}
+
+Zone,
+    Back_Corridor,                    !- Name
+    0,                       !- Direction of Relative North {deg}
+    75,                !- X Origin {m}
+    0,                       !- Y Origin {m}
+    0,                       !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    autocalculate,           !- Ceiling Height {m}
+    autocalculate;           !- Volume {m3}
+
+ScheduleTypeLimits,
+    Fraction,                !- Name
+    0,                       !- Lower Limit Value
+    1,                       !- Upper Limit Value
+    Continuous;              !- Numeric Type
+
+ScheduleTypeLimits,
+    Any Number;              !- Name
+
+Schedule:Compact,
+    Shop_1_Occ,              !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.0,       !- Field 3
+    Until: 09:00, 0.5,       !- Field 5
+    Until: 17:00, 1.0,       !- Field 7
+    Until: 18:00, 0.5,       !- Field 9
+    Until: 24:00, 0.0,       !- Field 11
+    For: Saturday,           !- Field 13
+    Until: 09:00, 0.0,       !- Field 14
+    Until: 13:00, 0.5,       !- Field 16
+    Until: 24:00, 0.0,       !- Field 18
+    For: Sunday Holidays,    !- Field 20
+    Until: 24:00, 0.0;       !- Field 21
+
+Schedule:Compact,
+    Shop_1_Ltg,              !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.1,       !- Field 3
+    Until: 17:00, 1.0,       !- Field 5
+    Until: 24:00, 0.1,       !- Field 7
+    For: Weekends Holidays,  !- Field 9
+    Until: 24:00, 0.1;       !- Field 10
+
+Schedule:Compact,
+    Shop_1_Eqp,              !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.1,       !- Field 3
+    Until: 17:00, 1.0,       !- Field 5
+    Until: 24:00, 0.1,       !- Field 7
+    For: Weekends Holidays,  !- Field 9
+    Until: 24:00, 0.1;       !- Field 10
+
+Schedule:Compact,
+    Shop_1_Act,              !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00, 120;       !- Field 3
+
+Schedule:Compact,
+    Shop_2_Occ,              !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.0,       !- Field 3
+    Until: 09:00, 0.5,       !- Field 5
+    Until: 17:00, 1.0,       !- Field 7
+    Until: 18:00, 0.5,       !- Field 9
+    Until: 24:00, 0.0,       !- Field 11
+    For: Saturday,           !- Field 13
+    Until: 09:00, 0.0,       !- Field 14
+    Until: 13:00, 0.5,       !- Field 16
+    Until: 24:00, 0.0,       !- Field 18
+    For: Sunday Holidays,    !- Field 20
+    Until: 24:00, 0.0;       !- Field 21
+
+Schedule:Compact,
+    Shop_2_Ltg,              !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.1,       !- Field 3
+    Until: 17:00, 1.0,       !- Field 5
+    Until: 24:00, 0.1,       !- Field 7
+    For: Weekends Holidays,  !- Field 9
+    Until: 24:00, 0.1;       !- Field 10
+
+Schedule:Compact,
+    Shop_2_Eqp,              !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.1,       !- Field 3
+    Until: 17:00, 1.0,       !- Field 5
+    Until: 24:00, 0.1,       !- Field 7
+    For: Weekends Holidays,  !- Field 9
+    Until: 24:00, 0.1;       !- Field 10
+
+Schedule:Compact,
+    Shop_2_Act,              !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00, 120;       !- Field 3
+
+Schedule:Compact,
+    Shop_3_Occ,              !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.0,       !- Field 3
+    Until: 09:00, 0.5,       !- Field 5
+    Until: 17:00, 1.0,       !- Field 7
+    Until: 18:00, 0.5,       !- Field 9
+    Until: 24:00, 0.0,       !- Field 11
+    For: Saturday,           !- Field 13
+    Until: 09:00, 0.0,       !- Field 14
+    Until: 13:00, 0.5,       !- Field 16
+    Until: 24:00, 0.0,       !- Field 18
+    For: Sunday Holidays,    !- Field 20
+    Until: 24:00, 0.0;       !- Field 21
+
+Schedule:Compact,
+    Shop_3_Ltg,              !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.1,       !- Field 3
+    Until: 17:00, 1.0,       !- Field 5
+    Until: 24:00, 0.1,       !- Field 7
+    For: Weekends Holidays,  !- Field 9
+    Until: 24:00, 0.1;       !- Field 10
+
+Schedule:Compact,
+    Shop_3_Eqp,              !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.1,       !- Field 3
+    Until: 17:00, 1.0,       !- Field 5
+    Until: 24:00, 0.1,       !- Field 7
+    For: Weekends Holidays,  !- Field 9
+    Until: 24:00, 0.1;       !- Field 10
+
+Schedule:Compact,
+    Shop_3_Act,              !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00, 120;       !- Field 3
+
+Schedule:Compact,
+    Back_Corridor_Occ,              !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.0,       !- Field 3
+    Until: 09:00, 0.5,       !- Field 5
+    Until: 17:00, 1.0,       !- Field 7
+    Until: 18:00, 0.5,       !- Field 9
+    Until: 24:00, 0.0,       !- Field 11
+    For: Saturday,           !- Field 13
+    Until: 09:00, 0.0,       !- Field 14
+    Until: 13:00, 0.5,       !- Field 16
+    Until: 24:00, 0.0,       !- Field 18
+    For: Sunday Holidays,    !- Field 20
+    Until: 24:00, 0.0;       !- Field 21
+
+Schedule:Compact,
+    Back_Corridor_Ltg,              !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.1,       !- Field 3
+    Until: 17:00, 1.0,       !- Field 5
+    Until: 24:00, 0.1,       !- Field 7
+    For: Weekends Holidays,  !- Field 9
+    Until: 24:00, 0.1;       !- Field 10
+
+Schedule:Compact,
+    Back_Corridor_Eqp,              !- Name
+    Fraction,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 08:00, 0.1,       !- Field 3
+    Until: 17:00, 1.0,       !- Field 5
+    Until: 24:00, 0.1,       !- Field 7
+    For: Weekends Holidays,  !- Field 9
+    Until: 24:00, 0.1;       !- Field 10
+
+Schedule:Compact,
+    Back_Corridor_Act,              !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00, 120;       !- Field 3
+
+People,
+    Shop_1_People,             !- Name
+    Shop_1,                    !- Zone or ZoneList Name
+    Shop_1_Occ,              !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    20,                   !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Shop_1_Act;              !- Activity Level Schedule Name
+
+People,
+    Shop_2_People,             !- Name
+    Shop_2,                    !- Zone or ZoneList Name
+    Shop_2_Occ,              !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    20,                   !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Shop_2_Act;              !- Activity Level Schedule Name
+
+People,
+    Shop_3_People,             !- Name
+    Shop_3,                    !- Zone or ZoneList Name
+    Shop_3_Occ,              !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    15,                   !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Shop_3_Act;              !- Activity Level Schedule Name
+
+People,
+    Back_Corridor_People,             !- Name
+    Back_Corridor,                    !- Zone or ZoneList Name
+    Back_Corridor_Occ,              !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    2,                   !- Number of People
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    autocalculate,           !- Sensible Heat Fraction
+    Back_Corridor_Act;              !- Activity Level Schedule Name
+
+Lights,
+    Shop_1_Lights,             !- Name
+    Shop_1,                    !- Zone or ZoneList Name
+    Shop_1_Ltg,              !- Schedule Name
+    LightingLevel,           !- Design Level Calculation Method
+    1800,                    !- Lighting Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    Shop_2_Lights,             !- Name
+    Shop_2,                    !- Zone or ZoneList Name
+    Shop_2_Ltg,              !- Schedule Name
+    LightingLevel,           !- Design Level Calculation Method
+    1800,                    !- Lighting Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    Shop_3_Lights,             !- Name
+    Shop_3,                    !- Zone or ZoneList Name
+    Shop_3_Ltg,              !- Schedule Name
+    LightingLevel,           !- Design Level Calculation Method
+    1200,                    !- Lighting Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+Lights,
+    Back_Corridor_Lights,             !- Name
+    Back_Corridor,                    !- Zone or ZoneList Name
+    Back_Corridor_Ltg,              !- Schedule Name
+    LightingLevel,           !- Design Level Calculation Method
+    200,                    !- Lighting Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.4,                     !- Fraction Radiant
+    0.2;                     !- Fraction Visible
+
+ElectricEquipment,
+    Shop_1_Equipment,          !- Name
+    Shop_1,                    !- Zone or ZoneList Name
+    Shop_1_Eqp,              !- Schedule Name
+    EquipmentLevel,          !- Design Level Calculation Method
+    1000,                    !- Design Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.3,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    Shop_2_Equipment,          !- Name
+    Shop_2,                    !- Zone or ZoneList Name
+    Shop_2_Eqp,              !- Schedule Name
+    EquipmentLevel,          !- Design Level Calculation Method
+    1000,                    !- Design Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.3,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    Shop_3_Equipment,          !- Name
+    Shop_3,                    !- Zone or ZoneList Name
+    Shop_3_Eqp,              !- Schedule Name
+    EquipmentLevel,          !- Design Level Calculation Method
+    800,                    !- Design Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.3,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+ElectricEquipment,
+    Back_Corridor_Equipment,          !- Name
+    Back_Corridor,                    !- Zone or ZoneList Name
+    Back_Corridor_Eqp,              !- Schedule Name
+    EquipmentLevel,          !- Design Level Calculation Method
+    100,                    !- Design Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Fraction Latent
+    0.3,                     !- Fraction Radiant
+    0;                       !- Fraction Lost
+
+Output:Variable,
+    *,                       !- Key Value
+    Zone Mean Air Temperature,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Zone Air System Sensible Cooling Energy,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Zone Air System Sensible Heating Energy,  !- Variable Name
+    Hourly;                  !- Reporting Frequency

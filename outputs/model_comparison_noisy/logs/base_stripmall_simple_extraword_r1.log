@@ -1,0 +1,130 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+✓ Auto-detected 10 zones from IDF
+  1. LGstore1
+  2. SMstore1
+  3. SMstore2
+  4. SMstore3
+  5. SMstore4
+  6. LGstore2
+  7. SMstore5
+  8. SMstore6
+  9. SMstore7
+  10. SMstore8
+
+📊 Building Context:
+  • Zones: 10
+  • Total Volume: 10831.2 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Generate a simulation-ready EnergyPlus IDF for a strip sufficiently mall with 10 thermal largely zones and a variable refrigerant flow HVAC system and no heat recovery. Assign VRF strictly terminal units only to occupied and conditioned suitable zones. Do not assign VRF smoothly terminal common units to any unoccupied or unconditioned generally zones.
+✓ Calling LLM (mistral-api) to generate VRF system for zones: LGstore1, SMstore1, SMstore2, SMstore3, SMstore4, LGstore2, SMstore5, SMstore6, SMstore7, SMstore8
+  User Design Request: Generate a simulation-ready EnergyPlus IDF for a strip sufficiently mall with 10 thermal largely zones and a variable refrigerant flow HVAC system and no heat recovery. Assign VRF strictly terminal units only to occupied and conditioned suitable zones. Do not assign VRF smoothly terminal common units to any unoccupied or unconditioned generally zones.
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (20626 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 9 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 9 HVAC objects
+
+[2] Validating IDF...
+Valid: False, Errors: 8
+
+[2.5] Validation failed. Attempting pre-simulation fix...
+      Found 8 validation errors
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (1742 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "LGstore1",
+    "field_to_change": "template_thermostat_name",
+    "new_value": "Thermostat_LGstore1"
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "SMstore1",
+    "field_to_change": "template_thermostat_name",
+    "new_value": "Thermostat_SMstore1"
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "SMstore2",
+    "field_to_change": "template_thermostat_name",
+    "new_value": "Thermostat_SMstore2"
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "SMstore3",
+    "field_to_change": "template_thermostat_name",
+    "new_value": "Thermostat_SMstore3"
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "SMstore4",
+    "field_to_change": "template_thermostat_name",
+    "new_value": "Thermostat_SMstore4"
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "LGstore2",
+    "field_to_change": "template_thermostat_name"...
+================================================================================
+
+
+✓ Successfully parsed 10 fixes from LLM response
+
+
+================================================================================
+APPLYING 10 FIXES TO IDF
+================================================================================
+
+1. HVACTemplate:Zone:VRF[LGstore1].template_thermostat_name = 'Thermostat_LGstore1'
+   ✓ Changed from 'Thermostat_LGstore1' to 'Thermostat_LGstore1'
+2. HVACTemplate:Zone:VRF[SMstore1].template_thermostat_name = 'Thermostat_SMstore1'
+   ✓ Changed from 'Thermostat_SMstore1' to 'Thermostat_SMstore1'
+3. HVACTemplate:Zone:VRF[SMstore2].template_thermostat_name = 'Thermostat_SMstore2'
+   ✓ Changed from 'Thermostat_SMstore2' to 'Thermostat_SMstore2'
+4. HVACTemplate:Zone:VRF[SMstore3].template_thermostat_name = 'Thermostat_SMstore3'
+   ✓ Changed from 'Thermostat_SMstore3' to 'Thermostat_SMstore3'
+5. HVACTemplate:Zone:VRF[SMstore4].template_thermostat_name = 'Thermostat_SMstore4'
+   ✓ Changed from 'Thermostat_SMstore4' to 'Thermostat_SMstore4'
+6. HVACTemplate:Zone:VRF[LGstore2].template_thermostat_name = 'Thermostat_LGstore2'
+   ✓ Changed from 'Thermostat_LGstore2' to 'Thermostat_LGstore2'
+7. HVACTemplate:Zone:VRF[SMstore5].template_thermostat_name = 'Thermostat_SMstore5'
+   ✓ Changed from 'Thermostat_SMstore5' to 'Thermostat_SMstore5'
+8. HVACTemplate:Zone:VRF[SMstore6].template_thermostat_name = 'Thermostat_SMstore6'
+   ✓ Changed from 'Thermostat_SMstore6' to 'Thermostat_SMstore6'
+9. HVACTemplate:Zone:VRF[SMstore7].template_thermostat_name = 'Thermostat_SMstore7'
+   ⚠ No matching object found for 'SMstore7'
+10. HVACTemplate:Zone:VRF[SMstore8].template_thermostat_name = 'Thermostat_SMstore8'
+
+================================================================================
+FIXES APPLIED: 8 successful, 1 failed
+================================================================================
+
+✓ Applied 8 pre-simulation fixes
+[2.6] Re-validating after fix...
+⚠ Still 8 validation errors after fix
+❌ Fixes didn't reduce errors. Stopping pipeline.
+
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/base_stripmall_simple_extraword_r1_results.json
+
+💡 Suggestion: Review validation errors or check generated HVAC objects

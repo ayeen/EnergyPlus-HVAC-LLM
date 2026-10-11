@@ -1,0 +1,293 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 1 non-HVAC zone(s): ['Back_Space']
+  ↳ Excluded 1 non-HVAC zone(s): ['Back_Space']
+✓ Auto-detected 4 zones from IDF
+  1. Core_Retail
+  2. Point_Of_Sale
+  3. Front_Retail
+  4. Front_Entry
+  ↳ Excluded 1 non-HVAC zone(s): ['Back_Space']
+
+📊 Building Context:
+  • Zones: 4
+  • Total Volume: 13993.4 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Create a complte VRF HHVAC configuration for a standalone retail buuilding containing 5 thermal zones, wth no heat rceovery, where ech thermal zone is served by one inodor terminal uint onnected to a single shared ohtdoor condensing unit fhrough a zone terminal unit ist. Only assign VRF terminla ubits to zone taht are ocupied and codnitioned. Skip any zoe that is unoccupied or unconditionedd.
+✓ Calling LLM (mistral-api) to generate VRF system for zones: Core_Retail, Point_Of_Sale, Front_Retail, Front_Entry
+  User Design Request: Create a complte VRF HHVAC configuration for a standalone retail buuilding containing 5 thermal zones, wth no heat rceovery, where ech thermal zone is served by one inodor terminal uint onnected to a single shared ohtdoor condensing unit fhrough a zone terminal unit ist. Only assign VRF terminla ubits to zone taht are ocupied and codnitioned. Skip any zoe that is unoccupied or unconditionedd.
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (8134 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 5 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 5 HVAC objects
+
+[2] Validating IDF...
+Valid: False, Errors: 4
+
+[2.5] Validation failed. Attempting pre-simulation fix...
+      Found 4 validation errors
+  ↳ Excluded 1 non-HVAC zone(s): ['Back_Space']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (637 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Core_Retail",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Point_Of_Sale",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Front_Retail",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Front_Entry",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  }
+]
+================================================================================
+
+
+✓ Successfully parsed 4 fixes from LLM response
+
+
+================================================================================
+APPLYING 4 FIXES TO IDF
+================================================================================
+
+1. HVACTemplate:Zone:VRF[Core_Retail].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Core_Retail' to ''
+2. HVACTemplate:Zone:VRF[Point_Of_Sale].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Point_Of_Sale' to ''
+3. HVACTemplate:Zone:VRF[Front_Retail].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Front_Retail' to ''
+4. HVACTemplate:Zone:VRF[Front_Entry].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Front_Entry' to ''
+
+================================================================================
+FIXES APPLIED: 4 successful, 0 failed
+================================================================================
+
+✓ Applied 4 pre-simulation fixes
+[2.6] Re-validating after fix...
+✓ Validation passed after fix!
+
+[3] Simulating...
+Success: False, Errors: 24
+
+[4.1] Fixing errors...
+  ↳ Excluded 1 non-HVAC zone(s): ['Back_Space']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (2504 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "Core_Retail VRF Cooling Coil",
+    "field_to_change": "gross_rated_sensible_heat_ratio",
+    "new_value": 0.7
+  },
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "Core_Retail VRF Cooling Coil",
+    "field_to_change": "gross_rated_total_cooling_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "Coil:Heating:DX:VariableRefrigerantFlow",
+    "object_name": "Core_Retail VRF Heating Coil",
+    "field_to_change": "gross_rated_heating_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "DesignSpecification:OutdoorAir",
+    "object_name": "SZ DSOA Core_Retail",
+    "field_to_change": "outdoor_air_flow_per_person",
+    "new_value": 0.0
+  },
+  {
+    "object_type": "DesignSpecification:OutdoorAir",
+    "object_name": "SZ DSOA Core_Retail",
+    "field_to_change": "outdoor_air_flow_per_zone",
+    "new_value": 0.0
+  },
+  {
+    "object_type": "D...
+================================================================================
+
+
+✓ Successfully parsed 13 fixes from LLM response
+
+
+================================================================================
+APPLYING 13 FIXES TO IDF
+================================================================================
+
+1. Coil:Cooling:DX:VariableRefrigerantFlow[Core_Retail VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.7'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+2. Coil:Cooling:DX:VariableRefrigerantFlow[Core_Retail VRF Cooling Coil].gross_rated_total_cooling_capacity = 'Autosize'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+3. Coil:Heating:DX:VariableRefrigerantFlow[Core_Retail VRF Heating Coil].gross_rated_heating_capacity = 'Autosize'
+   ❌ No objects of type 'Coil:Heating:DX:VariableRefrigerantFlow' found in IDF
+4. DesignSpecification:OutdoorAir[SZ DSOA Core_Retail].outdoor_air_flow_per_person = '0.0'
+   ❌ No objects of type 'DesignSpecification:OutdoorAir' found in IDF
+5. DesignSpecification:OutdoorAir[SZ DSOA Core_Retail].outdoor_air_flow_per_zone = '0.0'
+   ❌ No objects of type 'DesignSpecification:OutdoorAir' found in IDF
+6. DesignSpecification:OutdoorAir[SZ DSOA Core_Retail].outdoor_air_flow_per_zone_floor_area = '0.0'
+   ❌ No objects of type 'DesignSpecification:OutdoorAir' found in IDF
+7. DesignSpecification:OutdoorAir[SZ DSOA Core_Retail].outdoor_air_method = 'Sum'
+   ❌ No objects of type 'DesignSpecification:OutdoorAir' found in IDF
+8. Sizing:Zone[Sizing:Zone 1].zone_cooling_design_supply_air_temperature_difference = '11.11'
+   ❌ No objects of type 'Sizing:Zone' found in IDF
+9. Sizing:Zone[Sizing:Zone 1].zone_heating_design_supply_air_temperature_input_method = 'SupplyAirTemperatureDifference'
+   ❌ No objects of type 'Sizing:Zone' found in IDF
+10. ZoneControl:Thermostat[Thermostat_Core_Retail].control_2_object_type = 'ThermostatSetpoint:SingleHeating'
+   ✓ Changed from 'Clg-SetP-Sch' to 'ThermostatSetpoint:SingleHeating'
+11. ZoneHVAC:EquipmentList[Core_Retail Equipment].equipment_1_zone_equipment_object_type = 'ZoneHVAC:Baseboard:RadiantConvective:Water'
+   ❌ No objects of type 'ZoneHVAC:EquipmentList' found in IDF
+12. HVACTemplate:System:VRF[VRF_System_1].gross_rated_total_cooling_capacity = 'Autosize'
+   ✓ Changed from 'Autosize' to 'Autosize'
+13. HVACTemplate:System:VRF[VRF_System_1].gross_rated_heating_capacity = 'Autosize'
+   ✓ Changed from 'Autosize' to 'Autosize'
+
+================================================================================
+FIXES APPLIED: 3 successful, 10 failed
+================================================================================
+
+✓ Applied 3 fixes
+
+[5.1] Re-simulating...
+Success: False
+
+[4.2] Fixing errors...
+  ↳ Excluded 1 non-HVAC zone(s): ['Back_Space']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (3192 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "Core_Retail VRF Cooling Coil",
+    "field_to_change": "gross_rated_sensible_heat_ratio",
+    "new_value": 0.7
+  },
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "Core_Retail VRF Cooling Coil",
+    "field_to_change": "gross_rated_total_cooling_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "Coil:Heating:DX:VariableRefrigerantFlow",
+    "object_name": "Core_Retail VRF Heating Coil",
+    "field_to_change": "gross_rated_heating_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "DesignSpecification:OutdoorAir",
+    "object_name": "SZ DSOA Core_Retail",
+    "field_to_change": "outdoor_air_flow_per_person",
+    "new_value": "0.0"
+  },
+  {
+    "object_type": "DesignSpecification:OutdoorAir",
+    "object_name": "SZ DSOA Core_Retail",
+    "field_to_change": "outdoor_air_flow_per_zone",
+    "new_value": "0.0"
+  },
+  {
+    "object_type"...
+================================================================================
+
+
+✓ Successfully parsed 17 fixes from LLM response
+
+
+================================================================================
+APPLYING 17 FIXES TO IDF
+================================================================================
+
+1. Coil:Cooling:DX:VariableRefrigerantFlow[Core_Retail VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.7'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+2. Coil:Cooling:DX:VariableRefrigerantFlow[Core_Retail VRF Cooling Coil].gross_rated_total_cooling_capacity = 'Autosize'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+3. Coil:Heating:DX:VariableRefrigerantFlow[Core_Retail VRF Heating Coil].gross_rated_heating_capacity = 'Autosize'
+   ❌ No objects of type 'Coil:Heating:DX:VariableRefrigerantFlow' found in IDF
+4. DesignSpecification:OutdoorAir[SZ DSOA Core_Retail].outdoor_air_flow_per_person = '0.0'
+   ❌ No objects of type 'DesignSpecification:OutdoorAir' found in IDF
+5. DesignSpecification:OutdoorAir[SZ DSOA Core_Retail].outdoor_air_flow_per_zone = '0.0'
+   ❌ No objects of type 'DesignSpecification:OutdoorAir' found in IDF
+6. DesignSpecification:OutdoorAir[SZ DSOA Core_Retail].outdoor_air_flow_per_zone_floor_area = '0.0'
+   ❌ No objects of type 'DesignSpecification:OutdoorAir' found in IDF
+7. DesignSpecification:OutdoorAir[SZ DSOA Core_Retail].outdoor_air_method = 'Sum'
+   ❌ No objects of type 'DesignSpecification:OutdoorAir' found in IDF
+8. Sizing:Zone[Sizing:Zone 1].zone_cooling_design_supply_air_temperature_difference = '11.1'
+   ❌ No objects of type 'Sizing:Zone' found in IDF
+9. Sizing:Zone[Sizing:Zone 1].zone_heating_design_supply_air_temperature_input_method = 'SupplyAirTemperatureDifference'
+   ❌ No objects of type 'Sizing:Zone' found in IDF
+10. ZoneControl:Thermostat[Thermostat_Front_Entry].control_2_object_type = 'ThermostatSetpoint:SingleHeating'
+   ✓ Changed from 'Clg-SetP-Sch' to 'ThermostatSetpoint:SingleHeating'
+11. ZoneHVAC:EquipmentList[Core_Retail Equipment].equipment_1_zone_equipment_object_type = 'ZoneHVAC:Baseboard:RadiantConvective:Water'
+   ❌ No objects of type 'ZoneHVAC:EquipmentList' found in IDF
+12. HVACTemplate:System:VRF[VRF_System_1].gross_rated_total_cooling_capacity = 'Autosize'
+   ✓ Changed from 'Autosize' to 'Autosize'
+13. HVACTemplate:System:VRF[VRF_System_1].gross_rated_heating_capacity = 'Autosize'
+   ✓ Changed from 'Autosize' to 'Autosize'
+14. HVACTemplate:Zone:VRF[Core_Retail].template_vrf_system_name = 'VRF_System_1'
+   ✓ Changed from 'VRF_System_1' to 'VRF_System_1'
+15. HVACTemplate:Zone:VRF[Point_Of_Sale].template_vrf_system_name = 'VRF_System_1'
+   ✓ Changed from 'VRF_System_1' to 'VRF_System_1'
+16. HVACTemplate:Zone:VRF[Front_Retail].template_vrf_system_name = 'VRF_System_1'
+   ✓ Changed from 'VRF_System_1' to 'VRF_System_1'
+17. HVACTemplate:Zone:VRF[Front_Entry].template_vrf_system_name = 'VRF_System_1'
+   ✓ Changed from 'VRF_System_1' to 'VRF_System_1'
+
+================================================================================
+FIXES APPLIED: 7 successful, 10 failed
+================================================================================
+
+✓ Applied 7 fixes
+
+[5.2] Re-simulating...
+Success: False
+
+======================================================================
+PIPELINE COMPLETE: FAILED
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/base_rag_retailstandalone_medium_spelling_r1_results.json
+======================================================================

@@ -1,3 +1,0 @@
-Scenario,Test Case,Run,Prompt,Generation Success,Validation Success,Simulation Success,Time (s),Iterations,HVAC Objects,Errors
-Scenario 1 (No RAG),single_zone_office,1,Design a VRF HVAC system for efficient heating and...,True,False,False,43.34,0,0,0
-Scenario 2 (With RAG),single_zone_office,1,Design a VRF HVAC system for efficient heating and...,False,False,False,6.29,0,0,1

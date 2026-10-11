@@ -1,0 +1,24 @@
+# Flask Backend Dependencies
+Flask>=2.3.0
+flask-cors>=4.0.0
+flask-socketio>=5.3.0
+werkzeug>=2.3.0
+python-socketio>=5.9.0
+
+# WebSocket support
+eventlet>=0.33.0
+
+# Async support
+python-engineio>=4.7.0
+
+# All existing project dependencies
+eppy>=0.9.11
+pandas>=1.3.0
+google-generativeai>=0.2.0
+transformers>=4.36.0
+torch>=2.0.0
+accelerate>=0.25.0
+peft>=0.7.0
+bitsandbytes>=0.41.0
+chromadb>=0.4.22
+sentence-transformers>=2.2.2

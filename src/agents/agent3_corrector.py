@@ -1,12 +1,132 @@
 """
 LLM Agent 3: Error Corrector with RAG Integration
+
+This agent uses:
+- Gemini (pre-trained) when LLM_PROVIDER="gemini"
+- Fine-tuned Mistral model (agent3-balanced) when LLM_PROVIDER="mistral"
 """
 
 from src.agents.llm_interface import UniversalLLM
 from src.core.idf_handler import IDFHandler
 from src.rag.rag_retriever import RAGRetriever
+from config.settings import Config
 import json
 import re
+
+
+class Agent3MistralModel:
+    """Dedicated Mistral model for Agent 3 error correction (separate from Agent 1)"""
+    
+    _instance = None
+    _initialized = False
+    
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(Agent3MistralModel, cls).__new__(cls)
+        return cls._instance
+    
+    def __init__(self):
+        if Agent3MistralModel._initialized:
+            return
+            
+        self.model = None
+        self.tokenizer = None
+        self._load_model()
+        Agent3MistralModel._initialized = True
+    
+    def _load_model(self):
+        """Load the Agent 3 specific fine-tuned Mistral model"""
+        try:
+            import torch
+            from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+            from peft import PeftModel
+            
+            print("\n" + "="*60)
+            print("Loading Agent 3 Fine-tuned Mistral Model")
+            print("="*60)
+            print(f"   Base model: {Config.MISTRAL_BASE_MODEL}")
+            print(f"   Agent 3 path: {Config.MISTRAL_AGENT3_PATH}")
+            
+            # Configure 4-bit quantization
+            bnb_config = BitsAndBytesConfig(
+                load_in_4bit=True,
+                bnb_4bit_quant_type="nf4",
+                bnb_4bit_compute_dtype=torch.float16,
+                bnb_4bit_use_double_quant=False,
+                llm_int8_enable_fp32_cpu_offload=True,
+            )
+            
+            # Load base model
+            base_model = AutoModelForCausalLM.from_pretrained(
+                Config.MISTRAL_BASE_MODEL,
+                quantization_config=bnb_config,
+                device_map="auto",
+                trust_remote_code=True,
+                torch_dtype=torch.float16,
+                max_memory={0: "14GB", "cpu": "30GB"},
+            )
+            
+            # Load Agent 3 LoRA weights
+            self.model = PeftModel.from_pretrained(base_model, Config.MISTRAL_AGENT3_PATH)
+            
+            # Load tokenizer
+            self.tokenizer = AutoTokenizer.from_pretrained(Config.MISTRAL_AGENT3_PATH)
+            self.tokenizer.pad_token = self.tokenizer.eos_token
+            self.tokenizer.padding_side = "right"
+            
+            print("✓ Agent 3 Mistral model loaded successfully")
+            print(f"   Device: {next(self.model.parameters()).device}")
+            if torch.cuda.is_available():
+                print(f"   GPU: {torch.cuda.get_device_name(0)}")
+            print("="*60 + "\n")
+            
+        except Exception as e:
+            print(f"⚠ Agent 3 Mistral model loading failed: {e}")
+            import traceback
+            traceback.print_exc()
+            self.model = None
+            self.tokenizer = None
+    
+    def generate(self, system_prompt, user_prompt, max_tokens=1024):
+        """Generate error correction response"""
+        if self.model is None or self.tokenizer is None:
+            print("⚠ Agent 3 Mistral model not available")
+            return ""
+        
+        try:
+            import torch
+            
+            # Format prompt in Mistral instruction format
+            prompt = f"<s>[INST] {system_prompt}\n\n{user_prompt} [/INST]\n\n"
+            
+            inputs = self.tokenizer(prompt, return_tensors="pt").to(self.model.device)
+            
+            print(f"   Generating error correction (max {max_tokens} tokens)...")
+            
+            with torch.no_grad():
+                outputs = self.model.generate(
+                    **inputs,
+                    max_new_tokens=max_tokens,
+                    temperature=0.3,
+                    top_p=0.9,
+                    do_sample=True,
+                    pad_token_id=self.tokenizer.eos_token_id,
+                    repetition_penalty=1.2,
+                    no_repeat_ngram_size=3,
+                )
+            
+            # Decode only the new tokens
+            generated_tokens = outputs[0][len(inputs.input_ids[0]):]
+            text = self.tokenizer.decode(generated_tokens, skip_special_tokens=True)
+            
+            return text.strip()
+            
+        except Exception as e:
+            print(f"⚠ Agent 3 Mistral generation failed: {e}")
+            import traceback
+            traceback.print_exc()
+            return ""
+
 
 class ErrorCorrector:
     """Fix EnergyPlus errors using LLM with RAG-enhanced context"""
@@ -21,11 +141,23 @@ class ErrorCorrector:
                     Default: True (Scenario 2)
             llm_provider: LLM provider to use (e.g., "gemini", "mistral", None for default)
         """
-        # Note: Don't reset LLM here as generator may have already initialized it
-        self.llm = UniversalLLM(provider=llm_provider)
+        # Determine provider
+        self.llm_provider = llm_provider or Config.LLM_PROVIDER
+        
+        # Choose model based on provider:
+        # - gemini: Use Gemini pre-trained model (via UniversalLLM)
+        # - mistral: Use Agent 3 fine-tuned model (dedicated for error correction)
+        if self.llm_provider == "mistral":
+            print("\n🔧 Agent 3 using fine-tuned Mistral model for error correction")
+            self.agent3_mistral = Agent3MistralModel()
+            self.llm = None  # Don't use UniversalLLM for Mistral
+        else:
+            print("\n🔧 Agent 3 using Gemini pre-trained model")
+            self.llm = UniversalLLM(provider=self.llm_provider)
+            self.agent3_mistral = None
+        
         self.handler = IDFHandler()
         self.use_rag = use_rag
-        self.llm_provider = llm_provider
         
         # Initialize RAG retriever for error patterns and fix procedures
         if use_rag:
@@ -172,7 +304,13 @@ class ErrorCorrector:
 
 Generate the complete JSON array of ALL necessary fixes now:"""
         
-        response = self.llm.generate(system_prompt, user_prompt)
+        # Generate response using the appropriate model
+        if self.agent3_mistral is not None:
+            # Use Agent 3 fine-tuned Mistral model
+            response = self.agent3_mistral.generate(system_prompt, user_prompt)
+        else:
+            # Use Gemini pre-trained model
+            response = self.llm.generate(system_prompt, user_prompt)
         
         print("\n" + "="*80)
         print("LLM RESPONSE FOR ERROR CORRECTION:")
@@ -296,29 +434,57 @@ Output ONLY a valid JSON array of fix objects."""
                         "object_type": "HVACTemplate:System:VRF",
                         "object_name": "N/A",
                         "field_to_change": "minimum_outdoor_temperature_in_cooling_mode",
-                        "new_value": "-10"
+                        "new_value": "-6.0"   # EnergyPlus default / real equipment: −5 to −6 °C
                     },
                     {
                         "object_type": "HVACTemplate:System:VRF",
                         "object_name": "N/A",
                         "field_to_change": "maximum_outdoor_temperature_in_cooling_mode",
-                        "new_value": "48"
+                        "new_value": "43.0"   # EnergyPlus default / standard spec
                     }
                 ])
-            
+
             elif 'heating_temperature_range' in error_id.lower():
                 fixes.extend([
                     {
                         "object_type": "HVACTemplate:System:VRF",
                         "object_name": "N/A",
                         "field_to_change": "minimum_outdoor_temperature_in_heating_mode",
-                        "new_value": "-25"
+                        "new_value": "-20.0"  # EnergyPlus default / standard cold-climate VRF
                     },
                     {
                         "object_type": "HVACTemplate:System:VRF",
                         "object_name": "N/A",
                         "field_to_change": "maximum_outdoor_temperature_in_heating_mode",
-                        "new_value": "18"
+                        "new_value": "15.5"   # Daikin VRV IV / Mitsubishi CITY MULTI spec
+                    }
+                ])
+            
+            # Invalid condenser type error
+            elif 'invalid_condenser_type' in error_id.lower() or 'condenser_type' in error_id.lower():
+                # Fix in both HVACTemplate and expanded form
+                fixes.append({
+                    "object_type": "HVACTemplate:System:VRF",
+                    "object_name": "N/A",
+                    "field_to_change": "condenser_type",
+                    "new_value": "AirCooled"
+                })
+            
+            # Invalid COP type error (string in numeric field)
+            elif 'invalid_cop_type' in error_id.lower() or 'cop' in error_id.lower():
+                # Fix in both HVACTemplate and expanded form
+                fixes.extend([
+                    {
+                        "object_type": "HVACTemplate:System:VRF",
+                        "object_name": "N/A",
+                        "field_to_change": "gross_rated_heating_cop",
+                        "new_value": "3.5"
+                    },
+                    {
+                        "object_type": "HVACTemplate:System:VRF",
+                        "object_name": "N/A",
+                        "field_to_change": "gross_rated_cooling_cop",
+                        "new_value": "4.0"
                     }
                 ])
         
@@ -375,11 +541,15 @@ Output ONLY a valid JSON array of fix objects."""
                         else:
                             # Convert snake_case to Title_Case with special handling
                             # Preserve lowercase articles like "for", "in", "of", "to", "per", "used"
+                            # Keep acronyms in uppercase: COP, VRF, HVAC, etc.
                             lowercase_words = {'for', 'in', 'of', 'to', 'per', 'used', 'or', 'and', 'the'}
+                            uppercase_acronyms = {'cop', 'vrf', 'hvac', 'idf', 'db', 'wb', 'hr', 'dx'}
                             parts = field.split('_')
                             eppy_parts = []
                             for i, part in enumerate(parts):
-                                if i > 0 and part.lower() in lowercase_words:
+                                if part.lower() in uppercase_acronyms:
+                                    eppy_parts.append(part.upper())
+                                elif i > 0 and part.lower() in lowercase_words:
                                     eppy_parts.append(part.lower())
                                 else:
                                     eppy_parts.append(part.capitalize())

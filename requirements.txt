@@ -25,3 +25,12 @@ sentence-transformers>=2.2.2
 
 # Optional: For BGE-M3 specifically (can be installed later)
 # FlagEmbedding>=1.2.0
+
+# Evaluation metrics (BLEU and ROUGE-L)
+nltk>=3.8.0
+rouge-score>=0.1.2
+
+# Visualization (research figures)
+matplotlib>=3.7.0
+numpy>=1.24.0
+seaborn>=0.12.0

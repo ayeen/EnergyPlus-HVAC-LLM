@@ -1,0 +1,314 @@
+!-Generator EnergyPlus V23.1.0 Absolute Complete Envelope Baseline
+!-Case ID: 10 | Class: Large Low-Rise | Stories: 3 | Zones: 20 | Area: 1800m2 (60x30) per floor
+!-Zone Distribution: Story 1: 7 zones, Story 2: 7 zones, Story 3: 6 zones
+!-Floor Height: 6.0m | Facade: Split Windows Per Exterior Facade (~30% WWR)
+
+Version, 23.1;
+
+SimulationControl,
+  Yes,                     !- Do Zone Sizing Calculation
+  No,                      !- Do System Sizing Calculation
+  No,                      !- Do Plant Sizing Calculation
+  Yes,                     !- Run Simulation for Sizing Periods
+  No;                      !- Run Simulation for Weather File Run Periods
+
+Building,
+  Case_10_LargeLowRise_20Zone_60x30, !- Name
+  0.0,                     !- North Axis {deg}
+  Suburbs,                 !- Terrain
+  0.04,                    !- Loads Convergence Tolerance Value
+  0.4,                     !- Temperature Convergence Tolerance Value {deltaC}
+  FullExterior,            !- Solar Distribution
+  25,                      !- Maximum Number of Warmup Days
+  6;                       !- Minimum Number of Warmup Days
+
+Timestep, 4;
+
+GlobalGeometryRules,
+  UpperLeftCorner,         !- Starting Vertex Position
+  CounterClockWise,        !- Vertex Entry Direction
+  Relative;                !- Coordinate System
+
+!- --- SCHEDULES ---
+ScheduleTypeLimits, Fraction, 0.0, 1.0, Continuous;
+Schedule:Constant, AlwaysOn, Fraction, 1.0;
+Schedule:Constant, Cooling_Setpoint, , 24.0;
+Schedule:Constant, Heating_Setpoint, , 21.0;
+
+!- --- MATERIALS & CONSTRUCTIONS ---
+Material, Wall_Insulation, Rough, 0.1, 0.03, 43.0, 1210, 0.9, 0.7, 0.7;
+Construction, Exterior_Wall, Wall_Insulation;
+Material, Roof_Insulation, Rough, 0.15, 0.03, 43.0, 1210, 0.9, 0.7, 0.7;
+Construction, Exterior_Roof, Roof_Insulation;
+Material, Floor_Concrete, Rough, 0.2, 1.6, 2400, 880, 0.9, 0.7, 0.7;
+Construction, Ground_Floor, Floor_Concrete;
+Construction, Interior_Floor, Floor_Concrete;
+Material, Interior_Wall_Mat, Smooth, 0.2, 1.0, 1200, 840, 0.9, 0.6, 0.6;
+Construction, Interior_Wall, Interior_Wall_Mat;
+WindowMaterial:SimpleGlazingSystem, Clear_Glass, 2.4, 0.45, 0.7;
+Construction, External_Window, Clear_Glass;
+
+!- --- ZONES ---
+Zone, Story1_Zone1, 0,0,0,0,1,1,6.0;
+Zone, Story1_Zone2, 0,0,0,0,1,1,6.0;
+Zone, Story1_Zone3, 0,0,0,0,1,1,6.0;
+Zone, Story1_Zone4, 0,0,0,0,1,1,6.0;
+Zone, Story1_Zone5, 0,0,0,0,1,1,6.0;
+Zone, Story1_Zone6, 0,0,0,0,1,1,6.0;
+Zone, Story1_Zone7, 0,0,0,0,1,1,6.0;
+Zone, Story2_Zone1, 0,0,0,0,1,1,6.0;
+Zone, Story2_Zone2, 0,0,0,0,1,1,6.0;
+Zone, Story2_Zone3, 0,0,0,0,1,1,6.0;
+Zone, Story2_Zone4, 0,0,0,0,1,1,6.0;
+Zone, Story2_Zone5, 0,0,0,0,1,1,6.0;
+Zone, Story2_Zone6, 0,0,0,0,1,1,6.0;
+Zone, Story2_Zone7, 0,0,0,0,1,1,6.0;
+Zone, Story3_Zone1, 0,0,0,0,1,1,6.0;
+Zone, Story3_Zone2, 0,0,0,0,1,1,6.0;
+Zone, Story3_Zone3, 0,0,0,0,1,1,6.0;
+Zone, Story3_Zone4, 0,0,0,0,1,1,6.0;
+Zone, Story3_Zone5, 0,0,0,0,1,1,6.0;
+Zone, Story3_Zone6, 0,0,0,0,1,1,6.0;
+
+!- --- STORY 1 GEOMETRY ---
+BuildingSurface:Detailed, S1Z1_Floor, Floor, Ground_Floor, Story1_Zone1, Ground, , NoSun, NoWind, 0.5, 4, 0,30,0, 10,30,0, 10,0,0, 0,0,0;
+BuildingSurface:Detailed, S1Z1_Ceil, Ceiling, Interior_Floor, Story1_Zone1, Surface, S2Z1_Floor, NoSun, NoWind, 0.5, 4, 0,30,6, 0,0,6, 10,0,6, 10,30,6;
+BuildingSurface:Detailed, S1Z1_South, Wall, Exterior_Wall, Story1_Zone1, Outdoors, , SunExposed, WindExposed, 0.5, 4, 0,0,6, 0,0,0, 10,0,0, 10,0,6;
+FenestrationSurface:Detailed, S1Z1_South_Win, Window, External_Window, S1Z1_South, , 0.5, , , 1, 4, 2,0,4.5, 2,0,1.5, 8,0,1.5, 8,0,4.5;
+BuildingSurface:Detailed, S1Z1_North, Wall, Exterior_Wall, Story1_Zone1, Outdoors, , SunExposed, WindExposed, 0.5, 4, 10,30,6, 10,30,0, 0,30,0, 0,30,6;
+FenestrationSurface:Detailed, S1Z1_North_Win, Window, External_Window, S1Z1_North, , 0.5, , , 1, 4, 8,30,4.5, 8,30,1.5, 2,30,1.5, 2,30,4.5;
+BuildingSurface:Detailed, S1Z1_West, Wall, Exterior_Wall, Story1_Zone1, Outdoors, , SunExposed, WindExposed, 0.5, 4, 0,30,6, 0,30,0, 0,0,0, 0,0,6;
+FenestrationSurface:Detailed, S1Z1_West_Win, Window, External_Window, S1Z1_West, , 0.5, , , 1, 4, 0,24,4.5, 0,24,1.5, 0,6,1.5, 0,6,4.5;
+BuildingSurface:Detailed, S1Z1_East, Wall, Interior_Wall, Story1_Zone1, Surface, S1Z2_West, NoSun, NoWind, 0.5, 4, 10,0,6, 10,0,0, 10,30,0, 10,30,6;
+
+BuildingSurface:Detailed, S1Z2_Floor, Floor, Ground_Floor, Story1_Zone2, Ground, , NoSun, NoWind, 0.5, 4, 10,30,0, 20,30,0, 20,0,0, 10,0,0;
+BuildingSurface:Detailed, S1Z2_Ceil, Ceiling, Interior_Floor, Story1_Zone2, Surface, S2Z2_Floor, NoSun, NoWind, 0.5, 4, 10,30,6, 10,0,6, 20,0,6, 20,30,6;
+BuildingSurface:Detailed, S1Z2_South, Wall, Exterior_Wall, Story1_Zone2, Outdoors, , SunExposed, WindExposed, 0.5, 4, 10,0,6, 10,0,0, 20,0,0, 20,0,6;
+FenestrationSurface:Detailed, S1Z2_South_Win, Window, External_Window, S1Z2_South, , 0.5, , , 1, 4, 12,0,4.5, 12,0,1.5, 18,0,1.5, 18,0,4.5;
+BuildingSurface:Detailed, S1Z2_North, Wall, Exterior_Wall, Story1_Zone2, Outdoors, , SunExposed, WindExposed, 0.5, 4, 20,30,6, 20,30,0, 10,30,0, 10,30,6;
+FenestrationSurface:Detailed, S1Z2_North_Win, Window, External_Window, S1Z2_North, , 0.5, , , 1, 4, 18,30,4.5, 18,30,1.5, 12,30,1.5, 12,30,4.5;
+BuildingSurface:Detailed, S1Z2_West, Wall, Interior_Wall, Story1_Zone2, Surface, S1Z1_East, NoSun, NoWind, 0.5, 4, 10,30,6, 10,30,0, 10,0,0, 10,0,6;
+BuildingSurface:Detailed, S1Z2_East, Wall, Interior_Wall, Story1_Zone2, Surface, S1Z3_West, NoSun, NoWind, 0.5, 4, 20,0,6, 20,0,0, 20,30,0, 20,30,6;
+
+BuildingSurface:Detailed, S1Z3_Floor, Floor, Ground_Floor, Story1_Zone3, Ground, , NoSun, NoWind, 0.5, 4, 20,30,0, 30,30,0, 30,0,0, 20,0,0;
+BuildingSurface:Detailed, S1Z3_Ceil, Ceiling, Interior_Floor, Story1_Zone3, Surface, S2Z3_Floor, NoSun, NoWind, 0.5, 4, 20,30,6, 20,0,6, 30,0,6, 30,30,6;
+BuildingSurface:Detailed, S1Z3_South, Wall, Exterior_Wall, Story1_Zone3, Outdoors, , SunExposed, WindExposed, 0.5, 4, 20,0,6, 20,0,0, 30,0,0, 30,0,6;
+FenestrationSurface:Detailed, S1Z3_South_Win, Window, External_Window, S1Z3_South, , 0.5, , , 1, 4, 22,0,4.5, 22,0,1.5, 28,0,1.5, 28,0,4.5;
+BuildingSurface:Detailed, S1Z3_North, Wall, Exterior_Wall, Story1_Zone3, Outdoors, , SunExposed, WindExposed, 0.5, 4, 30,30,6, 30,30,0, 20,30,0, 20,30,6;
+FenestrationSurface:Detailed, S1Z3_North_Win, Window, External_Window, S1Z3_North, , 0.5, , , 1, 4, 28,30,4.5, 28,30,1.5, 22,30,1.5, 22,30,4.5;
+BuildingSurface:Detailed, S1Z3_West, Wall, Interior_Wall, Story1_Zone3, Surface, S1Z2_East, NoSun, NoWind, 0.5, 4, 20,30,6, 20,30,0, 20,0,0, 20,0,6;
+BuildingSurface:Detailed, S1Z3_East, Wall, Interior_Wall, Story1_Zone3, Surface, S1Z4_West, NoSun, NoWind, 0.5, 4, 30,0,6, 30,0,0, 30,30,0, 30,30,6;
+
+BuildingSurface:Detailed, S1Z4_Floor, Floor, Ground_Floor, Story1_Zone4, Ground, , NoSun, NoWind, 0.5, 4, 30,30,0, 40,30,0, 40,0,0, 30,0,0;
+BuildingSurface:Detailed, S1Z4_Ceil, Ceiling, Interior_Floor, Story1_Zone4, Surface, S2Z4_Floor, NoSun, NoWind, 0.5, 4, 30,30,6, 30,0,6, 40,0,6, 40,30,6;
+BuildingSurface:Detailed, S1Z4_South, Wall, Exterior_Wall, Story1_Zone4, Outdoors, , SunExposed, WindExposed, 0.5, 4, 30,0,6, 30,0,0, 40,0,0, 40,0,6;
+FenestrationSurface:Detailed, S1Z4_South_Win, Window, External_Window, S1Z4_South, , 0.5, , , 1, 4, 32,0,4.5, 32,0,1.5, 38,0,1.5, 38,0,4.5;
+BuildingSurface:Detailed, S1Z4_North, Wall, Exterior_Wall, Story1_Zone4, Outdoors, , SunExposed, WindExposed, 0.5, 4, 40,30,6, 40,30,0, 30,30,0, 30,30,6;
+FenestrationSurface:Detailed, S1Z4_North_Win, Window, External_Window, S1Z4_North, , 0.5, , , 1, 4, 38,30,4.5, 38,30,1.5, 32,30,1.5, 32,30,4.5;
+BuildingSurface:Detailed, S1Z4_West, Wall, Interior_Wall, Story1_Zone4, Surface, S1Z3_East, NoSun, NoWind, 0.5, 4, 30,30,6, 30,30,0, 30,0,0, 30,0,6;
+BuildingSurface:Detailed, S1Z4_East, Wall, Interior_Wall, Story1_Zone4, Surface, S1Z5_West, NoSun, NoWind, 0.5, 4, 40,0,6, 40,0,0, 40,30,0, 40,30,6;
+
+BuildingSurface:Detailed, S1Z5_Floor, Floor, Ground_Floor, Story1_Zone5, Ground, , NoSun, NoWind, 0.5, 4, 40,30,0, 50,30,0, 50,0,0, 40,0,0;
+BuildingSurface:Detailed, S1Z5_Ceil, Ceiling, Interior_Floor, Story1_Zone5, Surface, S2Z5_Floor, NoSun, NoWind, 0.5, 4, 40,30,6, 40,0,6, 50,0,6, 50,30,6;
+BuildingSurface:Detailed, S1Z5_South, Wall, Exterior_Wall, Story1_Zone5, Outdoors, , SunExposed, WindExposed, 0.5, 4, 40,0,6, 40,0,0, 50,0,0, 50,0,6;
+FenestrationSurface:Detailed, S1Z5_South_Win, Window, External_Window, S1Z5_South, , 0.5, , , 1, 4, 42,0,4.5, 42,0,1.5, 48,0,1.5, 48,0,4.5;
+BuildingSurface:Detailed, S1Z5_North, Wall, Exterior_Wall, Story1_Zone5, Outdoors, , SunExposed, WindExposed, 0.5, 4, 50,30,6, 50,30,0, 40,30,0, 40,30,6;
+FenestrationSurface:Detailed, S1Z5_North_Win, Window, External_Window, S1Z5_North, , 0.5, , , 1, 4, 48,30,4.5, 48,30,1.5, 42,30,1.5, 42,30,4.5;
+BuildingSurface:Detailed, S1Z5_West, Wall, Interior_Wall, Story1_Zone5, Surface, S1Z4_East, NoSun, NoWind, 0.5, 4, 40,30,6, 40,30,0, 40,0,0, 40,0,6;
+BuildingSurface:Detailed, S1Z5_East, Wall, Interior_Wall, Story1_Zone5, Surface, S1Z6_West, NoSun, NoWind, 0.5, 4, 50,0,6, 50,0,0, 50,30,0, 50,30,6;
+
+BuildingSurface:Detailed, S1Z6_Floor, Floor, Ground_Floor, Story1_Zone6, Ground, , NoSun, NoWind, 0.5, 4, 50,30,0, 55,30,0, 55,0,0, 50,0,0;
+BuildingSurface:Detailed, S1Z6_Ceil, Ceiling, Interior_Floor, Story1_Zone6, Surface, S2Z6_Floor, NoSun, NoWind, 0.5, 4, 50,30,6, 50,0,6, 55,0,6, 55,30,6;
+BuildingSurface:Detailed, S1Z6_South, Wall, Exterior_Wall, Story1_Zone6, Outdoors, , SunExposed, WindExposed, 0.5, 4, 50,0,6, 50,0,0, 55,0,0, 55,0,6;
+FenestrationSurface:Detailed, S1Z6_South_Win, Window, External_Window, S1Z6_South, , 0.5, , , 1, 4, 51,0,4.5, 51,0,1.5, 54,0,1.5, 54,0,4.5;
+BuildingSurface:Detailed, S1Z6_North, Wall, Exterior_Wall, Story1_Zone6, Outdoors, , SunExposed, WindExposed, 0.5, 4, 55,30,6, 55,30,0, 50,30,0, 50,30,6;
+FenestrationSurface:Detailed, S1Z6_North_Win, Window, External_Window, S1Z6_North, , 0.5, , , 1, 4, 54,30,4.5, 54,30,1.5, 51,30,1.5, 51,30,4.5;
+BuildingSurface:Detailed, S1Z6_West, Wall, Interior_Wall, Story1_Zone6, Surface, S1Z5_East, NoSun, NoWind, 0.5, 4, 50,30,6, 50,30,0, 50,0,0, 50,0,6;
+BuildingSurface:Detailed, S1Z6_East, Wall, Interior_Wall, Story1_Zone6, Surface, S1Z7_West, NoSun, NoWind, 0.5, 4, 55,0,6, 55,0,0, 55,30,0, 55,30,6;
+
+BuildingSurface:Detailed, S1Z7_Floor, Floor, Ground_Floor, Story1_Zone7, Ground, , NoSun, NoWind, 0.5, 4, 55,30,0, 60,30,0, 60,0,0, 55,0,0;
+BuildingSurface:Detailed, S1Z7_Ceil, Ceiling, Interior_Floor, Story1_Zone7, Surface, S2Z7_Floor, NoSun, NoWind, 0.5, 4, 55,30,6, 55,0,6, 60,0,6, 60,30,6;
+BuildingSurface:Detailed, S1Z7_South, Wall, Exterior_Wall, Story1_Zone7, Outdoors, , SunExposed, WindExposed, 0.5, 4, 55,0,6, 55,0,0, 60,0,0, 60,0,6;
+FenestrationSurface:Detailed, S1Z7_South_Win, Window, External_Window, S1Z7_South, , 0.5, , , 1, 4, 56,0,4.5, 56,0,1.5, 59,0,1.5, 59,0,4.5;
+BuildingSurface:Detailed, S1Z7_North, Wall, Exterior_Wall, Story1_Zone7, Outdoors, , SunExposed, WindExposed, 0.5, 4, 60,30,6, 60,30,0, 55,30,0, 55,30,6;
+FenestrationSurface:Detailed, S1Z7_North_Win, Window, External_Window, S1Z7_North, , 0.5, , , 1, 4, 59,30,4.5, 59,30,1.5, 56,30,1.5, 56,30,4.5;
+BuildingSurface:Detailed, S1Z7_West, Wall, Interior_Wall, Story1_Zone7, Surface, S1Z6_East, NoSun, NoWind, 0.5, 4, 55,30,6, 55,30,0, 55,0,0, 55,0,6;
+BuildingSurface:Detailed, S1Z7_East, Wall, Exterior_Wall, Story1_Zone7, Outdoors, , SunExposed, WindExposed, 0.5, 4, 60,0,6, 60,0,0, 60,30,0, 60,30,6;
+FenestrationSurface:Detailed, S1Z7_East_Win, Window, External_Window, S1Z7_East, , 0.5, , , 1, 4, 60,6,4.5, 60,6,1.5, 60,24,1.5, 60,24,4.5;
+
+
+!- --- STORY 2 GEOMETRY ---
+BuildingSurface:Detailed, S2Z1_Floor, Floor, Interior_Floor, Story2_Zone1, Surface, S1Z1_Ceil, NoSun, NoWind, 0.5, 4, 0,30,6, 10,30,6, 10,0,6, 0,0,6;
+BuildingSurface:Detailed, S2Z1_Ceil, Ceiling, Interior_Floor, Story2_Zone1, Surface, S3Z1_Floor, NoSun, NoWind, 0.5, 4, 0,30,12, 0,0,12, 10,0,12, 10,30,12;
+BuildingSurface:Detailed, S2Z1_South, Wall, Exterior_Wall, Story2_Zone1, Outdoors, , SunExposed, WindExposed, 0.5, 4, 0,0,12, 0,0,6, 10,0,6, 10,0,12;
+FenestrationSurface:Detailed, S2Z1_South_Win, Window, External_Window, S2Z1_South, , 0.5, , , 1, 4, 2,0,10.5, 2,0,7.5, 8,0,7.5, 8,0,10.5;
+BuildingSurface:Detailed, S2Z1_North, Wall, Exterior_Wall, Story2_Zone1, Outdoors, , SunExposed, WindExposed, 0.5, 4, 10,30,12, 10,30,6, 0,30,6, 0,30,12;
+FenestrationSurface:Detailed, S2Z1_North_Win, Window, External_Window, S2Z1_North, , 0.5, , , 1, 4, 8,30,10.5, 8,30,7.5, 2,30,7.5, 2,30,10.5;
+BuildingSurface:Detailed, S2Z1_West, Wall, Exterior_Wall, Story2_Zone1, Outdoors, , SunExposed, WindExposed, 0.5, 4, 0,30,12, 0,30,6, 0,0,6, 0,0,12;
+FenestrationSurface:Detailed, S2Z1_West_Win, Window, External_Window, S2Z1_West, , 0.5, , , 1, 4, 0,24,10.5, 0,24,7.5, 0,6,7.5, 0,6,10.5;
+BuildingSurface:Detailed, S2Z1_East, Wall, Interior_Wall, Story2_Zone1, Surface, S2Z2_West, NoSun, NoWind, 0.5, 4, 10,0,12, 10,0,6, 10,30,6, 10,30,12;
+
+BuildingSurface:Detailed, S2Z2_Floor, Floor, Interior_Floor, Story2_Zone2, Surface, S1Z2_Ceil, NoSun, NoWind, 0.5, 4, 10,30,6, 20,30,6, 20,0,6, 10,0,6;
+BuildingSurface:Detailed, S2Z2_Ceil, Ceiling, Interior_Floor, Story2_Zone2, Surface, S3Z2_Floor, NoSun, NoWind, 0.5, 4, 10,30,12, 10,0,12, 20,0,12, 20,30,12;
+BuildingSurface:Detailed, S2Z2_South, Wall, Exterior_Wall, Story2_Zone2, Outdoors, , SunExposed, WindExposed, 0.5, 4, 10,0,12, 10,0,6, 20,0,6, 20,0,12;
+FenestrationSurface:Detailed, S2Z2_South_Win, Window, External_Window, S2Z2_South, , 0.5, , , 1, 4, 12,0,10.5, 12,0,7.5, 18,0,7.5, 18,0,10.5;
+BuildingSurface:Detailed, S2Z2_North, Wall, Exterior_Wall, Story2_Zone2, Outdoors, , SunExposed, WindExposed, 0.5, 4, 20,30,12, 20,30,6, 10,30,6, 10,30,12;
+FenestrationSurface:Detailed, S2Z2_North_Win, Window, External_Window, S2Z2_North, , 0.5, , , 1, 4, 18,30,10.5, 18,30,7.5, 12,30,7.5, 12,30,10.5;
+BuildingSurface:Detailed, S2Z2_West, Wall, Interior_Wall, Story2_Zone2, Surface, S2Z1_East, NoSun, NoWind, 0.5, 4, 10,30,12, 10,30,6, 10,0,6, 10,0,12;
+BuildingSurface:Detailed, S2Z2_East, Wall, Interior_Wall, Story2_Zone2, Surface, S2Z3_West, NoSun, NoWind, 0.5, 4, 20,0,12, 20,0,6, 20,30,6, 20,30,12;
+
+BuildingSurface:Detailed, S2Z3_Floor, Floor, Interior_Floor, Story2_Zone3, Surface, S1Z3_Ceil, NoSun, NoWind, 0.5, 4, 20,30,6, 30,30,6, 30,0,6, 20,0,6;
+BuildingSurface:Detailed, S2Z3_Ceil, Ceiling, Interior_Floor, Story2_Zone3, Surface, S3Z3_Floor, NoSun, NoWind, 0.5, 4, 20,30,12, 20,0,12, 30,0,12, 30,30,12;
+BuildingSurface:Detailed, S2Z3_South, Wall, Exterior_Wall, Story2_Zone3, Outdoors, , SunExposed, WindExposed, 0.5, 4, 20,0,12, 20,0,6, 30,0,6, 30,0,12;
+FenestrationSurface:Detailed, S2Z3_South_Win, Window, External_Window, S2Z3_South, , 0.5, , , 1, 4, 22,0,10.5, 22,0,7.5, 28,0,7.5, 28,0,10.5;
+BuildingSurface:Detailed, S2Z3_North, Wall, Exterior_Wall, Story2_Zone3, Outdoors, , SunExposed, WindExposed, 0.5, 4, 30,30,12, 30,30,6, 20,30,6, 20,30,12;
+FenestrationSurface:Detailed, S2Z3_North_Win, Window, External_Window, S2Z3_North, , 0.5, , , 1, 4, 28,30,10.5, 28,30,7.5, 22,30,7.5, 22,30,10.5;
+BuildingSurface:Detailed, S2Z3_West, Wall, Interior_Wall, Story2_Zone3, Surface, S2Z2_East, NoSun, NoWind, 0.5, 4, 20,30,12, 20,30,6, 20,0,6, 20,0,12;
+BuildingSurface:Detailed, S2Z3_East, Wall, Interior_Wall, Story2_Zone3, Surface, S2Z4_West, NoSun, NoWind, 0.5, 4, 30,0,12, 30,0,6, 30,30,6, 30,30,12;
+
+BuildingSurface:Detailed, S2Z4_Floor, Floor, Interior_Floor, Story2_Zone4, Surface, S1Z4_Ceil, NoSun, NoWind, 0.5, 4, 30,30,6, 40,30,6, 40,0,6, 30,0,6;
+BuildingSurface:Detailed, S2Z4_Ceil, Ceiling, Interior_Floor, Story2_Zone4, Surface, S3Z4_Floor, NoSun, NoWind, 0.5, 4, 30,30,12, 30,0,12, 40,0,12, 40,30,12;
+BuildingSurface:Detailed, S2Z4_South, Wall, Exterior_Wall, Story2_Zone4, Outdoors, , SunExposed, WindExposed, 0.5, 4, 30,0,12, 30,0,6, 40,0,6, 40,0,12;
+FenestrationSurface:Detailed, S2Z4_South_Win, Window, External_Window, S2Z4_South, , 0.5, , , 1, 4, 32,0,10.5, 32,0,7.5, 38,0,7.5, 38,0,10.5;
+BuildingSurface:Detailed, S2Z4_North, Wall, Exterior_Wall, Story2_Zone4, Outdoors, , SunExposed, WindExposed, 0.5, 4, 40,30,12, 40,30,6, 30,30,6, 30,30,12;
+FenestrationSurface:Detailed, S2Z4_North_Win, Window, External_Window, S2Z4_North, , 0.5, , , 1, 4, 38,30,10.5, 38,30,7.5, 32,30,7.5, 32,30,10.5;
+BuildingSurface:Detailed, S2Z4_West, Wall, Interior_Wall, Story2_Zone4, Surface, S2Z3_East, NoSun, NoWind, 0.5, 4, 30,30,12, 30,30,6, 30,0,6, 30,0,12;
+BuildingSurface:Detailed, S2Z4_East, Wall, Interior_Wall, Story2_Zone4, Surface, S2Z5_West, NoSun, NoWind, 0.5, 4, 40,0,12, 40,0,6, 40,30,6, 40,30,12;
+
+BuildingSurface:Detailed, S2Z5_Floor, Floor, Interior_Floor, Story2_Zone5, Surface, S1Z5_Ceil, NoSun, NoWind, 0.5, 4, 40,30,6, 50,30,6, 50,0,6, 40,0,6;
+BuildingSurface:Detailed, S2Z5_Ceil, Ceiling, Interior_Floor, Story2_Zone5, Surface, S3Z5_Floor, NoSun, NoWind, 0.5, 4, 40,30,12, 40,0,12, 50,0,12, 50,30,12;
+BuildingSurface:Detailed, S2Z5_South, Wall, Exterior_Wall, Story2_Zone5, Outdoors, , SunExposed, WindExposed, 0.5, 4, 40,0,12, 40,0,6, 50,0,6, 50,0,12;
+FenestrationSurface:Detailed, S2Z5_South_Win, Window, External_Window, S2Z5_South, , 0.5, , , 1, 4, 42,0,10.5, 42,0,7.5, 48,0,7.5, 48,0,10.5;
+BuildingSurface:Detailed, S2Z5_North, Wall, Exterior_Wall, Story2_Zone5, Outdoors, , SunExposed, WindExposed, 0.5, 4, 50,30,12, 50,30,6, 40,30,6, 40,30,12;
+FenestrationSurface:Detailed, S2Z5_North_Win, Window, External_Window, S2Z5_North, , 0.5, , , 1, 4, 48,30,10.5, 48,30,7.5, 42,30,7.5, 42,30,10.5;
+BuildingSurface:Detailed, S2Z5_West, Wall, Interior_Wall, Story2_Zone5, Surface, S2Z4_East, NoSun, NoWind, 0.5, 4, 40,30,12, 40,30,6, 40,0,6, 40,0,12;
+BuildingSurface:Detailed, S2Z5_East, Wall, Interior_Wall, Story2_Zone5, Surface, S2Z6_West, NoSun, NoWind, 0.5, 4, 50,0,12, 50,0,6, 50,30,6, 50,30,12;
+
+BuildingSurface:Detailed, S2Z6_Floor, Floor, Interior_Floor, Story2_Zone6, Surface, S1Z6_Ceil, NoSun, NoWind, 0.5, 4, 50,30,6, 55,30,6, 55,0,6, 50,0,6;
+BuildingSurface:Detailed, S2Z6_Ceil, Ceiling, Interior_Floor, Story2_Zone6, Surface, S3Z6_Floor_P1, NoSun, NoWind, 0.5, 4, 50,30,12, 50,0,12, 55,0,12, 55,30,12;
+BuildingSurface:Detailed, S2Z6_South, Wall, Exterior_Wall, Story2_Zone6, Outdoors, , SunExposed, WindExposed, 0.5, 4, 50,0,12, 50,0,6, 55,0,6, 55,0,12;
+FenestrationSurface:Detailed, S2Z6_South_Win, Window, External_Window, S2Z6_South, , 0.5, , , 1, 4, 51,0,10.5, 51,0,7.5, 54,0,7.5, 54,0,10.5;
+BuildingSurface:Detailed, S2Z6_North, Wall, Exterior_Wall, Story2_Zone6, Outdoors, , SunExposed, WindExposed, 0.5, 4, 55,30,12, 55,30,6, 50,30,6, 50,30,12;
+FenestrationSurface:Detailed, S2Z6_North_Win, Window, External_Window, S2Z6_North, , 0.5, , , 1, 4, 54,30,10.5, 54,30,7.5, 51,30,7.5, 51,30,10.5;
+BuildingSurface:Detailed, S2Z6_West, Wall, Interior_Wall, Story2_Zone6, Surface, S2Z5_East, NoSun, NoWind, 0.5, 4, 50,30,12, 50,30,6, 50,0,6, 50,0,12;
+BuildingSurface:Detailed, S2Z6_East, Wall, Interior_Wall, Story2_Zone6, Surface, S2Z7_West, NoSun, NoWind, 0.5, 4, 55,0,12, 55,0,6, 55,30,6, 55,30,12;
+
+BuildingSurface:Detailed, S2Z7_Floor, Floor, Interior_Floor, Story2_Zone7, Surface, S1Z7_Ceil, NoSun, NoWind, 0.5, 4, 55,30,6, 60,30,6, 60,0,6, 55,0,6;
+BuildingSurface:Detailed, S2Z7_Ceil, Ceiling, Interior_Floor, Story2_Zone7, Surface, S3Z6_Floor_P2, NoSun, NoWind, 0.5, 4, 55,30,12, 55,0,12, 60,0,12, 60,30,12;
+BuildingSurface:Detailed, S2Z7_South, Wall, Exterior_Wall, Story2_Zone7, Outdoors, , SunExposed, WindExposed, 0.5, 4, 55,0,12, 55,0,6, 60,0,6, 60,0,12;
+FenestrationSurface:Detailed, S2Z7_South_Win, Window, External_Window, S2Z7_South, , 0.5, , , 1, 4, 56,0,10.5, 56,0,7.5, 59,0,7.5, 59,0,10.5;
+BuildingSurface:Detailed, S2Z7_North, Wall, Exterior_Wall, Story2_Zone7, Outdoors, , SunExposed, WindExposed, 0.5, 4, 60,30,12, 60,30,6, 55,30,6, 55,30,12;
+FenestrationSurface:Detailed, S2Z7_North_Win, Window, External_Window, S2Z7_North, , 0.5, , , 1, 4, 59,30,10.5, 59,30,7.5, 56,30,7.5, 56,30,10.5;
+BuildingSurface:Detailed, S2Z7_West, Wall, Interior_Wall, Story2_Zone7, Surface, S2Z6_East, NoSun, NoWind, 0.5, 4, 55,30,12, 55,30,6, 55,0,6, 55,0,12;
+BuildingSurface:Detailed, S2Z7_East, Wall, Exterior_Wall, Story2_Zone7, Outdoors, , SunExposed, WindExposed, 0.5, 4, 60,0,12, 60,0,6, 60,30,6, 60,30,12;
+FenestrationSurface:Detailed, S2Z7_East_Win, Window, External_Window, S2Z7_East, , 0.5, , , 1, 4, 60,6,10.5, 60,6,7.5, 60,24,7.5, 60,24,10.5;
+
+
+!- --- STORY 3 GEOMETRY ---
+BuildingSurface:Detailed, S3Z1_Floor, Floor, Interior_Floor, Story3_Zone1, Surface, S2Z1_Ceil, NoSun, NoWind, 0.5, 4, 0,30,12, 10,30,12, 10,0,12, 0,0,12;
+BuildingSurface:Detailed, S3Z1_Ceil, Ceiling, Exterior_Roof, Story3_Zone1, Outdoors, , SunExposed, WindExposed, 0.5, 4, 0,30,18, 0,0,18, 10,0,18, 10,30,18;
+BuildingSurface:Detailed, S3Z1_South, Wall, Exterior_Wall, Story3_Zone1, Outdoors, , SunExposed, WindExposed, 0.5, 4, 0,0,18, 0,0,12, 10,0,12, 10,0,18;
+FenestrationSurface:Detailed, S3Z1_South_Win, Window, External_Window, S3Z1_South, , 0.5, , , 1, 4, 2,0,16.5, 2,0,13.5, 8,0,13.5, 8,0,16.5;
+BuildingSurface:Detailed, S3Z1_North, Wall, Exterior_Wall, Story3_Zone1, Outdoors, , SunExposed, WindExposed, 0.5, 4, 10,30,18, 10,30,12, 0,30,12, 0,30,18;
+FenestrationSurface:Detailed, S3Z1_North_Win, Window, External_Window, S3Z1_North, , 0.5, , , 1, 4, 8,30,16.5, 8,30,13.5, 2,30,13.5, 2,30,16.5;
+BuildingSurface:Detailed, S3Z1_West, Wall, Exterior_Wall, Story3_Zone1, Outdoors, , SunExposed, WindExposed, 0.5, 4, 0,30,18, 0,30,12, 0,0,12, 0,0,18;
+FenestrationSurface:Detailed, S3Z1_West_Win, Window, External_Window, S3Z1_West, , 0.5, , , 1, 4, 0,24,16.5, 0,24,13.5, 0,6,13.5, 0,6,16.5;
+BuildingSurface:Detailed, S3Z1_East, Wall, Interior_Wall, Story3_Zone1, Surface, S3Z2_West, NoSun, NoWind, 0.5, 4, 10,0,18, 10,0,12, 10,30,12, 10,30,18;
+
+BuildingSurface:Detailed, S3Z2_Floor, Floor, Interior_Floor, Story3_Zone2, Surface, S2Z2_Ceil, NoSun, NoWind, 0.5, 4, 10,30,12, 20,30,12, 20,0,12, 10,0,12;
+BuildingSurface:Detailed, S3Z2_Ceil, Ceiling, Exterior_Roof, Story3_Zone2, Outdoors, , SunExposed, WindExposed, 0.5, 4, 10,30,18, 10,0,18, 20,0,18, 20,30,18;
+BuildingSurface:Detailed, S3Z2_South, Wall, Exterior_Wall, Story3_Zone2, Outdoors, , SunExposed, WindExposed, 0.5, 4, 10,0,18, 10,0,12, 20,0,12, 20,0,18;
+FenestrationSurface:Detailed, S3Z2_South_Win, Window, External_Window, S3Z2_South, , 0.5, , , 1, 4, 12,0,16.5, 12,0,13.5, 18,0,13.5, 18,0,16.5;
+BuildingSurface:Detailed, S3Z2_North, Wall, Exterior_Wall, Story3_Zone2, Outdoors, , SunExposed, WindExposed, 0.5, 4, 20,30,18, 20,30,12, 10,30,12, 10,30,18;
+FenestrationSurface:Detailed, S3Z2_North_Win, Window, External_Window, S3Z2_North, , 0.5, , , 1, 4, 18,30,16.5, 18,30,13.5, 12,30,13.5, 12,30,16.5;
+BuildingSurface:Detailed, S3Z2_West, Wall, Interior_Wall, Story3_Zone2, Surface, S3Z1_East, NoSun, NoWind, 0.5, 4, 10,30,18, 10,30,12, 10,0,12, 10,0,18;
+BuildingSurface:Detailed, S3Z2_East, Wall, Interior_Wall, Story3_Zone2, Surface, S3Z3_West, NoSun, NoWind, 0.5, 4, 20,0,18, 20,0,12, 20,30,12, 20,30,18;
+
+BuildingSurface:Detailed, S3Z3_Floor, Floor, Interior_Floor, Story3_Zone3, Surface, S2Z3_Ceil, NoSun, NoWind, 0.5, 4, 20,30,12, 30,30,12, 30,0,12, 20,0,12;
+BuildingSurface:Detailed, S3Z3_Ceil, Ceiling, Exterior_Roof, Story3_Zone3, Outdoors, , SunExposed, WindExposed, 0.5, 4, 20,30,18, 20,0,18, 30,0,18, 30,30,18;
+BuildingSurface:Detailed, S3Z3_South, Wall, Exterior_Wall, Story3_Zone3, Outdoors, , SunExposed, WindExposed, 0.5, 4, 20,0,18, 20,0,12, 30,0,12, 30,0,18;
+FenestrationSurface:Detailed, S3Z3_South_Win, Window, External_Window, S3Z3_South, , 0.5, , , 1, 4, 22,0,16.5, 22,0,13.5, 28,0,13.5, 28,0,16.5;
+BuildingSurface:Detailed, S3Z3_North, Wall, Exterior_Wall, Story3_Zone3, Outdoors, , SunExposed, WindExposed, 0.5, 4, 30,30,18, 30,30,12, 20,30,12, 20,30,18;
+FenestrationSurface:Detailed, S3Z3_North_Win, Window, External_Window, S3Z3_North, , 0.5, , , 1, 4, 28,30,16.5, 28,30,13.5, 22,30,13.5, 22,30,16.5;
+BuildingSurface:Detailed, S3Z3_West, Wall, Interior_Wall, Story3_Zone3, Surface, S3Z2_East, NoSun, NoWind, 0.5, 4, 20,30,18, 20,30,12, 20,0,12, 20,0,18;
+BuildingSurface:Detailed, S3Z3_East, Wall, Interior_Wall, Story3_Zone3, Surface, S3Z4_West, NoSun, NoWind, 0.5, 4, 30,0,18, 30,0,12, 30,30,12, 30,30,18;
+
+BuildingSurface:Detailed, S3Z4_Floor, Floor, Interior_Floor, Story3_Zone4, Surface, S2Z4_Ceil, NoSun, NoWind, 0.5, 4, 30,30,12, 40,30,12, 40,0,12, 30,0,12;
+BuildingSurface:Detailed, S3Z4_Ceil, Ceiling, Exterior_Roof, Story3_Zone4, Outdoors, , SunExposed, WindExposed, 0.5, 4, 30,30,18, 30,0,18, 40,0,18, 40,30,18;
+BuildingSurface:Detailed, S3Z4_South, Wall, Exterior_Wall, Story3_Zone4, Outdoors, , SunExposed, WindExposed, 0.5, 4, 30,0,18, 30,0,12, 40,0,12, 40,0,18;
+FenestrationSurface:Detailed, S3Z4_South_Win, Window, External_Window, S3Z4_South, , 0.5, , , 1, 4, 32,0,16.5, 32,0,13.5, 38,0,13.5, 38,0,16.5;
+BuildingSurface:Detailed, S3Z4_North, Wall, Exterior_Wall, Story3_Zone4, Outdoors, , SunExposed, WindExposed, 0.5, 4, 40,30,18, 40,30,12, 30,30,12, 30,30,18;
+FenestrationSurface:Detailed, S3Z4_North_Win, Window, External_Window, S3Z4_North, , 0.5, , , 1, 4, 38,30,16.5, 38,30,13.5, 32,30,13.5, 32,30,16.5;
+BuildingSurface:Detailed, S3Z4_West, Wall, Interior_Wall, Story3_Zone4, Surface, S3Z3_East, NoSun, NoWind, 0.5, 4, 30,30,18, 30,30,12, 30,0,12, 30,0,18;
+BuildingSurface:Detailed, S3Z4_East, Wall, Interior_Wall, Story3_Zone4, Surface, S3Z5_West, NoSun, NoWind, 0.5, 4, 40,0,18, 40,0,12, 40,30,12, 40,30,18;
+
+BuildingSurface:Detailed, S3Z5_Floor, Floor, Interior_Floor, Story3_Zone5, Surface, S2Z5_Ceil, NoSun, NoWind, 0.5, 4, 40,30,12, 50,30,12, 50,0,12, 40,0,12;
+BuildingSurface:Detailed, S3Z5_Ceil, Ceiling, Exterior_Roof, Story3_Zone5, Outdoors, , SunExposed, WindExposed, 0.5, 4, 40,30,18, 40,0,18, 50,0,18, 50,30,18;
+BuildingSurface:Detailed, S3Z5_South, Wall, Exterior_Wall, Story3_Zone5, Outdoors, , SunExposed, WindExposed, 0.5, 4, 40,0,18, 40,0,12, 50,0,12, 50,0,18;
+FenestrationSurface:Detailed, S3Z5_South_Win, Window, External_Window, S3Z5_South, , 0.5, , , 1, 4, 42,0,16.5, 42,0,13.5, 48,0,13.5, 48,0,16.5;
+BuildingSurface:Detailed, S3Z5_North, Wall, Exterior_Wall, Story3_Zone5, Outdoors, , SunExposed, WindExposed, 0.5, 4, 50,30,18, 50,30,12, 40,30,12, 40,30,18;
+FenestrationSurface:Detailed, S3Z5_North_Win, Window, External_Window, S3Z5_North, , 0.5, , , 1, 4, 48,30,16.5, 48,30,13.5, 42,30,13.5, 42,30,16.5;
+BuildingSurface:Detailed, S3Z5_West, Wall, Interior_Wall, Story3_Zone5, Surface, S3Z4_East, NoSun, NoWind, 0.5, 4, 40,30,18, 40,30,12, 40,0,12, 40,0,18;
+BuildingSurface:Detailed, S3Z5_East, Wall, Interior_Wall, Story3_Zone5, Surface, S3Z6_West, NoSun, NoWind, 0.5, 4, 50,0,18, 50,0,12, 50,30,12, 50,30,18;
+
+BuildingSurface:Detailed, S3Z6_Floor_P1, Floor, Interior_Floor, Story3_Zone6, Surface, S2Z6_Ceil, NoSun, NoWind, 0.5, 4, 50,30,12, 55,30,12, 55,0,12, 50,0,12;
+BuildingSurface:Detailed, S3Z6_Floor_P2, Floor, Interior_Floor, Story3_Zone6, Surface, S2Z7_Ceil, NoSun, NoWind, 0.5, 4, 55,30,12, 60,30,12, 60,0,12, 55,0,12;
+BuildingSurface:Detailed, S3Z6_Ceil, Ceiling, Exterior_Roof, Story3_Zone6, Outdoors, , SunExposed, WindExposed, 0.5, 4, 50,30,18, 50,0,18, 60,0,18, 60,30,18;
+BuildingSurface:Detailed, S3Z6_South, Wall, Exterior_Wall, Story3_Zone6, Outdoors, , SunExposed, WindExposed, 0.5, 4, 50,0,18, 50,0,12, 60,0,12, 60,0,18;
+FenestrationSurface:Detailed, S3Z6_South_Win, Window, External_Window, S3Z6_South, , 0.5, , , 1, 4, 52,0,16.5, 52,0,13.5, 58,0,13.5, 58,0,16.5;
+BuildingSurface:Detailed, S3Z6_North, Wall, Exterior_Wall, Story3_Zone6, Outdoors, , SunExposed, WindExposed, 0.5, 4, 60,30,18, 60,30,12, 50,30,12, 50,30,18;
+FenestrationSurface:Detailed, S3Z6_North_Win, Window, External_Window, S3Z6_North, , 0.5, , , 1, 4, 58,30,16.5, 58,30,13.5, 52,30,13.5, 52,30,16.5;
+BuildingSurface:Detailed, S3Z6_West, Wall, Interior_Wall, Story3_Zone6, Surface, S3Z5_East, NoSun, NoWind, 0.5, 4, 50,30,18, 50,30,12, 50,0,12, 50,0,18;
+BuildingSurface:Detailed, S3Z6_East, Wall, Exterior_Wall, Story3_Zone6, Outdoors, , SunExposed, WindExposed, 0.5, 4, 60,0,18, 60,0,12, 60,30,12, 60,30,18;
+FenestrationSurface:Detailed, S3Z6_East_Win, Window, External_Window, S3Z6_East, , 0.5, , , 1, 4, 60,6,16.5, 60,6,13.5, 60,24,13.5, 60,24,16.5;
+
+
+!- --- SIZING CONTROLS ---
+Sizing:Zone, Story1_Zone1, SupplyAirTemperature, 14, SupplyAirTemperature, 40, 0.008, 0.008, , , , CoolingDesignCapacity, , , , HeatingDesignCapacity;
+Sizing:Zone, Story1_Zone2, SupplyAirTemperature, 14, SupplyAirTemperature, 40, 0.008, 0.008, , , , CoolingDesignCapacity, , , , HeatingDesignCapacity;
+Sizing:Zone, Story1_Zone3, SupplyAirTemperature, 14, SupplyAirTemperature, 40, 0.008, 0.008, , , , CoolingDesignCapacity, , , , HeatingDesignCapacity;
+Sizing:Zone, Story1_Zone4, SupplyAirTemperature, 14, SupplyAirTemperature, 40, 0.008, 0.008, , , , CoolingDesignCapacity, , , , HeatingDesignCapacity;
+Sizing:Zone, Story1_Zone5, SupplyAirTemperature, 14, SupplyAirTemperature, 40, 0.008, 0.008, , , , CoolingDesignCapacity, , , , HeatingDesignCapacity;
+Sizing:Zone, Story1_Zone6, SupplyAirTemperature, 14, SupplyAirTemperature, 40, 0.008, 0.008, , , , CoolingDesignCapacity, , , , HeatingDesignCapacity;
+Sizing:Zone, Story1_Zone7, SupplyAirTemperature, 14, SupplyAirTemperature, 40, 0.008, 0.008, , , , CoolingDesignCapacity, , , , HeatingDesignCapacity;
+Sizing:Zone, Story2_Zone1, SupplyAirTemperature, 14, SupplyAirTemperature, 40, 0.008, 0.008, , , , CoolingDesignCapacity, , , , HeatingDesignCapacity;
+Sizing:Zone, Story2_Zone2, SupplyAirTemperature, 14, SupplyAirTemperature, 40, 0.008, 0.008, , , , CoolingDesignCapacity, , , , HeatingDesignCapacity;
+Sizing:Zone, Story2_Zone3, SupplyAirTemperature, 14, SupplyAirTemperature, 40, 0.008, 0.008, , , , CoolingDesignCapacity, , , , HeatingDesignCapacity;
+Sizing:Zone, Story2_Zone4, SupplyAirTemperature, 14, SupplyAirTemperature, 40, 0.008, 0.008, , , , CoolingDesignCapacity, , , , HeatingDesignCapacity;
+Sizing:Zone, Story2_Zone5, SupplyAirTemperature, 14, SupplyAirTemperature, 40, 0.008, 0.008, , , , CoolingDesignCapacity, , , , HeatingDesignCapacity;
+Sizing:Zone, Story2_Zone6, SupplyAirTemperature, 14, SupplyAirTemperature, 40, 0.008, 0.008, , , , CoolingDesignCapacity, , , , HeatingDesignCapacity;
+Sizing:Zone, Story2_Zone7, SupplyAirTemperature, 14, SupplyAirTemperature, 40, 0.008, 0.008, , , , CoolingDesignCapacity, , , , HeatingDesignCapacity;
+Sizing:Zone, Story3_Zone1, SupplyAirTemperature, 14, SupplyAirTemperature, 40, 0.008, 0.008, , , , CoolingDesignCapacity, , , , HeatingDesignCapacity;
+Sizing:Zone, Story3_Zone2, SupplyAirTemperature, 14, SupplyAirTemperature, 40, 0.008, 0.008, , , , CoolingDesignCapacity, , , , HeatingDesignCapacity;
+Sizing:Zone, Story3_Zone3, SupplyAirTemperature, 14, SupplyAirTemperature, 40, 0.008, 0.008, , , , CoolingDesignCapacity, , , , HeatingDesignCapacity;
+Sizing:Zone, Story3_Zone4, SupplyAirTemperature, 14, SupplyAirTemperature, 40, 0.008, 0.008, , , , CoolingDesignCapacity, , , , HeatingDesignCapacity;
+Sizing:Zone, Story3_Zone5, SupplyAirTemperature, 14, SupplyAirTemperature, 40, 0.008, 0.008, , , , CoolingDesignCapacity, , , , HeatingDesignCapacity;
+Sizing:Zone, Story3_Zone6, SupplyAirTemperature, 14, SupplyAirTemperature, 40, 0.008, 0.008, , , , CoolingDesignCapacity, , , , HeatingDesignCapacity;
+
+!- --- CONTROLS ---
+ThermostatSetpoint:DualSetpoint, Office_Thermostat_Dual, Heating_Setpoint, Cooling_Setpoint;
+
+ZoneControl:Thermostat, Story1_Zone1_Thermostat, Story1_Zone1, AlwaysOn, ThermostatSetpoint:DualSetpoint, Office_Thermostat_Dual;
+ZoneControl:Thermostat, Story1_Zone2_Thermostat, Story1_Zone2, AlwaysOn, ThermostatSetpoint:DualSetpoint, Office_Thermostat_Dual;
+ZoneControl:Thermostat, Story1_Zone3_Thermostat, Story1_Zone3, AlwaysOn, ThermostatSetpoint:DualSetpoint, Office_Thermostat_Dual;
+ZoneControl:Thermostat, Story1_Zone4_Thermostat, Story1_Zone4, AlwaysOn, ThermostatSetpoint:DualSetpoint, Office_Thermostat_Dual;
+ZoneControl:Thermostat, Story1_Zone5_Thermostat, Story1_Zone5, AlwaysOn, ThermostatSetpoint:DualSetpoint, Office_Thermostat_Dual;
+ZoneControl:Thermostat, Story1_Zone6_Thermostat, Story1_Zone6, AlwaysOn, ThermostatSetpoint:DualSetpoint, Office_Thermostat_Dual;
+ZoneControl:Thermostat, Story1_Zone7_Thermostat, Story1_Zone7, AlwaysOn, ThermostatSetpoint:DualSetpoint, Office_Thermostat_Dual;
+ZoneControl:Thermostat, Story2_Zone1_Thermostat, Story2_Zone1, AlwaysOn, ThermostatSetpoint:DualSetpoint, Office_Thermostat_Dual;
+ZoneControl:Thermostat, Story2_Zone2_Thermostat, Story2_Zone2, AlwaysOn, ThermostatSetpoint:DualSetpoint, Office_Thermostat_Dual;
+ZoneControl:Thermostat, Story2_Zone3_Thermostat, Story2_Zone3, AlwaysOn, ThermostatSetpoint:DualSetpoint, Office_Thermostat_Dual;
+ZoneControl:Thermostat, Story2_Zone4_Thermostat, Story2_Zone4, AlwaysOn, ThermostatSetpoint:DualSetpoint, Office_Thermostat_Dual;
+ZoneControl:Thermostat, Story2_Zone5_Thermostat, Story2_Zone5, AlwaysOn, ThermostatSetpoint:DualSetpoint, Office_Thermostat_Dual;
+ZoneControl:Thermostat, Story2_Zone6_Thermostat, Story2_Zone6, AlwaysOn, ThermostatSetpoint:DualSetpoint, Office_Thermostat_Dual;
+ZoneControl:Thermostat, Story2_Zone7_Thermostat, Story2_Zone7, AlwaysOn, ThermostatSetpoint:DualSetpoint, Office_Thermostat_Dual;
+ZoneControl:Thermostat, Story3_Zone1_Thermostat, Story3_Zone1, AlwaysOn, ThermostatSetpoint:DualSetpoint, Office_Thermostat_Dual;
+ZoneControl:Thermostat, Story3_Zone2_Thermostat, Story3_Zone2, AlwaysOn, ThermostatSetpoint:DualSetpoint, Office_Thermostat_Dual;
+ZoneControl:Thermostat, Story3_Zone3_Thermostat, Story3_Zone3, AlwaysOn, ThermostatSetpoint:DualSetpoint, Office_Thermostat_Dual;
+ZoneControl:Thermostat, Story3_Zone4_Thermostat, Story3_Zone4, AlwaysOn, ThermostatSetpoint:DualSetpoint, Office_Thermostat_Dual;
+ZoneControl:Thermostat, Story3_Zone5_Thermostat, Story3_Zone5, AlwaysOn, ThermostatSetpoint:DualSetpoint, Office_Thermostat_Dual;
+ZoneControl:Thermostat, Story3_Zone6_Thermostat, Story3_Zone6, AlwaysOn, ThermostatSetpoint:DualSetpoint, Office_Thermostat_Dual;
+
+Output:Variable, *, Zone Air Temperature, Hourly;
+Output:Variable, *, Zone Total Internal Total Heating Energy, Hourly;
+Output:Variable, *, Zone Metric Total Cooling Energy, Hourly;

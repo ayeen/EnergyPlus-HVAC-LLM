@@ -46,10 +46,32 @@ class UniversalLLM:
     
     @classmethod
     def reset(cls):
-        """Reset singleton to allow re-initialization with different provider"""
+        """Reset singleton and free GPU memory to allow re-initialization."""
+        # Explicitly delete model weights from GPU before clearing singleton
+        if cls._instance is not None:
+            inst = cls._instance
+            if getattr(inst, 'mistral_model', None) is not None:
+                del inst.mistral_model
+                inst.mistral_model = None
+            if getattr(inst, 'mistral_tokenizer', None) is not None:
+                del inst.mistral_tokenizer
+                inst.mistral_tokenizer = None
+
         cls._instance = None
         cls._initialized = False
+
+        # Free any remaining cached GPU memory
+        try:
+            import gc, torch
+            gc.collect()
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+                torch.cuda.synchronize()
+        except Exception:
+            pass
+
         print("✓ LLM instance reset. Next call will create new instance.")
+
     
     def _detect_provider(self):
         """Auto-detect available provider"""
@@ -82,51 +104,151 @@ class UniversalLLM:
                 print("⚠ Gemini client not available, falling back to MOCK")
         
         elif self.provider == "mistral":
-            try:
-                import torch
-                from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
-                from peft import PeftModel
-                
-                print("⏳ Loading Mistral fine-tuned model...")
-                print(f"   Base model: {Config.MISTRAL_BASE_MODEL}")
-                print(f"   Fine-tuned path: {Config.MISTRAL_FINETUNED_PATH}")
-                
-                # Configure 4-bit quantization for efficient inference
-                bnb_config = BitsAndBytesConfig(
-                    load_in_4bit=True,
-                    bnb_4bit_quant_type="nf4",
-                    bnb_4bit_compute_dtype=torch.float16,
-                    bnb_4bit_use_double_quant=False,
-                    llm_int8_enable_fp32_cpu_offload=True,
-                )
-                
-                # Load base model
-                base_model = AutoModelForCausalLM.from_pretrained(
-                    Config.MISTRAL_BASE_MODEL,
-                    quantization_config=bnb_config,
-                    device_map="auto",
-                    trust_remote_code=True,
-                    torch_dtype=torch.float16,
-                    max_memory={0: "14GB", "cpu": "30GB"},
-                )
-                
-                # Load LoRA weights
-                self.mistral_model = PeftModel.from_pretrained(base_model, Config.MISTRAL_FINETUNED_PATH)
-                
-                # Load tokenizer
-                self.mistral_tokenizer = AutoTokenizer.from_pretrained(Config.MISTRAL_FINETUNED_PATH)
-                self.mistral_tokenizer.pad_token = self.mistral_tokenizer.eos_token
-                self.mistral_tokenizer.padding_side = "right"
-                
-                print("✓ Mistral fine-tuned model loaded successfully")
-                print(f"   Device: {next(self.mistral_model.parameters()).device}")
-                if torch.cuda.is_available():
-                    print(f"   GPU: {torch.cuda.get_device_name(0)}")
-                
-            except Exception as e:
-                print(f"⚠ Mistral model loading failed: {e}")
+            self._load_mistral_finetuned()
+        
+        elif self.provider == "mistral-pretrained":
+            self._load_mistral_pretrained()
+        
+        elif self.provider == "mistral-api":
+            self._init_mistral_api()
+    
+    def _load_mistral_finetuned(self):
+        """Load Mistral fine-tuned model with LoRA weights"""
+        try:
+            import torch
+            from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+            from peft import PeftModel
+            
+            print("⏳ Loading Mistral fine-tuned model...")
+            print(f"   Base model: {Config.MISTRAL_BASE_MODEL}")
+            print(f"   Fine-tuned path: {Config.MISTRAL_FINETUNED_PATH}")
+            
+            # Configure 4-bit quantization for efficient inference
+            bnb_config = BitsAndBytesConfig(
+                load_in_4bit=True,
+                bnb_4bit_quant_type="nf4",
+                bnb_4bit_compute_dtype=torch.float16,
+                bnb_4bit_use_double_quant=False,
+                llm_int8_enable_fp32_cpu_offload=True,
+            )
+            
+            # Load base model
+            base_model = AutoModelForCausalLM.from_pretrained(
+                Config.MISTRAL_BASE_MODEL,
+                quantization_config=bnb_config,
+                device_map="auto",
+                trust_remote_code=True,
+                torch_dtype=torch.float16,
+                max_memory={0: "14GB", "cpu": "30GB"},
+            )
+            
+            # Load LoRA weights
+            self.mistral_model = PeftModel.from_pretrained(base_model, Config.MISTRAL_FINETUNED_PATH)
+            
+            # Load tokenizer
+            self.mistral_tokenizer = AutoTokenizer.from_pretrained(Config.MISTRAL_FINETUNED_PATH)
+            self.mistral_tokenizer.pad_token = self.mistral_tokenizer.eos_token
+            self.mistral_tokenizer.padding_side = "right"
+            
+            print("✓ Mistral fine-tuned model loaded successfully")
+            print(f"   Model type: {Config.MISTRAL_FINETUNED_TYPE}")
+            print(f"   Device: {next(self.mistral_model.parameters()).device}")
+            if torch.cuda.is_available():
+                print(f"   GPU: {torch.cuda.get_device_name(0)}")
+            
+        except Exception as e:
+            print(f"⚠ Mistral fine-tuned model loading failed: {e}")
+            print("  Falling back to MOCK mode")
+            self.provider = "mock"
+    
+    def _load_mistral_pretrained(self):
+        """Load Mistral pre-trained model (no LoRA weights) with optimized caching"""
+        try:
+            import torch
+            from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+            import os
+            
+            print("⏳ Loading Mistral pre-trained model...")
+            print(f"   Model: {Config.MISTRAL_PRETRAINED_PATH}")
+            print("   (This may take a few minutes on first run as model is downloaded from HuggingFace)")
+            
+            # Set HuggingFace cache directory for better control
+            hf_cache_dir = os.path.expanduser("~/.cache/huggingface/hub")
+            os.makedirs(hf_cache_dir, exist_ok=True)
+            
+            # Configure 4-bit quantization for efficient inference
+            bnb_config = BitsAndBytesConfig(
+                load_in_4bit=True,
+                bnb_4bit_quant_type="nf4",
+                bnb_4bit_compute_dtype=torch.float16,
+                bnb_4bit_use_double_quant=False,
+                llm_int8_enable_fp32_cpu_offload=True,
+            )
+            
+            print("   Loading tokenizer...")
+            # Load tokenizer first (smaller, faster)
+            self.mistral_tokenizer = AutoTokenizer.from_pretrained(
+                Config.MISTRAL_PRETRAINED_PATH,
+                cache_dir=hf_cache_dir,
+                trust_remote_code=True,
+            )
+            self.mistral_tokenizer.pad_token = self.mistral_tokenizer.eos_token
+            self.mistral_tokenizer.padding_side = "right"
+            print("   ✓ Tokenizer loaded")
+            
+            print("   Loading model weights (this may take 2-5 minutes)...")
+            # Load pre-trained model directly (no LoRA)
+            self.mistral_model = AutoModelForCausalLM.from_pretrained(
+                Config.MISTRAL_PRETRAINED_PATH,
+                quantization_config=bnb_config,
+                device_map="auto",
+                trust_remote_code=True,
+                torch_dtype=torch.float16,
+                max_memory={0: "14GB", "cpu": "30GB"},
+                cache_dir=hf_cache_dir,
+            )
+            print("   ✓ Model weights loaded")
+            
+            print("✓ Mistral pre-trained model loaded successfully")
+            print(f"   Model type: {Config.MISTRAL_PRETRAINED_TYPE}")
+            print(f"   Device: {next(self.mistral_model.parameters()).device}")
+            if torch.cuda.is_available():
+                print(f"   GPU: {torch.cuda.get_device_name(0)}")
+            
+        except Exception as e:
+            print(f"⚠ Mistral pre-trained model loading failed: {e}")
+            print("  Falling back to MOCK mode")
+            import traceback
+            traceback.print_exc()
+            self.provider = "mock"
+    
+    def _init_mistral_api(self):
+        """Initialize Mistral API client (no local model download needed)"""
+        try:
+            from mistralai import Mistral
+            
+            api_key = Config.get_api_key("mistral")
+            if not api_key:
+                print("⚠ MISTRAL_API_KEY not found in environment")
+                print("  Set it in .env file: MISTRAL_API_KEY=your-key-here")
                 print("  Falling back to MOCK mode")
                 self.provider = "mock"
+                return
+            
+            self.mistral_client = Mistral(api_key=api_key)
+            print(f"✓ Mistral API initialized")
+            print(f"   Model: {Config.MISTRAL_API_MODEL}")
+            print(f"   Type: pre-trained (API)")
+            
+        except ImportError:
+            print("⚠ mistralai package not installed")
+            print("  Install with: pip install mistralai")
+            print("  Falling back to MOCK mode")
+            self.provider = "mock"
+        except Exception as e:
+            print(f"⚠ Mistral API initialization failed: {e}")
+            print("  Falling back to MOCK mode")
+            self.provider = "mock"
     
     
     def generate(self, system_prompt, user_prompt):
@@ -134,8 +256,10 @@ class UniversalLLM:
         max_tokens = Config.LLM_MAX_TOKENS
        
         # Generate using configured provider
-        if self.provider == "mistral":
+        if self.provider in ["mistral", "mistral-pretrained"]:
             response = self._generate_mistral(system_prompt, user_prompt, max_tokens)
+        elif self.provider == "mistral-api":
+            response = self._generate_mistral_api(system_prompt, user_prompt, max_tokens)
         else:
             response = self._generate_gemini(system_prompt, user_prompt, max_tokens)
         
@@ -252,43 +376,329 @@ class UniversalLLM:
             print(f"⚠ Gemini generation failed: {e}")
             return ""
     
+    def _generate_mistral_api(self, system_prompt, user_prompt, max_tokens):
+        """
+        Generate using Mistral API (pre-trained model, no local download needed).
+        This is faster than loading the local model but requires API key.
+        """
+        try:
+            if not hasattr(self, 'mistral_client') or self.mistral_client is None:
+                print("⚠ Mistral API client not initialized")
+                return ""
+            
+            print(f"✓ Generating with Mistral API ({Config.MISTRAL_API_MODEL})...")
+            
+            # Combine system and user prompts
+            combined_prompt = f"{system_prompt}\n\n{user_prompt}"
+            
+            response = self.mistral_client.chat.complete(
+                model=Config.MISTRAL_API_MODEL,
+                messages=[
+                    {"role": "user", "content": combined_prompt}
+                ],
+                temperature=Config.MISTRAL_TEMPERATURE,
+                max_tokens=max_tokens
+            )
+            
+            output = response.choices[0].message.content
+            
+            # Clean up markdown if present
+            if output.startswith("```"):
+                # Remove markdown code blocks
+                import re
+                output = re.sub(r'^```\w*\n?', '', output)
+                output = re.sub(r'\n?```$', '', output)
+            
+            print(f"✓ Mistral API response received ({len(output)} chars)")
+            return output
+            
+        except Exception as e:
+            print(f"⚠ Mistral API generation failed: {e}")
+            import traceback
+            traceback.print_exc()
+            return ""
+    
+    # ─────────────────────────────────────────────────────────────────────────
+    # USER-REQUEST HELPERS  (prompt parsing → design intent → IDF parameters)
+    # ─────────────────────────────────────────────────────────────────────────
+
+    def _extract_user_request_from_prompt(self, prompt: str) -> str:
+        """
+        Pull the user's natural-language design request back out of the combined
+        prompt that _create_energyplus_template_prompt() assembled.
+
+        The combined prompt always looks like:
+            USER DESIGN REQUEST:
+            <user's text here>
+
+            TECHNICAL IMPLEMENTATION REQUIREMENTS: ...
+
+        We return everything between those two headers, stripped of whitespace.
+        Returns an empty string when no user request section is found.
+        """
+        if "USER DESIGN REQUEST:" not in prompt:
+            return ""
+        req_start = prompt.find("USER DESIGN REQUEST:") + len("USER DESIGN REQUEST:")
+        # Stop at whichever section header comes first after the request block.
+        end_markers = [
+            "TECHNICAL IMPLEMENTATION",
+            "**SIMILAR DESIGN PATTERNS",
+            "Building IDF Context",
+            "IMPORTANT VALIDATION",
+        ]
+        req_end = len(prompt)
+        for marker in end_markers:
+            pos = prompt.find(marker, req_start)
+            if 0 < pos < req_end:
+                req_end = pos
+        return prompt[req_start:req_end].strip()
+
+    def _parse_design_intent(self, user_request: str) -> dict:
+        """
+        Map keyword patterns in the user's natural-language request to concrete
+        VRF parameter decisions.
+
+        Returns a dict used by _generate_system_vrf, _generate_zone_vrf, and
+        _generate_thermostat to customise the generated EnergyPlus objects.
+
+        Keys and their meanings
+        -----------------------
+        climate           : description string sent to the model's prompt
+        cooling_cop_hint  : starting COP value for model inference
+        heating_cop_hint  : starting COP value for model inference
+        min_cool_temp     : min outdoor cooling temp (°C)
+        max_cool_temp     : max outdoor cooling temp (°C)
+        min_heat_temp     : min outdoor heating temp (°C)
+        max_heat_temp     : max outdoor heating temp (°C)
+        heat_recovery     : 'Yes' | 'No' — HVACTemplate:System:VRF field A6
+        supplemental_heating : '' | 'Electric' | 'Gas' | 'HotWater' — Zone field A14
+        supplemental_capacity: '' | 'Autosize' — Zone field N20
+        supplemental_max_temp: '' | numeric str — Zone field N21
+        baseboard_type    : '' | 'Electric' | 'HotWater' — Zone field A17
+        parasitic_on      : '' | W value str — Zone field N22
+        parasitic_off     : '' | W value str — Zone field N23
+        heating_setpoint  : °C str for HVACTemplate:Thermostat
+        cooling_setpoint  : °C str for HVACTemplate:Thermostat
+        """
+        req = user_request.lower()
+
+        # ── Defaults (generic / standard VRF request) ─────────────────────
+        # NOTE: HVACTemplate:Zone:VRF in EnergyPlus 25.2 has 44 fields.
+        # Supplemental heating coil fields do NOT exist in this object.
+        # Baseboard heating type IS supported (fields 42–44).
+        intent = {
+            'climate'          : 'Continental (mixed climate)',
+            'cooling_cop_hint' : '3.5',
+            'heating_cop_hint' : '4.0',
+            'min_cool_temp'    : '-6.0',
+            'max_cool_temp'    : '43.0',
+            'min_heat_temp'    : '-20.0',
+            'max_heat_temp'    : '15.5',
+            'heat_recovery'    : 'No',
+            'baseboard_type'   : '',   # '' | 'Electric' | 'HotWater'  — Zone VRF F42
+            'heating_setpoint' : '20.0',
+            'cooling_setpoint' : '24.0',
+        }
+
+        # ── High-efficiency ────────────────────────────────────────────────
+        if any(kw in req for kw in [
+            'high efficiency', 'high-efficiency', 'energy saving',
+            'energy efficient', 'energy-efficient', 'premium', 'efficient',
+        ]):
+            intent['climate']           = 'Continental — optimise for energy efficiency'
+            intent['cooling_cop_hint']  = '4.2'
+            intent['heating_cop_hint']  = '4.8'
+
+        # ── Cold climate / enhanced heating ───────────────────────────────
+        if any(kw in req for kw in [
+            'cold climate', 'cold weather', 'low temperature',
+            'winter performance', 'heating performance', 'enhanced heating',
+            'extreme cold',
+        ]):
+            intent['climate']          = 'Cold climate — harsh winters, prioritise heating performance'
+            intent['min_heat_temp']    = '-25.0'
+            intent['max_heat_temp']    = '20.0'
+            intent['heating_cop_hint'] = '4.5'
+            # EnergyPlus 25.2 HVACTemplate:Zone:VRF has no supplemental heating
+            # coil fields — use electric baseboard instead (F42) for backup heat.
+            intent['baseboard_type']   = 'Electric'
+
+        # ── Hot climate / cooling-dominated ───────────────────────────────
+        if any(kw in req for kw in [
+            'hot climate', 'tropical', 'desert',
+            'cooling dominated', 'cooling-dominated', 'high cooling',
+        ]):
+            intent['climate']          = 'Hot climate — prioritise cooling efficiency'
+            intent['max_cool_temp']    = '46.0'
+            intent['min_cool_temp']    = '-5.0'
+            intent['cooling_cop_hint'] = '4.0'
+            intent['heating_setpoint'] = '18.0'
+            intent['cooling_setpoint'] = '23.0'
+
+        # ── Heat recovery ─────────────────────────────────────────────────
+        # IMPORTANT: check for explicit negation FIRST.
+        # "no heat recovery" contains the substring "heat recovery", so a naïve
+        # `in` check would falsely enable heat recovery when the user said NOT to.
+        # Negation patterns that must lock heat_recovery to 'No':
+        _negated_heat_recovery = any(kw in req for kw in [
+            'no heat recovery',
+            'without heat recovery',
+            'not heat recovery',
+            'no waste heat',
+            'without waste heat',
+            'disable heat recovery',
+            'skip heat recovery',
+        ])
+        # Only enable heat recovery when a POSITIVE keyword is found AND no
+        # negation phrase was detected above.
+        if not _negated_heat_recovery and any(kw in req for kw in [
+            'heat recovery', 'simultaneous', 'waste heat',
+        ]):
+            intent['heat_recovery']    = 'Yes'
+            intent['cooling_cop_hint'] = '4.0'
+            intent['heating_cop_hint'] = '4.5'
+
+        # ── Perimeter / baseboard heating ─────────────────────────────────
+        if any(kw in req for kw in ['baseboard', 'perimeter heating', 'perimeter heat']):
+            intent['baseboard_type'] = 'Electric'
+
+        # ── Detailed energy accounting / monitoring ────────────────────────
+        if any(kw in req for kw in [
+            'detailed', 'energy accounting', 'monitoring',
+            'energy tracking', 'energy model',
+        ]):
+            intent['parasitic_on']  = '25'
+            intent['parasitic_off'] = '8'
+
+        # ── Explicit comfort setpoints in the request ──────────────────────
+        # e.g. "24°C cooling and 21°C heating", "cooling setpoint = 24°C"
+        # Use found flags (not value comparison) so "cooling setpoint = 24°C"
+        # is correctly recognised even though 24.0 is also the default value.
+        parsed_heat, parsed_cool, h_found, c_found = self._parse_setpoints_from_request(user_request)
+        if h_found:
+            intent['heating_setpoint'] = parsed_heat
+        if c_found:
+            intent['cooling_setpoint'] = parsed_cool
+        # Flag used by _generate_thermostat() to hard-enforce the value
+        intent['setpoints_from_prompt'] = h_found or c_found
+
+        return intent
+
+    def _parse_setpoints_from_request(self, user_request: str) -> tuple:
+        """
+        Extract explicit heating and cooling thermostat setpoints from the
+        user's natural-language request.
+
+        Recognised patterns (case-insensitive):
+          "21°C heating"             — temperature before keyword
+          "heating setpoint at 21°C" — keyword before temperature with at/of
+          "heating setpoint = 21°C"  — keyword before temperature with = sign
+
+        Returns (heating_str, cooling_str, heating_found, cooling_found).
+        Falls back to ('20.0', '24.0', False, False) when no explicit values found.
+        Valid heating range: 15–25 °C.  Valid cooling range: 20–30 °C.
+        """
+        import re
+        heating, cooling = '20.0', '24.0'
+        h_found, c_found = False, False
+
+        # Three alternatives:
+        #   g1: "21°C heating"
+        #   g2: "heating setpoint at/of 21°C"
+        #   g3: "heating setpoint = 21°C"   ← new
+        h_match = re.search(
+            r'(\d+(?:\.\d+)?)\s*(?:°C|degC|deg\.?\s*C)\s+heating'
+            r'|heating\s+(?:setpoint\s+)?(?:at\s+|of\s+)?(\d+(?:\.\d+)?)\s*(?:°C|degC|deg\.?\s*C)'
+            r'|heating\s+setpoint\s*=\s*(\d+(?:\.\d+)?)\s*(?:°C|degC|deg\.?\s*C)',
+            user_request, re.IGNORECASE
+        )
+        if h_match:
+            raw = h_match.group(1) or h_match.group(2) or h_match.group(3)
+            try:
+                val = float(raw)
+                if 15.0 <= val <= 25.0:
+                    heating = f'{val:.1f}'
+                    h_found = True
+            except ValueError:
+                pass
+
+        # Three alternatives:
+        #   g1: "24°C cooling"  — negative lookahead (?!\s+setpoint) prevents
+        #       "21°C cooling setpoint = 24°C" from falsely matching 21 as cooling
+        #   g2: "cooling setpoint at/of 24°C"
+        #   g3: "cooling setpoint = 24°C"   ← new
+        c_match = re.search(
+            r'(\d+(?:\.\d+)?)\s*(?:°C|degC|deg\.?\s*C)\s+cooling(?!\s+setpoint)'
+            r'|cooling\s+(?:setpoint\s+)?(?:at\s+|of\s+)?(\d+(?:\.\d+)?)\s*(?:°C|degC|deg\.?\s*C)'
+            r'|cooling\s+setpoint\s*=\s*(\d+(?:\.\d+)?)\s*(?:°C|degC|deg\.?\s*C)',
+            user_request, re.IGNORECASE
+        )
+        if c_match:
+            raw = c_match.group(1) or c_match.group(2) or c_match.group(3)
+            try:
+                val = float(raw)
+                if 20.0 <= val <= 30.0:
+                    cooling = f'{val:.1f}'
+                    c_found = True
+            except ValueError:
+                pass
+
+        return heating, cooling, h_found, c_found
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # MISTRAL GENERATION (iterative, prompt-aware)
+    # ─────────────────────────────────────────────────────────────────────────
+
     def _generate_mistral(self, system_prompt, user_prompt, max_tokens):
         """
         Generate using Mistral fine-tuned model with iterative prompting.
         This follows the successful pattern from generate_complete_vrf.py test script.
+
+        Now also extracts the user's design intent and passes it through every
+        sub-call so that COP values, temperature limits, supplemental heating,
+        baseboard type, and thermostat setpoints all respond to the user request.
         """
         try:
             import torch
             import re
-            
+
             if self.mistral_model is None or self.mistral_tokenizer is None:
                 print("⚠ Mistral model not initialized")
                 return ""
-            
+
             print("✓ Generating with Mistral fine-tuned model...")
-            
-            # Parse the request to understand what to generate
-            # Extract zones and system name from user_prompt
-            zones = self._extract_zones_from_prompt(user_prompt)
-            system_name = self._extract_system_name_from_prompt(user_prompt)
+
+            # Extract structural info from the combined prompt
+            zones            = self._extract_zones_from_prompt(user_prompt)
+            system_name      = self._extract_system_name_from_prompt(user_prompt)
             building_context = self._extract_building_context_from_prompt(user_prompt)
-            
+
+            # ── NEW: extract the user's design intent ─────────────────────
+            # The combined prompt embeds the original user_request under a
+            # "USER DESIGN REQUEST:" header; pull it back out so we can pass
+            # it to every generation sub-function.
+            user_request = self._extract_user_request_from_prompt(user_prompt)
+            if user_request:
+                print(f"   Design intent: {user_request[:120]}{'…' if len(user_request) > 120 else ''}")
+
             if not zones:
                 print("⚠ No zones found in prompt, using direct generation")
                 return self._generate_mistral_direct(system_prompt, user_prompt, max_tokens)
-            
+
             print(f"   Found {len(zones)} zones: {', '.join(zones)}")
             print(f"   System name: {system_name}")
-            
+
             # Use iterative generation approach (proven to work in testing)
+            # user_request is now forwarded so every sub-call is prompt-aware.
             complete_config = self._generate_complete_vrf_iterative(
-                zones, 
-                system_name, 
-                building_context
+                zones,
+                system_name,
+                building_context,
+                user_request,
             )
-            
+
             return complete_config
-            
+
         except Exception as e:
             print(f"⚠ Mistral generation failed: {e}")
             import traceback
@@ -340,91 +750,125 @@ class UniversalLLM:
             traceback.print_exc()
             return ""
     
-    def _generate_complete_vrf_iterative(self, zones, system_name, building_context):
+    def _generate_complete_vrf_iterative(self, zones, system_name, building_context,
+                                          user_request: str = ""):
         """
         Generate complete VRF system using iterative prompting.
         This is the proven approach from the testing script.
+
+        user_request is now forwarded to every sub-generator so that design
+        intent (efficiency, climate, setpoints, supplemental heating …)
+        influences every object in the output.
         """
         try:
             import torch
-            
+
             results = []
-            
-            # Step 1: Generate System VRF (pass zones for master thermostat location)
+
+            # Step 1: Generate HVACTemplate:System:VRF
+            # user_request tells the model what climate/efficiency profile to target.
             print(f"   🔧 Generating System VRF...")
-            system_vrf = self._generate_system_vrf(building_context, system_name, zones)
+            system_vrf = self._generate_system_vrf(building_context, system_name, zones,
+                                                    user_request=user_request)
             if system_vrf:
                 results.append(system_vrf)
                 print(f"      ✅ System VRF generated ({len(system_vrf)} chars)")
-            
-            # Step 2: Generate Zone VRF for each zone
+
+            # Step 2: Generate HVACTemplate:Zone:VRF for each conditioned zone.
+            # user_request drives advanced fields: supplemental heating, baseboard,
+            # parasitic loads.
             print(f"   🏢 Generating Zone VRFs for {len(zones)} zones...")
             for i, zone_name in enumerate(zones, 1):
                 print(f"      Zone {i}/{len(zones)}: {zone_name}...", end=" ")
-                zone_vrf = self._generate_zone_vrf(zone_name, system_name)
+                zone_vrf = self._generate_zone_vrf(zone_name, system_name,
+                                                    user_request=user_request)
                 if zone_vrf:
                     results.append(zone_vrf)
                     print(f"✅ ({len(zone_vrf)} chars)")
                 else:
                     print(f"⚠ Failed")
-            
-            # Step 3: Generate Thermostat for each zone
+
+            # Step 3: Generate HVACTemplate:Thermostat for each conditioned zone.
+            # user_request is parsed for explicit setpoint values (e.g. "24°C cooling").
             print(f"   🌡️  Generating Thermostats for {len(zones)} zones...")
             for i, zone_name in enumerate(zones, 1):
                 print(f"      Thermostat {i}/{len(zones)}: {zone_name}...", end=" ")
-                thermostat = self._generate_thermostat(zone_name)
+                thermostat = self._generate_thermostat(zone_name,
+                                                        user_request=user_request)
                 if thermostat:
                     results.append(thermostat)
                     print(f"✅ ({len(thermostat)} chars)")
                 else:
                     print(f"⚠ Failed")
-            
-            # Combine all objects
+
+            # Combine all objects into one IDF text block.
             complete_config = "\n\n".join(results)
-            
+
             print(f"   ✅ Complete VRF system generated ({len(complete_config)} chars)")
-            
+
             return complete_config
-            
+
         except Exception as e:
             print(f"⚠ Iterative generation failed: {e}")
             import traceback
             traceback.print_exc()
             return ""
     
-    def _generate_system_vrf(self, building_context, system_name, zones=None):
+    def _generate_system_vrf(self, building_context, system_name, zones=None,
+                              user_request: str = ""):
         """
         HYBRID APPROACH for HVACTemplate:System:VRF generation:
-        
-        1. Use fine-tuned model to generate DESIGN PARAMETERS (COP, temps, etc.)
-           - The model's VALUE is in HVAC engineering knowledge
-           
-        2. Use template to ensure correct FIELD ORDER (37 fields per IDD)
-           - Template handles EnergyPlus syntax compliance
-           
-        This separation allows:
-        - Model updates without retraining (just adjust template)
-        - EnergyPlus version compatibility (update template fields)
-        - Reliable IDF generation (template guarantees valid syntax)
+
+        1. Parse user_request → design intent (climate, efficiency, heat-recovery …)
+        2. Use fine-tuned model to pick DESIGN PARAMETERS guided by that intent.
+           - The model's value is HVAC engineering knowledge; intent seeds the prompt.
+        3. Use a fixed 37-field template for FIELD ORDER (EnergyPlus IDD compliance).
+
+        Previously the model prompt hardcoded "Continental climate" regardless of
+        what the user asked.  Now the intent description and seed hints are derived
+        from the user's actual request so the model returns relevant parameters.
         """
         try:
             import torch
             import re
-            
+
             # Get first zone name for master thermostat location
             master_zone = zones[0] if zones else "ZONE 1"
-            num_zones = len(zones) if zones else 1
-            
-            # STEP 1: Ask model for HVAC design parameters (not IDF syntax)
-            # The model's strength is engineering knowledge, not format compliance
+            num_zones   = len(zones) if zones else 1
+
+            # ── STEP 1: Parse user intent → seed values for model prompt ──
+            intent = self._parse_design_intent(user_request)
+
+            # Determine heat-recovery phrasing for the prompt
+            hr_note = (
+                "The system MUST support simultaneous heating and cooling "
+                "(Heat_Pump_Waste_Heat_Recovery = Yes)."
+                if intent['heat_recovery'] == 'Yes'
+                else "Standard VRF — no heat recovery required."
+            )
+
+            # ── STEP 2: Ask model for HVAC design parameters (not IDF syntax) ──
+            # The model prompt now includes the user's actual climate/efficiency
+            # intent so its parameter choices are request-specific.
             prompt = f"""<s>[INST] You are an HVAC engineer designing a VRF system.
+
+User design request: {user_request if user_request else 'Standard VRF HVAC system'}
 
 Building info:
 - Number of zones: {num_zones}
 - Zone names: {', '.join(zones) if zones else 'Single zone'}
-- Climate: Continental (cold winters, warm summers)
+- Climate context: {intent['climate']}
+- Heat recovery: {hr_note}
 
-Provide optimal VRF system parameters:
+Design guidance from the request:
+- Suggested Cooling COP starting point: {intent['cooling_cop_hint']}
+- Suggested Heating COP starting point: {intent['heating_cop_hint']}
+- Suggested Min Cooling Temp: {intent['min_cool_temp']} °C
+- Suggested Max Cooling Temp: {intent['max_cool_temp']} °C
+- Suggested Min Heating Temp: {intent['min_heat_temp']} °C
+- Suggested Max Heating Temp: {intent['max_heat_temp']} °C
+
+Provide optimal VRF system parameters (adjust guidance values as your engineering judgment dictates):
 1. Cooling COP (efficiency, typical 3.0-5.0)
 2. Heating COP (efficiency, typical 3.5-5.5)
 3. Min outdoor temp for cooling mode (°C)
@@ -445,37 +889,50 @@ Condenser: [type]
 Priority: [type] [/INST]
 
 Cooling_COP:"""
-            
+
             inputs = self.mistral_tokenizer(prompt, return_tensors="pt").to(self.mistral_model.device)
-            
+
             with torch.no_grad():
                 outputs = self.mistral_model.generate(
                     **inputs,
-                    max_new_tokens=200,  # Shorter - just need parameter values
+                    max_new_tokens=200,   # Shorter — just need the 8 parameter values
                     temperature=0.3,
                     top_p=0.9,
                     do_sample=True,
                     pad_token_id=self.mistral_tokenizer.eos_token_id,
                 )
-            
-            # Decode only the new tokens
+
+            # Decode only the newly generated tokens (not the prompt itself)
             generated_tokens = outputs[0][len(inputs.input_ids[0]):]
             text = self.mistral_tokenizer.decode(generated_tokens, skip_special_tokens=True)
-            
-            # STEP 2: Parse model's design recommendations
+
+            # ── STEP 3: Parse the model's recommendations ─────────────────
+            # _parse_design_parameters reads the structured "Key: value" output.
+            # _validate_design_parameters then clamps values to realistic ranges.
             model_values = self._parse_design_parameters(text)
-            
-            # Log what the model learned
+
+            # If the model missed a value, fall back to the intent-derived hint
+            # so the template always has a meaningful (non-default) starting point.
+            model_values.setdefault('cooling_cop',    intent['cooling_cop_hint'])
+            model_values.setdefault('heating_cop',    intent['heating_cop_hint'])
+            model_values.setdefault('min_cool_temp',  intent['min_cool_temp'])
+            model_values.setdefault('max_cool_temp',  intent['max_cool_temp'])
+            model_values.setdefault('min_heat_temp',  intent['min_heat_temp'])
+            model_values.setdefault('max_heat_temp',  intent['max_heat_temp'])
+
+            # Inject the heat-recovery flag from the parsed intent
+            # (model prompt asked for it, template field A6 controls it)
+            model_values['heat_recovery'] = intent['heat_recovery']
+
             if model_values:
-                learned_params = [f"{k}={v}" for k, v in model_values.items()]
-                # print(f"      Model learned: {', '.join(learned_params)}")
-            
-            # STEP 3: Build complete 37-field System:VRF using template + model values
-            # Template guarantees EnergyPlus IDD compliance, model provides engineering values
+                print(f"      Model values: " +
+                      ", ".join(f"{k}={v}" for k, v in model_values.items()))
+
+            # ── STEP 4: Build 37-field System:VRF (template + model values) ─
             complete_system = self._build_system_vrf_template(system_name, master_zone, model_values)
-            
+
             return complete_system
-            
+
         except Exception as e:
             print(f"⚠ System VRF generation failed: {e}")
             return self._get_fallback_system_vrf(system_name, zones[0] if zones else "ZONE 1")
@@ -575,38 +1032,42 @@ Cooling_COP:"""
             except ValueError:
                 values['heating_cop'] = '4.0'
         
-        # Temperature validation
+        # Temperature validation — enforce real manufacturer specs:
+        #   N3 Min Cooling : -6.0 °C  (Daikin/Mitsubishi: −5 °C; EnergyPlus default: −6 °C)
+        #   N4 Max Cooling : 43.0 °C  (standard spec; EnergyPlus default: 43 °C)
+        #   N8 Min Heating : -20.0 °C (standard cold-climate VRF; EnergyPlus default: −20 °C)
+        #   N9 Max Heating : 15.5 °C  (Daikin VRV IV / Mitsubishi CITY MULTI spec)
         if 'min_cool_temp' in values:
             try:
                 temp = float(values['min_cool_temp'])
-                if temp < -20 or temp > 10:
-                    values['min_cool_temp'] = '-10'
+                if temp < -15 or temp > -5:
+                    values['min_cool_temp'] = '-6.0'
             except ValueError:
-                values['min_cool_temp'] = '-10'
-        
+                values['min_cool_temp'] = '-6.0'
+
         if 'max_cool_temp' in values:
             try:
                 temp = float(values['max_cool_temp'])
-                if temp < 30 or temp > 55:
-                    values['max_cool_temp'] = '48'
+                if temp < 35 or temp > 52:
+                    values['max_cool_temp'] = '43.0'
             except ValueError:
-                values['max_cool_temp'] = '48'
-        
+                values['max_cool_temp'] = '43.0'
+
         if 'min_heat_temp' in values:
             try:
                 temp = float(values['min_heat_temp'])
-                if temp < -35 or temp > 0:
-                    values['min_heat_temp'] = '-25'
+                if temp < -25 or temp > -15:
+                    values['min_heat_temp'] = '-20.0'
             except ValueError:
-                values['min_heat_temp'] = '-25'
-        
+                values['min_heat_temp'] = '-20.0'
+
         if 'max_heat_temp' in values:
             try:
                 temp = float(values['max_heat_temp'])
-                if temp < 10 or temp > 25:
-                    values['max_heat_temp'] = '18'
+                if temp < 12 or temp > 20:
+                    values['max_heat_temp'] = '15.5'
             except ValueError:
-                values['max_heat_temp'] = '18'
+                values['max_heat_temp'] = '15.5'
         
         # Condenser type validation
         if 'condenser_type' in values:
@@ -634,18 +1095,18 @@ Cooling_COP:"""
   ,                        !- System Availability Schedule Name (A2)
   Autosize,                !- Gross Rated Total Cooling Capacity {{W}} (N1)
   {model_values.get('cooling_cop', '3.5')},                     !- Gross Rated Cooling COP {{W/W}} (N2)
-  {model_values.get('min_cool_temp', '-10')},                    !- Minimum Outdoor Temperature in Cooling Mode {{C}} (N3)
-  {model_values.get('max_cool_temp', '48')},                      !- Maximum Outdoor Temperature in Cooling Mode {{C}} (N4)
+  {model_values.get('min_cool_temp', '-6.0')},                    !- Minimum Outdoor Temperature in Cooling Mode {{C}} (N3)
+  {model_values.get('max_cool_temp', '43.0')},                     !- Maximum Outdoor Temperature in Cooling Mode {{C}} (N4)
   Autosize,                !- Gross Rated Heating Capacity {{W}} (N5)
   1.0,                     !- Rated Heating Capacity Sizing Ratio (N6)
   {model_values.get('heating_cop', '4.0')},                     !- Gross Rated Heating COP {{W/W}} (N7)
-  {model_values.get('min_heat_temp', '-25')},                   !- Minimum Outdoor Temperature in Heating Mode {{C}} (N8)
-  {model_values.get('max_heat_temp', '18')},                      !- Maximum Outdoor Temperature in Heating Mode {{C}} (N9)
+  {model_values.get('min_heat_temp', '-20.0')},                  !- Minimum Outdoor Temperature in Heating Mode {{C}} (N8)
+  {model_values.get('max_heat_temp', '15.5')},                     !- Maximum Outdoor Temperature in Heating Mode {{C}} (N9)
   0.15,                    !- Minimum Heat Pump Part-Load Ratio (N10)
   {master_zone},           !- Zone Name for Master Thermostat Location (A3)
   {model_values.get('priority', 'LoadPriority')},            !- Master Thermostat Priority Control Type (A4)
   ,                        !- Thermostat Priority Schedule Name (A5)
-  No,                      !- Heat Pump Waste Heat Recovery (A6)
+  {model_values.get('heat_recovery', 'No')},                      !- Heat Pump Waste Heat Recovery (A6)
   30,                      !- Equivalent Piping Length for Cooling {{m}} (N11)
   10,                      !- Vertical Height for Piping Correction {{m}} (N12)
   30,                      !- Equivalent Piping Length for Heating {{m}} (N13)
@@ -679,13 +1140,13 @@ Cooling_COP:"""
   ,                        !- System Availability Schedule Name (A2)
   Autosize,                !- Gross Rated Total Cooling Capacity {{W}} (N1)
   3.5,                     !- Gross Rated Cooling COP {{W/W}} (N2)
-  -10,                     !- Minimum Outdoor Temperature in Cooling Mode {{C}} (N3)
-  48,                      !- Maximum Outdoor Temperature in Cooling Mode {{C}} (N4)
+  -6.0,                    !- Minimum Outdoor Temperature in Cooling Mode {{C}} (N3)
+  43.0,                    !- Maximum Outdoor Temperature in Cooling Mode {{C}} (N4)
   Autosize,                !- Gross Rated Heating Capacity {{W}} (N5)
   1.0,                     !- Rated Heating Capacity Sizing Ratio (N6)
   4.0,                     !- Gross Rated Heating COP {{W/W}} (N7)
-  -25,                     !- Minimum Outdoor Temperature in Heating Mode {{C}} (N8)
-  18,                      !- Maximum Outdoor Temperature in Heating Mode {{C}} (N9)
+  -20.0,                   !- Minimum Outdoor Temperature in Heating Mode {{C}} (N8)
+  15.5,                    !- Maximum Outdoor Temperature in Heating Mode {{C}} (N9)
   0.15,                    !- Minimum Heat Pump Part-Load Ratio (N10)
   {master_zone},           !- Zone Name for Master Thermostat Location (A3)
   LoadPriority,            !- Master Thermostat Priority Control Type (A4)
@@ -749,24 +1210,44 @@ Cooling_COP:"""
         
         return '\n'.join(result_lines)
     
-    def _generate_zone_vrf(self, zone_name, system_name):
-        """Generate HVACTemplate:Zone:VRF object with all 39 required fields per IDD"""
+    def _generate_zone_vrf(self, zone_name, system_name, user_request: str = ""):
+        """
+        Generate HVACTemplate:Zone:VRF with all 42 required fields per IDD.
+
+        The model fills in the core structure; user_request drives the advanced
+        fields (supplemental heating type, baseboard, parasitic loads) via
+        _parse_design_intent().  If the model output is missing required names,
+        _get_fallback_zone_vrf() is called with the intent dict so even the
+        fallback path is prompt-aware.
+        """
         try:
             import torch
-            
-            prompt = f"""<s>[INST] Generate a complete HVACTemplate:Zone:VRF object with these specifications:
+
+            # Parse design intent once so both the model prompt and fallback use it.
+            intent = self._parse_design_intent(user_request)
+
+            # Baseboard note for the model (only valid advanced field in EnergyPlus 25.2)
+            base_note = (
+                f"Baseboard heating type: {intent['baseboard_type']} (field 42)"
+                if intent['baseboard_type']
+                else "No baseboard heating (leave field 42 blank)"
+            )
+
+            prompt = f"""<s>[INST] Generate a complete HVACTemplate:Zone:VRF object (44 fields, EnergyPlus 25.2):
 - Zone Name: {zone_name}
 - Template VRF System Name: {system_name}
 - Template Thermostat Name: Thermostat_{zone_name}
 - Cooling and Heating Supply Air Flow Rate: Autosize
+- User design request: {user_request if user_request else 'standard VRF'}
+- {base_note}
 
 Generate ONLY this single zone VRF object, end with semicolon. [/INST]
 
 HVACTemplate:Zone:VRF,
   {zone_name},"""
-            
+
             inputs = self.mistral_tokenizer(prompt, return_tensors="pt").to(self.mistral_model.device)
-            
+
             with torch.no_grad():
                 outputs = self.mistral_model.generate(
                     **inputs,
@@ -776,156 +1257,215 @@ HVACTemplate:Zone:VRF,
                     do_sample=True,
                     pad_token_id=self.mistral_tokenizer.eos_token_id,
                 )
-            
-            # Decode only the new tokens (not the prompt)
+
+            # Decode only newly generated tokens
             generated_tokens = outputs[0][len(inputs.input_ids[0]):]
-            text = self.mistral_tokenizer.decode(generated_tokens, skip_special_tokens=True)
+            text  = self.mistral_tokenizer.decode(generated_tokens, skip_special_tokens=True)
             cleaned = self._clean_mistral_output(text)
-            
-            # Prepend the object type with zone name
+
+            # Prepend the object type header if the model omitted it
             if not cleaned.startswith("HVACTemplate:Zone:VRF,"):
                 cleaned = f"HVACTemplate:Zone:VRF,\n  {zone_name}," + cleaned
-            
-            # Validate: should have zone name and system name
+
+            # Validate minimum required references are present
             if zone_name not in cleaned or system_name not in cleaned:
-                # Fallback: use complete template with all fields
-                cleaned = self._get_fallback_zone_vrf(zone_name, system_name)
-            
+                # Fallback uses intent so advanced fields are still prompt-driven
+                cleaned = self._get_fallback_zone_vrf(zone_name, system_name, intent)
+
             return cleaned
-            
+
         except Exception as e:
             print(f"⚠ Zone VRF generation failed: {e}")
-            return self._get_fallback_zone_vrf(zone_name, system_name)
-    
-    def _get_fallback_zone_vrf(self, zone_name, system_name):
-        """Fallback Zone:VRF template with all 39 required fields per IDD"""
+            intent = self._parse_design_intent(user_request)
+            return self._get_fallback_zone_vrf(zone_name, system_name, intent)
+
+    def _get_fallback_zone_vrf(self, zone_name, system_name, intent: dict = None):
+        """
+        Fallback Zone:VRF template with exactly 44 fields per EnergyPlus 25.2 IDD.
+
+        Field order confirmed from Energy+.idd (v25.2):
+          F1–F32  : core zone/fan/coil fields (same as before)
+          F33–F34 : parasitic electric energy use (on/off)
+          F35     : dedicated outdoor air system name
+          F36–F38 : zone cooling design supply air temperature (method, value, diff)
+          F39–F41 : zone heating design supply air temperature (method, value, diff)
+          F42     : baseboard heating type  ← driven by design intent
+          F43     : baseboard heating availability schedule name
+          F44     : baseboard heating capacity  ← Autosize when baseboard enabled
+
+        NOTE: HVACTemplate:Zone:VRF in EnergyPlus 25.2 has NO supplemental heating
+        coil fields — the Gemini prompt description of those fields was incorrect.
+        Supplemental/backup heating for cold climates must be handled at the
+        system level or via separate zone equipment objects outside HVACTemplate.
+
+        When `intent` carries baseboard_type (set by _parse_design_intent for
+        requests mentioning 'cold climate', 'baseboard', 'perimeter heating'),
+        fields 42 and 44 are populated accordingly.
+        """
+        if intent is None:
+            intent = {}
+
+        # Only baseboard is relevant from intent for this object (fields 42–44)
+        baseboard     = intent.get('baseboard_type', '')   # '' | 'Electric' | 'HotWater'
+        baseboard_cap = 'Autosize' if baseboard else ''    # Autosize when type is set
+
         return f"""HVACTemplate:Zone:VRF,
-  {zone_name},                          !- Zone Name (A1)
-  {system_name},                        !- Template VRF System Name (A2)
-  Thermostat_{zone_name},               !- Template Thermostat Name (A3)
-  ,                                     !- Zone Heating Sizing Factor (N1) - blank uses Sizing:Parameters
-  ,                                     !- Zone Cooling Sizing Factor (N2) - blank uses Sizing:Parameters
-  1.0,                                  !- Rated Total Heating Capacity Sizing Ratio (N3)
-  Autosize,                             !- Cooling Supply Air Flow Rate (N4)
-  Autosize,                             !- No Cooling Supply Air Flow Rate (N5)
-  Autosize,                             !- Heating Supply Air Flow Rate (N6)
-  Autosize,                             !- No Heating Supply Air Flow Rate (N7)
-  Autosize,                             !- Cooling Outdoor Air Flow Rate (N8)
-  Autosize,                             !- Heating Outdoor Air Flow Rate (N9)
-  Autosize,                             !- No Load Outdoor Air Flow Rate (N10)
-  ,                                     !- Outdoor Air Method (A4)
-  ,                                     !- Outdoor Air Flow Rate per Person (N11)
-  ,                                     !- Outdoor Air Flow Rate per Zone Floor Area (N12)
-  ,                                     !- Outdoor Air Flow Rate per Zone (N13)
-  ,                                     !- Design Specification Outdoor Air Object Name (A5)
-  ,                                     !- Design Specification Zone Air Distribution Object Name (A6)
-  ,                                     !- System Availability Schedule Name (A7)
-  ,                                     !- Supply Fan Operating Mode Schedule Name (A8)
-  DrawThrough,                          !- Supply Air Fan Placement (A9)
-  0.7,                                  !- Supply Fan Total Efficiency (N14)
-  300,                                  !- Supply Fan Delta Pressure (N15)
-  0.9,                                  !- Supply Fan Motor Efficiency (N16)
-  VariableRefrigerantFlowDX,            !- Cooling Coil Type (A10)
-  ,                                     !- Cooling Coil Availability Schedule Name (A11)
-  Autosize,                             !- Cooling Coil Gross Rated Total Capacity (N17)
-  Autosize,                             !- Cooling Coil Gross Rated Sensible Heat Ratio (N18)
-  VariableRefrigerantFlowDX,            !- Heat Pump Heating Coil Type (A12)
-  ,                                     !- Heat Pump Heating Coil Availability Schedule Name (A13)
-  Autosize,                             !- Heat Pump Heating Coil Gross Rated Capacity (N19)
-  30,                                   !- Zone Terminal Unit On Parasitic Electric Energy Use (N20)
-  20,                                   !- Zone Terminal Unit Off Parasitic Electric Energy Use (N21)
-  ,                                     !- Dedicated Outdoor Air System Name (A14)
-  SupplyAirTemperature,                 !- Zone Cooling Design Supply Air Temperature Input Method (A15)
-  12.8,                                 !- Zone Cooling Design Supply Air Temperature (N22)
-  ,                                     !- Zone Cooling Design Supply Air Temperature Difference (N23)
-  SupplyAirTemperature,                 !- Zone Heating Design Supply Air Temperature Input Method (A16)
-  50;                                   !- Zone Heating Design Supply Air Temperature (N24)"""
+  {zone_name},                          !- Zone Name (F1)
+  {system_name},                        !- Template VRF System Name (F2)
+  Thermostat_{zone_name},               !- Template Thermostat Name (F3)
+  ,                                     !- Zone Heating Sizing Factor (F4)
+  ,                                     !- Zone Cooling Sizing Factor (F5)
+  1.0,                                  !- Rated Total Heating Capacity Sizing Ratio (F6)
+  Autosize,                             !- Cooling Supply Air Flow Rate (F7)
+  Autosize,                             !- No Cooling Supply Air Flow Rate (F8)
+  Autosize,                             !- Heating Supply Air Flow Rate (F9)
+  Autosize,                             !- No Heating Supply Air Flow Rate (F10)
+  Autosize,                             !- Cooling Outdoor Air Flow Rate (F11)
+  Autosize,                             !- Heating Outdoor Air Flow Rate (F12)
+  Autosize,                             !- No Load Outdoor Air Flow Rate (F13)
+  ,                                     !- Outdoor Air Method (F14)
+  ,                                     !- Outdoor Air Flow Rate per Person (F15)
+  ,                                     !- Outdoor Air Flow Rate per Zone Floor Area (F16)
+  ,                                     !- Outdoor Air Flow Rate per Zone (F17)
+  ,                                     !- Design Specification Outdoor Air Object Name (F18)
+  ,                                     !- Design Specification Zone Air Distribution Object Name (F19)
+  ,                                     !- System Availability Schedule Name (F20)
+  ,                                     !- Supply Fan Operating Mode Schedule Name (F21)
+  DrawThrough,                          !- Supply Air Fan Placement (F22)
+  0.7,                                  !- Supply Fan Total Efficiency (F23)
+  300,                                  !- Supply Fan Delta Pressure (F24)
+  0.9,                                  !- Supply Fan Motor Efficiency (F25)
+  VariableRefrigerantFlowDX,            !- Cooling Coil Type (F26)
+  ,                                     !- Cooling Coil Availability Schedule Name (F27)
+  Autosize,                             !- Cooling Coil Gross Rated Total Capacity (F28)
+  Autosize,                             !- Cooling Coil Gross Rated Sensible Heat Ratio (F29)
+  VariableRefrigerantFlowDX,            !- Heat Pump Heating Coil Type (F30)
+  ,                                     !- Heat Pump Heating Coil Availability Schedule Name (F31)
+  Autosize,                             !- Heat Pump Heating Coil Gross Rated Capacity (F32)
+  30,                                   !- Zone Terminal Unit On Parasitic Electric Energy Use (F33)
+  20,                                   !- Zone Terminal Unit Off Parasitic Electric Energy Use (F34)
+  ,                                     !- Dedicated Outdoor Air System Name (F35)
+  SupplyAirTemperature,                 !- Zone Cooling Design Supply Air Temperature Input Method (F36)
+  12.8,                                 !- Zone Cooling Design Supply Air Temperature (F37)
+  ,                                     !- Zone Cooling Design Supply Air Temperature Difference (F38)
+  SupplyAirTemperature,                 !- Zone Heating Design Supply Air Temperature Input Method (F39)
+  50,                                   !- Zone Heating Design Supply Air Temperature (F40)
+  ,                                     !- Zone Heating Design Supply Air Temperature Difference (F41)
+  {baseboard},                          !- Baseboard Heating Type (F42)
+  ,                                     !- Baseboard Heating Availability Schedule Name (F43)
+  {baseboard_cap};                      !- Baseboard Heating Capacity (F44)"""
     
-    def _generate_thermostat(self, zone_name):
-        """Generate HVACTemplate:Thermostat object using fine-tuned model with one-shot example"""
+    def _generate_thermostat(self, zone_name, user_request: str = ""):
+        """
+        Generate HVACTemplate:Thermostat using the fine-tuned model.
+
+        Previously the heating setpoint was hardcoded to 20.0 °C and the model
+        only generated the cooling setpoint (~24 °C by training default).  Now:
+          1. _parse_setpoints_from_request() extracts any explicit setpoint values
+             mentioned in the user request (e.g. "21°C heating / 24°C cooling").
+          2. Those values are embedded in the one-shot example so the model sees
+             the intended range and generates a consistent cooling setpoint.
+          3. The explicitly parsed values are used in the final object regardless
+             of what the model outputs, making setpoints fully prompt-driven.
+        """
         try:
             import torch
-            
-            # One-shot example with almost complete structure
-            # The model only needs to fill in the cooling setpoint value
+
+            # ── Parse setpoints from user request (may override defaults) ──
+            heating_sp, cooling_sp, h_found, c_found = self._parse_setpoints_from_request(user_request)
+            # heating_sp is used directly (model does not generate this field).
+            # cooling_sp: if the user explicitly wrote a value, enforce it;
+            # otherwise let the model confirm/refine around the default.
+
+            # One-shot example uses the same setpoints so the model stays in range.
             prompt = f"""<s>[INST] Generate HVACTemplate:Thermostat objects.
 
-Example for Kitchen_Zone:
+Example for Kitchen_Zone (heating {heating_sp}°C, cooling {cooling_sp}°C):
 HVACTemplate:Thermostat,
   Thermostat_Kitchen_Zone,                !- Name
   ,                        !- Heating Setpoint Schedule Name
-  20.5,                    !- Constant Heating Setpoint {{C}}
+  {heating_sp},                    !- Constant Heating Setpoint {{C}}
   ,                        !- Cooling Setpoint Schedule Name
-  23.8;                    !- Constant Cooling Setpoint {{C}}
+  {cooling_sp};                    !- Constant Cooling Setpoint {{C}}
 
 Now generate for {zone_name}: [/INST]
 
 HVACTemplate:Thermostat,
   Thermostat_{zone_name},                !- Name
   ,                        !- Heating Setpoint Schedule Name
-  20.0,                    !- Constant Heating Setpoint {{C}}
+  {heating_sp},                    !- Constant Heating Setpoint {{C}}
   ,                        !- Cooling Setpoint Schedule Name
   """
-            
+
             inputs = self.mistral_tokenizer(prompt, return_tensors="pt").to(self.mistral_model.device)
-            
+
             with torch.no_grad():
                 outputs = self.mistral_model.generate(
                     **inputs,
-                    max_new_tokens=30,  # Only need "24.0;  !- Constant Cooling Setpoint {C}"
-                    temperature=0.1,  # Very low for deterministic output
+                    max_new_tokens=30,   # Only need the cooling-setpoint value + semicolon
+                    temperature=0.1,     # Very low → deterministic output near the example
                     top_p=0.9,
                     do_sample=True,
                     pad_token_id=self.mistral_tokenizer.eos_token_id,
                 )
-            
-            # Decode only the new tokens (not the prompt)
+
+            # Decode only the newly generated tokens
             generated_tokens = outputs[0][len(inputs.input_ids[0]):]
             text = self.mistral_tokenizer.decode(generated_tokens, skip_special_tokens=True)
-            
-            # Clean the continuation - should be just "24.0;  !- Constant Cooling Setpoint {C}" or similar
+
+            # Extract the cooling-setpoint value the model produced
             continuation = text.strip()
-            
-            # Find the first semicolon and stop there
             if ';' in continuation:
-                end_idx = continuation.find(';')
-                continuation = continuation[:end_idx + 1]
+                continuation = continuation[:continuation.find(';') + 1]
             else:
-                # No semicolon found, just use the number if it's there
                 import re
                 num_match = re.search(r'(\d+\.?\d*)', continuation)
-                if num_match:
-                    continuation = num_match.group(1) + ';                    !- Constant Cooling Setpoint {C}'
+                model_cool = num_match.group(1) if num_match else cooling_sp
+                continuation = f'{model_cool};'
+
+            # ── Validate the model's cooling setpoint value ────────────────
+            # If the user explicitly wrote a setpoint in the prompt, enforce it
+            # directly — the model output is irrelevant.  Otherwise accept the
+            # model value if it falls within the realistic range (20–30 °C).
+            import re as _re
+            if c_found:
+                continuation = f'{cooling_sp};'
+            else:
+                cool_match = _re.search(r'(-?\d+\.?\d*)', continuation)
+                if cool_match:
+                    try:
+                        cool_val = float(cool_match.group(1))
+                        if not (20.0 <= cool_val <= 30.0):
+                            continuation = f'{cooling_sp};'
+                    except ValueError:
+                        continuation = f'{cooling_sp};'
                 else:
-                    continuation = '24.0;                    !- Constant Cooling Setpoint {C}'
-            
-            # Build the complete thermostat
-            complete_thermostat = f"""HVACTemplate:Thermostat,
-  Thermostat_{zone_name},                !- Name
-  ,                        !- Heating Setpoint Schedule Name
-  20.0,                    !- Constant Heating Setpoint {{C}}
-  ,                        !- Cooling Setpoint Schedule Name
-  {continuation}"""
-            
-            # Clean up any duplicate semicolons or trailing content
-            lines = complete_thermostat.split('\n')
-            clean_lines = []
-            for line in lines:
-                if ';' in line:
-                    # Keep only up to the first semicolon and comment
-                    semi_idx = line.find(';')
-                    clean_lines.append(line[:semi_idx+1] + '                    !- Constant Cooling Setpoint {C}')
-                    break
-                else:
-                    clean_lines.append(line)
-            
-            complete_thermostat = '\n'.join(clean_lines)
-            
+                    continuation = f'{cooling_sp};'
+
+            # ── Build the complete thermostat object ───────────────────────
+            complete_thermostat = (
+                f"HVACTemplate:Thermostat,\n"
+                f"  Thermostat_{zone_name},                !- Name\n"
+                f"  ,                        !- Heating Setpoint Schedule Name\n"
+                f"  {heating_sp},                    !- Constant Heating Setpoint {{C}}\n"
+                f"  ,                        !- Cooling Setpoint Schedule Name\n"
+                f"  {continuation}                    !- Constant Cooling Setpoint {{C}}"
+            )
+
             return complete_thermostat
-            
+
         except Exception as e:
             print(f"⚠ Thermostat generation failed: {e}")
-            return ""
+            # Hard fallback — still uses parsed setpoints, not hardcoded 20/24
+            heating_sp, cooling_sp, _, _ = self._parse_setpoints_from_request(user_request)
+            return (
+                f"HVACTemplate:Thermostat,\n"
+                f"  Thermostat_{zone_name},                !- Name\n"
+                f"  ,                        !- Heating Setpoint Schedule Name\n"
+                f"  {heating_sp},                    !- Constant Heating Setpoint {{C}}\n"
+                f"  ,                        !- Cooling Setpoint Schedule Name\n"
+                f"  {cooling_sp};                    !- Constant Cooling Setpoint {{C}}"
+            )
     
     def _clean_mistral_output(self, text):
         """Clean and extract the generated IDF object from Mistral output"""

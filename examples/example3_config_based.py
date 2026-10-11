@@ -51,7 +51,7 @@ def run_single_request(request_id: str, config: dict):
     # If zones is None, pipeline will auto-detect from base IDF
     result = pipeline.run(
         base_idf=base_idf_full,
-        zones=zones,  # Can be None for auto-detection
+        zones=None,  # Can be None for auto-detection
         output_name=request_id,
         user_request=config['prompt'],  # User's natural language request
         enable_quick_validation=False  # Enable LLM validation
@@ -93,7 +93,7 @@ def create_example_config():
             "base_idf": "../data/base_idfs/building_with_zones.idf",
             "note": "For actual multi-zone, create a multi-zone base IDF first"
         },
-        "vrf_high_efficiency": {use_rag
+        "vrf_high_efficiency": {
             "prompt": "Design a high-efficiency VRF system with advanced control strategies for energy savings",
             "zones": ["ZONE ONE"],
             "base_idf": "../data/base_idfs/building_with_zones.idf"

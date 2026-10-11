@@ -1,0 +1,44 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+✓ Auto-detected 10 zones from IDF
+  1. LGstore1
+  2. SMstore1
+  3. SMstore2
+  4. SMstore3
+  5. SMstore4
+  6. LGstore2
+  7. SMstore5
+  8. SMstore6
+  9. SMstore7
+  10. SMstore8
+
+📊 Building Context:
+  • Zones: 10
+  • Total Volume: 10831.2 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Designing an complete HVAC systems an strip mall 10 thermal zone use variable flow refrigerant or no heat recovery. One terminal indoor units each thermal zones connected for the single shares outdoor condensing units through a zones terminal units lists. Complete but valid object relationships, references, or node connection of every zone. Zones equipments lists, equipments connections, or air node definition of all zones. Dual setpoints thermostats controls all zone by cool setpoint = 24°C and heating setpoints = 21°C. Availability schedule in system operation, fan operation, but thermostats controls. Using autosize in each rates airflow, capacities, fans parameters, or other sizing-related input wherever permitted. Using realistic defaults value at each required input not explicitly specified. Generates all required schedule, curve, but supporting object necessary the complete, simulation-ready EnergyPlus IDF. Assigned VRF units terminal to zone that are occupied but conditioned. Excluding any zones that is unconditioned, unoccupied, and does not serving as a space habitable.
+✓ Calling LLM (mistral-api) to generate VRF system for zones: LGstore1, SMstore1, SMstore2, SMstore3, SMstore4, LGstore2, SMstore5, SMstore6, SMstore7, SMstore8
+  User Design Request: Designing an complete HVAC systems an strip mall 10 thermal zone use variable flow refrigerant or no heat recovery. One terminal indoor units each thermal zones connected for the single shares outdoor condensing units through a zones terminal units lists. Complete but valid object relationships, references, or node connection of every zone. Zones equipments lists, equipments connections, or air node definition of all zones. Dual setpoints thermostats controls all zone by cool setpoint = 24°C and heating setpoints = 21°C. Availability schedule in system operation, fan operation, but thermostats controls. Using autosize in each rates airflow, capacities, fans parameters, or other sizing-related input wherever permitted. Using realistic defaults value at each required input not explicitly specified. Generates all required schedule, curve, but supporting object necessary the complete, simulation-ready EnergyPlus IDF. Assigned VRF units terminal to zone that are occupied but conditioned. Excluding any zones that is unconditioned, unoccupied, and does not serving as a space habitable.
+✓ Generating with Mistral API (mistral-small-latest)...
+⚠ Mistral API generation failed: API error occurred: Status 429. Body: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+Traceback (most recent call last):
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/src/agents/llm_interface.py", line 394, in _generate_mistral_api
+    response = self.mistral_client.chat.complete(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/.venv/lib/python3.12/site-packages/mistralai/chat.py", line 251, in complete
+    raise models.SDKError("API error occurred", http_res, http_res_text)
+mistralai.models.sdkerror.SDKError: API error occurred: Status 429. Body: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+✗ Prompt got empty response
+❌ Error: Empty HVAC configuration generated

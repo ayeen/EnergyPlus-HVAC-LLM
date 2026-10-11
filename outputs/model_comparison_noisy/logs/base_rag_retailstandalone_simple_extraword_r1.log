@@ -1,0 +1,259 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 1 non-HVAC zone(s): ['Back_Space']
+  ↳ Excluded 1 non-HVAC zone(s): ['Back_Space']
+✓ Auto-detected 4 zones from IDF
+  1. Core_Retail
+  2. Point_Of_Sale
+  3. Front_Retail
+  4. Front_Entry
+  ↳ Excluded 1 non-HVAC zone(s): ['Back_Space']
+
+📊 Building Context:
+  • Zones: 4
+  • Total Volume: 13993.4 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Generate a simulation-ready EnergyPlus IDF for a standalone retail building with 5 thermal conventional zones and a variable refrigerant flow HVAC system without conventional heat obvious recovery. Assign VRF clearly terminal units only to directly occupied and plainly conditioned practical zones. Do not assign VRF terminal units to any unoccupied or unconditioned zones.
+✓ Calling LLM (mistral-api) to generate VRF system for zones: Core_Retail, Point_Of_Sale, Front_Retail, Front_Entry
+  User Design Request: Generate a simulation-ready EnergyPlus IDF for a standalone retail building with 5 thermal conventional zones and a variable refrigerant flow HVAC system without conventional heat obvious recovery. Assign VRF clearly terminal units only to directly occupied and plainly conditioned practical zones. Do not assign VRF terminal units to any unoccupied or unconditioned zones.
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (11743 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 5 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 5 HVAC objects
+
+[2] Validating IDF...
+Valid: False, Errors: 4
+
+[2.5] Validation failed. Attempting pre-simulation fix...
+      Found 4 validation errors
+  ↳ Excluded 1 non-HVAC zone(s): ['Back_Space']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (637 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Core_Retail",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Point_Of_Sale",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Front_Retail",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Front_Entry",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  }
+]
+================================================================================
+
+
+✓ Successfully parsed 4 fixes from LLM response
+
+
+================================================================================
+APPLYING 4 FIXES TO IDF
+================================================================================
+
+1. HVACTemplate:Zone:VRF[Core_Retail].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Core_Retail' to ''
+2. HVACTemplate:Zone:VRF[Point_Of_Sale].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Point_Of_Sale' to ''
+3. HVACTemplate:Zone:VRF[Front_Retail].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Front_Retail' to ''
+4. HVACTemplate:Zone:VRF[Front_Entry].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Front_Entry' to ''
+
+================================================================================
+FIXES APPLIED: 4 successful, 0 failed
+================================================================================
+
+✓ Applied 4 pre-simulation fixes
+[2.6] Re-validating after fix...
+✓ Validation passed after fix!
+
+[3] Simulating...
+Success: False, Errors: 6
+
+[4.1] Fixing errors...
+  ↳ Excluded 1 non-HVAC zone(s): ['Back_Space']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (1101 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "Core_Retail VRF Cooling Coil",
+    "field_to_change": "gross_rated_sensible_heat_ratio",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "Coil:Heating:DX:VariableRefrigerantFlow",
+    "object_name": "Core_Retail VRF Heating Coil",
+    "field_to_change": "gross_rated_heating_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "Fan:OnOff",
+    "object_name": "Core_Retail VRF Supply Fan",
+    "field_to_change": "motor_efficiency",
+    "new_value": 0.85
+  },
+  {
+    "object_type": "Fan:OnOff",
+    "object_name": "Core_Retail VRF Supply Fan",
+    "field_to_change": "pressure_rise",
+    "new_value": 125
+  },
+  {
+    "object_type": "ZoneControl:Thermostat",
+    "object_name": "Thermostat_Core_Retail",
+    "field_to_change": "control_2_object_type",
+    "new_value": "ThermostatSetpoint:DualSetpoint"
+  },
+  {
+    "object_type": "ZoneControl:Thermostat",
+    "object_name": "Thermostat_C...
+================================================================================
+
+
+✓ Successfully parsed 6 fixes from LLM response
+
+
+================================================================================
+APPLYING 6 FIXES TO IDF
+================================================================================
+
+1. Coil:Cooling:DX:VariableRefrigerantFlow[Core_Retail VRF Cooling Coil].gross_rated_sensible_heat_ratio = 'Autosize'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+2. Coil:Heating:DX:VariableRefrigerantFlow[Core_Retail VRF Heating Coil].gross_rated_heating_capacity = 'Autosize'
+   ❌ No objects of type 'Coil:Heating:DX:VariableRefrigerantFlow' found in IDF
+3. Fan:OnOff[Core_Retail VRF Supply Fan].motor_efficiency = '0.85'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+4. Fan:OnOff[Core_Retail VRF Supply Fan].pressure_rise = '125'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+5. ZoneControl:Thermostat[Thermostat_Core_Retail].control_2_object_type = 'ThermostatSetpoint:DualSetpoint'
+   ✓ Changed from 'Clg-SetP-Sch' to 'ThermostatSetpoint:DualSetpoint'
+6. ZoneControl:Thermostat[Thermostat_Core_Retail].control_2_name = 'Thermostat_Core_Retail'
+   ✓ Changed from '' to 'Thermostat_Core_Retail'
+
+================================================================================
+FIXES APPLIED: 2 successful, 4 failed
+================================================================================
+
+✓ Applied 2 fixes
+
+[5.1] Re-simulating...
+Success: False
+
+[4.2] Fixing errors...
+  ↳ Excluded 1 non-HVAC zone(s): ['Back_Space']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (1123 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "Core_Retail VRF Cooling Coil",
+    "field_to_change": "gross_rated_sensible_heat_ratio",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "Coil:Heating:DX:VariableRefrigerantFlow",
+    "object_name": "Core_Retail VRF Heating Coil",
+    "field_to_change": "gross_rated_heating_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "Fan:OnOff",
+    "object_name": "Core_Retail VRF Supply Fan",
+    "field_to_change": "motor_efficiency",
+    "new_value": "0.85"
+  },
+  {
+    "object_type": "Fan:OnOff",
+    "object_name": "Core_Retail VRF Supply Fan",
+    "field_to_change": "pressure_rise",
+    "new_value": "125"
+  },
+  {
+    "object_type": "ZoneControl:Thermostat",
+    "object_name": "Thermostat_Front_Entry",
+    "field_to_change": "control_2_object_type",
+    "new_value": "ThermostatSetpoint:SingleHeating"
+  },
+  {
+    "object_type": "ZoneControl:Thermostat",
+    "object_name": "Thermos...
+================================================================================
+
+
+✓ Successfully parsed 6 fixes from LLM response
+
+
+================================================================================
+APPLYING 6 FIXES TO IDF
+================================================================================
+
+1. Coil:Cooling:DX:VariableRefrigerantFlow[Core_Retail VRF Cooling Coil].gross_rated_sensible_heat_ratio = 'Autosize'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+2. Coil:Heating:DX:VariableRefrigerantFlow[Core_Retail VRF Heating Coil].gross_rated_heating_capacity = 'Autosize'
+   ❌ No objects of type 'Coil:Heating:DX:VariableRefrigerantFlow' found in IDF
+3. Fan:OnOff[Core_Retail VRF Supply Fan].motor_efficiency = '0.85'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+4. Fan:OnOff[Core_Retail VRF Supply Fan].pressure_rise = '125'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+5. ZoneControl:Thermostat[Thermostat_Front_Entry].control_2_object_type = 'ThermostatSetpoint:SingleHeating'
+   ✓ Changed from 'Clg-SetP-Sch' to 'ThermostatSetpoint:SingleHeating'
+6. ZoneControl:Thermostat[Thermostat_Front_Entry].control_2_name = 'Thermostat_Front_Entry Heating Setpoint'
+   ✓ Changed from '' to 'Thermostat_Front_Entry Heating Setpoint'
+
+================================================================================
+FIXES APPLIED: 2 successful, 4 failed
+================================================================================
+
+✓ Applied 2 fixes
+
+[5.2] Re-simulating...
+Success: False
+
+======================================================================
+PIPELINE COMPLETE: FAILED
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/base_rag_retailstandalone_simple_extraword_r1_results.json
+======================================================================

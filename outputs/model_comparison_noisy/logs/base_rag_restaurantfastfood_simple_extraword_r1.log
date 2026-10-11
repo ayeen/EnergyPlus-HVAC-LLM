@@ -1,0 +1,247 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 1 non-HVAC zone(s): ['attic']
+  ↳ Excluded 1 non-HVAC zone(s): ['attic']
+✓ Auto-detected 2 zones from IDF
+  1. Dining
+  2. Kitchen
+  ↳ Excluded 1 non-HVAC zone(s): ['attic']
+
+📊 Building Context:
+  • Zones: 2
+  • Total Volume: 970.7 m³
+  • Orientation: 0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Generate a simulation-ready EnergyPlus IDF for a fast food adequately restaurant with 3 somewhat thermal notably zones and a variable refrigerant flow HVAC system and no heat recovery. Assign VRF terminal typical units only to occupied and conditioned basic zones. Do not assign VRF efficiently terminal units to any unoccupied or unconditioned mainly zones.
+✓ Calling LLM (mistral-api) to generate VRF system for zones: Dining, Kitchen
+  User Design Request: Generate a simulation-ready EnergyPlus IDF for a fast food adequately restaurant with 3 somewhat thermal notably zones and a variable refrigerant flow HVAC system and no heat recovery. Assign VRF terminal typical units only to occupied and conditioned basic zones. Do not assign VRF efficiently terminal units to any unoccupied or unconditioned mainly zones.
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (8282 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 3 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 3 HVAC objects
+
+[2] Validating IDF...
+Valid: False, Errors: 2
+
+[2.5] Validation failed. Attempting pre-simulation fix...
+      Found 2 validation errors
+  ↳ Excluded 1 non-HVAC zone(s): ['attic']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (309 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Dining",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  },
+  {
+    "object_type": "HVACTemplate:Zone:VRF",
+    "object_name": "Kitchen",
+    "field_to_change": "template_thermostat_name",
+    "new_value": ""
+  }
+]
+================================================================================
+
+
+✓ Successfully parsed 2 fixes from LLM response
+
+
+================================================================================
+APPLYING 2 FIXES TO IDF
+================================================================================
+
+1. HVACTemplate:Zone:VRF[Dining].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Dining' to ''
+2. HVACTemplate:Zone:VRF[Kitchen].template_thermostat_name = ''
+   ✓ Changed from 'Thermostat_Kitchen' to ''
+
+================================================================================
+FIXES APPLIED: 2 successful, 0 failed
+================================================================================
+
+✓ Applied 2 pre-simulation fixes
+[2.6] Re-validating after fix...
+✓ Validation passed after fix!
+
+[3] Simulating...
+Success: False, Errors: 7
+
+[4.1] Fixing errors...
+  ↳ Excluded 1 non-HVAC zone(s): ['attic']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (1288 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "Dining VRF Cooling Coil",
+    "field_to_change": "gross_rated_sensible_heat_ratio",
+    "new_value": 0.7
+  },
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "Dining VRF Cooling Coil",
+    "field_to_change": "gross_rated_total_cooling_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "Coil:Heating:DX:VariableRefrigerantFlow",
+    "object_name": "Dining VRF Heating Coil",
+    "field_to_change": "gross_rated_heating_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "Fan:OnOff",
+    "object_name": "Dining VRF Supply Fan",
+    "field_to_change": "fan_total_efficiency",
+    "new_value": 0.7
+  },
+  {
+    "object_type": "Fan:OnOff",
+    "object_name": "Dining VRF Supply Fan",
+    "field_to_change": "pressure_rise",
+    "new_value": 125
+  },
+  {
+    "object_type": "ZoneControl:Thermostat",
+    "object_name": "Thermostat_Dining",
+    "fie...
+================================================================================
+
+
+✓ Successfully parsed 7 fixes from LLM response
+
+
+================================================================================
+APPLYING 7 FIXES TO IDF
+================================================================================
+
+1. Coil:Cooling:DX:VariableRefrigerantFlow[Dining VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.7'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+2. Coil:Cooling:DX:VariableRefrigerantFlow[Dining VRF Cooling Coil].gross_rated_total_cooling_capacity = 'Autosize'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+3. Coil:Heating:DX:VariableRefrigerantFlow[Dining VRF Heating Coil].gross_rated_heating_capacity = 'Autosize'
+   ❌ No objects of type 'Coil:Heating:DX:VariableRefrigerantFlow' found in IDF
+4. Fan:OnOff[Dining VRF Supply Fan].fan_total_efficiency = '0.7'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+5. Fan:OnOff[Dining VRF Supply Fan].pressure_rise = '125'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+6. ZoneControl:Thermostat[Thermostat_Dining].control_2_object_type = 'ThermostatSetpoint:SingleHeating'
+   ✓ Changed from 'Clg-SetP-Sch' to 'ThermostatSetpoint:SingleHeating'
+7. ZoneControl:Thermostat[Thermostat_Dining].control_2_name = 'Thermostat Heating Setpoint Schedule'
+   ✓ Changed from '' to 'Thermostat Heating Setpoint Schedule'
+
+================================================================================
+FIXES APPLIED: 2 successful, 5 failed
+================================================================================
+
+✓ Applied 2 fixes
+
+[5.1] Re-simulating...
+Success: False
+
+[4.2] Fixing errors...
+  ↳ Excluded 1 non-HVAC zone(s): ['attic']
+✓ Generating with Mistral API (mistral-small-latest)...
+✓ Mistral API response received (1276 chars)
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+[
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "Dining VRF Cooling Coil",
+    "field_to_change": "gross_rated_sensible_heat_ratio",
+    "new_value": 0.75
+  },
+  {
+    "object_type": "Coil:Cooling:DX:VariableRefrigerantFlow",
+    "object_name": "Dining VRF Cooling Coil",
+    "field_to_change": "gross_rated_total_cooling_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "Coil:Heating:DX:VariableRefrigerantFlow",
+    "object_name": "Dining VRF Heating Coil",
+    "field_to_change": "gross_rated_heating_capacity",
+    "new_value": "Autosize"
+  },
+  {
+    "object_type": "Fan:OnOff",
+    "object_name": "Dining VRF Supply Fan",
+    "field_to_change": "fan_total_efficiency",
+    "new_value": 0.7
+  },
+  {
+    "object_type": "Fan:OnOff",
+    "object_name": "Dining VRF Supply Fan",
+    "field_to_change": "pressure_rise",
+    "new_value": 125
+  },
+  {
+    "object_type": "ZoneControl:Thermostat",
+    "object_name": "Thermostat_Kitchen",
+    "f...
+================================================================================
+
+
+✓ Successfully parsed 7 fixes from LLM response
+
+
+================================================================================
+APPLYING 7 FIXES TO IDF
+================================================================================
+
+1. Coil:Cooling:DX:VariableRefrigerantFlow[Dining VRF Cooling Coil].gross_rated_sensible_heat_ratio = '0.75'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+2. Coil:Cooling:DX:VariableRefrigerantFlow[Dining VRF Cooling Coil].gross_rated_total_cooling_capacity = 'Autosize'
+   ❌ No objects of type 'Coil:Cooling:DX:VariableRefrigerantFlow' found in IDF
+3. Coil:Heating:DX:VariableRefrigerantFlow[Dining VRF Heating Coil].gross_rated_heating_capacity = 'Autosize'
+   ❌ No objects of type 'Coil:Heating:DX:VariableRefrigerantFlow' found in IDF
+4. Fan:OnOff[Dining VRF Supply Fan].fan_total_efficiency = '0.7'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+5. Fan:OnOff[Dining VRF Supply Fan].pressure_rise = '125'
+   ❌ No objects of type 'Fan:OnOff' found in IDF
+6. ZoneControl:Thermostat[Thermostat_Kitchen].control_2_object_type = 'ThermostatSetpoint:DualSetpoint'
+   ✓ Changed from 'Clg-SetP-Sch' to 'ThermostatSetpoint:DualSetpoint'
+7. ZoneControl:Thermostat[Thermostat_Kitchen].control_2_name = 'Kitchen Dual Setpoints'
+   ✓ Changed from '' to 'Kitchen Dual Setpoints'
+
+================================================================================
+FIXES APPLIED: 2 successful, 5 failed
+================================================================================
+
+✓ Applied 2 fixes
+
+[5.2] Re-simulating...
+Success: False
+
+======================================================================
+PIPELINE COMPLETE: FAILED
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/base_rag_restaurantfastfood_simple_extraword_r1_results.json
+======================================================================

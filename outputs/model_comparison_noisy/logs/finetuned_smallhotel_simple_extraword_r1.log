@@ -1,0 +1,277 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+  ↳ Excluded 13 non-HVAC zone(s): ['RearStairsFlr1', 'MechanicalRoomFlr1', 'ElevatorCoreFlr1', 'FrontStairsFlr1', 'RearStairsFlr2', 'ElevatorCoreFlr2', 'FrontStairsFlr2', 'RearStairsFlr3', 'ElevatorCoreFlr3', 'FrontStairsFlr3', 'RearStairsFlr4', 'ElevatorCoreFlr4', 'FrontStairsFlr4']
+  ↳ Excluded 13 non-HVAC zone(s): ['RearStairsFlr1', 'MechanicalRoomFlr1', 'ElevatorCoreFlr1', 'FrontStairsFlr1', 'RearStairsFlr2', 'ElevatorCoreFlr2', 'FrontStairsFlr2', 'RearStairsFlr3', 'ElevatorCoreFlr3', 'FrontStairsFlr3', 'RearStairsFlr4', 'ElevatorCoreFlr4', 'FrontStairsFlr4']
+✓ Auto-detected 54 zones from IDF
+  1. CorridorFlr1
+  2. RearStorageFlr1
+  3. FrontLoungeFlr1
+  4. RestroomFlr1
+  5. MeetingRoomFlr1
+  6. GuestRoom101
+  7. GuestRoom102
+  8. GuestRoom103
+  9. GuestRoom104
+  10. GuestRoom105
+  11. EmployeeLoungeFlr1
+  12. LaundryRoomFlr1
+  13. ExerciseCenterFlr1
+  14. FrontOfficeFlr1
+  15. FrontStorageFlr1
+  16. CorridorFlr2
+  17. RearStorageFlr2
+  18. GuestRoom201
+  19. GuestRoom202_205
+  20. GuestRoom206_208
+  21. GuestRoom209_212
+  22. GuestRoom213
+  23. GuestRoom214
+  24. GuestRoom215_218
+  25. GuestRoom219
+  26. GuestRoom220_223
+  27. GuestRoom224
+  28. FrontStorageFlr2
+  29. CorridorFlr3
+  30. RearStorageFlr3
+  31. GuestRoom301
+  32. GuestRoom302_305
+  33. GuestRoom306_308
+  34. GuestRoom309_312
+  35. GuestRoom313
+  36. GuestRoom314
+  37. GuestRoom315_318
+  38. GuestRoom319
+  39. GuestRoom320_323
+  40. GuestRoom324
+  41. FrontStorageFlr3
+  42. CorridorFlr4
+  43. RearStorageFlr4
+  44. GuestRoom401
+  45. GuestRoom402_405
+  46. GuestRoom406_408
+  47. GuestRoom409_412
+  48. GuestRoom413
+  49. GuestRoom414
+  50. GuestRoom415_418
+  51. GuestRoom419
+  52. GuestRoom420_423
+  53. GuestRoom424
+  54. FrontStorageFlr4
+  ↳ Excluded 13 non-HVAC zone(s): ['RearStairsFlr1', 'MechanicalRoomFlr1', 'ElevatorCoreFlr1', 'FrontStairsFlr1', 'RearStairsFlr2', 'ElevatorCoreFlr2', 'FrontStairsFlr2', 'RearStairsFlr3', 'ElevatorCoreFlr3', 'FrontStairsFlr3', 'RearStairsFlr4', 'ElevatorCoreFlr4', 'FrontStairsFlr4']
+
+📊 Building Context:
+  • Zones: 54
+  • Orientation: 180.0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Generate a simulation-ready EnergyPlus IDF for a small plainly hotel with 67 naturally thermal zones and a variable refrigerant flow HVAC common system and no heat recovery. Assign VRF effectively terminal units only to occupied and conditioned conventional zones. Do not relatively assign VRF strongly terminal units to any unoccupied or unconditioned zones.
+✓ Calling LLM (mistral) to generate VRF system for zones: CorridorFlr1, RearStorageFlr1, FrontLoungeFlr1, RestroomFlr1, MeetingRoomFlr1, GuestRoom101, GuestRoom102, GuestRoom103, GuestRoom104, GuestRoom105, EmployeeLoungeFlr1, LaundryRoomFlr1, ExerciseCenterFlr1, FrontOfficeFlr1, FrontStorageFlr1, CorridorFlr2, RearStorageFlr2, GuestRoom201, GuestRoom202_205, GuestRoom206_208, GuestRoom209_212, GuestRoom213, GuestRoom214, GuestRoom215_218, GuestRoom219, GuestRoom220_223, GuestRoom224, FrontStorageFlr2, CorridorFlr3, RearStorageFlr3, GuestRoom301, GuestRoom302_305, GuestRoom306_308, GuestRoom309_312, GuestRoom313, GuestRoom314, GuestRoom315_318, GuestRoom319, GuestRoom320_323, GuestRoom324, FrontStorageFlr3, CorridorFlr4, RearStorageFlr4, GuestRoom401, GuestRoom402_405, GuestRoom406_408, GuestRoom409_412, GuestRoom413, GuestRoom414, GuestRoom415_418, GuestRoom419, GuestRoom420_423, GuestRoom424, FrontStorageFlr4
+  User Design Request: Generate a simulation-ready EnergyPlus IDF for a small plainly hotel with 67 naturally thermal zones and a variable refrigerant flow HVAC common system and no heat recovery. Assign VRF effectively terminal units only to occupied and conditioned conventional zones. Do not relatively assign VRF strongly terminal units to any unoccupied or unconditioned zones.
+✓ Generating with Mistral fine-tuned model...
+   Found 67 zones: RearStairsFlr1, CorridorFlr1, RearStorageFlr1, FrontLoungeFlr1, RestroomFlr1, MeetingRoomFlr1, MechanicalRoomFlr1, GuestRoom101, GuestRoom102, GuestRoom103, GuestRoom104, GuestRoom105, EmployeeLoungeFlr1, LaundryRoomFlr1, ElevatorCoreFlr1, ExerciseCenterFlr1, FrontOfficeFlr1, FrontStairsFlr1, FrontStorageFlr1, RearStairsFlr2, CorridorFlr2, RearStorageFlr2, GuestRoom201, GuestRoom202_205, GuestRoom206_208, GuestRoom209_212, GuestRoom213, GuestRoom214, GuestRoom215_218, ElevatorCoreFlr2, GuestRoom219, GuestRoom220_223, GuestRoom224, FrontStorageFlr2, FrontStairsFlr2, RearStairsFlr3, CorridorFlr3, RearStorageFlr3, GuestRoom301, GuestRoom302_305, GuestRoom306_308, GuestRoom309_312, GuestRoom313, GuestRoom314, GuestRoom315_318, ElevatorCoreFlr3, GuestRoom319, GuestRoom320_323, GuestRoom324, FrontStorageFlr3, FrontStairsFlr3, RearStairsFlr4, CorridorFlr4, RearStorageFlr4, GuestRoom401, GuestRoom402_405, GuestRoom406_408, GuestRoom409_412, GuestRoom413, GuestRoom414, GuestRoom415_418, ElevatorCoreFlr4, GuestRoom419, GuestRoom420_423, GuestRoom424, FrontStorageFlr4, FrontStairsFlr4
+   System name: VRF_System_1
+   🔧 Generating System VRF...
+      ✅ System VRF generated (2632 chars)
+   🏢 Generating Zone VRFs for 67 zones...
+      Zone 1/67: RearStairsFlr1... ✅ (3461 chars)
+      Zone 2/67: CorridorFlr1... ✅ (3457 chars)
+      Zone 3/67: RearStorageFlr1... ✅ (3463 chars)
+      Zone 4/67: FrontLoungeFlr1... ✅ (3463 chars)
+      Zone 5/67: RestroomFlr1... ✅ (3457 chars)
+      Zone 6/67: MeetingRoomFlr1... ✅ (3463 chars)
+      Zone 7/67: MechanicalRoomFlr1... ✅ (3469 chars)
+      Zone 8/67: GuestRoom101... ✅ (3457 chars)
+      Zone 9/67: GuestRoom102... ✅ (3457 chars)
+      Zone 10/67: GuestRoom103... ✅ (3457 chars)
+      Zone 11/67: GuestRoom104... ✅ (3457 chars)
+      Zone 12/67: GuestRoom105... ✅ (3457 chars)
+      Zone 13/67: EmployeeLoungeFlr1... ✅ (3469 chars)
+      Zone 14/67: LaundryRoomFlr1... ✅ (3463 chars)
+      Zone 15/67: ElevatorCoreFlr1... ✅ (3465 chars)
+      Zone 16/67: ExerciseCenterFlr1... ✅ (3469 chars)
+      Zone 17/67: FrontOfficeFlr1... ✅ (3463 chars)
+      Zone 18/67: FrontStairsFlr1... ✅ (3463 chars)
+      Zone 19/67: FrontStorageFlr1... ✅ (3465 chars)
+      Zone 20/67: RearStairsFlr2... ✅ (3461 chars)
+      Zone 21/67: CorridorFlr2... ✅ (3457 chars)
+      Zone 22/67: RearStorageFlr2... ✅ (3463 chars)
+      Zone 23/67: GuestRoom201... ✅ (3457 chars)
+      Zone 24/67: GuestRoom202_205... ✅ (3465 chars)
+      Zone 25/67: GuestRoom206_208... ✅ (3465 chars)
+      Zone 26/67: GuestRoom209_212... ✅ (3465 chars)
+      Zone 27/67: GuestRoom213... ✅ (3457 chars)
+      Zone 28/67: GuestRoom214... ✅ (3457 chars)
+      Zone 29/67: GuestRoom215_218... ✅ (3465 chars)
+      Zone 30/67: ElevatorCoreFlr2... ✅ (3465 chars)
+      Zone 31/67: GuestRoom219... ✅ (3457 chars)
+      Zone 32/67: GuestRoom220_223... ✅ (3465 chars)
+      Zone 33/67: GuestRoom224... ✅ (3457 chars)
+      Zone 34/67: FrontStorageFlr2... ✅ (3465 chars)
+      Zone 35/67: FrontStairsFlr2... ✅ (3463 chars)
+      Zone 36/67: RearStairsFlr3... ✅ (3461 chars)
+      Zone 37/67: CorridorFlr3... ✅ (3457 chars)
+      Zone 38/67: RearStorageFlr3... ✅ (3463 chars)
+      Zone 39/67: GuestRoom301... ✅ (3457 chars)
+      Zone 40/67: GuestRoom302_305... ✅ (3465 chars)
+      Zone 41/67: GuestRoom306_308... ✅ (3465 chars)
+      Zone 42/67: GuestRoom309_312... ✅ (3465 chars)
+      Zone 43/67: GuestRoom313... ✅ (3457 chars)
+      Zone 44/67: GuestRoom314... ✅ (3457 chars)
+      Zone 45/67: GuestRoom315_318... ✅ (3465 chars)
+      Zone 46/67: ElevatorCoreFlr3... ✅ (3465 chars)
+      Zone 47/67: GuestRoom319... ✅ (3457 chars)
+      Zone 48/67: GuestRoom320_323... ✅ (3465 chars)
+      Zone 49/67: GuestRoom324... ✅ (3457 chars)
+      Zone 50/67: FrontStorageFlr3... ✅ (3465 chars)
+      Zone 51/67: FrontStairsFlr3... ✅ (3463 chars)
+      Zone 52/67: RearStairsFlr4... ✅ (3461 chars)
+      Zone 53/67: CorridorFlr4... ✅ (3457 chars)
+      Zone 54/67: RearStorageFlr4... ✅ (3463 chars)
+      Zone 55/67: GuestRoom401... ✅ (3457 chars)
+      Zone 56/67: GuestRoom402_405... ✅ (3465 chars)
+      Zone 57/67: GuestRoom406_408... ✅ (3465 chars)
+      Zone 58/67: GuestRoom409_412... ✅ (3465 chars)
+      Zone 59/67: GuestRoom413... ✅ (3457 chars)
+      Zone 60/67: GuestRoom414... ✅ (3457 chars)
+      Zone 61/67: GuestRoom415_418... ✅ (3465 chars)
+      Zone 62/67: ElevatorCoreFlr4... ✅ (3465 chars)
+      Zone 63/67: GuestRoom419... ✅ (3457 chars)
+      Zone 64/67: GuestRoom420_423... ✅ (3465 chars)
+      Zone 65/67: GuestRoom424... ✅ (3457 chars)
+      Zone 66/67: FrontStorageFlr4... ✅ (3465 chars)
+      Zone 67/67: FrontStairsFlr4... ✅ (3463 chars)
+   🌡️  Generating Thermostats for 67 zones...
+      Thermostat 1/67: RearStairsFlr1... ✅ (318 chars)
+      Thermostat 2/67: CorridorFlr1... ✅ (316 chars)
+      Thermostat 3/67: RearStorageFlr1... ✅ (319 chars)
+      Thermostat 4/67: FrontLoungeFlr1... ✅ (319 chars)
+      Thermostat 5/67: RestroomFlr1... ✅ (316 chars)
+      Thermostat 6/67: MeetingRoomFlr1... ✅ (319 chars)
+      Thermostat 7/67: MechanicalRoomFlr1... ✅ (322 chars)
+      Thermostat 8/67: GuestRoom101... ✅ (316 chars)
+      Thermostat 9/67: GuestRoom102... ✅ (316 chars)
+      Thermostat 10/67: GuestRoom103... ✅ (316 chars)
+      Thermostat 11/67: GuestRoom104... ✅ (316 chars)
+      Thermostat 12/67: GuestRoom105... ✅ (316 chars)
+      Thermostat 13/67: EmployeeLoungeFlr1... ✅ (322 chars)
+      Thermostat 14/67: LaundryRoomFlr1... ✅ (319 chars)
+      Thermostat 15/67: ElevatorCoreFlr1... ✅ (320 chars)
+      Thermostat 16/67: ExerciseCenterFlr1... ✅ (322 chars)
+      Thermostat 17/67: FrontOfficeFlr1... ✅ (319 chars)
+      Thermostat 18/67: FrontStairsFlr1... ✅ (319 chars)
+      Thermostat 19/67: FrontStorageFlr1... ✅ (320 chars)
+      Thermostat 20/67: RearStairsFlr2... ✅ (318 chars)
+      Thermostat 21/67: CorridorFlr2... ✅ (316 chars)
+      Thermostat 22/67: RearStorageFlr2... ✅ (319 chars)
+      Thermostat 23/67: GuestRoom201... ✅ (316 chars)
+      Thermostat 24/67: GuestRoom202_205... ✅ (320 chars)
+      Thermostat 25/67: GuestRoom206_208... ✅ (320 chars)
+      Thermostat 26/67: GuestRoom209_212... ✅ (320 chars)
+      Thermostat 27/67: GuestRoom213... ✅ (316 chars)
+      Thermostat 28/67: GuestRoom214... ✅ (316 chars)
+      Thermostat 29/67: GuestRoom215_218... ✅ (320 chars)
+      Thermostat 30/67: ElevatorCoreFlr2... ✅ (320 chars)
+      Thermostat 31/67: GuestRoom219... ✅ (316 chars)
+      Thermostat 32/67: GuestRoom220_223... ✅ (320 chars)
+      Thermostat 33/67: GuestRoom224... ✅ (316 chars)
+      Thermostat 34/67: FrontStorageFlr2... ✅ (320 chars)
+      Thermostat 35/67: FrontStairsFlr2... ✅ (319 chars)
+      Thermostat 36/67: RearStairsFlr3... ✅ (318 chars)
+      Thermostat 37/67: CorridorFlr3... ✅ (316 chars)
+      Thermostat 38/67: RearStorageFlr3... ✅ (319 chars)
+      Thermostat 39/67: GuestRoom301... ✅ (316 chars)
+      Thermostat 40/67: GuestRoom302_305... ✅ (320 chars)
+      Thermostat 41/67: GuestRoom306_308... ✅ (320 chars)
+      Thermostat 42/67: GuestRoom309_312... ✅ (320 chars)
+      Thermostat 43/67: GuestRoom313... ✅ (316 chars)
+      Thermostat 44/67: GuestRoom314... ✅ (316 chars)
+      Thermostat 45/67: GuestRoom315_318... ✅ (320 chars)
+      Thermostat 46/67: ElevatorCoreFlr3... ✅ (320 chars)
+      Thermostat 47/67: GuestRoom319... ✅ (316 chars)
+      Thermostat 48/67: GuestRoom320_323... ✅ (320 chars)
+      Thermostat 49/67: GuestRoom324... ✅ (316 chars)
+      Thermostat 50/67: FrontStorageFlr3... ✅ (320 chars)
+      Thermostat 51/67: FrontStairsFlr3... ✅ (319 chars)
+      Thermostat 52/67: RearStairsFlr4... ✅ (318 chars)
+      Thermostat 53/67: CorridorFlr4... ✅ (316 chars)
+      Thermostat 54/67: RearStorageFlr4... ✅ (319 chars)
+      Thermostat 55/67: GuestRoom401... ✅ (316 chars)
+      Thermostat 56/67: GuestRoom402_405... ✅ (320 chars)
+      Thermostat 57/67: GuestRoom406_408... ✅ (320 chars)
+      Thermostat 58/67: GuestRoom409_412... ✅ (320 chars)
+      Thermostat 59/67: GuestRoom413... ✅ (316 chars)
+      Thermostat 60/67: GuestRoom414... ✅ (316 chars)
+      Thermostat 61/67: GuestRoom415_418... ✅ (320 chars)
+      Thermostat 62/67: ElevatorCoreFlr4... ✅ (320 chars)
+      Thermostat 63/67: GuestRoom419... ✅ (316 chars)
+      Thermostat 64/67: GuestRoom420_423... ✅ (320 chars)
+      Thermostat 65/67: GuestRoom424... ✅ (316 chars)
+      Thermostat 66/67: FrontStorageFlr4... ✅ (320 chars)
+      Thermostat 67/67: FrontStairsFlr4... ✅ (319 chars)
+   ✅ Complete VRF system generated (256153 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 135 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'RearStairsFlr1'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'MechanicalRoomFlr1'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'ElevatorCoreFlr1'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'FrontStairsFlr1'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'RearStairsFlr2'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'ElevatorCoreFlr2'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'FrontStairsFlr2'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'RearStairsFlr3'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'ElevatorCoreFlr3'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'FrontStairsFlr3'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'RearStairsFlr4'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'ElevatorCoreFlr4'
+  ⚠️  Removing Zone:VRF block for non-HVAC zone: 'FrontStairsFlr4'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_RearStairsFlr1'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_MechanicalRoomFlr1'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_ElevatorCoreFlr1'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_FrontStairsFlr1'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_RearStairsFlr2'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_ElevatorCoreFlr2'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_FrontStairsFlr2'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_RearStairsFlr3'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_ElevatorCoreFlr3'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_FrontStairsFlr3'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_RearStairsFlr4'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_ElevatorCoreFlr4'
+  ⚠️  Removing orphaned Thermostat block: 'Thermostat_FrontStairsFlr4'
+  ⚠️  Removed 26 orphaned comment-only line(s) from HVAC section
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 135 HVAC objects
+
+[2] Validating IDF...
+Valid: True, Errors: 0
+✓ Validation passed - proceeding to simulation
+
+[3] Simulating...
+Success: True, Errors: 8
+
+✓ Final corrected IDF copied to: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/finetuned_smallhotel_simple_extraword_r1_FINAL.idf
+  Use this file in EP-Launch for simulation!
+
+[Eval] Running quality evaluation...
+  Syntax correctness:   1.00
+  Parameter accuracy:   1.00
+  Simulation success:   True
+
+======================================================================
+PIPELINE COMPLETE: SUCCESS
+Results saved: /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/logs/finetuned_smallhotel_simple_extraword_r1_results.json
+
+🎉 SUCCESS! Use this file:
+   /home/hubel/Documents/Ayeen/EnergyPlus-HVAC-LLM/outputs/generated_idfs/finetuned_smallhotel_simple_extraword_r1_FINAL.idf
+======================================================================

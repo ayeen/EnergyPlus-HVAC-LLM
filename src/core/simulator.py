@@ -137,7 +137,8 @@ class EnergyPlusSimulator:
     def _parse_results(self, output_dir):
         """Parse simulation results"""
         
-        err_file = os.path.join(output_dir, "eplusout.err")
+        # Note: We're already in output_dir from os.chdir(), so just look for the file directly
+        err_file = "eplusout.err"
         
         if not os.path.exists(err_file):
             return {"success": False, "error": "No error file generated"}

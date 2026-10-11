@@ -1,0 +1,272 @@
+======================================================================
+HVAC-LLM PIPELINE
+======================================================================
+
+[0] Analyzing base IDF...
+
+[0.1] Checking IDD compliance...
+✓ Base IDF is IDD-compliant
+✓ Enabled zone/system sizing for HVAC autosizing
+✓ Auto-detected 55 zones from IDF
+  1. Basement
+  2. ER_Exam1_Mult4_Flr_1
+  3. ER_Trauma1_Flr_1
+  4. ER_Exam3_Mult4_Flr_1
+  5. ER_Trauma2_Flr_1
+  6. ER_Triage_Mult4_Flr_1
+  7. Office1_Mult4_Flr_1
+  8. Lobby_Records_Flr_1
+  9. Corridor_Flr_1
+  10. ER_NurseStn_Lobby_Flr_1
+  11. OR1_Flr_2
+  12. OR2_Mult5_Flr_2
+  13. OR3_Flr_2
+  14. OR4_Flr_2
+  15. IC_PatRoom1_Mult5_Flr_2
+  16. IC_PatRoom2_Flr_2
+  17. IC_PatRoom3_Mult6_Flr_2
+  18. ICU_Flr_2
+  19. ICU_NurseStn_Lobby_Flr_2
+  20. Corridor_Flr_2
+  21. OR_NurseStn_Lobby_Flr_2
+  22. PatRoom1_Mult10_Flr_3
+  23. PatRoom2_Flr_3
+  24. PatRoom3_Mult10_Flr_3
+  25. PatRoom4_Flr_3
+  26. PatRoom5_Mult10_Flr_3
+  27. PhysTherapy_Flr_3
+  28. PatRoom6_Flr_3
+  29. PatRoom7_Mult10_Flr_3
+  30. PatRoom8_Flr_3
+  31. NurseStn_Lobby_Flr_3
+  32. Lab_Flr_3
+  33. Corridor_SE_Flr_3
+  34. Corridor_NW_Flr_3
+  35. PatRoom1_Mult10_Flr_4
+  36. PatRoom2_Flr_4
+  37. PatRoom3_Mult10_Flr_4
+  38. PatRoom4_Flr_4
+  39. PatRoom5_Mult10_Flr_4
+  40. Radiology_Flr_4
+  41. PatRoom6_Flr_4
+  42. PatRoom7_Mult10_Flr_4
+  43. PatRoom8_Flr_4
+  44. NurseStn_Lobby_Flr_4
+  45. Lab_Flr_4
+  46. Corridor_SE_Flr_4
+  47. Corridor_NW_Flr_4
+  48. Dining_Flr_5
+  49. NurseStn_Lobby_Flr_5
+  50. Kitchen_Flr_5
+  51. Office1_Flr_5
+  52. Office2_Mult5_Flr_5
+  53. Office3_Flr_5
+  54. Office4_Mult6_Flr_5
+  55. Corridor_Flr_5
+
+📊 Building Context:
+  • Zones: 55
+  • Total Volume: 78055.0 m³
+  • Orientation: -90.0°
+  • Internal Loads: ✓ Yes
+    (People, Lights, Equipment)
+  • Location: Albuquerque.Intl.Sunport_NM_USA WMO=723650
+
+[1] Generating HVAC...
+User Request: Create a complete VRF HVAC configuration for a hospital containing 55 thermal zones, with no heat recovery, where each thermal zone is served by one indoor terminal unit connected to a single shared outdoor condensing unit through a zone terminal unit list. Only assign VRF terminal units to zones that are occupied and conditioned. Skip any zone that is unoccupied or unconditioned.
+✓ Calling LLM (mistral) to generate VRF system for zones: Basement, ER_Exam1_Mult4_Flr_1, ER_Trauma1_Flr_1, ER_Exam3_Mult4_Flr_1, ER_Trauma2_Flr_1, ER_Triage_Mult4_Flr_1, Office1_Mult4_Flr_1, Lobby_Records_Flr_1, Corridor_Flr_1, ER_NurseStn_Lobby_Flr_1, OR1_Flr_2, OR2_Mult5_Flr_2, OR3_Flr_2, OR4_Flr_2, IC_PatRoom1_Mult5_Flr_2, IC_PatRoom2_Flr_2, IC_PatRoom3_Mult6_Flr_2, ICU_Flr_2, ICU_NurseStn_Lobby_Flr_2, Corridor_Flr_2, OR_NurseStn_Lobby_Flr_2, PatRoom1_Mult10_Flr_3, PatRoom2_Flr_3, PatRoom3_Mult10_Flr_3, PatRoom4_Flr_3, PatRoom5_Mult10_Flr_3, PhysTherapy_Flr_3, PatRoom6_Flr_3, PatRoom7_Mult10_Flr_3, PatRoom8_Flr_3, NurseStn_Lobby_Flr_3, Lab_Flr_3, Corridor_SE_Flr_3, Corridor_NW_Flr_3, PatRoom1_Mult10_Flr_4, PatRoom2_Flr_4, PatRoom3_Mult10_Flr_4, PatRoom4_Flr_4, PatRoom5_Mult10_Flr_4, Radiology_Flr_4, PatRoom6_Flr_4, PatRoom7_Mult10_Flr_4, PatRoom8_Flr_4, NurseStn_Lobby_Flr_4, Lab_Flr_4, Corridor_SE_Flr_4, Corridor_NW_Flr_4, Dining_Flr_5, NurseStn_Lobby_Flr_5, Kitchen_Flr_5, Office1_Flr_5, Office2_Mult5_Flr_5, Office3_Flr_5, Office4_Mult6_Flr_5, Corridor_Flr_5
+  User Design Request: Create a complete VRF HVAC configuration for a hospital containing 55 thermal zones, with no heat recovery, where each thermal zone is served by one indoor terminal unit connected to a single shared outdoor condensing unit through a zone terminal unit list. Only assign VRF terminal units to zones that are occupied and conditioned. Skip any zone that is unoccupied or unconditioned.
+✓ Generating with Mistral fine-tuned model...
+   Design intent: Create a complete VRF HVAC configuration for a hospital containing 55 thermal zones, with no heat recovery, where each t…
+   Found 55 zones: Basement, ER_Exam1_Mult4_Flr_1, ER_Trauma1_Flr_1, ER_Exam3_Mult4_Flr_1, ER_Trauma2_Flr_1, ER_Triage_Mult4_Flr_1, Office1_Mult4_Flr_1, Lobby_Records_Flr_1, Corridor_Flr_1, ER_NurseStn_Lobby_Flr_1, OR1_Flr_2, OR2_Mult5_Flr_2, OR3_Flr_2, OR4_Flr_2, IC_PatRoom1_Mult5_Flr_2, IC_PatRoom2_Flr_2, IC_PatRoom3_Mult6_Flr_2, ICU_Flr_2, ICU_NurseStn_Lobby_Flr_2, Corridor_Flr_2, OR_NurseStn_Lobby_Flr_2, PatRoom1_Mult10_Flr_3, PatRoom2_Flr_3, PatRoom3_Mult10_Flr_3, PatRoom4_Flr_3, PatRoom5_Mult10_Flr_3, PhysTherapy_Flr_3, PatRoom6_Flr_3, PatRoom7_Mult10_Flr_3, PatRoom8_Flr_3, NurseStn_Lobby_Flr_3, Lab_Flr_3, Corridor_SE_Flr_3, Corridor_NW_Flr_3, PatRoom1_Mult10_Flr_4, PatRoom2_Flr_4, PatRoom3_Mult10_Flr_4, PatRoom4_Flr_4, PatRoom5_Mult10_Flr_4, Radiology_Flr_4, PatRoom6_Flr_4, PatRoom7_Mult10_Flr_4, PatRoom8_Flr_4, NurseStn_Lobby_Flr_4, Lab_Flr_4, Corridor_SE_Flr_4, Corridor_NW_Flr_4, Dining_Flr_5, NurseStn_Lobby_Flr_5, Kitchen_Flr_5, Office1_Flr_5, Office2_Mult5_Flr_5, Office3_Flr_5, Office4_Mult6_Flr_5, Corridor_Flr_5
+   System name: VRF_System_1
+   🔧 Generating System VRF...
+      Model values: heating_cop=4.33, min_cool_temp=-6.0, max_cool_temp=43.0, min_heat_temp=-20.0, max_heat_temp=15.5, condenser_type=AirCooled, priority=LoadPriority, cooling_cop=3.5, heat_recovery=No
+      ✅ System VRF generated (2627 chars)
+   🏢 Generating Zone VRFs for 55 zones...
+      Zone 1/55: Basement... ✅ (3715 chars)
+      Zone 2/55: ER_Exam1_Mult4_Flr_1... ✅ (3739 chars)
+      Zone 3/55: ER_Trauma1_Flr_1... ✅ (3731 chars)
+      Zone 4/55: ER_Exam3_Mult4_Flr_1... ✅ (3739 chars)
+      Zone 5/55: ER_Trauma2_Flr_1... ✅ (3731 chars)
+      Zone 6/55: ER_Triage_Mult4_Flr_1... ✅ (3741 chars)
+      Zone 7/55: Office1_Mult4_Flr_1... ✅ (3737 chars)
+      Zone 8/55: Lobby_Records_Flr_1... ✅ (3737 chars)
+      Zone 9/55: Corridor_Flr_1... ✅ (3727 chars)
+      Zone 10/55: ER_NurseStn_Lobby_Flr_1... ✅ (3745 chars)
+      Zone 11/55: OR1_Flr_2... ✅ (3717 chars)
+      Zone 12/55: OR2_Mult5_Flr_2... ✅ (3729 chars)
+      Zone 13/55: OR3_Flr_2... ✅ (3717 chars)
+      Zone 14/55: OR4_Flr_2... ✅ (3717 chars)
+      Zone 15/55: IC_PatRoom1_Mult5_Flr_2... ✅ (3745 chars)
+      Zone 16/55: IC_PatRoom2_Flr_2... ✅ (3733 chars)
+      Zone 17/55: IC_PatRoom3_Mult6_Flr_2... ✅ (3745 chars)
+      Zone 18/55: ICU_Flr_2... ✅ (3717 chars)
+      Zone 19/55: ICU_NurseStn_Lobby_Flr_2... ✅ (3747 chars)
+      Zone 20/55: Corridor_Flr_2... ✅ (3727 chars)
+      Zone 21/55: OR_NurseStn_Lobby_Flr_2... ✅ (3745 chars)
+      Zone 22/55: PatRoom1_Mult10_Flr_3... ✅ (3741 chars)
+      Zone 23/55: PatRoom2_Flr_3... ✅ (3727 chars)
+      Zone 24/55: PatRoom3_Mult10_Flr_3... ✅ (3741 chars)
+      Zone 25/55: PatRoom4_Flr_3... ✅ (3727 chars)
+      Zone 26/55: PatRoom5_Mult10_Flr_3... ✅ (3741 chars)
+      Zone 27/55: PhysTherapy_Flr_3... ✅ (3733 chars)
+      Zone 28/55: PatRoom6_Flr_3... ✅ (3727 chars)
+      Zone 29/55: PatRoom7_Mult10_Flr_3... ✅ (3741 chars)
+      Zone 30/55: PatRoom8_Flr_3... ✅ (3727 chars)
+      Zone 31/55: NurseStn_Lobby_Flr_3... ✅ (3739 chars)
+      Zone 32/55: Lab_Flr_3... ✅ (3717 chars)
+      Zone 33/55: Corridor_SE_Flr_3... ✅ (3733 chars)
+      Zone 34/55: Corridor_NW_Flr_3... ✅ (3733 chars)
+      Zone 35/55: PatRoom1_Mult10_Flr_4... ✅ (3741 chars)
+      Zone 36/55: PatRoom2_Flr_4... ✅ (3727 chars)
+      Zone 37/55: PatRoom3_Mult10_Flr_4... ✅ (3741 chars)
+      Zone 38/55: PatRoom4_Flr_4... ✅ (3727 chars)
+      Zone 39/55: PatRoom5_Mult10_Flr_4... ✅ (3741 chars)
+      Zone 40/55: Radiology_Flr_4... ✅ (3729 chars)
+      Zone 41/55: PatRoom6_Flr_4... ✅ (3727 chars)
+      Zone 42/55: PatRoom7_Mult10_Flr_4... ✅ (3741 chars)
+      Zone 43/55: PatRoom8_Flr_4... ✅ (3727 chars)
+      Zone 44/55: NurseStn_Lobby_Flr_4... ✅ (3739 chars)
+      Zone 45/55: Lab_Flr_4... ✅ (3717 chars)
+      Zone 46/55: Corridor_SE_Flr_4... ✅ (3733 chars)
+      Zone 47/55: Corridor_NW_Flr_4... ✅ (3733 chars)
+      Zone 48/55: Dining_Flr_5... ✅ (3723 chars)
+      Zone 49/55: NurseStn_Lobby_Flr_5... ✅ (3739 chars)
+      Zone 50/55: Kitchen_Flr_5... ✅ (3725 chars)
+      Zone 51/55: Office1_Flr_5... ✅ (3725 chars)
+      Zone 52/55: Office2_Mult5_Flr_5... ✅ (3737 chars)
+      Zone 53/55: Office3_Flr_5... ✅ (3725 chars)
+      Zone 54/55: Office4_Mult6_Flr_5... ✅ (3737 chars)
+      Zone 55/55: Corridor_Flr_5... ✅ (3727 chars)
+   🌡️  Generating Thermostats for 55 zones...
+      Thermostat 1/55: Basement... ✅ (312 chars)
+      Thermostat 2/55: ER_Exam1_Mult4_Flr_1... ✅ (324 chars)
+      Thermostat 3/55: ER_Trauma1_Flr_1... ✅ (320 chars)
+      Thermostat 4/55: ER_Exam3_Mult4_Flr_1... ✅ (324 chars)
+      Thermostat 5/55: ER_Trauma2_Flr_1... ✅ (320 chars)
+      Thermostat 6/55: ER_Triage_Mult4_Flr_1... ✅ (325 chars)
+      Thermostat 7/55: Office1_Mult4_Flr_1... ✅ (323 chars)
+      Thermostat 8/55: Lobby_Records_Flr_1... ✅ (323 chars)
+      Thermostat 9/55: Corridor_Flr_1... ✅ (318 chars)
+      Thermostat 10/55: ER_NurseStn_Lobby_Flr_1... ✅ (327 chars)
+      Thermostat 11/55: OR1_Flr_2... ✅ (313 chars)
+      Thermostat 12/55: OR2_Mult5_Flr_2... ✅ (319 chars)
+      Thermostat 13/55: OR3_Flr_2... ✅ (313 chars)
+      Thermostat 14/55: OR4_Flr_2... ✅ (313 chars)
+      Thermostat 15/55: IC_PatRoom1_Mult5_Flr_2... ✅ (327 chars)
+      Thermostat 16/55: IC_PatRoom2_Flr_2... ✅ (321 chars)
+      Thermostat 17/55: IC_PatRoom3_Mult6_Flr_2... ✅ (327 chars)
+      Thermostat 18/55: ICU_Flr_2... ✅ (313 chars)
+      Thermostat 19/55: ICU_NurseStn_Lobby_Flr_2... ✅ (328 chars)
+      Thermostat 20/55: Corridor_Flr_2... ✅ (318 chars)
+      Thermostat 21/55: OR_NurseStn_Lobby_Flr_2... ✅ (327 chars)
+      Thermostat 22/55: PatRoom1_Mult10_Flr_3... ✅ (325 chars)
+      Thermostat 23/55: PatRoom2_Flr_3... ✅ (318 chars)
+      Thermostat 24/55: PatRoom3_Mult10_Flr_3... ✅ (325 chars)
+      Thermostat 25/55: PatRoom4_Flr_3... ✅ (318 chars)
+      Thermostat 26/55: PatRoom5_Mult10_Flr_3... ✅ (325 chars)
+      Thermostat 27/55: PhysTherapy_Flr_3... ✅ (321 chars)
+      Thermostat 28/55: PatRoom6_Flr_3... ✅ (318 chars)
+      Thermostat 29/55: PatRoom7_Mult10_Flr_3... ✅ (325 chars)
+      Thermostat 30/55: PatRoom8_Flr_3... ✅ (318 chars)
+      Thermostat 31/55: NurseStn_Lobby_Flr_3... ✅ (324 chars)
+      Thermostat 32/55: Lab_Flr_3... ✅ (313 chars)
+      Thermostat 33/55: Corridor_SE_Flr_3... ✅ (321 chars)
+      Thermostat 34/55: Corridor_NW_Flr_3... ✅ (321 chars)
+      Thermostat 35/55: PatRoom1_Mult10_Flr_4... ✅ (325 chars)
+      Thermostat 36/55: PatRoom2_Flr_4... ✅ (318 chars)
+      Thermostat 37/55: PatRoom3_Mult10_Flr_4... ✅ (325 chars)
+      Thermostat 38/55: PatRoom4_Flr_4... ✅ (318 chars)
+      Thermostat 39/55: PatRoom5_Mult10_Flr_4... ✅ (325 chars)
+      Thermostat 40/55: Radiology_Flr_4... ✅ (319 chars)
+      Thermostat 41/55: PatRoom6_Flr_4... ✅ (318 chars)
+      Thermostat 42/55: PatRoom7_Mult10_Flr_4... ✅ (325 chars)
+      Thermostat 43/55: PatRoom8_Flr_4... ✅ (318 chars)
+      Thermostat 44/55: NurseStn_Lobby_Flr_4... ✅ (324 chars)
+      Thermostat 45/55: Lab_Flr_4... ✅ (313 chars)
+      Thermostat 46/55: Corridor_SE_Flr_4... ✅ (321 chars)
+      Thermostat 47/55: Corridor_NW_Flr_4... ✅ (321 chars)
+      Thermostat 48/55: Dining_Flr_5... ✅ (316 chars)
+      Thermostat 49/55: NurseStn_Lobby_Flr_5... ✅ (324 chars)
+      Thermostat 50/55: Kitchen_Flr_5... ✅ (317 chars)
+      Thermostat 51/55: Office1_Flr_5... ✅ (317 chars)
+      Thermostat 52/55: Office2_Mult5_Flr_5... ✅ (323 chars)
+      Thermostat 53/55: Office3_Flr_5... ✅ (317 chars)
+      Thermostat 54/55: Office4_Mult6_Flr_5... ✅ (323 chars)
+      Thermostat 55/55: Corridor_Flr_5... ✅ (318 chars)
+   ✅ Complete VRF system generated (225748 chars)
+✓ Successfully generated VRF system with HVAC content
+✓ Generated 111 HVAC objects
+
+[1.5] LLM validation SKIPPED (disabled)
+  ✓ DEBUG: complete_idf is clean before write
+✓ Added 111 HVAC objects
+
+[2] Validating IDF...
+Valid: True, Errors: 0
+✓ Validation passed - proceeding to simulation
+
+[3] Simulating...
+Success: False, Errors: 22
+
+[4.1] Fixing errors...
+   Generating error correction (max 1024 tokens)...
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+Analysis: Wrong enum value. 'Wall_Type' must be one of 'InteriorWall', 'ExteriorWall'.
+
+Corrected JSON:
+````json
+{
+  "object": "KITKEN_FLOR_5__WALLS_1&2",
+[{"object_id":"KITCKEN_FLOAR_5___WALLTYPE_1","wall_type":"InteriorWindow"},
+{"object":""KITCHEM_FLRO_5____WALLTYP_2","walltype":"ExteriorWindow"}
+``''
+================================================================================
+
+
+✓ Successfully parsed 0 fixes from LLM response
+
+
+================================================================================
+APPLYING 0 FIXES TO IDF
+================================================================================
+
+
+================================================================================
+FIXES APPLIED: 0 successful, 0 failed
+================================================================================
+
+✓ Applied 0 fixes
+
+[5.1] Re-simulating...
+Success: False
+
+[4.2] Fixing errors...
+   Generating error correction (max 1024 tokens)...
+
+================================================================================
+LLM RESPONSE FOR ERROR CORRECTION:
+================================================================================
+Analysis: Wrong enum value. 'PatientRoom_53_VRF' requires 'PatientsRoom_Type'.
+
+Corrected JSON:
+````json
+{
+  "object": "PatientRooms_52_V RF System",
+[  { "objectType": "Field:Enum", "objectName": "patientsRoomType", "newValue": "OperatingRoom_783_Patient Room_51", "fieldToChange": "patientRoom_vrf" },
+  {"objectType":"HVACTemplate:System","objectName":"VRF System_1","fieldToFix":"condensertype","newValue":"AirC cooled"}
+]
+================================================================================
+
+
+✓ Successfully parsed 2 fixes from LLM response
+
+
+================================================================================
+APPLYING 2 FIXES TO IDF
+================================================================================
+
