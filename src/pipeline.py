@@ -1,45 +1,45 @@
 """
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                   VRF HVAC-LLM COMPLETE PIPELINE                           ║
+║                   VRF HVAC-LLM COMPLETE PIPELINE                             ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
 ║                                                                              ║
-║  HIGH-LEVEL FLOW (left → right = steps in order):                           ║
+║  HIGH-LEVEL FLOW (left → right = steps in order):                            ║
 ║                                                                              ║
-║  Base IDF ──► [0] Load & Compliance Check                                   ║
+║  Base IDF ──► [0] Load & Compliance Check                                    ║
 ║                       │                                                      ║
 ║                       ▼                                                      ║
-║              [1] LLM Generation (Agent 1 — HVACGenerator)                   ║
-║                       │  generates HVACTemplate:System:VRF                  ║
-║                       │          + HVACTemplate:Zone:VRF  (per zone)        ║
-║                       │          + HVACTemplate:Thermostat (per zone)       ║
+║              [1] LLM Generation (Agent 1 — HVACGenerator)                    ║
+║                       │  generates HVACTemplate:System:VRF                   ║
+║                       │          + HVACTemplate:Zone:VRF  (per zone)         ║
+║                       │          + HVACTemplate:Thermostat (per zone)        ║
 ║                       ▼                                                      ║
-║              [1.5] LLM Quick Validation (Agent 1.5 — QuickValidator)        ║
+║              [1.5] LLM Quick Validation (Agent 1.5 — QuickValidator)         ║
 ║                       │  catches obvious errors before simulation            ║
-║                       │  → [1.5b] auto-fix + [1.5c] re-validate if needed  ║
+║                       │  → [1.5b] auto-fix + [1.5c] re-validate if needed    ║
 ║                       ▼                                                      ║
-║              [1.6] LLM Output Sanitization (in-memory, no agent)            ║
-║                       │  • strip objects already in base IDF (avoid dupes)  ║
-║                       │  • remove VRF blocks for non-HVAC zones (plenums…)  ║
+║              [1.6] LLM Output Sanitization (in-memory, no agent)             ║
+║                       │  • strip objects already in base IDF (avoid dupes)   ║
+║                       │  • remove VRF blocks for non-HVAC zones (plenums…)   ║
 ║                       │  • clamp VRF outdoor-temp limits to spec             ║
-║                       │  • rebuild malformed Zone:VRF blocks                ║
-║                       │  • delete orphaned comment-only lines               ║
+║                       │  • rebuild malformed Zone:VRF blocks                 ║
+║                       │  • delete orphaned comment-only lines                ║
 ║                       ▼                                                      ║
-║              base_content + sanitized HVAC  →  _hvac.idf                   ║
+║              base_content + sanitized HVAC  →  _hvac.idf                     ║
 ║                       ▼                                                      ║
-║              [2] Structural Validation (Eppy / IDFValidator)                ║
-║                       │  → [2.5] auto-fix validation errors if needed       ║
+║              [2] Structural Validation (Eppy / IDFValidator)                 ║
+║                       │  → [2.5] auto-fix validation errors if needed        ║
 ║                       ▼                                                      ║
 ║              [3] EnergyPlus Simulation                                       ║
-║                       │  first run on _hvac.idf                             ║
+║                       │  first run on _hvac.idf                              ║
 ║                       ▼                                                      ║
-║              [4/5] Error-Correction Loop (Agent 3 — ErrorCorrector)         ║
-║                       │  reads EnergyPlus error file, patches IDF,          ║
-║                       │  re-simulates  (up to Config.MAX_ITERATIONS)        ║
+║              [4/5] Error-Correction Loop (Agent 3 — ErrorCorrector)          ║
+║                       │  reads EnergyPlus error file, patches IDF,           ║
+║                       │  re-simulates  (up to Config.MAX_ITERATIONS)         ║
 ║                       ▼                                                      ║
-║              [Eval] Quality Evaluation (syntax + parameter + BLEU/ROUGE-L)  ║
+║              [Eval] Quality Evaluation (syntax + parameter + BLEU/ROUGE-L)   ║
 ║                       │                                                      ║
 ║                       ▼                                                      ║
-║              _FINAL.idf  +  results JSON                                    ║
+║              _FINAL.idf  +  results JSON                                     ║
 ║                                                                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 """
@@ -256,6 +256,7 @@ class HVACLLMPipeline:
         print(f"  • Orientation: {building_context['orientation']}°")
         print(f"  • Internal Loads: {'✓ Yes' if building_context['has_internal_loads'] else '✗ None'}")
         if building_context['has_internal_loads']:
+            
             loads = []
             if building_context['has_people']: loads.append("People")
             if building_context['has_lights']: loads.append("Lights")
@@ -677,11 +678,7 @@ class HVACLLMPipeline:
         # LLMs sometimes hallucinate temperature values outside the physical
         # operating envelope of real VRF equipment.  We clamp the minimum
         # cooling outdoor temperature to the realistic range: −15 °C to −5 °C.
-        # Reference: Daikin VRV IV / Mitsubishi CITY MULTI / EnergyPlus IDD defaults.
-        #   N3  Min Cooling : -6.0 °C
-        #   N4  Max Cooling : 43.0 °C
-        #   N8  Min Heating : -20.0 °C
-        #   N9  Max Heating : 15.5 °C
+    
         def _fix_vrf_min_cooling_temp(hvac_text: str) -> str:
             """Clamp HVACTemplate:System:VRF min cooling temp to -6.0 °C if out of range."""
             def _clamp(m):
@@ -724,10 +721,7 @@ class HVACLLMPipeline:
         # EnergyPlus validators then report:
         #   "Zone references non-existent system: HVACTemplate:System:VRF"
         #   "Zone references non-existent thermostat: VRF_System_1"
-        #
-        # Fix: detect the collapsed pattern, extract the zone name, and
-        # rebuild a fully-expanded Zone:VRF block with all fields at their
-        # EnergyPlus IDD defaults.
+
         def _fix_malformed_zone_vrf(hvac_text: str) -> str:
             # Find the actual VRF system name from the System:VRF block so
             # the rebuilt Zone:VRF references the correct outdoor unit.
@@ -836,16 +830,7 @@ class HVACLLMPipeline:
         # ══════════════════════════════════════════════════════════════════
         # The LLM occasionally emits a bare "   !- Field Name" line AFTER the
         # semicolon that already closes an EnergyPlus object, e.g.:
-        #
-        #   50;   !- Zone Heating Design Supply Air Temperature (N24)
-        #                !- Zone Heating Design Supply Air Temperature (N24)  ← REMOVE
-        #
-        # These orphaned lines have ONLY leading whitespace then "!-" — no
-        # value before the comment marker.  EnergyPlus treats them as orphan
-        # text and may report a "read error" or "unexpected input" warning.
-        # We strip them with a targeted regex so valid inline comments like
-        #   "  50;   !- comment"  (value + whitespace + !-)
-        # are never touched (they always have a value token before the spaces).
+        
         before = sanitized_hvac.count('\n')
         sanitized_hvac = _re2.sub(r'\n[ \t]+!-[^\n]*', '', sanitized_hvac)
         removed = before - sanitized_hvac.count('\n')
@@ -865,9 +850,7 @@ class HVACLLMPipeline:
 
         # ── DEBUG: check for a known bad sentinel value before writing ─────
         # "Baseboard Heating Type;" should never appear in a VRF-only file;
-        # its presence means the LLM mixed in baseboard objects.  Log the
-        # exact source (hvac_response / base_content / header) so we can
-        # pinpoint the root cause during development.
+      
         if 'Baseboard Heating Type;' in complete_idf:
             print("  ❌ DEBUG: Problem STILL in complete_idf before write!")
             # More detailed debug

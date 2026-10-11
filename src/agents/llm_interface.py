@@ -571,12 +571,16 @@ class UniversalLLM:
             intent['parasitic_off'] = '8'
 
         # ── Explicit comfort setpoints in the request ──────────────────────
-        # e.g. "24°C cooling and 21°C heating", "21 degC heating setpoint"
-        parsed_heat, parsed_cool = self._parse_setpoints_from_request(user_request)
-        if parsed_heat != '20.0':
+        # e.g. "24°C cooling and 21°C heating", "cooling setpoint = 24°C"
+        # Use found flags (not value comparison) so "cooling setpoint = 24°C"
+        # is correctly recognised even though 24.0 is also the default value.
+        parsed_heat, parsed_cool, h_found, c_found = self._parse_setpoints_from_request(user_request)
+        if h_found:
             intent['heating_setpoint'] = parsed_heat
-        if parsed_cool != '24.0':
+        if c_found:
             intent['cooling_setpoint'] = parsed_cool
+        # Flag used by _generate_thermostat() to hard-enforce the value
+        intent['setpoints_from_prompt'] = h_found or c_found
 
         return intent
 
@@ -586,47 +590,60 @@ class UniversalLLM:
         user's natural-language request.
 
         Recognised patterns (case-insensitive):
-          "21°C heating"  /  "heating setpoint at 21°C"  /  "21 degC heating"
-          "24°C cooling"  /  "cooling setpoint of 24°C"  /  "23 deg C cooling"
+          "21°C heating"             — temperature before keyword
+          "heating setpoint at 21°C" — keyword before temperature with at/of
+          "heating setpoint = 21°C"  — keyword before temperature with = sign
 
-        Returns (heating_setpoint_str, cooling_setpoint_str).
-        Falls back to ('20.0', '24.0') when no explicit values are found.
+        Returns (heating_str, cooling_str, heating_found, cooling_found).
+        Falls back to ('20.0', '24.0', False, False) when no explicit values found.
         Valid heating range: 15–25 °C.  Valid cooling range: 20–30 °C.
         """
         import re
-        heating = '20.0'
-        cooling  = '24.0'
+        heating, cooling = '20.0', '24.0'
+        h_found, c_found = False, False
 
-        # Match "XX°C heating" or "heating … XX°C" in any order
+        # Three alternatives:
+        #   g1: "21°C heating"
+        #   g2: "heating setpoint at/of 21°C"
+        #   g3: "heating setpoint = 21°C"   ← new
         h_match = re.search(
             r'(\d+(?:\.\d+)?)\s*(?:°C|degC|deg\.?\s*C)\s+heating'
-            r'|heating\s+(?:setpoint\s+)?(?:at\s+|of\s+)?(\d+(?:\.\d+)?)\s*(?:°C|degC|deg\.?\s*C)',
+            r'|heating\s+(?:setpoint\s+)?(?:at\s+|of\s+)?(\d+(?:\.\d+)?)\s*(?:°C|degC|deg\.?\s*C)'
+            r'|heating\s+setpoint\s*=\s*(\d+(?:\.\d+)?)\s*(?:°C|degC|deg\.?\s*C)',
             user_request, re.IGNORECASE
         )
         if h_match:
-            raw = h_match.group(1) or h_match.group(2)
+            raw = h_match.group(1) or h_match.group(2) or h_match.group(3)
             try:
                 val = float(raw)
                 if 15.0 <= val <= 25.0:
                     heating = f'{val:.1f}'
+                    h_found = True
             except ValueError:
                 pass
 
+        # Three alternatives:
+        #   g1: "24°C cooling"  — negative lookahead (?!\s+setpoint) prevents
+        #       "21°C cooling setpoint = 24°C" from falsely matching 21 as cooling
+        #   g2: "cooling setpoint at/of 24°C"
+        #   g3: "cooling setpoint = 24°C"   ← new
         c_match = re.search(
-            r'(\d+(?:\.\d+)?)\s*(?:°C|degC|deg\.?\s*C)\s+cooling'
-            r'|cooling\s+(?:setpoint\s+)?(?:at\s+|of\s+)?(\d+(?:\.\d+)?)\s*(?:°C|degC|deg\.?\s*C)',
+            r'(\d+(?:\.\d+)?)\s*(?:°C|degC|deg\.?\s*C)\s+cooling(?!\s+setpoint)'
+            r'|cooling\s+(?:setpoint\s+)?(?:at\s+|of\s+)?(\d+(?:\.\d+)?)\s*(?:°C|degC|deg\.?\s*C)'
+            r'|cooling\s+setpoint\s*=\s*(\d+(?:\.\d+)?)\s*(?:°C|degC|deg\.?\s*C)',
             user_request, re.IGNORECASE
         )
         if c_match:
-            raw = c_match.group(1) or c_match.group(2)
+            raw = c_match.group(1) or c_match.group(2) or c_match.group(3)
             try:
                 val = float(raw)
                 if 20.0 <= val <= 30.0:
                     cooling = f'{val:.1f}'
+                    c_found = True
             except ValueError:
                 pass
 
-        return heating, cooling
+        return heating, cooling, h_found, c_found
 
     # ─────────────────────────────────────────────────────────────────────────
     # MISTRAL GENERATION (iterative, prompt-aware)
@@ -1355,9 +1372,10 @@ HVACTemplate:Zone:VRF,
             import torch
 
             # ── Parse setpoints from user request (may override defaults) ──
-            heating_sp, cooling_sp = self._parse_setpoints_from_request(user_request)
-            # cooling_sp is the target; let model confirm/refine it
-            # heating_sp is used directly (model does not generate this field)
+            heating_sp, cooling_sp, h_found, c_found = self._parse_setpoints_from_request(user_request)
+            # heating_sp is used directly (model does not generate this field).
+            # cooling_sp: if the user explicitly wrote a value, enforce it;
+            # otherwise let the model confirm/refine around the default.
 
             # One-shot example uses the same setpoints so the model stays in range.
             prompt = f"""<s>[INST] Generate HVACTemplate:Thermostat objects.
@@ -1406,19 +1424,23 @@ HVACTemplate:Thermostat,
                 continuation = f'{model_cool};'
 
             # ── Validate the model's cooling setpoint value ────────────────
-            # If it falls outside the realistic range (20–30 °C), fall back to
-            # the value parsed from the user request (or the default 24.0 °C).
+            # If the user explicitly wrote a setpoint in the prompt, enforce it
+            # directly — the model output is irrelevant.  Otherwise accept the
+            # model value if it falls within the realistic range (20–30 °C).
             import re as _re
-            cool_match = _re.search(r'(-?\d+\.?\d*)', continuation)
-            if cool_match:
-                try:
-                    cool_val = float(cool_match.group(1))
-                    if not (20.0 <= cool_val <= 30.0):
-                        continuation = f'{cooling_sp};'
-                except ValueError:
-                    continuation = f'{cooling_sp};'
-            else:
+            if c_found:
                 continuation = f'{cooling_sp};'
+            else:
+                cool_match = _re.search(r'(-?\d+\.?\d*)', continuation)
+                if cool_match:
+                    try:
+                        cool_val = float(cool_match.group(1))
+                        if not (20.0 <= cool_val <= 30.0):
+                            continuation = f'{cooling_sp};'
+                    except ValueError:
+                        continuation = f'{cooling_sp};'
+                else:
+                    continuation = f'{cooling_sp};'
 
             # ── Build the complete thermostat object ───────────────────────
             complete_thermostat = (
@@ -1435,7 +1457,7 @@ HVACTemplate:Thermostat,
         except Exception as e:
             print(f"⚠ Thermostat generation failed: {e}")
             # Hard fallback — still uses parsed setpoints, not hardcoded 20/24
-            heating_sp, cooling_sp = self._parse_setpoints_from_request(user_request)
+            heating_sp, cooling_sp, _, _ = self._parse_setpoints_from_request(user_request)
             return (
                 f"HVACTemplate:Thermostat,\n"
                 f"  Thermostat_{zone_name},                !- Name\n"

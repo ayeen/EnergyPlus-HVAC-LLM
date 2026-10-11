@@ -1,0 +1,49 @@
+{
+  "Syntax": {
+    "instruction": "Fix the EnergyPlus IDF syntax error for this hospital building. Syntax error: Missing semicolon at end of Zone object definition.",
+    "input": "Error Message: ** Fatal ** IDF line 879: Missing semicolon at end of object definition.\n\nIDF Snippet:\nZone,\n  Hospital_Lobby_130, !- Name\n  0, !- Direction of North Axis\n  0, 0, 0, !- X,Y,Z ==> X=0, Y=0, Z=0\n  1, !- Type\n  1, !- Multiplier\n  3.0, !- Ceiling Height\n  100.0 !- Volume",
+    "output": "Analysis: Syntax error: Missing semicolon at end of Zone object definition.\n\nCorrected IDF:\nZone,\n  Hospital_Lobby_130, !- Name\n  0, !- Direction of North Axis\n  0, 0, 0, !- X,Y,Z ==> X=0, Y=0, Z=0\n  1, !- Type\n  1, !- Multiplier\n  3.0, !- Ceiling Height\n  100.0; !- Volume",
+    "metadata": {
+      "error_category": "Syntax",
+      "error_type": "missing_semicolon",
+      "building_type": "Hospital",
+      "zone_affected": "Hospital_Lobby_130",
+      "agent_target": "Agent 3"
+    }
+  },
+  "Logic": {
+    "instruction": "Fix the EnergyPlus IDF logic error for this Apartment building. System capacity is less than sum of zone capacities.",
+    "input": "Error Message: ** Warning ** AirConditioner:VariableRefrigerantFlow 'VRF_System_5': Total rated capacity (42486 W) is less than sum of terminal unit capacities (56966 W).\n\nIDF Snippet:\nAirConditioner:VariableRefrigerantFlow,\n  VRF_System_5, !- Name\n  Apartment_Bathroom_968_Avail, !- Availability Schedule\n  AirCooled, !- Condenser Type\n  VRF_Cond_In, !- Condenser Inlet\n  VRF_Cond_Out, !- Condenser Outlet\n  42486, !- Gross Rated Cooling Capacity\n  46734; !- Gross Rated Heating Capacity",
+    "output": "Analysis: Capacity mismatch. System capacity (42486 W) must be >= sum of terminal capacities (56966 W).\n\nCorrected IDF:\nAirConditioner:VariableRefrigerantFlow,\n  VRF_System_1, !- Name\n  Apartment_Bathroom_968_Avail, !- Availability Schedule\n  AirCooled, !- Condenser Type\n  VRF_Cond_In, !- Condenser Inlet\n  VRF_Cond_Out, !- Condenser Outlet\n  60406, !- Gross Rated Cooling Capacity (CORRECTED)\n  66446; !- Gross Rated Heating Capacity (CORRECTED)",
+    "metadata": {
+      "error_category": "Logic",
+      "error_type": "capacity_mismatch",
+      "building_type": "Apartment",
+      "zone_affected": "Apartment_Bathroom_968",
+      "agent_target": "Agent 3"
+    }
+  },
+  "Completeness": {
+    "instruction": "Fix the EnergyPlus IDF errors for this Office building. Identify missing objects or incorrect field references in the VRF system.",
+    "input": "Error Message: ** Fatal ** Zone Office_OpenOffice_968 has HVAC equipment but no thermostat name is provided in EquipmentConnections.\n\nIDF Snippet:\nZoneHVAC:EquipmentConnections,\n  Office_OpenOffice_968, !- Zone Name\n  Office_OpenOffice_968_Equip, !- List\n  Office_OpenOffice_968_In, Office_OpenOffice_968_Ex, Office_OpenOffice_968_Node;",
+    "output": "Analysis: Missing ZoneControl:Thermostat. Fix: Created thermostat object and linked it to Office_OpenOffice_968.\n\nCorrected IDF:\nZoneControl:Thermostat,\n  Office_OpenOffice_968_Stat, Office_OpenOffice_968, DualSetpoint_Sched, ThermostatSetpoint:DualSetpoint, Office_OpenOffice_968_Dual;\n\nZoneHVAC:EquipmentConnections,\n  Office_OpenOffice_968, Office_OpenOffice_968_Equip, Office_OpenOffice_968_In, Office_OpenOffice_968_Ex, Office_OpenOffice_968_Node, Office_OpenOffice_968_Stat;",
+    "metadata": {
+      "error_category": "Completeness",
+      "building_type": "Office",
+      "zone_affected": "Office_OpenOffice_968",
+      "agent_target": "Agent 3"
+    }
+  },
+  "Reference": {
+    "instruction": "Fix the EnergyPlus IDF reference error for this office building. Incorrect zone reference. The VRF terminal references a zone that doesn't exist or has wrong name.",
+    "input": "Error Message: ** Fatal ** ZoneHVAC:TerminalUnit:VariableRefrigerantFlow: \"Office_Lobby_935_VRF\" references Zone: \"WrongZone_69\" which is not found.\n\nIDF Snippet:\nZoneHVAC:TerminalUnit:VariableRefrigerantFlow,\n  Office_Lobby_935_VRF, !- Name\n  VRF_System_1, !- VRF System\n  WrongZone_69, !- Zone\n  Office_Lobby_935_VRF_Avail, !- Availability\n  Office_Lobby_935_VRF_In, !- Air Inlet\n  Office_Lobby_935_VRF_Out, !- Air Outlet\n  4000, !- Cooling Capacity\n  5000; !- Heating Capacity",
+    "output": "Analysis: Incorrect zone reference. The VRF terminal references a zone that doesn't exist or has wrong name.\n\nCorrected IDF:\nZoneHVAC:TerminalUnit:VariableRefrigerantFlow,\n  Office_Lobby_935_VRF, !- Name\n  VRF_System_1, !- VRF System\n  Office_Lobby_935, !- Zone (CORRECTED)\n  Office_Lobby_935_VRF_Avail, !- Availability\n  Office_Lobby_935_VRF_In, !- Air Inlet\n  Office_Lobby_935_VRF_Out, !- Air Outlet\n  4000, !- Cooling Capacity\n  5000; !- Heating Capacity",
+    "metadata": {
+      "error_category": "Reference",
+      "error_type": "wrong_zone_reference",
+      "building_type": "Office",
+      "zone_affected": "Office_Lobby_935",
+      "agent_target": "Agent 3"
+    }
+  }
+}

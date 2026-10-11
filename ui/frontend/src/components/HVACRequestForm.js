@@ -82,10 +82,10 @@ const HVACRequestForm = ({ uploadedFile, onPipelineStart, onBack }) => {
   return (
     <Paper elevation={3} sx={{ p: 4 }}>
       <Typography variant="h5" gutterBottom>
-        Step 2: Configure HVAC Request
+        Step 2: User Request
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Describe your desired HVAC system in natural language
+        Describe your desired  VRF system.
       </Typography>
 
       {/* File Info Summary */}
@@ -108,12 +108,12 @@ const HVACRequestForm = ({ uploadedFile, onPipelineStart, onBack }) => {
               fullWidth
               multiline
               rows={4}
-              label="HVAC Request (Natural Language)"
+              label="Prompt (Natural Language)"
               placeholder="Example: Design a VRF system with heat recovery for a commercial office building in cold climate. Prioritize energy efficiency and zonal control."
               value={userRequest}
               onChange={(e) => setUserRequest(e.target.value)}
               required
-              helperText="Describe the HVAC system you want to generate. Be as specific as possible about requirements, climate, efficiency goals, etc."
+              helperText="Describe the VRF system you want to generate. Be as specific as possible about requirements."
             />
           </Grid>
 
@@ -156,9 +156,9 @@ const HVACRequestForm = ({ uploadedFile, onPipelineStart, onBack }) => {
                   <Typography variant="body1">
                     Enable RAG (Retrieval-Augmented Generation)
                   </Typography>
-                  <Typography variant="caption" color="text.secondary">
+                  {/* <Typography variant="caption" color="text.secondary">
                     Uses knowledge base for better results (Recommended)
-                  </Typography>
+                  </Typography> */}
                 </Box>
               }
             />
@@ -210,7 +210,7 @@ const HVACRequestForm = ({ uploadedFile, onPipelineStart, onBack }) => {
                 disabled={loading || !userRequest}
                 fullWidth
               >
-                {loading ? 'Starting Pipeline...' : 'Generate IDF'}
+                {loading ? 'Starting Pipeline...' : 'Generate'}
               </Button>
             </Box>
           </Grid>

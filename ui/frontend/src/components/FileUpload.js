@@ -71,7 +71,7 @@ const FileUpload = ({ onFileUploaded }) => {
         Step 1: Upload Base IDF File
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Upload an EnergyPlus IDF file containing building geometry and zones without HVAC systems
+        Upload an IDF file containing building geometry and zones without HVAC systems
       </Typography>
 
       <Box

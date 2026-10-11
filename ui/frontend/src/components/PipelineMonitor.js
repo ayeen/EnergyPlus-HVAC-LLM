@@ -31,7 +31,7 @@ const AGENT_INFO = {
     name: 'Agent 1: HVAC Generator',
     icon: <PsychologyIcon />,
     color: 'primary',
-    description: 'Generating HVAC system configuration from your request'
+    description: 'Generating VRF-HVAC system configuration from your request'
   },
   'agent1_5_validation': {
     name: 'Agent 1.5: Quick Validator',
@@ -135,7 +135,7 @@ const PipelineMonitor = ({ executionId, onComplete }) => {
         Step 3: Pipeline Execution
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Monitoring AI agents working on your HVAC system design
+        Monitoring AI agents working on your VRF-HVAC system design
       </Typography>
 
       {/* Progress Bar */}

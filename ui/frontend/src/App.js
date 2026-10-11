@@ -30,7 +30,7 @@ const theme = createTheme({
 
 const steps = [
   'Upload Base IDF',
-  'Configure HVAC Request',
+  'User Request',
   'Generate & Monitor',
   'View Results'
 ];
@@ -72,11 +72,11 @@ function App() {
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              HuBEL - EnergyPlus VRF-HVAC Interface
+              HuBEL - VRF-LLM
             </Typography>
-            <Typography variant="body2">
-              Automated VRF-HVAC System Powered by AI
-            </Typography>
+            {/* <Typography variant="body2">
+              Automated VRF-HVAC System 
+            </Typography> */}
           </Toolbar>
         </AppBar>
 
@@ -134,7 +134,7 @@ function App() {
         >
           <Container maxWidth="xl">
             <Typography variant="body2" color="text.secondary" align="center">
-              EnergyPlus VRF-HVAC Research Project | Version 1.0.0
+               Human Behavior and Energy Laboratory (HuBEL) | VRF-LLM Version 1.0.0
             </Typography>
           </Container>
         </Box>
