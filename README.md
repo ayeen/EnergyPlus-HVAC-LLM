@@ -199,8 +199,6 @@ Success means EnergyPlus finishes with "Completed Successfully" in `eplusout.err
 - The base and fine-tuned configurations use different generation strategies (one free-form
   call vs. template-based, object-by-object calls), so the success gap is not due to
   fine-tuning alone.
-- The LLM writes about 2–5 % of HVACTemplate fields; the rest comes from templates, rules
-  and ExpandObjects defaults (see above).
 - With the fine-tuned model, RAG context retrieved by Agent 1 is not inserted into the
   per-object prompts. RAG made no measurable difference in any result set.
 - The training data was rule-based and never simulated, and its objects do not follow the
