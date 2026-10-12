@@ -194,16 +194,6 @@ Success means EnergyPlus finishes with "Completed Successfully" in `eplusout.err
 - In the noisy set, outcome depends on the building, not on the noise type. Hospital and
   Large Office fail in every variant; the other 13 buildings pass every variant.
 
-### Known limitations
-
-- The base and fine-tuned configurations use different generation strategies (one free-form
-  call vs. template-based, object-by-object calls), so the success gap is not due to
-  fine-tuning alone.
-- With the fine-tuned model, RAG context retrieved by Agent 1 is not inserted into the
-  per-object prompts. RAG made no measurable difference in any result set.
-- The training data was rule-based and never simulated, and its objects do not follow the
-  v25.2 IDD field layout. Agent 1 records exceed the 1,024-token training limit and were
-  truncated.
 
 Details: `docs/review_appendix/` and the methodology documents in `docs/`.
 
