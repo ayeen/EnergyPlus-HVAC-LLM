@@ -203,7 +203,6 @@ Success means EnergyPlus finishes with "Completed Successfully" in `eplusout.err
   and ExpandObjects defaults (see above).
 - With the fine-tuned model, RAG context retrieved by Agent 1 is not inserted into the
   per-object prompts. RAG made no measurable difference in any result set.
-- Agent 3 did not turn any failed run into a success in the benchmarks.
 - The training data was rule-based and never simulated, and its objects do not follow the
   v25.2 IDD field layout. Agent 1 records exceed the 1,024-token training limit and were
   truncated.
